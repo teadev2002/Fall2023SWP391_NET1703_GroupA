@@ -1,10 +1,10 @@
 CREATE DATABASE swp391;
 USE swp391;
 
-CREATE TABLE [user](
-	id int IDENTITY(1,1),
-	username varchar(50),
-	fullname nvarchar(100),
+CREATE TABLE users(
+	id int auto_increment,
+	user_name varchar(50),
+	full_name nvarchar(100),
 	email varchar(50),
 	password varchar(50),
 	phone varchar(11),
@@ -15,7 +15,7 @@ CREATE TABLE [user](
 );
 
 CREATE TABLE role(
-	id int IDENTITY(1,1),
+	id int auto_increment,
 	name varchar(50),
 	description varchar(255),
 	
@@ -24,55 +24,44 @@ CREATE TABLE role(
 
 
 CREATE TABLE blog(
-	id int IDENTITY(1,1) primary key,
+	id int auto_increment,
 	title varchar(100),
 	content text,
 	image varchar(255),
-	blog_type varchar(50),
-	fee float,
+	min_price double,
+	max_price double ,
 	status bit,
-	create_date Date,
-	id_user_create int,
-	
-	
-);
-
-CREATE TABLE exchange(
-	id int IDENTITY(1,1) primary key,
-	price float,
+	create_date date,
 	confirm bit,
-	id_blog int,
- 
 	
+	id_user_create int,
+	id_blog_type int,
 	
+	primary key(id)
 );
 
-CREATE TABLE service(
-	id int IDENTITY(1,1) primary key,
-	min_price float,
-	max_price float,
-	start_time date,
-	end_time date,
-	id_blog int,
-	 
+CREATE TABLE blog_type(
+	id int auto_increment,
+	name varchar(50),
+	primary key (id)
 );
+
 
 CREATE TABLE booking(
-	id_user int,
-	id_blog int,
-	id int IDENTITY(1,1),
+	id int auto_increment,
 	create_date date,
-	total_price float,
+	total_price double,
 	paying_method varchar(10),
 	status bit,
-	
-	primary key(id,id_user,id_blog)
+	id_user int,
+	id_blog int,
+	primary key(id)
 
 
 );
 
 CREATE TABLE booking_history(
-	id int IDENTITY(1,1),
+	id int auto_increment,
 	description varchar(255),
 	status bit,
 	id_booking int,
@@ -82,21 +71,32 @@ CREATE TABLE booking_history(
 
 
 CREATE TABLE comment(
+	id int auto_increment,
+	description text,
+	create_date Date,
+	rating int,
 	id_user int,
-	id_blog int,
-	description varchar(255),
-	date Date,
-	
-	primary key(id_user,id_blog)
+	primary key(id)
 );
 
-ALTER TABLE [user]  ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
+CREATE TABLE user_blog_comment(
+	id_blog int,
+	id_user int,
+	id_comment int,
+	
+	primary key(id_user,id_blog,id_comment)
+);
 
-ALTER TABLE blog ADD CONSTRAINT FK_id_user_blog FOREIGN KEY (id_user_create) REFERENCES [user](id);
-ALTER TABLE exchange ADD CONSTRAINT FK_id_blog_exchange FOREIGN KEY (id_blog) REFERENCES blog(id);
-ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFERENCES blog(id);
+ALTER TABLE users  ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
+ALTER TABLE blog ADD CONSTRAINT FK_id_user_blog FOREIGN KEY (id_user_create) REFERENCES users(id);
 ALTER TABLE booking ADD CONSTRAINT FK_id_blog_booking FOREIGN KEY (id_blog) REFERENCES blog(id);
-ALTER TABLE booking ADD CONSTRAINT FK_id_user_booking FOREIGN KEY (id_user) REFERENCES [user](id);
-ALTER TABLE booking_history ADD CONSTRAINT FK__bookingid_booking_history FOREIGN KEY (id_booking) REFERENCES booking(id);
-ALTER TABLE comment ADD CONSTRAINT FK_id_blog_comment FOREIGN KEY (id_blog) REFERENCES blog(id);
-ALTER TABLE comment ADD CONSTRAINT FK_id_user_comment FOREIGN KEY (id_user) REFERENCES [user](id);
+ALTER TABLE booking ADD CONSTRAINT FK_id_user_booking FOREIGN KEY (id_user) REFERENCES users(id);
+ALTER TABLE booking_history ADD CONSTRAINT FK__booking_booking_history FOREIGN KEY (id_booking) REFERENCES booking(id);
+ALTER TABLE comment ADD CONSTRAINT FK_id_user_comment FOREIGN KEY (id_user) REFERENCES users(id);
+ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_user_user_blog_comment FOREIGN KEY (id_user) REFERENCES users(id);
+ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_blog_user_blog_comment FOREIGN KEY (id_blog) REFERENCES blog(id);
+ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_comment_user_blog_comment FOREIGN KEY (id_comment) REFERENCES comment(id);
+ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
+
+
+
