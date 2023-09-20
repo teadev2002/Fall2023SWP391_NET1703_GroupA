@@ -25,16 +25,16 @@ public class BookingEntity {
     private boolean status;
 
     @ManyToOne
-    @JoinColumn(name="id_user") // tên cột khóa ngoại trong database
+    @JoinColumn(name="id_user") // tên cột khóa ngoại trong database   //Checked
     private UserEntity userEntity_BookingEntity; // tên Entity tham chiếu tới
 
     @ManyToOne
-    @JoinColumn(name="id_blog") // tên cột khóa ngoại trong database
+    @JoinColumn(name="id_blog") // tên cột khóa ngoại trong database   //Checked
     private BlogEntity blogEntity_BookingEntity; // tên Entity tham chiếu tới
 
 
     @OneToMany(mappedBy = "bookingEntity")
-    List<BookingHistoryEntity>bookingHistories;
+    List<BookingHistoryEntity> listBookingHistory;
 
 
 }

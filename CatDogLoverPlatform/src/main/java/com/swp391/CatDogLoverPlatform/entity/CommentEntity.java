@@ -22,7 +22,7 @@ public class CommentEntity {
     UserBlogCommentEntity userBlogCommentEntities_CommentEntity;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user")   //Checked
     private UserEntity userEntity_CommentEntity;
 
 }

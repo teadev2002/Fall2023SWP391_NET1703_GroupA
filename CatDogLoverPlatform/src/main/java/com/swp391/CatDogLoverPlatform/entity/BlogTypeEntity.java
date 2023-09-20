@@ -12,6 +12,6 @@ public class BlogTypeEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "blogTypeEntity")
+    @OneToMany(mappedBy = "blogTypeEntity") //Checked
     List<BlogEntity> blogEntity;
 }
