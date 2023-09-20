@@ -26,11 +26,11 @@ public class BookingEntity {
 
     @ManyToOne
     @JoinColumn(name="id_user") // tên cột khóa ngoại trong database
-    private UserEntity userEntity4; // tên Entity tham chiếu tới
+    private UserEntity userEntity_BookingEntity; // tên Entity tham chiếu tới
 
     @ManyToOne
     @JoinColumn(name="id_blog") // tên cột khóa ngoại trong database
-    private BlogEntity blogEntity4; // tên Entity tham chiếu tới
+    private BlogEntity blogEntity_BookingEntity; // tên Entity tham chiếu tới
 
 
     @OneToMany(mappedBy = "bookingEntity")
