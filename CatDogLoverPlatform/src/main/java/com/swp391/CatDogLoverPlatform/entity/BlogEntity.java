@@ -39,16 +39,13 @@ public class BlogEntity {
     @JoinColumn(name="id_user_create")
     private UserEntity userEntity;
 
-    @Column(name = "id_blog_type")
-    private int id_blog_type;
-
     @ManyToOne
     @JoinColumn(name="id_blog_type",insertable = false, updatable = false)
     private BlogTypeEntity blogTypeEntity;
 
-    @OneToMany(mappedBy = "blogEntity2")
-    List<UserBlogCommentEntity>userBlogCommentEntities;
+    @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")
+    List<UserBlogCommentEntity>userBlogCommentEntities_BlogEntity;
 
-    @OneToMany(mappedBy = "blogEntity4")
-    List<BookingEntity>bookingEntities;
+    @OneToMany(mappedBy = "blogEntity_BookingEntity")
+    List<BookingEntity>bookingEntities_BlogEntity;
 }

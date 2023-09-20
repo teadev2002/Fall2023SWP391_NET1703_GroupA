@@ -38,12 +38,12 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity")
     List<BlogEntity> listBlog;
 
-    @OneToMany(mappedBy = "userEntity2")
-    List<UserBlogCommentEntity>userBlogCommentEntities ;
+    @OneToMany(mappedBy = "userEntity_UserBlogCommentEntity")
+    List<UserBlogCommentEntity>userBlogCommentEntities_UserEntity ;
 
-    @OneToMany(mappedBy = "userEntity3")
-    List<CommentEntity>commentEntities ;
+    @OneToMany(mappedBy = "userEntity_CommentEntity")
+    List<CommentEntity>commentEntities_UserEntity ;
 
-    @OneToMany(mappedBy = "userEntity4")
-    List<BookingEntity>bookingEntities ;
+    @OneToMany(mappedBy = "userEntity_BookingEntity")
+    List<BookingEntity>bookingEntities_UserEntity ;
 }

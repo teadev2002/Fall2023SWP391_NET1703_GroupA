@@ -19,12 +19,12 @@ public class CommentEntity {
     @Column(name = "rating")
     private int rating;
 
-    @OneToOne(mappedBy = "commentEntity2")
-    UserBlogCommentEntity userBlogCommentEntities;
+    @OneToOne(mappedBy = "commentEntity_UserBlogCommentEntity")
+    UserBlogCommentEntity userBlogCommentEntities_CommentEntity;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private UserEntity userEntity3;
+    private UserEntity userEntity_CommentEntity;
 
 }
 
