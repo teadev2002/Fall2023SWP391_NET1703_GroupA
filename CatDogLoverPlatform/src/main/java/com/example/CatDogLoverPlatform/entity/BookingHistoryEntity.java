@@ -1,4 +1,4 @@
-package com.swp391.CatDogLoverPlatform.entity;
+package com.example.CatDogLoverPlatform.entity;
 
 import javax.persistence.*;
 import java.util.Date;
