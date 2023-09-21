@@ -40,12 +40,16 @@ public class BlogEntity {
     private UserEntity userEntity;
 
     @ManyToOne
+<<<<<<< HEAD:CatDogLoverPlatform/src/main/java/com/example/CatDogLoverPlatform/entity/BlogEntity.java
     @JoinColumn(name="id_blog_type",insertable = false, updatable = false)
+=======
+    @JoinColumn(name="id_blog_type",insertable = false, updatable = false) //Checked
+>>>>>>> 8cd1aad647b32d2095d8440ca67e4e254f995fac:CatDogLoverPlatform/src/main/java/com/swp391/CatDogLoverPlatform/entity/BlogEntity.java
     private BlogTypeEntity blogTypeEntity;  
 
-    @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")
-    List<UserBlogCommentEntity>userBlogCommentEntities_BlogEntity;
+    @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")   //Checked
+    List<UserBlogCommentEntity> listUserBlogComment_BlogEntity;
 
     @OneToMany(mappedBy = "blogEntity_BookingEntity")
-    List<BookingEntity>bookingEntities_BlogEntity;
+    List<BookingEntity> listBooking_BlogEntity;
 }
