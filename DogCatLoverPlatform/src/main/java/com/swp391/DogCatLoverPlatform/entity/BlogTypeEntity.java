@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity;
+package com.swp391.CatDogLoverPlatform.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +12,6 @@ public class BlogTypeEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "blogTypeEntity")
+    @OneToMany(mappedBy = "blogTypeEntity") //Checked
     List<BlogEntity> blogEntity;
 }

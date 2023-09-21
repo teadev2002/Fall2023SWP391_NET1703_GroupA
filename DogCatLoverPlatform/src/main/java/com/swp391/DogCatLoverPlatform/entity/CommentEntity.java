@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity;
+package com.swp391.CatDogLoverPlatform.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,7 +22,7 @@ public class CommentEntity {
     UserBlogCommentEntity userBlogCommentEntities_CommentEntity;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user")   //Checked
     private UserEntity userEntity_CommentEntity;
 
 }

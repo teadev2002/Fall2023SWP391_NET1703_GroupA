@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity.keys;
+package com.swp391.CatDogLoverPlatform.entity.keys;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

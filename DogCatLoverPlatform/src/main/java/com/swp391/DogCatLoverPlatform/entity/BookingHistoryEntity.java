@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity;
+package com.swp391.CatDogLoverPlatform.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,7 +23,7 @@ public class BookingHistoryEntity {
     private boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "id_booking")
+    @JoinColumn(name = "id_booking")    //Checked
     private BookingEntity bookingEntity;
 
 
