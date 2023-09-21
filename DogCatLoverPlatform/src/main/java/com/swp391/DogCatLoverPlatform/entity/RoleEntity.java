@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity;
+package com.swp391.CatDogLoverPlatform.entity;
 
 import javax.persistence.*;
 import java.util.List;

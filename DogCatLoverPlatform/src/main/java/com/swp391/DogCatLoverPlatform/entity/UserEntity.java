@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity;
+package com.swp391.CatDogLoverPlatform.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -38,12 +38,12 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity")    //Checked
     List<BlogEntity> listBlogs;
 
-    @OneToMany(mappedBy = "userEntity_UserBlogCommentEntity")
-    List<UserBlogCommentEntity>userBlogCommentEntities_UserEntity ;
+    @OneToMany(mappedBy = "userEntity_UserBlogCommentEntity")     //Checked
+    List<UserBlogCommentEntity> listUserBlogComment_UserEntity ;
 
-    @OneToMany(mappedBy = "userEntity_CommentEntity")
-    List<CommentEntity>commentEntities_UserEntity ;
+    @OneToMany(mappedBy = "userEntity_CommentEntity")  //Checked
+    List<CommentEntity> listComment_UserEntity ;
 
-    @OneToMany(mappedBy = "userEntity_BookingEntity")
-    List<BookingEntity>bookingEntities_UserEntity ;
+    @OneToMany(mappedBy = "userEntity_BookingEntity") //Checked
+    List<BookingEntity> listBooking_UserEntity ;
 }

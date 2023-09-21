@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity;
+package com.swp391.CatDogLoverPlatform.entity;
 
 import com.swp391.CatDogLoverPlatform.entity.keys.UserBlogCommentKey;
 
@@ -11,11 +11,11 @@ public class UserBlogCommentEntity {
     private UserBlogCommentKey userBlogCommentKey;
 
     @ManyToOne
-    @JoinColumn(name="id_user",insertable = false, updatable = false) // tên cột khóa ngoại trong database
+    @JoinColumn(name="id_user",insertable = false, updatable = false) // tên cột khóa ngoại trong database  //Checked
     private UserEntity userEntity_UserBlogCommentEntity; // tên Entity tham chiếu tới
 
     @ManyToOne
-    @JoinColumn(name="id_blog",insertable = false, updatable = false) // tên cột khóa ngoại trong database
+    @JoinColumn(name="id_blog",insertable = false, updatable = false) // tên cột khóa ngoại trong database  //Checked
     private BlogEntity blogEntity_UserBlogCommentEntity; // tên Entity tham chiếu tới
 
     @OneToOne

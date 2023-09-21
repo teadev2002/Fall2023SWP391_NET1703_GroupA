@@ -1,4 +1,4 @@
-package com.swp391.DogCatLoverPlatform.entity;
+package com.swp391.CatDogLoverPlatform.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -40,12 +40,12 @@ public class BlogEntity {
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name="id_blog_type",insertable = false, updatable = false)
+    @JoinColumn(name="id_blog_type",insertable = false, updatable = false) //Checked
     private BlogTypeEntity blogTypeEntity;  
 
-    @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")
-    List<UserBlogCommentEntity>userBlogCommentEntities_BlogEntity;
+    @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")   //Checked
+    List<UserBlogCommentEntity> listUserBlogComment_BlogEntity;
 
     @OneToMany(mappedBy = "blogEntity_BookingEntity")
-    List<BookingEntity>bookingEntities_BlogEntity;
+    List<BookingEntity> listBooking_BlogEntity;
 }
