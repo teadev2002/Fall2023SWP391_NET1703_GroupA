@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:08:38 GMT -->
 <head>
@@ -7,36 +7,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" href="../static/images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
 
-    <link rel="stylesheet" href="../static/css/all.css">
+    <link rel="stylesheet" th:href="@{../css/all.css}">
 
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{../css/bootstrap.min.css}">
 
-    <link rel="stylesheet" href="../static/css/boxicons.min.css">
+    <link rel="stylesheet" th:href="@{../css/boxicons.min.css}">
 
-    <link rel="stylesheet" href="../static/css/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{../css/bootstrap-icons.css}">
 
-    <link rel="stylesheet" href="../static/css/jquery-ui.css">
-    <link rel="stylesheet" href="../static/css/aos.css">
+    <link rel="stylesheet" th:href="@{../css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{../css/aos.css}">
 
-    <link rel="stylesheet" href="../static/css/swiper-bundle.css">
+    <link rel="stylesheet" th:href="@{../css/swiper-bundle.css}">
 
-    <link rel="stylesheet" href="../static/css/nice-select.css">
+    <link rel="stylesheet" th:href="@{../css/nice-select.css}">
 
-    <link rel="stylesheet" href="../static/css/magnific-popup.css">
+    <link rel="stylesheet" th:href="@{../css/magnific-popup.css}">
 
-    <link rel="stylesheet" href="../static/css/animate.css">
-    <link rel="stylesheet" href="../static/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" th:href="@{../css/animate.css}">
+    <link rel="stylesheet" th:href="@{../css/jquery.fancybox.min.css}">
 
-    <link rel="stylesheet" href="../static/css/odometer.css">
+    <link rel="stylesheet" th:href="@{../css/odometer.css}">
 
-    <link rel="stylesheet" href="../static/css/datepicker.min.css">
+    <link rel="stylesheet" th:href="@{../css/datepicker.min.css}">
 
-    <link rel="stylesheet" href="../static/css/jquery-ui.css">
-    <link rel="stylesheet" href="../static/css/aos.css">
+    <link rel="stylesheet" th:href="@{../css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{../css/aos.css}">
 
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
 </head>
 <body>
 
@@ -56,7 +56,7 @@
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
                 <div class="contact-number">
-                    <a href="tel:+1(541)754-3020">+1 (541) 754-3010 <img src="../static/images/icon/support.svg" alt></a>
+                    <a href="tel:+1(541)754-3020">+1 (541) 754-3010 <img th:src="@{../images/icon/support.svg}" alt></a>
                 </div>
             </div>
         </div>
@@ -67,12 +67,12 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" src="../static/images/header1-logo.svg"></a>
+            <a href="http://localhost:8080/demoTestingNTimes/home"><img alt="image" class="img-fluid" th:src="@{../images/header1-logo.svg}"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" src="../static/images/header1-logo.svg"></a>
+                    <a th:href="index.html"><img alt="image" th:src="@{../images/header1-logo.svg}"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
@@ -80,38 +80,38 @@
             </div>
             <ul class="menu-list">
 
-                <li><a href="index.html">Home</a></li>
+                <li><a th:href="@{home}">Home</a></li>
 
-                <li><a href="about.html">About</a></li>
+                <li><a th:href="@{About}">About</a></li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
+                        <li><a th:href="@{Service-Details}">Daycare </a></li>
+                        <li><a th:href="@{Service-Details}">Grooming</a></li>
+                        <li><a th:href="@{Service-Details}">Boarding</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="3col-gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
+                        <li><a th:href="@{Pricing-Plan}">Pricing Plan</a></li>
+                        <li><a th:href="@{Team}">Our Team</a></li>
+                        <li><a th:href="@{3col-gallery}">Gallery</a></li>
+                        <li><a th:href="@{Faq}">Faq</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="blog-standard.html">Exchange</a></li>
-                        <li><a href="blog-standard.html">Gift</a></li>
+                        <li><a th:href="@{Blog-Standard}">Exchange</a></li>
+                        <li><a th:href="@{Blog-Details}">Gift</a></li>
                     </ul>
                 </li>
 
-                <li><a href="contact.html">Contact</a></li>
+                <li><a th:href="@{Contact}">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
@@ -121,17 +121,17 @@
                     </div>
                 </div>
                 <ul class="social-link mb-5">
-                    <li><a href>
+                    <li><a th:href>
                         <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                         </svg>
                     </a></li>
-                    <li><a href>
+                    <li><a th:href>
                         <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z"/>
                         </svg>
                     </a></li>
-                    <li><a href>
+                    <li><a th:href>
                         <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_1585_341)">
                                 <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
@@ -164,17 +164,17 @@
                         </button>
                     </form>
                 </li>
-                <li><a href>
+                <li><a th:href>
                     <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                     </svg>
                 </a></li>
-                <li><a href="cart.html">
+                <li><a th:href="cart.html">
                     <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z"/>
                     </svg>
                 </a></li>
-                <li><a href="login.html">
+                <li><a th:href="login.html">
                     <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1585_341)">
                             <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
@@ -210,18 +210,18 @@
                     </div>
                     <div class="col-xxl-6 col-xl-7 d-flex align-items-center justify-content-md-start justify-content-center">
                         <div class="banner-img">
-                            <img class="img-fluid" src="../static/images/bg/new-banner-img.png" alt>
+                            <img class="img-fluid" th:src="@{../images/bg/new-banner-img.png}" alt>
                         </div>
                         <div class="reservation-review">
                             <div class="reservation-btn">
-                                <a class="primary-btn1" href="contact.html">Make A Reservation</a>
+                                <a class="primary-btn1" th:href="contact.html">Make A Reservation</a>
                             </div>
                             <div class="review-area">
                                 <ul>
                                     <li>
                                         <div class="single-review">
                                             <div class="icon">
-                                                <img src="../static/images/icon/trustpilot001.svg" alt>
+                                                <img th:src="@{../images/icon/trustpilot001.svg}" alt>
                                                 <span>reviews</span>
                                             </div>
                                             <div class="reviews">
@@ -239,7 +239,7 @@
                                     <li>
                                         <div class="single-review">
                                             <div class="icon">
-                                                <img src="../static/images/icon/google2.svg" alt>
+                                                <img th:src="@{../images/icon/google2.svg}" alt>
                                                 <span>reviews</span>
                                             </div>
                                             <div class="reviews">
@@ -269,7 +269,7 @@
             <div class="col-lg-11">
                 <div class="video-wraper">
                     <video autoplay loop="loop" muted preload="auto">
-                        <source src="../static/video/video-02.mp4" type="video/mp4">
+                        <source th:src="@{../video/video-02.mp4}" type="video/mp4">
                     </video>
                 </div>
             </div>
@@ -283,8 +283,8 @@
         <div class="row">
             <div class="col-lg-12 d-flex justify-content-center">
                 <div class="section-title1 text-center">
-                    <span><img src="../static/images/icon/section-vec-l1.svg" alt>Services<img
-                            src="../static/images/icon/section-vec-r1.svg" alt></span>
+                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Services<img
+                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
                     <h2>Experience our worship</h2>
                 </div>
             </div>
@@ -306,58 +306,58 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="services-card1">
-                            <img class="services-card-vec" src="../static/images/bg/services-card-vec.png" alt>
+                            <img class="services-card-vec" th:src="@{../images/bg/services-card-vec.png}" alt>
                             <div class="icon">
-                                <img src="../static/images/icon/daycare-center2.svg" alt>
+                                <img th:src="@{../images/icon/daycare-center2.svg}" alt>
                             </div>
                             <div class="content">
-                                <h3><a href="service-details.html">Daycare </a></h3>
+                                <h3><a th:href="service-details.html">Daycare </a></h3>
                                 <p>Pellentesque maximus augue orciquista ut aliquet risus In hac habitasse.</p>
                             </div>
-                            <a class="more-btn" href="service-details.html">More Details<img
-                                    src="../static/images/icon/btn-arrow1.svg" alt></a>
+                            <a class="more-btn" th:href="service-details.html">More Details<img
+                                    th:src="@{../images/icon/btn-arrow1.svg}" alt></a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="services-card1 two">
-                            <img class="services-card-vec" src="../static/images/bg/services-card-vec.png" alt>
+                            <img class="services-card-vec" th:src="@{../images/bg/services-card-vec.png}" alt>
                             <div class="icon">
-                                <img src="../static/images/icon/grooming2.svg" alt>
+                                <img th:src="@{../images/icon/grooming2.svg}" alt>
                             </div>
                             <div class="content">
-                                <h3><a href="service-details.html">Grooming </a></h3>
+                                <h3><a th:href="service-details.html">Grooming </a></h3>
                                 <p>Pellentesque maximus augue orciquista ut aliquet risus In hac habitasse.</p>
                             </div>
-                            <a class="more-btn" href="service-details.html">More Details<img
-                                    src="../static/images/icon/btn-arrow1.svg" alt></a>
+                            <a class="more-btn" th:href="service-details.html">More Details<img
+                                    th:src="@{../images/icon/btn-arrow1.svg}" alt></a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="services-card1 three">
-                            <img class="services-card-vec" src="../static/images/bg/services-card-vec.png" alt>
+                            <img class="services-card-vec" th:src="@{../images/bg/services-card-vec.png}" alt>
                             <div class="icon">
-                                <img src="../static/images/icon/boarding2.svg" alt>
+                                <img th:src="@{../images/icon/boarding2.svg}" alt>
                             </div>
                             <div class="content">
-                                <h3><a href="service-details.html">Boarding</a></h3>
+                                <h3><a th:href="service-details.html">Boarding</a></h3>
                                 <p>Pellentesque maximus augue orciquista ut aliquet risus In hac habitasse.</p>
                             </div>
-                            <a class="more-btn" href="service-details.html">More Details<img
-                                    src="../static/images/icon/btn-arrow1.svg" alt></a>
+                            <a class="more-btn" th:href="service-details.html">More Details<img
+                                    th:src="@{../images/icon/btn-arrow1.svg}" alt></a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="services-card1 four">
-                            <img class="services-card-vec" src="../static/images/bg/services-card-vec.png" alt>
+                            <img class="services-card-vec" th:src="@{../images/bg/services-card-vec.png}" alt>
                             <div class="icon">
-                                <img src="../static/images/icon/veterinary2.svg" alt>
+                                <img th:src="@{../images/icon/veterinary2.svg}" alt>
                             </div>
                             <div class="content">
-                                <h3><a href="service-details.html">veterinary</a></h3>
+                                <h3><a th:href="service-details.html">veterinary</a></h3>
                                 <p>Pellentesque maximus augue orciquista ut aliquet risus In hac habitasse.</p>
                             </div>
-                            <a class="more-btn" href="service-details.html">More Details<img
-                                    src="../static/images/icon/btn-arrow1.svg" alt></a>
+                            <a class="more-btn" th:href="service-details.html">More Details<img
+                                    th:src="@{../images/icon/btn-arrow1.svg}" alt></a>
                         </div>
                     </div>
                 </div>
@@ -372,8 +372,8 @@
         <div class="row g-lg-4 gy-5">
             <div class="col-lg-6">
                 <div class="section-title1">
-                    <span><img src="../static/images/icon/section-vec-l1.svg" alt>Our Story<img
-                            src="../static/images/icon/section-vec-r1.svg" alt></span>
+                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Our Story<img
+                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
                     <h2>come to know what we have done about pets.</h2>
                 </div>
                 <div class="story-content">
@@ -385,7 +385,7 @@
                         <h3>We Think Working Process may <span>increase</span> mindset.</h3>
                         <div class="review">
                             <p>Based on <a href="#">20,921 reviews</a></p>
-                            <img src="../static/images/icon/trastpilot.svg" alt>
+                            <img th:src="@{../images/icon/trastpilot.svg}" alt>
                         </div>
                     </div>
                     <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
@@ -395,7 +395,7 @@
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
                 <div class="story-img">
-                    <img class="img-fluid" src="../static/images/bg/story-img1.png" alt>
+                    <img class="img-fluid" th:src="@{../images/bg/story-img1.png}" alt>
                 </div>
             </div>
         </div>
@@ -410,7 +410,7 @@
                 <div class="feature-left">
                     <div class="single-card mb-45">
                         <div class="icon">
-                            <img src="../static/images/icon/badge1.svg" alt>
+                            <img th:src="@{../images/icon/badge1.svg}" alt>
                         </div>
                         <div class="content">
                             <h4>ID Badged</h4>
@@ -419,7 +419,7 @@
                     </div>
                     <div class="single-card">
                         <div class="icon">
-                            <img src="../static/images/icon/checked1.svg" alt>
+                            <img th:src="@{../images/icon/checked1.svg}" alt>
                         </div>
                         <div class="content">
                             <h4>DBS Checked</h4>
@@ -433,7 +433,7 @@
                 <div class="feature-right">
                     <div class="single-card mb-45">
                         <div class="icon">
-                            <img src="../static/images/icon/insured1.svg" alt>
+                            <img th:src="@{../images/icon/insured1.svg}" alt>
                         </div>
                         <div class="content">
                             <h4>Fully Insured</h4>
@@ -442,7 +442,7 @@
                     </div>
                     <div class="single-card">
                         <div class="icon">
-                            <img src="../static/images/icon/fast-aid1.svg" alt>
+                            <img th:src="@{../images/icon/fast-aid1.svg}" alt>
                         </div>
                         <div class="content">
                             <h4>Pet First-Aid Trained</h4>
@@ -460,7 +460,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                 <div class="counter-single client">
                     <div class="counter-icon">
-                        <img src="../static/images/icon/client.svg" alt="image">
+                        <img th:src="@{../images/icon/client.svg}" alt="image">
                     </div>
                     <div class="coundown">
                         <div class="d-flex align-items-center gap-2">
@@ -476,7 +476,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                 <div class="counter-single animals">
                     <div class="counter-icon">
-                        <img src="../static/images/icon/animals.svg" alt="image">
+                        <img th:src="@{../images/icon/animals.svg}" alt="image">
                     </div>
                     <div class="coundown">
                         <div class="d-flex align-items-center gap-12">
@@ -492,7 +492,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                 <div class="counter-single walked">
                     <div class="counter-icon">
-                        <img src="../static/images/icon/walked.svg" alt="image">
+                        <img th:src="@{../images/icon/walked.svg}" alt="image">
                     </div>
                     <div class="coundown">
                         <div class="d-flex align-items-center gap-2">
@@ -507,7 +507,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                 <div class="counter-single years">
                     <div class="counter-icon">
-                        <img src="../static/images/icon/years.svg" alt="image">
+                        <img th:src="@{../images/icon/years.svg}" alt="image">
                     </div>
                     <div class="coundown">
                         <div class="d-flex align-items-center gap-2">
@@ -529,8 +529,8 @@
         <div class="row g-lg-4 gy-5 justify-content-center">
             <div class="col-lg-5">
                 <div class="section-title1">
-                    <span><img src="../static/images/icon/section-vec-l1.svg" alt>Why Choose Us<img
-                            src="../static/images/icon/section-vec-r1.svg" alt></span>
+                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Why Choose Us<img
+                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
                     <h2>we provide the best care services.</h2>
                 </div>
                 <div class="choose-content">
@@ -599,14 +599,14 @@
             <div class="col-lg-5 col-md-8">
                 <div class="choose-img">
                     <div class="batch">
-                        <img src="../static/images/icon/choose-star.svg" alt>
+                        <img th:src="@{../images/icon/choose-star.svg}" alt>
                         <span>100% Safe<br>
 Your Pet</span>
                     </div>
                     <div class="choose-vector">
-                        <img src="../static/images/icon/choose-vector.svg" alt>
+                        <img th:src="@{../images/icon/choose-vector.svg}" alt>
                     </div>
-                    <img class="img-fluid" src="../static/images/bg/choose-img.png" alt="choose-img">
+                    <img class="img-fluid" th:src="@{../images/bg/choose-img.png}" alt="choose-img">
                 </div>
             </div>
             <div class="col-lg-2">
@@ -615,7 +615,7 @@ Your Pet</span>
                         <li>
                             <div class="single-choose-card">
                                 <div class="icon">
-                                    <img src="../static/images/icon/care.svg" alt>
+                                    <img th:src="@{../images/icon/care.svg}" alt>
                                 </div>
                                 <div class="content">
                                     <h4>Personalized care</h4>
@@ -626,7 +626,7 @@ Your Pet</span>
                         <li>
                             <div class="single-choose-card">
                                 <div class="icon">
-                                    <img src="../static/images/icon/team.svg" alt>
+                                    <img th:src="@{../images/icon/team.svg}" alt>
                                 </div>
                                 <div class="content">
                                     <h4>Trusted Team</h4>
@@ -637,7 +637,7 @@ Your Pet</span>
                         <li>
                             <div class="single-choose-card">
                                 <div class="icon">
-                                    <img src="../static/images/icon/mind.svg" alt>
+                                    <img th:src="@{../images/icon/mind.svg}" alt>
                                 </div>
                                 <div class="content">
                                     <h4>Peace of mind</h4>
@@ -665,7 +665,7 @@ Your Pet</span>
                     <div class="author-name-expariance">
                         <div class="author-name">
                             <div class="img">
-                                <img src="../static/images/bg/founder-img.png" alt>
+                                <img th:src="@{../images/bg/founder-img.png}" alt>
                             </div>
                             <div class="name-deg">
                                 <span>Founder</span>
@@ -673,7 +673,7 @@ Your Pet</span>
                             </div>
                         </div>
                         <div class="expariance">
-                            <img src="../static/images/icon/expriance.svg" alt>
+                            <img th:src="@{../images/icon/expriance.svg}" alt>
                         </div>
                     </div>
                 </div>
@@ -682,42 +682,42 @@ Your Pet</span>
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/envato.svg" alt>
+                            <img th:src="@{../images/icon/partner/envato.svg}" alt>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/xidex.svg" alt>
+                            <img th:src="@{../images/icon/partner/xidex.svg}" alt>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/arrow.svg" alt>
+                            <img th:src="@{../images/icon/partner/arrow.svg}" alt>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/ozgeo.svg" alt>
+                            <img th:src="@{../images/icon/partner/ozgeo.svg}" alt>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/avianca.svg" alt>
+                            <img th:src="@{../images/icon/partner/avianca.svg}" alt>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/shopee.svg" alt>
+                            <img th:src="@{../images/icon/partner/shopee.svg}" alt>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/olinski.svg" alt>
+                            <img th:src="@{../images/icon/partner/olinski.svg}" alt>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 d-flex justify-content-center">
                         <div class="partner-img">
-                            <img src="../static/images/icon/partner/air-prime.svg" alt>
+                            <img th:src="@{../images/icon/partner/air-prime.svg}" alt>
                         </div>
                     </div>
                 </div>
@@ -732,8 +732,8 @@ Your Pet</span>
         <div class="row">
             <div class="col-lg-12 d-flex justify-content-center">
                 <div class="section-title1 text-center">
-                    <span><img src="../static/images/icon/section-vec-l1.svg" alt>Pricing plan<img
-                            src="../static/images/icon/section-vec-r1.svg" alt></span>
+                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Pricing plan<img
+                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
                     <h2>Choose your perfect Plan</h2>
                 </div>
             </div>
@@ -755,7 +755,7 @@ Your Pet</span>
                     <div class="row justify-content-center g-lg-4 gy-5">
                         <div class="col-lg-4 col-md-6 col-sm-10">
                             <div class="pricing-card">
-                                <img class="price-card-vector" src="../static/images/icon/price-card-bg.svg" alt>
+                                <img class="price-card-vector" th:src="@{../images/icon/price-card-bg.svg}" alt>
                                 <div class="title">
                                     <h4>Day Care Regular</h4>
                                     <h2><span class="currency">$</span> 39 <span class="time">Per Hour</span></h2>
@@ -763,27 +763,27 @@ Your Pet</span>
                                 <ul>
                                     <li>
                                         Socialise Excercise
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Handscissor Finish
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Watering Plants
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Conditioning Treatment
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                     <li>
                                         Ears Flushed & Cleaned
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                 </ul>
                                 <div class="book-now-btn">
-                                    <a href="contact.html">Book Now</a>
+                                    <a th:href="contact.html">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -792,7 +792,7 @@ Your Pet</span>
                                 <div class="offer-batch">
                                     <h5>50% <span>Off</span></h5>
                                 </div>
-                                <img class="price-card-vector" src="../static/images/icon/price-card-bg.svg" alt>
+                                <img class="price-card-vector" th:src="@{../images/icon/price-card-bg.svg}" alt>
                                 <div class="title">
                                     <h4>Day Care Standard </h4>
                                     <h2><span class="currency">$</span> 49 <span class="time">Per Hour</span></h2>
@@ -800,33 +800,33 @@ Your Pet</span>
                                 <ul>
                                     <li>
                                         Socialise Excercise
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Handscissor Finish
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Watering Plants
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Conditioning Treatment
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                     <li>
                                         Ears Flushed & Cleaned
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                 </ul>
                                 <div class="book-now-btn">
-                                    <a href="contact.html">Book Now</a>
+                                    <a th:href="contact.html">Book Now</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-10">
                             <div class="pricing-card">
-                                <img class="price-card-vector" src="../static/images/icon/price-card-bg.svg" alt>
+                                <img class="price-card-vector" th:src="@{../images/icon/price-card-bg.svg}" alt>
                                 <div class="title">
                                     <h4>Day Care Special </h4>
                                     <h2><span class="currency">$</span> 99 <span class="time">Per Hour</span></h2>
@@ -834,27 +834,27 @@ Your Pet</span>
                                 <ul>
                                     <li>
                                         Socialise Excercise
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Handscissor Finish
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Watering Plants
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Conditioning Treatment
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                     <li>
                                         Ears Flushed & Cleaned
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                 </ul>
                                 <div class="book-now-btn">
-                                    <a href="contact.html">Book Now</a>
+                                    <a th:href="contact.html">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -864,7 +864,7 @@ Your Pet</span>
                     <div class="row justify-content-center g-lg-4 gy-5">
                         <div class="col-lg-4 col-md-6 col-sm-10">
                             <div class="pricing-card">
-                                <img class="price-card-vector" src="../static/images/icon/price-card-bg.svg" alt>
+                                <img class="price-card-vector" th:src="@{../images/icon/price-card-bg.svg}" alt>
                                 <div class="title">
                                     <h4>Day Care Regular</h4>
                                     <h2><span class="currency">$</span> 390 <span class="time">Per Day</span></h2>
@@ -872,27 +872,27 @@ Your Pet</span>
                                 <ul>
                                     <li>
                                         Socialise Excercise
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Handscissor Finish
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Watering Plants
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Conditioning Treatment
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                     <li>
                                         Ears Flushed & Cleaned
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                 </ul>
                                 <div class="book-now-btn">
-                                    <a href="contact.html">Book Now</a>
+                                    <a th:href="contact.html">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -901,7 +901,7 @@ Your Pet</span>
                                 <div class="offer-batch">
                                     <h5>50% <span>Off</span></h5>
                                 </div>
-                                <img class="price-card-vector" src="../static/images/icon/price-card-bg.svg" alt>
+                                <img class="price-card-vector" th:src="@{../images/icon/price-card-bg.svg}" alt>
                                 <div class="title">
                                     <h4>Day Care Standard </h4>
                                     <h2><span class="currency">$</span> 490 <span class="time">Per Day</span></h2>
@@ -909,33 +909,33 @@ Your Pet</span>
                                 <ul>
                                     <li>
                                         Socialise Excercise
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Handscissor Finish
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Watering Plants
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Conditioning Treatment
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                     <li>
                                         Ears Flushed & Cleaned
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                 </ul>
                                 <div class="book-now-btn">
-                                    <a href="contact.html">Book Now</a>
+                                    <a th:href="contact.html">Book Now</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-10">
                             <div class="pricing-card">
-                                <img class="price-card-vector" src="../static/images/icon/price-card-bg.svg" alt>
+                                <img class="price-card-vector" th:src="@{../images/icon/price-card-bg.svg}" alt>
                                 <div class="title">
                                     <h4>Day Care Special</h4>
                                     <h2><span class="currency">$</span> 990 <span class="time">Per Day</span></h2>
@@ -943,27 +943,27 @@ Your Pet</span>
                                 <ul>
                                     <li>
                                         Socialise Excercise
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Handscissor Finish
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Watering Plants
-                                        <img src="../static/images/icon/pricing-check.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-check.svg}" alt>
                                     </li>
                                     <li>
                                         Conditioning Treatment
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                     <li>
                                         Ears Flushed & Cleaned
-                                        <img src="../static/images/icon/pricing-X.svg" alt>
+                                        <img th:src="@{../images/icon/pricing-X.svg}" alt>
                                     </li>
                                 </ul>
                                 <div class="book-now-btn">
-                                    <a href="authentication.html">Book Now</a>
+                                    <a th:href="authentication.html">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -980,8 +980,8 @@ Your Pet</span>
         <div class="row mb-50">
             <div class="col-lg-12 d-flex justify-content-center">
                 <div class="section-title1 text-center">
-                    <span><img src="../static/images/icon/section-vec-l2.svg" alt>Testimonial<img
-                            src="../static/images/icon/section-vec-r2.svg" alt></span>
+                    <span><img th:src="@{../images/icon/section-vec-l2.svg}" alt>Testimonial<img
+                            th:src="@{../images/icon/section-vec-r2.svg}" alt></span>
                     <h2 class="text-white">valueable words from Customers</h2>
                 </div>
             </div>
@@ -993,7 +993,7 @@ Your Pet</span>
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" src="../static/images/bg/h1-testi1.png" alt>
+                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi1.png}" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -1016,7 +1016,7 @@ Your Pet</span>
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" src="../static/images/bg/h1-testi2.png" alt>
+                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi2.png}" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -1039,7 +1039,7 @@ Your Pet</span>
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" src="../static/images/bg/h1-testi3.png" alt>
+                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi3.png}" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -1063,7 +1063,7 @@ Your Pet</span>
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" src="../static/images/bg/h1-testi4.png" alt>
+                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi4.png}" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -1115,8 +1115,8 @@ Your Pet</span>
         <div class="row mb-50">
             <div class="col-lg-12 d-flex justify-content-center">
                 <div class="section-title1 text-center">
-                    <span><img src="../static/images/icon/section-vec-l1.svg" alt>Our Team<img
-                            src="../static/images/icon/section-vec-r1.svg" alt></span>
+                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Our Team<img
+                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
                     <h2>See Our Scooby Team members</h2>
                 </div>
             </div>
@@ -1127,7 +1127,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" src="../static/images/bg/team/team-1.png" alt>
+                                <img class="img-fluid" th:src="@{../images/bg/team/team-1.png}" alt>
                             </div>
                             <div class="member-content">
                                 <span>Co-Founder</span>
@@ -1138,7 +1138,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" src="../static/images/bg/team/team-2.png" alt>
+                                <img class="img-fluid" th:src="@{../images/bg/team/team-2.png}" alt>
                             </div>
                             <div class="member-content">
                                 <span>Kennel Assistant</span>
@@ -1149,7 +1149,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" src="../static/images/bg/team/team-3.png" alt>
+                                <img class="img-fluid" th:src="@{../images/bg/team/team-3.png}" alt>
                             </div>
                             <div class="member-content">
                                 <span>Veterinary Assistant</span>
@@ -1160,7 +1160,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" src="../static/images/bg/team/team-4.png" alt>
+                                <img class="img-fluid" th:src="@{../images/bg/team/team-4.png}" alt>
                             </div>
                             <div class="member-content">
                                 <span>Groomer Manager</span>
@@ -1181,8 +1181,8 @@ Your Pet</span>
             <div class="col-lg-12">
                 <div class="newsletter-wrap">
                     <div class="section-title1 text-center mb-40">
-                        <span><img src="../static/images/icon/section-vec-l1.svg" alt>Get In Touch<img
-                                src="../static/images/icon/section-vec-r1.svg" alt></span>
+                        <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Get In Touch<img
+                                th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
                         <h2>Let’s Connect Our Newsletter</h2>
                     </div>
                     <form>
@@ -1203,8 +1203,8 @@ Your Pet</span>
         <div class="row mb-50">
             <div class="col-lg-12 d-flex justify-content-center">
                 <div class="section-title1 text-center">
-                    <span><img src="../static/images/icon/section-vec-l2.svg" alt>Latest Blog<img
-                            src="../static/images/icon/section-vec-r2.svg" alt></span>
+                    <span><img th:src="@{../images/icon/section-vec-l2.svg}" alt>Latest Blog<img
+                            th:src="@{../images/icon/section-vec-r2.svg}" alt></span>
                     <h2>valueable words from Customers</h2>
                 </div>
             </div>
@@ -1213,16 +1213,16 @@ Your Pet</span>
             <div class="col-lg-4 col-md-6 col-sm-10">
                 <div class="h1-blog-card">
                     <div class="blog-img">
-                        <img class="img-fluid" src="../static/images/blog/blog1.png" alt>
+                        <img class="img-fluid" th:src="@{../images/blog/blog1.png}" alt>
                         <div class="category">
-                            <a href="blog-grid.html">Dog bording</a>
+                            <a th:href="blog-grid.html">Dog bording</a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <a href="blog-grid.html">August 13, 2022</a>
+                            <a th:href="blog-grid.html">August 13, 2022</a>
                         </div>
-                        <h4><a href="blog-details.html">lobortis pharetra In necat boi risuse osae that one far This
+                        <h4><a th:href="blog-details.html">lobortis pharetra In necat boi risuse osae that one far This
                             fox.</a></h4>
                     </div>
                 </div>
@@ -1230,16 +1230,16 @@ Your Pet</span>
             <div class="col-lg-4 col-md-6 col-sm-10">
                 <div class="h1-blog-card">
                     <div class="blog-img">
-                        <img class="img-fluid" src="../static/images/blog/blog2.png" alt>
+                        <img class="img-fluid" th:src="@{../images/blog/blog2.png}" alt>
                         <div class="category">
-                            <a href="blog-grid.html">Day Care</a>
+                            <a th:href="blog-grid.html">Day Care</a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <a href="blog-grid.html">August 10, 2022</a>
+                            <a th:href="blog-grid.html">August 10, 2022</a>
                         </div>
-                        <h4><a href="blog-details.html">Donec venenatis ex id nibh iaculisoni Clonal interdum
+                        <h4><a th:href="blog-details.html">Donec venenatis ex id nibh iaculisoni Clonal interdum
                             Curabitur.</a></h4>
                     </div>
                 </div>
@@ -1247,16 +1247,16 @@ Your Pet</span>
             <div class="col-lg-4 col-md-6 col-sm-10">
                 <div class="h1-blog-card">
                     <div class="blog-img">
-                        <img class="img-fluid" src="../static/images/blog/blog3.png" alt>
+                        <img class="img-fluid" th:src="@{../images/blog/blog3.png}" alt>
                         <div class="category">
-                            <a href="blog-grid.html">Grooming</a>
+                            <a th:href="blog-grid.html">Grooming</a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <a href="blog-grid.html">August 05, 2022</a>
+                            <a th:href="blog-grid.html">August 05, 2022</a>
                         </div>
-                        <h4><a href="blog-details.html">Orci varius natoque penatibus etmal dis parturient montes.</a>
+                        <h4><a th:href="blog-details.html">Orci varius natoque penatibus etmal dis parturient montes.</a>
                         </h4>
                     </div>
                 </div>
@@ -1270,9 +1270,9 @@ Your Pet</span>
     <div class="swiper gallery-1">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-11.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-11.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-1.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-1.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1282,9 +1282,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-22.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-22.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-2.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-2.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1294,9 +1294,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-33.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-33.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-3.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-3.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1306,9 +1306,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-44.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-44.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-4.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-4.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1318,9 +1318,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-55.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-55.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-5.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-5.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1330,9 +1330,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-66.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-66.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-6.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-6.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1342,9 +1342,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-77.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-77.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-7.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-7.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1354,9 +1354,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-88.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-88.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-8.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-8.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1366,9 +1366,9 @@ Your Pet</span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="../static/images/bg/gallery/gallery-99.png" data-fancybox="gallery" class="gallery2-img">
+                <a th:href="@{../images/bg/gallery/gallery-99.png}" data-fancybox="gallery" class="gallery2-img">
                     <div class="gallery-img">
-                        <img class="img-fluid" src="../static/images/bg/gallery/gallery-9.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/gallery/gallery-9.png}" alt>
                         <div class="overlay">
                             <div class="zoom-icon">
                                 <i class="bi bi-zoom-in"></i>
@@ -1390,7 +1390,7 @@ Your Pet</span>
                     <h3>Contacts</h3>
                     <div class="hotline mb-30">
                         <div class="hotline-icon">
-                            <img src="../static/images/icon/phone-icon.svg" alt>
+                            <img th:src="@{../images/icon/phone-icon.svg}" alt>
                         </div>
                         <div class="hotline-info">
                             <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
@@ -1399,22 +1399,22 @@ Your Pet</span>
                     </div>
                     <div class="email mb-30">
                         <div class="email-icon">
-                            <img src="../static/images/icon/envelope.svg" alt>
+                            <img th:src="@{../images/icon/envelope.svg}" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
-                                    href="https://demo.egenslab.com/cdn-cgi/l/email-protection#31585f575e715449505c415d541f525e5c"><span
+                                    href="https:/demo.egenslab.com/cdn-cgi/l/email-protection#31585f575e715449505c415d541f525e5c"><span
                                     class="__cf_email__" data-cfemail="cfa6a1a9a08faab7aea2bfa3aae1aca0a2">[email&#160;protected]</span></a>
                             </h6>
                             <h6>
-                                <a href="https://demo.egenslab.com/cdn-cgi/l/email-protection#7b12151d143b080e0b0b14090f55181416"><span
+                                <a href="https:/demo.egenslab.com/cdn-cgi/l/email-protection#7b12151d143b080e0b0b14090f55181416"><span
                                         class="__cf_email__" data-cfemail="2b42454d446b585e5b5b44595f05484446">[email&#160;protected]</span></a>
                             </h6>
                         </div>
                     </div>
                     <div class="email">
                         <div class="email-icon">
-                            <img src="../static/images/icon/location.svg" alt>
+                            <img th:src="@{../images/icon/location.svg}" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a>168/170, Avenue 01, Mirpur</a></h6>
@@ -1428,7 +1428,7 @@ Your Pet</span>
                     <h2>want <span>to keep</span><br>
                         your pet in, <span>our center</span>?</h2>
                     <div class="book-btn">
-                        <a class="primary-btn1" href="contact.html">Book Now</a>
+                        <a class="primary-btn1" th:href="contact.html">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -1450,7 +1450,7 @@ Your Pet</span>
         <div class="row border-top">
             <div class="col-lg-6">
                 <div class="copyright-area">
-                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com/"> Egens Lab.</a></p>
+                    <p>© 2023 Scooby is Proudly Powered by <a href="https:/www.egenslab.com/"> Egens Lab.</a></p>
                 </div>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
@@ -1465,24 +1465,24 @@ Your Pet</span>
     </div>
 </footer>
 
-<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script src="../static/js/jquery-3.6.0.min.js"></script>
-<script src="../static/js/jquery-ui.js"></script>
-<script src="../static/js/jquery.timepicker.min.js"></script>
-<script src="../static/js/bootstrap.bundle.min.js"></script>
-<script src="../static/js/swiper-bundle.min.js"></script>
-<script src="../static/js/jquery.nice-select.js"></script>
-<script src="../static/js/jquery.fancybox.min.js"></script>
-<script src="../static/js/morphext.min.js"></script>
-<script src="../static/js/odometer.min.js"></script>
-<script src="../static/js/jquery.marquee.min.js"></script>
-<script src="../static/js/viewport.jquery.js"></script>
-<script src="../static/js/isotope.pkgd.min.js"></script>
-<script src="../static/js/SmoothScroll.js"></script>
-<script src="../static/js/jquery.nice-number.min.js"></script>
-<script src="../static/js/jquery.magnific-popup.min.js"></script>
-<script src="../static/js/masonry.pkgd.min.js"></script>
-<script src="../static/js/main.js"></script>
+<script data-cfasync="false" th:src="@{../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
+<script th:src="@{../js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{../js/jquery-ui.js}"></script>
+<script th:src="@{../js/jquery.timepicker.min.js}"></script>
+<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../js/swiper-bundle.min.js}"></script>
+<script th:src="@{../js/jquery.nice-select.js}"></script>
+<script th:src="@{../js/jquery.fancybox.min.js}"></script>
+<script th:src="@{../js/morphext.min.js}"></script>
+<script th:src="@{../js/odometer.min.js}"></script>
+<script th:src="@{../js/jquery.marquee.min.js}"></script>
+<script th:src="@{../js/viewport.jquery.js}"></script>
+<script th:src="@{../js/isotope.pkgd.min.js}"></script>
+<script th:src="@{../js/SmoothScroll.js}"></script>
+<script th:src="@{../js/jquery.nice-number.min.js}"></script>
+<script th:src="@{../js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{../js/masonry.pkgd.min.js}"></script>
+<script th:src="@{../js/main.js}"></script>
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:09:37 GMT -->
