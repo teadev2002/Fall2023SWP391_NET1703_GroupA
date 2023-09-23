@@ -1,5 +1,6 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
+
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/demoTestingNTimes")
-public class MainController {
+@RequestMapping("/DogCatLoverPlatform")
+public class UserController {
 
     @Autowired
-    UserService  userService;
+    UserService userService;
 
     @GetMapping("/home")
     public String hello(){
@@ -102,14 +103,14 @@ public class MainController {
         String password = req.getParameter("password");
         String username = req.getParameter("userName");
         userService.addUser(fullname,password,email,username);
-        return "redirect:/demoTestingNTimes/Sign-up";
+        return "redirect:/DogCatLoverPlatform/Login";
     }
 
     @GetMapping("/delete-user")
     public String deleteUser(HttpServletRequest req){
         int id = Integer.parseInt(req.getParameter("id"));
         userService.deleteUser(id);
-        return "redirect:/demoTestingNTimes/Sign-up";
+        return "redirect:/DogCatLoverPlatform/Sign-up";
     }
 
 }

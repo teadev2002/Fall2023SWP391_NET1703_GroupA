@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" href=".. /images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" th:href="@{../css/all.css}">
     <link rel="stylesheet" th:href="@{../css/animate.css}">
@@ -55,7 +55,7 @@
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
                 <div class="contact-number">
-                    <a href="tel:+1(541)754-3020">+1 (541) 754-3010 <img src="../static/images/icon/support.svg" alt></a>
+                    <a href="tel:+1(541)754-3020">+1 (541) 754-3010 <img th:src="@{../images/icon/support.svg}" alt></a>
                 </div>
             </div>
         </div>
@@ -66,50 +66,51 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" src="../static/images/header1-logo.svg"></a>
+            <a href="index.html"><img alt="image" class="img-fluid" th:src="@{../images/header1-logo.svg}"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" src="../static/images/header1-logo.svg"></a>
+                    <a href="index.html"><img alt="image" th:src="@{../images/header1-logo.svg}"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
                 </div>
             </div>
             <ul class="menu-list">
-                <li><a href="index.html">Home</a></li>
 
-                <li><a href="about.html">About</a></li>
+                <li><a th:href="@{home}">Home</a></li>
+
+                <li><a th:href="@{About}">About</a></li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
+                        <li><a th:href="@{Service-Details}">Daycare </a></li>
+                        <li><a th:href="@{Service-Details}">Grooming</a></li>
+                        <li><a th:href="@{Service-Details}">Boarding</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="3col-gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
+                        <li><a th:href="@{Pricing-Plan}">Pricing Plan</a></li>
+                        <li><a th:href="@{Team}">Our Team</a></li>
+                        <li><a th:href="@{3col-gallery}">Gallery</a></li>
+                        <li><a th:href="@{Faq}">Faq</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="blog-standard.html">Exchange</a></li>
-                        <li><a href="blog-standard.html">Gift</a></li>
+                        <li><a th:href="@{Blog-Standard}">Exchange</a></li>
+                        <li><a th:href="@{Blog-Details}">Gift</a></li>
                     </ul>
                 </li>
 
-                <li><a href="contact.html">Contact</a></li>
+                <li><a th:href="@{Contact}">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
@@ -191,7 +192,7 @@
 
 <div class="inner-page-banner">
     <div class="breadcrumb-vec-btm">
-        <img class="img-fluid" src="../static/images/bg/inner-banner-btm-vec.png" alt>
+        <img class="img-fluid" th:src="@{../images/bg/inner-banner-btm-vec.png}" alt>
     </div>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center">
@@ -209,9 +210,9 @@
             <div class="col-lg-6">
                 <div class="banner-img d-lg-block d-none">
                     <div class="banner-img-bg">
-                        <img class="img-fluid" src="../static/images/bg/inner-banner-vec.png" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/inner-banner-vec.png}" alt>
                     </div>
-                    <img class="img-fluid" src="../static/images/bg/inner-banner-img.png" alt>
+                    <img class="img-fluid" th:src="@{../images/bg/inner-banner-img.png}" alt>
                 </div>
             </div>
         </div>
@@ -223,73 +224,24 @@
     <div class="container">
         <div class="row g-lg-4 gy-5 justify-content-center mb-70">
             <div class="col-lg-8">
-                <div class="blog-st-card mb-60">
+                <div class="blog-st-card mb-70" th:each="blog : ${listBlog}">
                     <div class="blog-img">
-                        <img class="img-fluid" src="../static/images/blog/blog-st-1.png" alt>
+                        <img class="img-fluid" th:src="@{../images/blog/blog-st-1.png}" alt>
                         <div class="category">
-                            <a href="blog-grid.html">Medical Care</a>
+                            <a href="blog-grid.html" th:text="${blog.title}"></a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
                             <ul>
-                                <li><a href="blog-grid.html">August 12, 2022</a></li>
-                                <li><a href="blog-grid.html">By, Nikon Brook</a></li>
-                            </ul>
-                        </div>
-                        <h4><a href="blog-details.html">Luctus justo quis feugiat lacus orcha ornare auguelon Intege gon
-                            form together nicelon jogona.</a></h4>
-                        <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
-                            massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus
-                            for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>
-                        <div class="more-btn">
-                            <a href="blog-details.html"><span>Re</span>ad More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="blog-st-card mb-60">
-                    <div class="blog-img">
-                        <img class="img-fluid" src="../static/images/blog/blog-st-2.png" alt>
-                        <div class="category">
-                            <a href="blog-grid.html">Medical Care</a>
-                        </div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <ul>
-                                <li><a href="blog-grid.html">August 12, 2022</a></li>
-                                <li><a href="blog-grid.html">By, Robert Bruce</a></li>
-                            </ul>
-                        </div>
-                        <h4><a href="blog-details.html">Morbi auctor ultricies purus aliquam convallis odio conguenti
-                            sed Cras accumsan nulla nislnec.</a></h4>
-                        <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
-                            massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus
-                            for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>
-                        <div class="more-btn">
-                            <a href="blog-details.html"><span>Re</span>ad More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="blog-st-card mb-70">
-                    <div class="blog-img">
-                        <img class="img-fluid" src="../static/images/blog/blog-st-1.png" alt>
-                        <div class="category">
-                            <a href="blog-grid.html">Medical Care</a>
-                        </div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <ul>
-                                <li><a href="blog-grid.html">August 12, 2022</a></li>
-                                <li><a href="blog-grid.html">By, Watson Bord</a></li>
+                                <li><a href="blog-grid.html" th:text="${blog.title}"></a></li>
+                                <li><a href="blog-grid.html" th:text="${blog.userDTO.userName}"></a></li>
                             </ul>
                         </div>
                         <h4><a href="blog-details.html">gravida sit amet urna Duis gravida sem sed fringilla suscipit
                             Quisque ac pellentesque ipsum.</a></h4>
-                        <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
-                            massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus
-                            for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>
+                        <p>Pmmkmkmaksmckdfnjnamdnsjmaehnsvdsvsdvadvfbsavddvadvfbgszdbfvdfbdgfnhvdfsbgdnhfdvfbcvn
+                        dsgfbgdnfnsfngdfbdfxb fhgnhdsfbdnghfbgdnhfn bgnhfmbfbgnhf bmnbgnbmn\</p>
                         <div class="more-btn">
                             <a href="blog-details.html"><span>Re</span>ad More</a>
                         </div>
@@ -356,7 +308,7 @@
                         <div class="recent-post-wraper">
                             <div class="widget-cnt mb-25">
                                 <div class="wi">
-                                    <a href="blog-details.html"><img src="../static/images/blog/blog-sidebar-1.png"
+                                    <a href="blog-details.html"><img th:src="@{../images/blog/blog-sidebar-1.png}"
                                                                      alt="image"></a>
                                 </div>
                                 <div class="wc">
@@ -367,7 +319,7 @@
                             </div>
                             <div class="widget-cnt mb-25">
                                 <div class="wi">
-                                    <a href="blog-details.html"><img src="../static/images/blog/blog-sidebar-2.png"
+                                    <a href="blog-details.html"><img th:src="@{../images/blog/blog-sidebar-2.png}"
                                                                      alt="image"></a>
                                 </div>
                                 <div class="wc">
@@ -377,7 +329,7 @@
                             </div>
                             <div class="widget-cnt">
                                 <div class="wi">
-                                    <a href="blog-details.html"><img src="../static/images/blog/blog-sidebar-3.png"
+                                    <a href="blog-details.html"><img th:src="@{../images/blog/blog-sidebar-3.png}"
                                                                      alt="image"></a>
                                 </div>
                                 <div class="wc">
@@ -403,6 +355,14 @@
                             <a href="blog-grid.html">Education</a>
                             <a href="blog-grid.html">Services</a>
                         </p>
+                        <table>
+                            <tr th:each="blog : ${listBlog}" >
+                                <td th:text="${blog.title}"></td>
+                                <td th:text="${blog.image}"></td>
+                                <td th:text="${blog.price}"></td>
+                                <td th:text="${blog.userDTO.userName}"></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="single-widgets widget_egns_social">
                         <div class="widget-title">
@@ -430,7 +390,7 @@
                     <h3>Contacts</h3>
                     <div class="hotline mb-30">
                         <div class="hotline-icon">
-                            <img src="../static/images/icon/phone-icon.svg" alt>
+                            <img th:src="@{../images/icon/phone-icon.svg}" alt>
                         </div>
                         <div class="hotline-info">
                             <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
@@ -439,7 +399,7 @@
                     </div>
                     <div class="email mb-30">
                         <div class="email-icon">
-                            <img src="../static/images/icon/envelope.svg" alt>
+                            <img th:src="@{../images/icon/envelope.svg}" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
@@ -454,7 +414,7 @@
                     </div>
                     <div class="email">
                         <div class="email-icon">
-                            <img src="../static/images/icon/location.svg" alt>
+                            <img th:src="@{../images/icon/location.svg}" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a>168/170, Avenue 01, Mirpur</a></h6>

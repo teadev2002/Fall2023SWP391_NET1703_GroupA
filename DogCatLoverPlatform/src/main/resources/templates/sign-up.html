@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" href=".. /images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" th:href="@{../css/all.css}">
     <link rel="stylesheet" th:href="@{../css/animate.css}">
@@ -78,38 +78,39 @@
                 </div>
             </div>
             <ul class="menu-list">
-                <li><a th:href="@{/demoTestingNTimes/home}">Home</a></li>
 
-                <li><a href="about.html">About</a></li>
+                <li><a th:href="@{home}">Home</a></li>
+
+                <li><a th:href="@{About}">About</a></li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
+                        <li><a th:href="@{Service-Details}">Daycare </a></li>
+                        <li><a th:href="@{Service-Details}">Grooming</a></li>
+                        <li><a th:href="@{Service-Details}">Boarding</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="3col-gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
+                        <li><a th:href="@{Pricing-Plan}">Pricing Plan</a></li>
+                        <li><a th:href="@{Team}">Our Team</a></li>
+                        <li><a th:href="@{3col-gallery}">Gallery</a></li>
+                        <li><a th:href="@{Faq}">Faq</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="blog-standard.html">Exchange</a></li>
-                        <li><a href="blog-standard.html">Gift</a></li>
+                        <li><a th:href="@{Blog-Standard}">Exchange</a></li>
+                        <li><a th:href="@{Blog-Details}">Gift</a></li>
                     </ul>
                 </li>
 
-                <li><a href="contact.html">Contact</a></li>
+                <li><a th:href="@{Contact}">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
@@ -191,7 +192,7 @@
 
 <div class="inner-page-banner">
     <div class="breadcrumb-vec-btm">
-        <img class="img-fluid" th:src="@{.. /images/bg/inner-banner-btm-vec.png}" alt>
+        <img class="img-fluid" th:src="@{../images/bg/inner-banner-btm-vec.png}" alt>
     </div>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center">
@@ -209,9 +210,9 @@
             <div class="col-lg-6">
                 <div class="banner-img d-lg-block d-none">
                     <div class="banner-img-bg">
-                        <img class="img-fluid" th:src="@{.. /images/bg/inner-banner-vec.png}" alt>
+                        <img class="img-fluid" th:src="@{../images/bg/inner-banner-vec.png}" alt>
                     </div>
-                    <img class="img-fluid" th:src="@{.. /images/bg/inner-banner-img.png}" alt>
+                    <img class="img-fluid" th:src="@{../images/bg/inner-banner-img.png}" alt>
                 </div>
             </div>
         </div>
@@ -238,7 +239,7 @@
                             <div class="col-md-6">
                                 <div class="form-inner">
                                     <label>Last Name *</label>
-                                    <input name="userName" type="email" placeholder="Last Name">
+                                    <input name="userName" type="text" placeholder="Last Name">
                                 </div>
                             </div>
                             <div class="col-md-12">
