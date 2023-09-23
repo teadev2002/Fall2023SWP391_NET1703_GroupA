@@ -2,9 +2,16 @@ package com.swp391.DogCatLoverPlatform.entity;
 
 
 import com.swp391.DogCatLoverPlatform.entity.keys.UserBlogCommentKey;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "user_blog_comment")
 public class UserBlogCommentEntity {
 
