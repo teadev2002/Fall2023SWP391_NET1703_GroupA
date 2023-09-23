@@ -45,7 +45,7 @@ public class BlogEntity {
     private boolean confirm;
 
     @ManyToOne
-    @JoinColumn(name="id_user_create")     //Checked
+    @JoinColumn(name="id_user_created")     //Checked
     private UserEntity userEntity;
 
     @ManyToOne
