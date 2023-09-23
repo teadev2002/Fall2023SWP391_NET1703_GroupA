@@ -31,6 +31,7 @@ public class BlogService {
             blogDTO.setImage(i.getImage());
             blogDTO.setPrice(i.getMaxPrice());
             blogDTO.setTitle(i.getTitle());
+            blogDTO.setCreateDate(i.getCreateDate());
 
             UserDTO userDTO = new UserDTO();
             userDTO.setId(i.getUserEntity().getId());
