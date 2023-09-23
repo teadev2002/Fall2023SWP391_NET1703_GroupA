@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/demoTestingNTimes")
+@RequestMapping("/test")
 public class MainController {
 
     @Autowired
@@ -22,57 +22,57 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/Login")
+    @GetMapping("/login")
     public String login(){
         return "login";
     }
 
-    @GetMapping("/Blog-Standard")
+    @GetMapping("/blog")
     public String blogStandard(){
         return "blog-standard";
     }
 
-    @GetMapping("/Blog-Details")
+    @GetMapping("/blog-details")
     public String blogDetails(){
         return "blog-details";
     }
 
-    @GetMapping("/About")
+    @GetMapping("/about")
     public String about(){
         return "about";
     }
 
-    @GetMapping("/Error")
+    @GetMapping("/error")
     public String error(){
         return "error";
     }
 
-    @GetMapping("/Contact")
+    @GetMapping("/contact")
     public String contact(){
         return "contact";
     }
 
-    @GetMapping("/Faq")
+    @GetMapping("/faq")
     public String faq(){
         return "faq";
     }
 
-    @GetMapping("/Pricing-Plan")
+    @GetMapping("/pricing-plan")
     public String pricingPlan(){
         return "pricing-plan";
     }
 
-    @GetMapping("/Service-Details")
+    @GetMapping("/service-details")
     public String serviceDetail(){
         return "service-details";
     }
 
-    @GetMapping("/Cart")
+    @GetMapping("/cart")
     public String cart(){
         return "cart";
     }
 
-    @GetMapping("/Check-out")
+    @GetMapping("/check-out")
     public String checkOut(){
         return "check-out";
     }
@@ -82,20 +82,20 @@ public class MainController {
         return "3col-gallery";
     }
 
-    @GetMapping("/Team")
+    @GetMapping("/team")
     public String team(){
         return "team";
     }
 
 
-    @GetMapping("/Sign-up")
+    @GetMapping("/sign-up")
     public String listTodo(Model model){
         List<UserEntity> listUser = userService.getAllUser();
         model.addAttribute("listUser",listUser);
         return "sign-up";
     }
 
-    @PostMapping (value = "/Sign-up-add")
+    @PostMapping (value = "/sign-up-add")
     public String addTodo(HttpServletRequest req){
         String email = req.getParameter("email");
         String fullname = req.getParameter("fullName");
