@@ -57,4 +57,6 @@ public class BlogEntity {
 
     @OneToMany(mappedBy = "blogEntity_BookingEntity")
     List<BookingEntity> listBooking_BlogEntity;
+
+
 }
