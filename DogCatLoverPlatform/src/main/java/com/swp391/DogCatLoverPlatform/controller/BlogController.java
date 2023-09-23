@@ -19,11 +19,10 @@ public class BlogController {
     BlogService blogService;
 
     @GetMapping("/view")
-    public ResponseEntity<?> getAllBlog(Model model){
-        List<BlogDTO> listBlog =   blogService.getAllBlog();
-//        model.addAttribute("listBlog",listBlog);
-//        return "blog";
-        return new ResponseEntity<>(listBlog, HttpStatus.OK);
-
+    public String GetAllBlogs(Model model) {
+        List<BlogDTO> list = blogService.GetAllBlog();
+        model.addAttribute("listBlog", list);
+        return "blog-standard";
     }
+
 }

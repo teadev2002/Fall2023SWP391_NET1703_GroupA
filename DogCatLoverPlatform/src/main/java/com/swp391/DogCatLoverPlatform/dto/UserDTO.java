@@ -1,14 +1,13 @@
 package com.swp391.DogCatLoverPlatform.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class BlogTypeDTO {
+public class UserDTO {
     private int id;
-    private String name;
+    private String userName;
+
 
 }
