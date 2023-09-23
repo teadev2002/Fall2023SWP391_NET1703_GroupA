@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/blog-standard.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:34 GMT -->
 <head>
@@ -7,35 +7,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" th:href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
 
-    <link rel="stylesheet" th:href="../css/all.css">
-    <link rel="stylesheet" th:href="../css/animate.css">
+    <link rel="stylesheet" th:href="@{../css/all.css}">
+    <link rel="stylesheet" th:href="@{../css/animate.css}">
 
-    <link rel="stylesheet" th:href="../css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{../css/bootstrap.min.css}">
 
-    <link rel="stylesheet" th:href="../css/boxicons.min.css">
+    <link rel="stylesheet" th:href="@{../css/boxicons.min.css}">
 
-    <link rel="stylesheet" th:href="../css/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{../css/bootstrap-icons.css}">
 
-    <link rel="stylesheet" th:href="../css/jquery-ui.css">
-    <link rel="stylesheet" th:href="../css/aos.css">
+    <link rel="stylesheet" th:href="@{../css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{../css/aos.css}">
 
-    <link rel="stylesheet" th:href="../css/swiper-bundle.css">
+    <link rel="stylesheet" th:href="@{../css/swiper-bundle.css}">
 
-    <link rel="stylesheet" th:href="../css/nice-select.css">
+    <link rel="stylesheet" th:href="@{../css/nice-select.css}">
 
-    <link rel="stylesheet" th:href="../css/magnific-popup.css">
+    <link rel="stylesheet" th:href="@{../css/magnific-popup.css}">
 
-    <link rel="stylesheet" th:href="../css/jquery.fancybox.min.css">
+    <link rel="stylesheet" th:href="@{../css/jquery.fancybox.min.css}">
 
-    <link rel="stylesheet" th:href="../css/odometer.css">
+    <link rel="stylesheet" th:href="@{../css/odometer.css}">
 
-    <link rel="stylesheet" th:href="../css/datepicker.min.css">
+    <link rel="stylesheet" th:href="@{../css/datepicker.min.css}">
 
-    <link rel="stylesheet" th:href="../css/uiicss.css">
+    <link rel="stylesheet" th:href="@{../css/uiicss.css}">
 
-    <link rel="stylesheet" th:href="../css/style.css">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
 </head>
 <body>
 
@@ -45,17 +45,17 @@
             <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
                 <div class="social-area">
                     <ul>
-                        <li><a th:href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a th:href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a th:href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a th:href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
                 <div class="contact-number">
-                    <a th:href="tel:+1(541)754-3020">+1 (541) 754-3010 <img src="../images/icon/support.svg" alt></a>
+                    <a href="tel:+1(541)754-3020">+1 (541) 754-3010 <img src="../images/icon/support.svg" alt></a>
                 </div>
             </div>
         </div>
@@ -66,70 +66,70 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a th:href="index.html"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
+            <a href="index.html"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a th:href="index.html"><img alt="image" src="../images/header1-logo.svg"></a>
+                    <a href="index.html"><img alt="image" src="../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
                 </div>
             </div>
             <ul class="menu-list">
-                <li><a th:href="index.html">Home</a></li>
+                <li><a href="index.html">Home</a></li>
 
-                <li><a th:href="about.html">About</a></li>
+                <li><a href="about.html">About</a></li>
 
                 <li class="menu-item-has-children">
-                    <a th:href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="service-details.html">Daycare </a></li>
-                        <li><a th:href="service-details.html">Grooming</a></li>
-                        <li><a th:href="service-details.html">Boarding</a></li>
+                        <li><a href="service-details.html">Daycare </a></li>
+                        <li><a href="service-details.html">Grooming</a></li>
+                        <li><a href="service-details.html">Boarding</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
-                    <a th:href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a th:href="team.html">Our Team</a></li>
-                        <li><a th:href="3col-gallery.html">Gallery</a></li>
-                        <li><a th:href="faq.html">Faq</a></li>
+                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="3col-gallery.html">Gallery</a></li>
+                        <li><a href="faq.html">Faq</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
-                    <a th:href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="blog-standard.html">Exchange</a></li>
-                        <li><a th:href="blog-standard.html">Gift</a></li>
+                        <li><a href="blog-standard.html">Exchange</a></li>
+                        <li><a href="blog-standard.html">Gift</a></li>
                     </ul>
                 </li>
 
-                <li><a th:href="contact.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
                     <div class="hotline-info">
                         <span>Click To Call</span>
-                        <h6><a th:href="tel:+1(541)754-3010">+1 (541) 754-3010</a></h6>
+                        <h6><a href="tel:+1(541)754-3010">+1 (541) 754-3010</a></h6>
                     </div>
                 </div>
                 <ul class="social-link mb-5">
-                    <li><a th:href>
+                    <li><a href>
                         <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                         </svg>
                     </a></li>
-                    <li><a th:href>
+                    <li><a href>
                         <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z"/>
                         </svg>
                     </a></li>
-                    <li><a th:href>
+                    <li><a href>
                         <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_1585_341)">
                                 <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
@@ -162,17 +162,17 @@
                         </button>
                     </form>
                 </li>
-                <li><a th:href="#">
+                <li><a href="#">
                     <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                     </svg>
                 </a></li>
-                <li><a th:href="cart.html">
+                <li><a href="cart.html">
                     <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z"/>
                     </svg>
                 </a></li>
-                <li><a th:href="login.html">
+                <li><a href="login.html">
                     <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1585_341)">
                             <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
@@ -200,7 +200,7 @@
                     <h1>Blog Standard</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a th:href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Blog Standard</li>
                         </ol>
                     </nav>
@@ -227,23 +227,23 @@
                     <div class="blog-img">
                         <img class="img-fluid" src="../images/blog/blog-st-1.png" alt>
                         <div class="category">
-                            <a th:href="blog-grid.html">Medical Care</a>
+                            <a href="blog-grid.html">Medical Care</a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
                             <ul>
-                                <li><a th:href="blog-grid.html">August 12, 2022</a></li>
-                                <li><a th:href="blog-grid.html">By, Nikon Brook</a></li>
+                                <li><a href="blog-grid.html">August 12, 2022</a></li>
+                                <li><a href="blog-grid.html">By, Nikon Brook</a></li>
                             </ul>
                         </div>
-                        <h4><a th:href="blog-details.html">Luctus justo quis feugiat lacus orcha ornare auguelon Intege gon
+                        <h4><a href="blog-details.html">Luctus justo quis feugiat lacus orcha ornare auguelon Intege gon
                             form together nicelon jogona.</a></h4>
                         <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
                             massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus
                             for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>
                         <div class="more-btn">
-                            <a th:href="blog-details.html"><span>Re</span>ad More</a>
+                            <a href="blog-details.html"><span>Re</span>ad More</a>
                         </div>
                     </div>
                 </div>
@@ -251,23 +251,23 @@
                     <div class="blog-img">
                         <img class="img-fluid" src="../images/blog/blog-st-2.png" alt>
                         <div class="category">
-                            <a th:href="blog-grid.html">Medical Care</a>
+                            <a href="blog-grid.html">Medical Care</a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
                             <ul>
-                                <li><a th:href="blog-grid.html">August 12, 2022</a></li>
-                                <li><a th:href="blog-grid.html">By, Robert Bruce</a></li>
+                                <li><a href="blog-grid.html">August 12, 2022</a></li>
+                                <li><a href="blog-grid.html">By, Robert Bruce</a></li>
                             </ul>
                         </div>
-                        <h4><a th:href="blog-details.html">Morbi auctor ultricies purus aliquam convallis odio conguenti
+                        <h4><a href="blog-details.html">Morbi auctor ultricies purus aliquam convallis odio conguenti
                             sed Cras accumsan nulla nislnec.</a></h4>
                         <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
                             massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus
                             for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>
                         <div class="more-btn">
-                            <a th:href="blog-details.html"><span>Re</span>ad More</a>
+                            <a href="blog-details.html"><span>Re</span>ad More</a>
                         </div>
                     </div>
                 </div>
@@ -275,35 +275,35 @@
                     <div class="blog-img">
                         <img class="img-fluid" src="../images/blog/blog-st-1.png" alt>
                         <div class="category">
-                            <a th:href="blog-grid.html">Medical Care</a>
+                            <a href="blog-grid.html">Medical Care</a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
                             <ul>
-                                <li><a th:href="blog-grid.html">August 12, 2022</a></li>
-                                <li><a th:href="blog-grid.html">By, Watson Bord</a></li>
+                                <li><a href="blog-grid.html">August 12, 2022</a></li>
+                                <li><a href="blog-grid.html">By, Watson Bord</a></li>
                             </ul>
                         </div>
-                        <h4><a th:href="blog-details.html">gravida sit amet urna Duis gravida sem sed fringilla suscipit
+                        <h4><a href="blog-details.html">gravida sit amet urna Duis gravida sem sed fringilla suscipit
                             Quisque ac pellentesque ipsum.</a></h4>
                         <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
                             massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus
                             for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>
                         <div class="more-btn">
-                            <a th:href="blog-details.html"><span>Re</span>ad More</a>
+                            <a href="blog-details.html"><span>Re</span>ad More</a>
                         </div>
                     </div>
                 </div>
                 <div class="paginations-area d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" th:href="#"><i
+                            <li class="page-item"><a class="page-link" href="#"><i
                                     class="bi bi-arrow-left-short"></i></a></li>
-                            <li class="page-item active"><a class="page-link" th:href="#">01</a></li>
-                            <li class="page-item"><a class="page-link" th:href="#">02</a></li>
-                            <li class="page-item"><a class="page-link" th:href="#">03</a></li>
-                            <li class="page-item"><a class="page-link" th:href="#"><i class="bi bi-arrow-right-short"></i></a>
+                            <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                            <li class="page-item"><a class="page-link" href="#">02</a></li>
+                            <li class="page-item"><a class="page-link" href="#">03</a></li>
+                            <li class="page-item"><a class="page-link" href="#"><i class="bi bi-arrow-right-short"></i></a>
                             </li>
                         </ul>
                     </nav>
@@ -329,22 +329,22 @@
                             <h3>Category</h3>
                         </div>
                         <ul class="wp-block-categoris-cloud">
-                            <li><a th:href="blog-grid.html"><span>Pet Grooming</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Grooming</span> <span><span
                                     class="number-of-categoris">(30)</span><i
                                     class="bi bi-arrow-right-short"></i></span></a></li>
-                            <li><a th:href="blog-grid.html"><span>Medical Care</span> <span><span
+                            <li><a href="blog-grid.html"><span>Medical Care</span> <span><span
                                     class="number-of-categoris">(18)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a th:href="blog-grid.html"><span>Pet Bording</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Bording</span> <span><span
                                     class="number-of-categoris">(21)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a th:href="blog-grid.html"><span>Pet Daycare</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
                                     class="number-of-categoris">(25)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a th:href="blog-grid.html"><span>Pet Walking</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Walking</span> <span><span
                                     class="number-of-categoris">(29)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a th:href="blog-grid.html"><span>Education Pet</span> <span><span
+                            <li><a href="blog-grid.html"><span>Education Pet</span> <span><span
                                     class="number-of-categoris">(31)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
                         </ul>
@@ -356,33 +356,33 @@
                         <div class="recent-post-wraper">
                             <div class="widget-cnt mb-25">
                                 <div class="wi">
-                                    <a th:href="blog-details.html"><img src="../images/blog/blog-sidebar-1.png"
+                                    <a href="blog-details.html"><img src="../images/blog/blog-sidebar-1.png"
                                                                      alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="blog-grid.html">July 18, 2022</a>
-                                    <h6><a th:href="blog-details.html">Quisque laoreet Maecento facilisis tristique.</a>
+                                    <a href="blog-grid.html">July 18, 2022</a>
+                                    <h6><a href="blog-details.html">Quisque laoreet Maecento facilisis tristique.</a>
                                     </h6>
                                 </div>
                             </div>
                             <div class="widget-cnt mb-25">
                                 <div class="wi">
-                                    <a th:href="blog-details.html"><img src="../images/blog/blog-sidebar-2.png"
+                                    <a href="blog-details.html"><img src="../images/blog/blog-sidebar-2.png"
                                                                      alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="blog-grid.html">July 15, 2022</a>
-                                    <h6><a th:href="blog-details.html">Etiam vel diam volutpatha pellentesque.</a></h6>
+                                    <a href="blog-grid.html">July 15, 2022</a>
+                                    <h6><a href="blog-details.html">Etiam vel diam volutpatha pellentesque.</a></h6>
                                 </div>
                             </div>
                             <div class="widget-cnt">
                                 <div class="wi">
-                                    <a th:href="blog-details.html"><img src="../images/blog/blog-sidebar-3.png"
+                                    <a href="blog-details.html"><img src="../images/blog/blog-sidebar-3.png"
                                                                      alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="blog-grid.html">July 14, 2022</a>
-                                    <h6><a th:href="blog-details.html">Nunc finibus gravidato on porta. Nulla vitae.</a>
+                                    <a href="blog-grid.html">July 14, 2022</a>
+                                    <h6><a href="blog-details.html">Nunc finibus gravidato on porta. Nulla vitae.</a>
                                     </h6>
                                 </div>
                             </div>
@@ -393,15 +393,15 @@
                             <h3>All Tag</h3>
                         </div>
                         <p class="wp-block-tag-cloud">
-                            <a th:href="blog-grid.html">Grooming</a>
-                            <a th:href="blog-grid.html">Walking</a>
-                            <a th:href="blog-grid.html">Pet Care</a>
-                            <a th:href="blog-grid.html">Daycare</a>
-                            <a th:href="blog-grid.html">Bording</a>
-                            <a th:href="blog-grid.html">Madical</a>
-                            <a th:href="blog-grid.html">Vakcine</a>
-                            <a th:href="blog-grid.html">Education</a>
-                            <a th:href="blog-grid.html">Services</a>
+                            <a href="blog-grid.html">Grooming</a>
+                            <a href="blog-grid.html">Walking</a>
+                            <a href="blog-grid.html">Pet Care</a>
+                            <a href="blog-grid.html">Daycare</a>
+                            <a href="blog-grid.html">Bording</a>
+                            <a href="blog-grid.html">Madical</a>
+                            <a href="blog-grid.html">Vakcine</a>
+                            <a href="blog-grid.html">Education</a>
+                            <a href="blog-grid.html">Services</a>
                         </p>
                     </div>
                     <div class="single-widgets widget_egns_social">
@@ -409,10 +409,10 @@
                             <h3>Social</h3>
                         </div>
                         <ul class="social-link d-flex align-items-center">
-                            <li><a th:href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                            <li><a th:href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                            <li><a th:href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                            <li><a th:href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                            <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                            <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                            <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                            <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -433,8 +433,8 @@
                             <img src="../images/icon/phone-icon.svg" alt>
                         </div>
                         <div class="hotline-info">
-                            <h6 class="mb-10"><a th:href="tel:+8801761111456">+880 176 1111 456</a></h6>
-                            <h6><a th:href="tel:+8801701111000">+880 170 1111 000</a></h6>
+                            <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
+                            <h6><a href="tel:+8801701111000">+880 170 1111 000</a></h6>
                         </div>
                     </div>
                     <div class="email mb-30">
@@ -443,11 +443,11 @@
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
-                                    th:href="https://demo.egenslab.com/cdn-cgi/l/email-protection#f49d9a929bb4918c9599849891da979b99"><span
+                                    href="https://demo.egenslab.com/cdn-cgi/l/email-protection#f49d9a929bb4918c9599849891da979b99}"><span
                                     class="__cf_email__" data-cfemail="6a03040c052a0f120b071a060f44090507">[email&#160;protected]</span></a>
                             </h6>
                             <h6>
-                                <a th:href="https://demo.egenslab.com/cdn-cgi/l/email-protection#fb92959d94bb888e8b8b94898fd5989496"><span
+                                <a href="https://demo.egenslab.com/cdn-cgi/l/email-protection#fb92959d94bb888e8b8b94898fd5989496}"><span
                                         class="__cf_email__" data-cfemail="1e777078715e6d6b6e6e716c6a307d7173">[email&#160;protected]</span></a>
                             </h6>
                         </div>
@@ -468,7 +468,7 @@
                     <h2>want <span>to keep</span><br>
                         your pet in, <span>our center</span>?</h2>
                     <div class="book-btn">
-                        <a class="primary-btn1" th:href="contact.html">Book Now</a>
+                        <a class="primary-btn1" href="contact.html">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -479,10 +479,10 @@
                     <h6 class="mb-25">Saturday: 9.00AM - 6.00PM</h6>
                     <h6>Sunday: Closed</h6>
                     <ul class="social-icons">
-                        <li><a th:href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a th:href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a th:href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a th:href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -490,15 +490,15 @@
         <div class="row border-top">
             <div class="col-lg-6">
                 <div class="copyright-area">
-                    <p>© 2023 Scooby is Proudly Powered by <a th:href="https://www.egenslab.com/"> Egens Lab.</a></p>
+                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com"> Egens Lab.</a></p>
                 </div>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
                 <ul class="footer-btm-menu">
-                    <li><a th:href="#">Privacy Policy</a></li>
-                    <li><a th:href="#">Terms & Conditions</a></li>
-                    <li><a th:href="#">Services</a></li>
-                    <li><a th:href="#">Help</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Help</a></li>
                 </ul>
             </div>
         </div>
