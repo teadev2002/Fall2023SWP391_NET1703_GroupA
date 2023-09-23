@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/DEMOJPA")
+@RequestMapping("/testblog")
 public class BlogController {
     @Autowired
     BlogService blogService;
 
     @GetMapping("/blogs")
     public String GetAllBlogs(Model model) {
-        List<BlogDTO>list = blogService.GetAllBlog();
+        List<BlogDTO> list = blogService.GetAllBlog();
         model.addAttribute("listBlog",list);
         return "blog-standard" ;
 
@@ -60,4 +60,5 @@ public class BlogController {
             return new ResponseEntity<>("Something wrong while deleting", HttpStatus.OK);
         }
     }
+
 }

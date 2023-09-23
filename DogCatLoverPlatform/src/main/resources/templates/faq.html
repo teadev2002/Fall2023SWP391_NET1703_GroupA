@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/faq.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:16 GMT -->
 <head>
@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" href=".. /images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" th:href="@{../css/all.css}">
     <link rel="stylesheet" th:href="@{../css/animate.css}">
@@ -45,10 +45,10 @@
             <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
                 <div class="social-area">
                     <ul>
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
                 <div class="opening-time text-center">
@@ -78,39 +78,55 @@
                 </div>
             </div>
             <ul class="menu-list">
-
-                <li><a th:href="@{home}">Home</a></li>
-
-                <li><a th:href="@{About}">About</a></li>
-
+                <li class="menu-item-has-children">
+                    <a href="#" class="drop-down">Home</a><i class="bi bi-plus dropdown-icon"></i>
+                    <ul class="sub-menu">
+                        <li><a href="index.html">Home One</a></li>
+                        <li><a href="index2.html">Home Two</a></li>
+                        <li><a href="index3.html">Home Three</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html">About</a></li>
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Service-Details}">Daycare </a></li>
-                        <li><a th:href="@{Service-Details}">Grooming</a></li>
-                        <li><a th:href="@{Service-Details}">Boarding</a></li>
+                        <li><a href="service-details.html">Daycare </a></li>
+                        <li><a href="service-details.html">Grooming</a></li>
+                        <li><a href="service-details.html">Boarding</a></li>
+                        <li><a href="service-details.html">Veterinary</a></li>
                     </ul>
                 </li>
-
-                <li class="menu-item-has-children">
+                <li class="menu-item-has-children active">
                     <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Pricing-Plan}">Pricing Plan</a></li>
-                        <li><a th:href="@{Team}">Our Team</a></li>
-                        <li><a th:href="@{3col-gallery}">Gallery</a></li>
-                        <li><a th:href="@{Faq}">Faq</a></li>
+                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="3col-gallery.html">Gallery</a></li>
+                        <li class="active"><a href="faq.html">Faq</a></li>
+                        <li><a href="error.html">Error</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="sign-up.html">Sign Up</a></li>
                     </ul>
                 </li>
-
+                <li class="menu-item-has-children">
+                    <a href="#">Shop</a><i class="bi bi-plus dropdown-icon"></i>
+                    <ul class="sub-menu">
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shop-details.html">Shop Details</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="check-out.html">Check Out</a></li>
+                    </ul>
+                </li>
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Blog-Standard}">Exchange</a></li>
-                        <li><a th:href="@{Blog-Details}">Gift</a></li>
+                        <li><a href="blog-grid.html">Blog Grid</a></li>
+                        <li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
+                        <li><a href="blog-standard.html">Blog Standard</a></li>
+                        <li><a href="blog-details.html">Blog Details</a></li>
                     </ul>
                 </li>
-
-                <li><a th:href="@{Contact}">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
@@ -192,7 +208,7 @@
 
 <div class="inner-page-banner">
     <div class="breadcrumb-vec-btm">
-        <img class="img-fluid" th:src="@{../images/bg/inner-banner-btm-vec.png}" alt>
+        <img class="img-fluid" src="../images/bg/inner-banner-btm-vec.png" alt>
     </div>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center">
@@ -210,9 +226,9 @@
             <div class="col-lg-6">
                 <div class="banner-img d-lg-block d-none">
                     <div class="banner-img-bg">
-                        <img class="img-fluid" th:src="@{../images/bg/inner-banner-vec.png}" alt>
+                        <img class="img-fluid" src="../images/bg/inner-banner-vec.png" alt>
                     </div>
-                    <img class="img-fluid" th:src="@{../images/bg/inner-banner-img.png}" alt>
+                    <img class="img-fluid" src="../images/bg/inner-banner-img.png" alt>
                 </div>
             </div>
         </div>
@@ -402,7 +418,7 @@
                     <h3>Contacts</h3>
                     <div class="hotline mb-30">
                         <div class="hotline-icon">
-                            <img th:src="@{../images/icon/phone-icon.svg}" alt>
+                            <img src="../images/icon/phone-icon.svg" alt>
                         </div>
                         <div class="hotline-info">
                             <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
@@ -411,7 +427,7 @@
                     </div>
                     <div class="email mb-30">
                         <div class="email-icon">
-                            <img th:src="@{../images/icon/envelope.svg}" alt>
+                            <img src="../images/icon/envelope.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
@@ -426,7 +442,7 @@
                     </div>
                     <div class="email">
                         <div class="email-icon">
-                            <img th:src="@{../images/icon/location.svg}" alt>
+                            <img src="../images/icon/location.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a>168/170, Avenue 01, Mirpur</a></h6>
@@ -451,10 +467,10 @@
                     <h6 class="mb-25">Saturday: 9.00AM - 6.00PM</h6>
                     <h6>Sunday: Closed</h6>
                     <ul class="social-icons">
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -462,7 +478,7 @@
         <div class="row border-top">
             <div class="col-lg-6">
                 <div class="copyright-area">
-                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com/"> Egens Lab.</a></p>
+                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com"> Egens Lab.</a></p>
                 </div>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
@@ -477,25 +493,25 @@
     </div>
 </footer>
 
-<script data-cfasync="false" th:src="@{../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
-<script th:src="@{../js/jquery-3.6.0.min.js}"></script>
-<script th:src="@{../js/jquery-ui.js}"></script>
-<script th:src="@{../js/jquery.timepicker.min.js}"></script>
-<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{../js/swiper-bundle.min.js}"></script>
-<script th:src="@{../js/aos.js}"></script>
-<script th:src="@{../js/jquery.nice-select.js}"></script>
-<script th:src="@{../js/jquery.fancybox.min.js}"></script>
-<script th:src="@{../js/morphext.min.js}"></script>
-<script th:src="@{../js/odometer.min.js}"></script>
-<script th:src="@{../js/jquery.marquee.min.js}"></script>
-<script th:src="@{../js/viewport.jquery.js}"></script>
-<script th:src="@{../js/isotope.pkgd.min.js}"></script>
-<script th:src="@{../js/SmoothScroll.js}"></script>
-<script th:src="@{../js/jquery.nice-number.min.js}"></script>
-<script th:src="@{../js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{../js/masonry.pkgd.min.js}"></script>
-<script th:src="@{../js/main.js}"></script>
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="../js/jquery.timepicker.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/swiper-bundle.min.js"></script>
+<script src="../js/aos.js"></script>
+<script src="../js/jquery.nice-select.js"></script>
+<script src="../js/jquery.fancybox.min.js"></script>
+<script src="../js/morphext.min.js"></script>
+<script src="../js/odometer.min.js"></script>
+<script src="../js/jquery.marquee.min.js"></script>
+<script src="../js/viewport.jquery.js"></script>
+<script src="../js/isotope.pkgd.min.js"></script>
+<script src="../js/SmoothScroll.js"></script>
+<script src="../js/jquery.nice-number.min.js"></script>
+<script src="../js/jquery.magnific-popup.min.js"></script>
+<script src="../js/masonry.pkgd.min.js"></script>
+<script src="../js/main.js"></script>
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/faq.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:16 GMT -->

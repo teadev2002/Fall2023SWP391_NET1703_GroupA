@@ -1,6 +1,5 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
-
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,68 +11,68 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/DogCatLoverPlatform")
-public class UserController {
+@RequestMapping("/test")
+public class MainController {
 
     @Autowired
-    UserService userService;
+    UserService  userService;
 
     @GetMapping("/home")
     public String hello(){
         return "index";
     }
 
-    @GetMapping("/Login")
+    @GetMapping("/login")
     public String login(){
         return "login";
     }
 
-    @GetMapping("/Blog-Standard")
+    @GetMapping("/blog")
     public String blogStandard(){
         return "blog-standard";
     }
 
-    @GetMapping("/Blog-Details")
+    @GetMapping("/blog-details")
     public String blogDetails(){
         return "blog-details";
     }
 
-    @GetMapping("/About")
+    @GetMapping("/about")
     public String about(){
         return "about";
     }
 
-    @GetMapping("/Error")
+    @GetMapping("/error")
     public String error(){
         return "error";
     }
 
-    @GetMapping("/Contact")
+    @GetMapping("/contact")
     public String contact(){
         return "contact";
     }
 
-    @GetMapping("/Faq")
+    @GetMapping("/faq")
     public String faq(){
         return "faq";
     }
 
-    @GetMapping("/Pricing-Plan")
+    @GetMapping("/pricing-plan")
     public String pricingPlan(){
         return "pricing-plan";
     }
 
-    @GetMapping("/Service-Details")
+    @GetMapping("/service-details")
     public String serviceDetail(){
         return "service-details";
     }
 
-    @GetMapping("/Cart")
+    @GetMapping("/cart")
     public String cart(){
         return "cart";
     }
 
-    @GetMapping("/Check-out")
+    @GetMapping("/check-out")
     public String checkOut(){
         return "check-out";
     }
@@ -83,34 +82,34 @@ public class UserController {
         return "3col-gallery";
     }
 
-    @GetMapping("/Team")
+    @GetMapping("/team")
     public String team(){
         return "team";
     }
 
 
-    @GetMapping("/Sign-up")
+    @GetMapping("/sign-up")
     public String listTodo(Model model){
         List<UserEntity> listUser = userService.getAllUser();
         model.addAttribute("listUser",listUser);
         return "sign-up";
     }
 
-    @PostMapping (value = "/Sign-up-add")
+    @PostMapping (value = "/sign-up-add")
     public String addTodo(HttpServletRequest req){
         String email = req.getParameter("email");
         String fullname = req.getParameter("fullName");
         String password = req.getParameter("password");
         String username = req.getParameter("userName");
         userService.addUser(fullname,password,email,username);
-        return "redirect:/DogCatLoverPlatform/Login";
+        return "redirect://test/login";
     }
 
     @GetMapping("/delete-user")
     public String deleteUser(HttpServletRequest req){
         int id = Integer.parseInt(req.getParameter("id"));
         userService.deleteUser(id);
-        return "redirect:/DogCatLoverPlatform/Sign-up";
+        return "redirect://test/sign-up";
     }
 
 }

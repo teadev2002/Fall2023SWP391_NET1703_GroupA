@@ -1,49 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
-<!-- Mirrored from demo.egenslab.com/html/scooby/preview/blog-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:35 GMT -->
+<!-- Mirrored from demo.egenslab.com/html/scooby/preview/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:10:47 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
-
-    <link rel="stylesheet" th:href="@{../css/all.css}">
-    <link rel="stylesheet" th:href="@{../css/animate.css}">
-
-    <link rel="stylesheet" th:href="@{../css/bootstrap.min.css}">
-
-    <link rel="stylesheet" th:href="@{../css/boxicons.min.css}">
-
-    <link rel="stylesheet" th:href="@{../css/bootstrap-icons.css}">
-
-    <link rel="stylesheet" th:href="@{../css/jquery-ui.css}">
-    <link rel="stylesheet" th:href="@{../css/aos.css}">
-
-    <link rel="stylesheet" th:href="@{../css/swiper-bundle.css}">
-
-    <link rel="stylesheet" th:href="@{../css/nice-select.css}">
-
-    <link rel="stylesheet" th:href="@{../css/magnific-popup.css}">
-
-    <link rel="stylesheet" th:href="@{../css/jquery.fancybox.min.css}">
-
-    <link rel="stylesheet" th:href="@{../css/odometer.css}">
-
-    <link rel="stylesheet" th:href="@{../css/datepicker.min.css}">
-
-    <link rel="stylesheet" th:href="@{../css/uiicss.css}">
-
-    <link rel="stylesheet" th:href="@{../css/style.css}">
-
-    <!-- Mirrored from demo.egenslab.com/html/scooby/preview/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:10:47 GMT -->
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" href=".. /images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" th:href="@{../css/all.css}">
     <link rel="stylesheet" th:href="@{../css/animate.css}">
@@ -81,17 +45,17 @@
             <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
                 <div class="social-area">
                     <ul>
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
                 <div class="contact-number">
-                    <a href="tel:+1(541)754-3020">+1 (541) 754-3010 <img src="@{../images/icon/support.svg}" alt></a>
+                    <a href="tel:+1(541)754-3020">+1 (541) 754-3010 <img src="../images/icon/support.svg" alt></a>
                 </div>
             </div>
         </div>
@@ -102,12 +66,12 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" th:src="@{../images/header1-logo.svg}"></a>
+            <a href="index.html"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" th:src="@{../images/header1-logo.svg}"></a>
+                    <a href="index.html"><img alt="image" src="../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
@@ -115,38 +79,38 @@
             </div>
             <ul class="menu-list">
 
-                <li><a th:href="@{home}">Home</a></li>
+                <li><a href="index.html">Home</a></li>
 
-                <li><a th:href="@{About}">About</a></li>
+                <li><a href="about.html">About</a></li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Service-Details}">Daycare </a></li>
-                        <li><a th:href="@{Service-Details}">Grooming</a></li>
-                        <li><a th:href="@{Service-Details}">Boarding</a></li>
+                        <li><a href="service-details.html">Daycare </a></li>
+                        <li><a href="service-details.html">Grooming</a></li>
+                        <li><a href="service-details.html">Boarding</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Pricing-Plan}">Pricing Plan</a></li>
-                        <li><a th:href="@{Team}">Our Team</a></li>
-                        <li><a th:href="@{3col-gallery}">Gallery</a></li>
-                        <li><a th:href="@{Faq}">Faq</a></li>
+                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="3col-gallery.html">Gallery</a></li>
+                        <li><a href="faq.html">Faq</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Blog-Standard}">Exchange</a></li>
-                        <li><a th:href="@{Blog-Details}">Gift</a></li>
+                        <li><a href="blog-standard.html">Exchange</a></li>
+                        <li><a href="blog-standard.html">Gift</a></li>
                     </ul>
                 </li>
 
-                <li><a th:href="@{Contact}">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
@@ -228,7 +192,7 @@
 
 <div class="inner-page-banner">
     <div class="breadcrumb-vec-btm">
-        <img class="img-fluid" th:src="@{../images/bg/inner-banner-btm-vec.png}" alt>
+        <img class="img-fluid" src="../images/bg/inner-banner-btm-vec.png" alt>
     </div>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center">
@@ -246,9 +210,9 @@
             <div class="col-lg-6">
                 <div class="banner-img d-lg-block d-none">
                     <div class="banner-img-bg">
-                        <img class="img-fluid" th:src="@{../images/bg/inner-banner-vec.png}" alt>
+                        <img class="img-fluid" src="../images/bg/inner-banner-vec.png" alt>
                     </div>
-                    <img class="img-fluid" th:src="@{../images/bg/inner-banner-img.png}" alt>
+                    <img class="img-fluid" src="../images/bg/inner-banner-img.png" alt>
                 </div>
             </div>
         </div>
@@ -261,8 +225,8 @@
         <div class="row g-lg-4 gy-5">
             <div class="col-lg-6">
                 <div class="section-title1">
-                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Our Story<img
-                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
+                    <span><img src="../images/icon/section-vec-l1.svg" alt>Our Story<img
+                            src="../images/icon/section-vec-r1.svg" alt></span>
                     <h2>come to know what we have done about pets.</h2>
                 </div>
                 <div class="story-content">
@@ -274,7 +238,7 @@
                         <h3>We Think Working Process may <span>increase</span> mindset.</h3>
                         <div class="review">
                             <p>Based on <a href="#">20,921 reviews</a></p>
-                            <img th:src="@{../images/icon/trastpilot.svg}" alt>
+                            <img src="../images/icon/trastpilot.svg" alt>
                         </div>
                     </div>
                     <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
@@ -284,7 +248,7 @@
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
                 <div class="story-img">
-                    <img class="img-fluid" th:src="@{../images/bg/story-img1.png}" alt>
+                    <img class="img-fluid" src="../images/bg/story-img1.png" alt>
                 </div>
             </div>
         </div>
@@ -301,12 +265,12 @@
                         <div class="services-img-bg">
                             <img src="../images/icon/h2-services-img-bg.svg" alt>
                         </div>
-                        <img class="img-fluid" th:src="@{../images/bg/h2-services-img.png}" alt>
+                        <img class="img-fluid" src="../images/bg/h2-services-img.png" alt>
                     </div>
                 </div>
                 <div class="col-lg-7">
                     <div class="services-content">
-                        <img th:src="@{../images/icon/section-sl-no.svg}" alt>
+                        <img src="../images/icon/section-sl-no.svg" alt>
                         <h2>we are providing pet care service for years.</h2>
                         <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi
                             massal molestie vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus for that
@@ -314,7 +278,7 @@
                             dictumst. Nuncet posuere scelerisque justo in accumsan.</p>
                         <div class="author-area">
                             <div class="author-quat">
-                                <p><sup><img th:src="@{../images/icon/author-quat-icon.svg}" alt></sup> Pllentesque
+                                <p><sup><img src="../images/icon/author-quat-icon.svg" alt></sup> Pllentesque
                                     maximus augue orci, quis congue purus iaculisona ideno joku Maecenas eu lorem
                                     quisesdoi massal molestie jugnute vulputate in sitagajoi amet diam Cras eu odio sit
                                     amet.</p>
@@ -337,8 +301,8 @@
         <div class="row mb-50">
             <div class="col-lg-12 d-flex justify-content-center">
                 <div class="section-title1 text-center">
-                    <span><img th:src="@{../images/icon/section-vec-l2.svg}" alt>Testimonial<img
-                            th:src="@{../images/icon/section-vec-r2.svg}" alt></span>
+                    <span><img src="../images/icon/section-vec-l2.svg" alt>Testimonial<img
+                            src="../images/icon/section-vec-r2.svg" alt></span>
                     <h2 class="text-white">valueable words from Customers</h2>
                 </div>
             </div>
@@ -350,7 +314,7 @@
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi1.png}" alt>
+                                    <img class="img-fluid" src="../images/bg/h1-testi1.png" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -372,7 +336,7 @@
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi2.png}" alt>
+                                    <img class="img-fluid" src="../images/bg/h1-testi2.png" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -394,7 +358,7 @@
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi3.png}" alt>
+                                    <img class="img-fluid" src="../images/bg/h1-testi3.png" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -417,7 +381,7 @@
                         <div class="swiper-slide">
                             <div class="testimonial-card">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" th:src="@{../images/bg/h1-testi4.png}" alt>
+                                    <img class="img-fluid" src="../images/bg/h1-testi4.png" alt>
                                 </div>
                                 <div class="testimonial-content">
                                     <ul class="review">
@@ -460,8 +424,8 @@
         <div class="row g-lg-4 gy-5 justify-content-center">
             <div class="col-lg-5">
                 <div class="section-title1">
-                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Why Choose Us<img
-                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
+                    <span><img src="../images/icon/section-vec-l1.svg" alt>Why Choose Us<img
+                            src="../images/icon/section-vec-r1.svg" alt></span>
                     <h2>we provide the best care services.</h2>
                 </div>
                 <div class="choose-content">
@@ -530,14 +494,14 @@
             <div class="col-lg-5 col-md-8">
                 <div class="choose-img">
                     <div class="batch">
-                        <img th:src="@{../images/icon/choose-star.svg}" alt>
+                        <img src="../images/icon/choose-star.svg" alt>
                         <span>100% Safe<br>
 Your Pet</span>
                     </div>
                     <div class="choose-vector">
-                        <img th:src="@{../images/icon/choose-vector.svg}" alt>
+                        <img src="../images/icon/choose-vector.svg" alt>
                     </div>
-                    <img class="img-fluid" th:src="@{../images/bg/choose-img.png}" alt="choose-img">
+                    <img class="img-fluid" src="../images/bg/choose-img.png" alt="choose-img">
                 </div>
             </div>
             <div class="col-lg-2">
@@ -546,7 +510,7 @@ Your Pet</span>
                         <li>
                             <div class="single-choose-card">
                                 <div class="icon">
-                                    <img th:src="@{../images/icon/care.svg}" alt>
+                                    <img src="../images/icon/care.svg" alt>
                                 </div>
                                 <div class="content">
                                     <h4>Personalized care</h4>
@@ -557,7 +521,7 @@ Your Pet</span>
                         <li>
                             <div class="single-choose-card">
                                 <div class="icon">
-                                    <img th:src="@{../images/icon/team.svg}" alt>
+                                    <img src="../images/icon/team.svg" alt>
                                 </div>
                                 <div class="content">
                                     <h4>Trusted Team</h4>
@@ -568,7 +532,7 @@ Your Pet</span>
                         <li>
                             <div class="single-choose-card">
                                 <div class="icon">
-                                    <img th:src="@{../images/icon/mind.svg}" alt>
+                                    <img src="../images/icon/mind.svg" alt>
                                 </div>
                                 <div class="content">
                                     <h4>Peace of mind</h4>
@@ -597,8 +561,8 @@ Your Pet</span>
         <div class="row mb-50">
             <div class="col-lg-12 d-flex justify-content-center">
                 <div class="section-title1 text-center">
-                    <span><img th:src="@{../images/icon/section-vec-l1.svg}" alt>Our Team<img
-                            th:src="@{../images/icon/section-vec-r1.svg}" alt></span>
+                    <span><img src="../images/icon/section-vec-l1.svg" alt>Our Team<img
+                            src="../images/icon/section-vec-r1.svg" alt></span>
                     <h2>See Our Scooby Team members</h2>
                 </div>
             </div>
@@ -609,7 +573,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" th:src="@{../images/bg/team/team-1.png}" alt>
+                                <img class="img-fluid" src="../images/bg/team/team-1.png" alt>
                             </div>
                             <div class="member-content">
                                 <span>Co-Founder</span>
@@ -620,7 +584,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" th:src="@{../images/bg/team/team-2.png}" alt>
+                                <img class="img-fluid" src="../images/bg/team/team-2.png" alt>
                             </div>
                             <div class="member-content">
                                 <span>Kennel Assistant</span>
@@ -631,7 +595,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" th:src="@{../images/bg/team/team-3.png}" alt>
+                                <img class="img-fluid" src="../images/bg/team/team-3.png" alt>
                             </div>
                             <div class="member-content">
                                 <span>Veterinary Assistant</span>
@@ -642,7 +606,7 @@ Your Pet</span>
                     <div class="swiper-slide">
                         <div class="single-team-card">
                             <div class="member-img">
-                                <img class="img-fluid" th:src="@{../images/bg/team/team-4.png}" alt>
+                                <img class="img-fluid" src="../images/bg/team/team-4.png" alt>
                             </div>
                             <div class="member-content">
                                 <span>Groomer Manager</span>
@@ -665,7 +629,7 @@ Your Pet</span>
                     <h3>Contacts</h3>
                     <div class="hotline mb-30">
                         <div class="hotline-icon">
-                            <img th:src="@{../images/icon/phone-icon.svg}" alt>
+                            <img src="../images/icon/phone-icon.svg" alt>
                         </div>
                         <div class="hotline-info">
                             <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
@@ -674,7 +638,7 @@ Your Pet</span>
                     </div>
                     <div class="email mb-30">
                         <div class="email-icon">
-                            <img th:src="@{../images/icon/envelope.svg}" alt>
+                            <img src="../images/icon/envelope.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
@@ -714,10 +678,10 @@ Your Pet</span>
                     <h6 class="mb-25">Saturday: 9.00AM - 6.00PM</h6>
                     <h6>Sunday: Closed</h6>
                     <ul class="social-icons">
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -725,7 +689,7 @@ Your Pet</span>
         <div class="row border-top">
             <div class="col-lg-6">
                 <div class="copyright-area">
-                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com/"> Egens Lab.</a></p>
+                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com"> Egens Lab.</a></p>
                 </div>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
@@ -740,25 +704,25 @@ Your Pet</span>
     </div>
 </footer>
 
-<script data-cfasync="false" th:src="@{../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
-<script th:src="@{../js/jquery-3.6.0.min.js}"></script>
-<script th:src="@{../js/jquery-ui.js}"></script>
-<script th:src="@{../js/jquery.timepicker.min.js}"></script>
-<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{../js/swiper-bundle.min.js}"></script>
-<script th:src="@{../js/aos.js}"></script>
-<script th:src="@{../js/jquery.nice-select.js}"></script>
-<script th:src="@{../js/jquery.fancybox.min.js}"></script>
-<script th:src="@{../js/morphext.min.js}"></script>
-<script th:src="@{../js/odometer.min.js}"></script>
-<script th:src="@{../js/jquery.marquee.min.js}"></script>
-<script th:src="@{../js/viewport.jquery.js}"></script>
-<script th:src="@{../js/isotope.pkgd.min.js}"></script>
-<script th:src="@{../js/SmoothScroll.js}"></script>
-<script th:src="@{../js/jquery.nice-number.min.js}"></script>
-<script th:src="@{../js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{../js/masonry.pkgd.min.js}"></script>
-<script th:src="@{../js/main.js}"></script>
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="../js/jquery.timepicker.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/swiper-bundle.min.js"></script>
+<script src="../js/aos.js"></script>
+<script src="../js/jquery.nice-select.js"></script>
+<script src="../js/jquery.fancybox.min.js"></script>
+<script src="../js/morphext.min.js"></script>
+<script src="../js/odometer.min.js"></script>
+<script src="../js/jquery.marquee.min.js"></script>
+<script src="../js/viewport.jquery.js"></script>
+<script src="../js/isotope.pkgd.min.js"></script>
+<script src="../js/SmoothScroll.js"></script>
+<script src="../js/jquery.nice-number.min.js"></script>
+<script src="../js/jquery.magnific-popup.min.js"></script>
+<script src="../js/masonry.pkgd.min.js"></script>
+<script src="../js/main.js"></script>
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:10:49 GMT -->

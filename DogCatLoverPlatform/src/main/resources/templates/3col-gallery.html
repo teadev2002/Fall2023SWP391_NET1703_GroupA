@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/3col-gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:02 GMT -->
 <head>
@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
+    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" th:href="@{../css/all.css}">
     <link rel="stylesheet" th:href="@{../css/animate.css}">
@@ -45,10 +45,10 @@
             <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
                 <div class="social-area">
                     <ul>
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
                 <div class="opening-time text-center">
@@ -66,51 +66,67 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" th:src="@{../images/header1-logo.svg}"></a>
+            <a href="index.html"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" th:src="@{../images/header1-logo.svg}"></a>
+                    <a href="index.html"><img alt="image" src="../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
                 </div>
             </div>
             <ul class="menu-list">
-
-                <li><a th:href="@{home}">Home</a></li>
-
-                <li><a th:href="@{About}">About</a></li>
-
+                <li class="menu-item-has-children">
+                    <a href="#" class="drop-down">Home</a><i class="bi bi-plus dropdown-icon"></i>
+                    <ul class="sub-menu">
+                        <li><a href="index.html">Home One</a></li>
+                        <li><a href="index2.html">Home Two</a></li>
+                        <li><a href="index3.html">Home Three</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html">About</a></li>
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Service-Details}">Daycare </a></li>
-                        <li><a th:href="@{Service-Details}">Grooming</a></li>
-                        <li><a th:href="@{Service-Details}">Boarding</a></li>
+                        <li><a href="service-details.html">Daycare </a></li>
+                        <li><a href="service-details.html">Grooming</a></li>
+                        <li><a href="service-details.html">Boarding</a></li>
+                        <li><a href="service-details.html">Veterinary</a></li>
                     </ul>
                 </li>
-
-                <li class="menu-item-has-children">
+                <li class="menu-item-has-children active">
                     <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Pricing-Plan}">Pricing Plan</a></li>
-                        <li><a th:href="@{Team}">Our Team</a></li>
-                        <li><a th:href="@{3col-gallery}">Gallery</a></li>
-                        <li><a th:href="@{Faq}">Faq</a></li>
+                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li class="active"><a href="3col-gallery.html">Gallery</a></li>
+                        <li><a href="faq.html">Faq</a></li>
+                        <li><a href="error.html">Error</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="sign-up.html">Sign Up</a></li>
                     </ul>
                 </li>
-
+                <li class="menu-item-has-children">
+                    <a href="#">Shop</a><i class="bi bi-plus dropdown-icon"></i>
+                    <ul class="sub-menu">
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shop-details.html">Shop Details</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="check-out.html">Check Out</a></li>
+                    </ul>
+                </li>
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Blog-Standard}">Exchange</a></li>
-                        <li><a th:href="@{Blog-Details}">Gift</a></li>
+                        <li><a href="blog-grid.html">Blog Grid</a></li>
+                        <li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
+                        <li><a href="blog-standard.html">Blog Standard</a></li>
+                        <li><a href="blog-details.html">Blog Details</a></li>
                     </ul>
                 </li>
-
-                <li><a th:href="@{Contact}">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
@@ -192,7 +208,7 @@
 
 <div class="inner-page-banner">
     <div class="breadcrumb-vec-btm">
-        <img class="img-fluid" th:src="@{../images/bg/inner-banner-btm-vec.png}" alt>
+        <img class="img-fluid" src="../images/bg/inner-banner-btm-vec.png" alt>
     </div>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center">
@@ -210,9 +226,9 @@
             <div class="col-lg-6">
                 <div class="banner-img d-lg-block d-none">
                     <div class="banner-img-bg">
-                        <img class="img-fluid" th:src="@{../images/bg/inner-banner-vec.png}" alt>
+                        <img class="img-fluid" src="../images/bg/inner-banner-vec.png" alt>
                     </div>
-                    <img class="img-fluid" th:src="@{../images/bg/inner-banner-img.png}" alt>
+                    <img class="img-fluid" src="../images/bg/inner-banner-img.png" alt>
                 </div>
             </div>
         </div>
@@ -240,10 +256,10 @@
             <div class="col-lg-10">
                 <div class="row grid g-4">
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item food">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-01.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-01.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-01.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-01.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -253,10 +269,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item privateevent">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-02.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-02.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-02.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-02.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -266,10 +282,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item interior">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-03.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-03.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-03.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-03.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -279,10 +295,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item eatingplace">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-04.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-04.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-04.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-04.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -292,10 +308,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item traditions">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-05.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-05.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-05.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-05.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -305,10 +321,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item food">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-06.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-06.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-06.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-06.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -318,10 +334,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item privateevent">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-07.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-07.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-07.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-07.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -331,10 +347,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item interior">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-08.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-08.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-08.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-08.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -344,10 +360,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item eatingplace">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-09.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-09.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-09.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-09.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -357,10 +373,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item eatingplace">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-010.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-010.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-010.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-010.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -370,10 +386,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item eatingplace">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-011.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-011.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-011.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-011.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -383,10 +399,10 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 grid-item eatingplace">
-                        <a th:href="@{../images/bg/gallery/3col-big-img-012.png}" data-fancybox="gallery"
+                        <a href="../images/bg/gallery/3col-big-img-012.png" data-fancybox="gallery"
                            class="gallery2-img">
                             <div class="gallery-img">
-                                <img class="img-fluid" th:src="@{../images/bg/gallery/3col-gallery-012.png}" alt>
+                                <img class="img-fluid" src="../images/bg/gallery/3col-gallery-012.png" alt>
                                 <div class="overlay">
                                     <div class="zoom-icon">
                                         <i class="bi bi-zoom-in"></i>
@@ -417,7 +433,7 @@
                     <h3>Contacts</h3>
                     <div class="hotline mb-30">
                         <div class="hotline-icon">
-                            <img th:src="@{../images/icon/phone-icon.svg}" alt>
+                            <img src="../images/icon/phone-icon.svg" alt>
                         </div>
                         <div class="hotline-info">
                             <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
@@ -426,7 +442,7 @@
                     </div>
                     <div class="email mb-30">
                         <div class="email-icon">
-                            <img th:src="@{../images/icon/envelope.svg}" alt>
+                            <img src="../images/icon/envelope.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
@@ -441,7 +457,7 @@
                     </div>
                     <div class="email">
                         <div class="email-icon">
-                            <img th:src="@{../images/icon/location.svg}" alt>
+                            <img src="../images/icon/location.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a>168/170, Avenue 01, Mirpur</a></h6>
@@ -466,10 +482,10 @@
                     <h6 class="mb-25">Saturday: 9.00AM - 6.00PM</h6>
                     <h6>Sunday: Closed</h6>
                     <ul class="social-icons">
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -477,7 +493,7 @@
         <div class="row border-top">
             <div class="col-lg-6">
                 <div class="copyright-area">
-                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com/"> Egens Lab.</a></p>
+                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com"> Egens Lab.</a></p>
                 </div>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
@@ -492,25 +508,25 @@
     </div>
 </footer>
 
-<script data-cfasync="false" th:src="@{../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
-<script th:src="@{../js/jquery-3.6.0.min.js}"></script>
-<script th:src="@{../js/jquery-ui.js}"></script>
-<script th:src="@{../js/jquery.timepicker.min.js}"></script>
-<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{../js/swiper-bundle.min.js}"></script>
-<script th:src="@{../js/aos.js}"></script>
-<script th:src="@{../js/jquery.nice-select.js}"></script>
-<script th:src="@{../js/jquery.fancybox.min.js}"></script>
-<script th:src="@{../js/morphext.min.js}"></script>
-<script th:src="@{../js/odometer.min.js}"></script>
-<script th:src="@{../js/jquery.marquee.min.js}"></script>
-<script th:src="@{../js/viewport.jquery.js}"></script>
-<script th:src="@{../js/isotope.pkgd.min.js}"></script>
-<script th:src="@{../js/SmoothScroll.js}"></script>
-<script th:src="@{../js/jquery.nice-number.min.js}"></script>
-<script th:src="@{../js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{../js/masonry.pkgd.min.js}"></script>
-<script th:src="@{../js/main.js}"></script>
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="../js/jquery.timepicker.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/swiper-bundle.min.js"></script>
+<script src="../js/aos.js"></script>
+<script src="../js/jquery.nice-select.js"></script>
+<script src="../js/jquery.fancybox.min.js"></script>
+<script src="../js/morphext.min.js"></script>
+<script src="../js/odometer.min.js"></script>
+<script src="../js/jquery.marquee.min.js"></script>
+<script src="../js/viewport.jquery.js"></script>
+<script src="../js/isotope.pkgd.min.js"></script>
+<script src="../js/SmoothScroll.js"></script>
+<script src="../js/jquery.nice-number.min.js"></script>
+<script src="../js/jquery.magnific-popup.min.js"></script>
+<script src="../js/masonry.pkgd.min.js"></script>
+<script src="../js/main.js"></script>
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/3col-gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:16 GMT -->

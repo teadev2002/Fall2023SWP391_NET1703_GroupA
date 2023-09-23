@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/check-out.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:25 GMT -->
 <head>
@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
+    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" th:href="@{../css/all.css}">
     <link rel="stylesheet" th:href="@{../css/animate.css}">
@@ -45,10 +45,10 @@
             <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
                 <div class="social-area">
                     <ul>
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
                 <div class="opening-time text-center">
@@ -66,12 +66,12 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" th:src="@{../images/header1-logo.svg}"></a>
+            <a href="index.html"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" th:src="@{../images/header1-logo.svg}"></a>
+                    <a href="index.html"><img alt="image" src="../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
@@ -79,38 +79,37 @@
             </div>
             <ul class="menu-list">
 
-                <li><a th:href="@{home}">Home</a></li>
+                <li><a href="index.html">Home</a></li>
 
-                <li><a th:href="@{About}">About</a></li>
+                <li><a href="about.html">About</a></li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Service-Details}">Daycare </a></li>
-                        <li><a th:href="@{Service-Details}">Grooming</a></li>
-                        <li><a th:href="@{Service-Details}">Boarding</a></li>
+                        <li><a href="service-details.html">Daycare </a></li>
+                        <li><a href="service-details.html">Grooming</a></li>
+                        <li><a href="service-details.html">Boarding</a></li>
                     </ul>
                 </li>
-
                 <li class="menu-item-has-children">
                     <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Pricing-Plan}">Pricing Plan</a></li>
-                        <li><a th:href="@{Team}">Our Team</a></li>
-                        <li><a th:href="@{3col-gallery}">Gallery</a></li>
-                        <li><a th:href="@{Faq}">Faq</a></li>
+                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="3col-gallery.html">Gallery</a></li>
+                        <li><a href="faq.html">Faq</a></li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{Blog-Standard}">Exchange</a></li>
-                        <li><a th:href="@{Blog-Details}">Gift</a></li>
+                        <li><a href="blog-standard.html">Exchange</a></li>
+                        <li><a href="blog-standard.html">Gift</a></li>
                     </ul>
                 </li>
 
-                <li><a th:href="@{Contact}">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">
@@ -163,7 +162,7 @@
                         </button>
                     </form>
                 </li>
-                <li><a href>
+                <li><a href="#">
                     <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                     </svg>
@@ -192,7 +191,7 @@
 
 <div class="inner-page-banner">
     <div class="breadcrumb-vec-btm">
-        <img class="img-fluid" th:src="@{../images/bg/inner-banner-btm-vec.png}" alt>
+        <img class="img-fluid" src="../images/bg/inner-banner-btm-vec.png" alt>
     </div>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center">
@@ -210,9 +209,9 @@
             <div class="col-lg-6">
                 <div class="banner-img d-lg-block d-none">
                     <div class="banner-img-bg">
-                        <img class="img-fluid" th:src="@{../images/bg/inner-banner-vec.png}" alt>
+                        <img class="img-fluid" src="../images/bg/inner-banner-vec.png" alt>
                     </div>
-                    <img class="img-fluid" th:src="@{../images/bg/inner-banner-img.png}" alt>
+                    <img class="img-fluid" src="../images/bg/inner-banner-img.png" alt>
                 </div>
             </div>
         </div>
@@ -332,7 +331,7 @@
                     <ul class="added-products">
                         <li class="single-product d-flex justify-content-start">
                             <div class="product-img">
-                                <img th:src="@{../images/bg/check-out-01.png}" alt>
+                                <img src="../images/bg/check-out-01.png" alt>
                             </div>
                             <div class="product-info">
                                 <h5 class="product-title"><a href="#">Whiskas Cat Food Core Tuna</a></h5>
@@ -355,7 +354,7 @@
                         </li>
                         <li class="single-product d-flex justify-content-start">
                             <div class="product-img">
-                                <img th:src="@{../images/bg/check-out-02.png}" alt>
+                                <img src="../images/bg/check-out-02.png" alt>
                             </div>
                             <div class="product-info">
                                 <h5 class="product-title"><a href="#">Friskies Kitten Discoveries.</a></h5>
@@ -378,7 +377,7 @@
                         </li>
                         <li class="single-product d-flex justify-content-start">
                             <div class="product-img">
-                                <img th:src="@{../images/bg/check-out-03.png}" alt>
+                                <img src="../images/bg/check-out-03.png" alt>
                             </div>
                             <div class="product-info">
                                 <h5 class="product-title"><a href="#">Natural Dog Fresh Food.</a></h5>
@@ -458,7 +457,7 @@
                             <label class="form-check-label" for="flexRadioDefault3">
                                 PayPal
                             </label>
-                            <img th:src="@{../images/bg/payonert.png}" alt>
+                            <img src="../images/bg/payonert.png" alt>
                             <a href="#" class="about-paypal">What is PayPal</a>
                         </div>
                         <div class="payment-form-bottom d-flex align-items-start">
@@ -485,7 +484,7 @@
                     <h3>Contacts</h3>
                     <div class="hotline mb-30">
                         <div class="hotline-icon">
-                            <img th:src="@{../images/icon/phone-icon.svg}" alt>
+                            <img src="../images/icon/phone-icon.svg" alt>
                         </div>
                         <div class="hotline-info">
                             <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
@@ -494,11 +493,11 @@
                     </div>
                     <div class="email mb-30">
                         <div class="email-icon">
-                            <img th:src="@{../images/icon/envelope.svg}" alt>
+                            <img src="../images/icon/envelope.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
-                                    href="https://demo.egenslab.com/cdn-cgi/l/email-protection#f0999e969fb09588919d809c95de939f9d"><span
+                                    href="https://demo.egenslab.comcdn-cgi/l/email-protection#f0999e969fb09588919d809c95de939f9d"><span
                                     class="__cf_email__" data-cfemail="7b12151d143b1e031a160b171e55181416">[email&#160;protected]</span></a>
                             </h6>
                             <h6>
@@ -509,7 +508,7 @@
                     </div>
                     <div class="email">
                         <div class="email-icon">
-                            <img th:src="@{../images/icon/location.svg}" alt>
+                            <img src="../images/icon/location.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a>168/170, Avenue 01, Mirpur</a></h6>
@@ -534,10 +533,10 @@
                     <h6 class="mb-25">Saturday: 9.00AM - 6.00PM</h6>
                     <h6>Sunday: Closed</h6>
                     <ul class="social-icons">
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
+                        <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
+                        <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
+                        <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -545,7 +544,7 @@
         <div class="row border-top">
             <div class="col-lg-6">
                 <div class="copyright-area">
-                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com/"> Egens Lab.</a></p>
+                    <p>© 2023 Scooby is Proudly Powered by <a href="https://www.egenslab.com"> Egens Lab.</a></p>
                 </div>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center">
@@ -560,25 +559,25 @@
     </div>
 </footer>
 
-<script data-cfasync="false" th:src="@{../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
-<script th:src="@{../js/jquery-3.6.0.min.js}"></script>
-<script th:src="@{../js/jquery-ui.js}"></script>
-<script th:src="@{../js/jquery.timepicker.min.js}"></script>
-<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{../js/swiper-bundle.min.js}"></script>
-<script th:src="@{../js/aos.js}"></script>
-<script th:src="@{../js/jquery.nice-select.js}"></script>
-<script th:src="@{../js/jquery.fancybox.min.js}"></script>
-<script th:src="@{../js/morphext.min.js}"></script>
-<script th:src="@{../js/odometer.min.js}"></script>
-<script th:src="@{../js/jquery.marquee.min.js}"></script>
-<script th:src="@{../js/viewport.jquery.js}"></script>
-<script th:src="@{../js/isotope.pkgd.min.js}"></script>
-<script th:src="@{../js/SmoothScroll.js}"></script>
-<script th:src="@{../js/jquery.nice-number.min.js}"></script>
-<script th:src="@{../js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{../js/masonry.pkgd.min.js}"></script>
-<script th:src="@{../js/main.js}"></script>
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="../js/jquery.timepicker.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/swiper-bundle.min.js"></script>
+<script src="../js/aos.js"></script>
+<script src="../js/jquery.nice-select.js"></script>
+<script src="../js/jquery.fancybox.min.js"></script>
+<script src="../js/morphext.min.js"></script>
+<script src="../js/odometer.min.js"></script>
+<script src="../js/jquery.marquee.min.js"></script>
+<script src="../js/viewport.jquery.js"></script>
+<script src="../js/isotope.pkgd.min.js"></script>
+<script src="../js/SmoothScroll.js"></script>
+<script src="../js/jquery.nice-number.min.js"></script>
+<script src="../js/jquery.magnific-popup.min.js"></script>
+<script src="../js/masonry.pkgd.min.js"></script>
+<script src="../js/main.js"></script>
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/check-out.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:27 GMT -->

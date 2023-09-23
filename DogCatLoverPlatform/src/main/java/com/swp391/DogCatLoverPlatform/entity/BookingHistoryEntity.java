@@ -1,9 +1,17 @@
 package com.swp391.DogCatLoverPlatform.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "booking_history")
 public class BookingHistoryEntity {
     @Id
