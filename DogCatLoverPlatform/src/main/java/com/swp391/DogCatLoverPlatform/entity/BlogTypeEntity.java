@@ -23,4 +23,6 @@ public class BlogTypeEntity {
 
     @OneToMany(mappedBy = "blogTypeEntity") //Checked
     List<BlogEntity> blogEntity;
+
+
 }

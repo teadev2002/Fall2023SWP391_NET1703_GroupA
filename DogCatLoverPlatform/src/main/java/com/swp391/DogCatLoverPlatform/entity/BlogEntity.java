@@ -49,7 +49,7 @@ public class BlogEntity {
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name="id_blog_type") //Checked
+    @JoinColumn(name="id_blog_type",insertable = false, updatable = false) //Checked
     private BlogTypeEntity blogTypeEntity;  
 
     @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")   //Checked
@@ -57,4 +57,6 @@ public class BlogEntity {
 
     @OneToMany(mappedBy = "blogEntity_BookingEntity")
     List<BookingEntity> listBooking_BlogEntity;
+
+
 }

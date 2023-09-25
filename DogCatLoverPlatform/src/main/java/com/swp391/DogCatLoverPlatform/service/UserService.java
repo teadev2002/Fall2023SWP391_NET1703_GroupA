@@ -33,5 +33,19 @@ public class UserService {
     }
 
 
+    public boolean checkLogin(String email, String password) {
+        UserEntity user = userRepository.findByEmailAndPassword(email, password);
+        if(user != null){
+            return true;
+        }
+        return false;
+    }
 
+    public boolean checkEmailExist(String email) {
+        UserEntity user = userRepository.findByEmail(email);
+        if(user != null){
+            return true;
+        }
+        return false;
+    }
 }

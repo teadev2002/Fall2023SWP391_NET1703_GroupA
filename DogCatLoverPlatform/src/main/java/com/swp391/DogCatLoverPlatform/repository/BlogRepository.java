@@ -8,11 +8,13 @@ import java.util.List;
 
 @Repository
 public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
-    List<BlogEntity> findAll();
 
-    List<BlogEntity> findBymaxPriceBetween(double minPrice, double maxPrice);
+        List<BlogEntity> findAll();
 
-    List<BlogEntity> findByTitleContaining(String title);
+        List<BlogEntity> findBymaxPriceBetween(double minPrice, double maxPrice);
 
-    List<BlogEntity> findByTitle(String userName);
+        List<BlogEntity> findByTitleContaining(String title);
+
+        List<BlogEntity> findByTitle(String userName);
+
 }

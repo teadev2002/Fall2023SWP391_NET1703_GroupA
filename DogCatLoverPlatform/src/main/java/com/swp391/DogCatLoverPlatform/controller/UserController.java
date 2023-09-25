@@ -1,5 +1,6 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
+
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/test")
-public class MainController {
+public class UserController {
+
 
     @Autowired
-    UserService  userService;
+    UserService userService;
 
     @GetMapping("/home")
     public String hello(){
@@ -96,20 +98,39 @@ public class MainController {
     }
 
     @PostMapping (value = "/sign-up-add")
-    public String addTodo(HttpServletRequest req){
+    public String addTodo(HttpServletRequest req,Model model){
+        boolean isSucces = false;
         String email = req.getParameter("email");
-        String fullname = req.getParameter("fullName");
+        String fullName = req.getParameter("fullName");
+        String userName = req.getParameter("userName");
         String password = req.getParameter("password");
-        String username = req.getParameter("userName");
-        userService.addUser(fullname,password,email,username);
-        return "redirect://test/login";
+        String password2 = req.getParameter("password2");
+
+        if(password2.equals(password) && userService.checkEmailExist(email) == false){
+            userService.addUser(fullName, password, email, userName);
+            isSucces = true;
+        }
+
+        model.addAttribute("isSuccess", isSucces);
+        return "redirect:/test/sign-up";
+    }
+
+    @PostMapping (value = "/login")
+    public String loginInto(HttpServletRequest req,Model model){
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        boolean check = userService.checkLogin(email,password);
+        if (check == true){
+            return "redirect:/test/home";
+        }
+            return "redirect:/test/login";
     }
 
     @GetMapping("/delete-user")
     public String deleteUser(HttpServletRequest req){
         int id = Integer.parseInt(req.getParameter("id"));
         userService.deleteUser(id);
-        return "redirect://test/sign-up";
+        return "redirect:/DogCatLoverPlatform/Sign-up";
     }
 
 }
