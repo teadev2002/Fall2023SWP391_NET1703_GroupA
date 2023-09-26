@@ -7,6 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class BlogTypeDTO {
     private int id;
     private String name;

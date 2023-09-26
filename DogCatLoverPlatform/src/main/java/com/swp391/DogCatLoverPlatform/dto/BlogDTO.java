@@ -9,18 +9,19 @@ import java.util.Date;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BlogDTO {
 
-    private int id;
     private String title;
     private String content;
     private String image;
-    private double price;
-    private boolean status;
     private Date createDate;
-    private boolean confirm;
-    private UserDTO userDTO;
-    private BlogTypeDTO blogTypeDTO;
-
+    private String userName;
+    private String blogTypeName;
+    //private int id;
+    //private double price;
+    //private boolean status;
+    //private boolean confirm;
 
 }
