@@ -47,6 +47,13 @@ public class BlogService {
         return modelMapperConfig.modelMapper().map(blogEntity,BlogDTO.class);
     }
 
+    public BlogDTO createBlog(BlogDTO blogDTO) {
+        BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
+        BlogEntity savedBlogEntity = blogRepository.save(blogEntity);
+        BlogDTO createdBlog = modelMapperConfig.modelMapper().map(savedBlogEntity, BlogDTO.class);
+        return createdBlog;
+    }
+
     public void updateBlog(int id, BlogUpdateDTO blogUpdateDTO){
         BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
 
@@ -90,12 +97,7 @@ public class BlogService {
 //        return null;
 //    }
 
-    public BlogDTO createBlog(BlogDTO blogDTO) {
-        BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
-        BlogEntity savedBlogEntity = blogRepository.save(blogEntity);
-        BlogDTO createdBlog = modelMapperConfig.modelMapper().map(savedBlogEntity, BlogDTO.class);
-        return createdBlog;
-    }
+
 
 //
 //    public void DeleteBlog(int id) {
