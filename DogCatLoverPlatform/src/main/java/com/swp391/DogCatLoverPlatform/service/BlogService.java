@@ -1,7 +1,9 @@
 package com.swp391.DogCatLoverPlatform.service;
 
+import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
 import com.swp391.DogCatLoverPlatform.dto.BlogTypeDTO;
+import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
@@ -15,6 +17,9 @@ import java.util.List;
 public class BlogService {
     @Autowired
     BlogRepository blogRepository;
+
+    @Autowired
+    private ModelMapperConfig modelMapperConfig;
 
     public List<BlogDTO> GetAllBlog() {
         List<BlogEntity> listBlog = blogRepository.findAll();
@@ -49,6 +54,12 @@ public class BlogService {
         return null;
     }
 
+    public void updateBlog(int id, BlogUpdateDTO blogUpdateDTO){
+        BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
+
+        modelMapperConfig.modelMapper().map(blogUpdateDTO,blogEntity);
+        blogRepository.save(blogEntity);
+    }
 //    public List<BlogDTO> GetBlogsByTitle(String title) {
 //        List<BlogEntity> listBlog = blogRepository.findByTitleContaining(title);
 //        List<BlogDTO> listBlogDTO = new ArrayList<>();
