@@ -19,8 +19,4 @@ public class ModelMapperConfig {
     }
 }
 
-//        ModelMapper modelMapper = new ModelMapper();
-//        // Ánh xạ từ BlogEntity sang BlogDTO
-//        modelMapper.createTypeMap(BlogEntity.class, BlogDTO.class)
-//                .addMapping(src -> src.getBlogTypeEntity().getName(), BlogDTO::setBlogTypeName)
-//                .addMapping(src -> src.getUserEntity().getUserName(), BlogDTO::setUserName);
+
