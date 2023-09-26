@@ -1,9 +1,11 @@
 package com.swp391.DogCatLoverPlatform.service;
 
+import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
 import com.swp391.DogCatLoverPlatform.dto.BlogTypeDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
+import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,28 +18,23 @@ public class BlogService {
     @Autowired
     BlogRepository blogRepository;
 
+    @Autowired
+    ModelMapperConfig modelMapperConfig;
+
     public List<BlogDTO> GetAllBlog() {
         List<BlogEntity> listBlog = blogRepository.findAll();
         List<BlogDTO> listBlogDTO = new ArrayList<>();
-        // mapper
+
         for (BlogEntity i : listBlog) {
-            BlogDTO blogDTO = new BlogDTO();
-            blogDTO.setId(i.getId());
-            blogDTO.setImage(i.getImage());
-            blogDTO.setPrice(i.getMaxPrice());
-            blogDTO.setTitle(i.getTitle());
-            blogDTO.setContent(i.getContent());
-            blogDTO.setCreateDate(i.getCreateDate());
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(i,BlogDTO.class);
 
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(i.getUserEntity().getId());
-            userDTO.setUserName(i.getUserEntity().getUserName());
-            blogDTO.setUserDTO(userDTO);
-
-            BlogTypeDTO blogTypeDTO = new BlogTypeDTO();
-            blogTypeDTO.setId(i.getBlogTypeEntity().getId());
-            blogTypeDTO.setName(i.getBlogTypeEntity().getName());
-            blogDTO.setBlogTypeDTO(blogTypeDTO);
+//            UserDTO userDTO = new UserDTO();
+//            userDTO.setUserName(i.getUserEntity().getUserName());
+//            blogDTO.setUserDTO(userDTO);
+//
+//            BlogTypeDTO blogTypeDTO = new BlogTypeDTO();
+//            blogTypeDTO.setName(i.getBlogTypeEntity().getName());
+//            blogDTO.setBlogTypeDTO(blogTypeDTO);
 
             listBlogDTO.add(blogDTO);
         }
