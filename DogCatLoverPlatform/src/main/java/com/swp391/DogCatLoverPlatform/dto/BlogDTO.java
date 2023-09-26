@@ -19,9 +19,9 @@ public class BlogDTO {
     private Date createDate;
     private String userName;
     private String blogTypeName;
-    //private int id;
+    private int id;
     //private double price;
-    //private boolean status;
+    private boolean status;
     //private boolean confirm;
 
 }

@@ -1,6 +1,7 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 
+import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -91,6 +94,25 @@ public class UserController {
         return "team";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model, HttpServletRequest req){
+        Cookie[] cookies = req.getCookies();
+        String email = null;
+        try{
+            for(Cookie c : cookies){
+                email = c.getValue();
+                UserDTO user = userService.getUserByEmail(email);
+                model.addAttribute("user", user);
+                return "profile";
+            }
+
+        }catch (Exception e){
+            model.addAttribute("error","You didn't Login");
+            return "redirect:/test/login";
+        }
+        return "redirect:/test/login";
+    }
+
 
     @GetMapping("/sign-up")
     public String listTodo(Model model){
@@ -118,14 +140,17 @@ public class UserController {
     }
 
     @PostMapping (value = "/login")
-    public String loginInto(HttpServletRequest req,Model model){
+    public String loginInto(HttpServletRequest req, HttpServletResponse resp, Model model){
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         boolean check = userService.checkLogin(email,password);
         if (check == true){
+            Cookie userCookie = new Cookie("User",email);
+            userCookie.setMaxAge(3600); // Cookie will expire in 1 hour (you can adjust this as needed)
+            resp.addCookie(userCookie);
             return "redirect:/test/home";
         }
-            return "redirect:/test/login";
+        return "redirect:/test/login";
     }
 
     @GetMapping("/delete-user")

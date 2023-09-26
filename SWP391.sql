@@ -34,7 +34,7 @@ CREATE TABLE blog(
 	create_date date,
 	confirm bit,
 	
-	id_user_create int,
+	id_user_created int,
 	id_blog_type int,
 	
 	primary key(id)
