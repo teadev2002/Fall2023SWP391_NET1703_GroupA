@@ -223,13 +223,13 @@
     <div class="container">
         <div class="row g-lg-4 gy-5 justify-content-center mb-70">
             <div class="col-lg-8">
-
+                <a th:href="@{/create}">Create New Blog</a>
                 <div class="blog-st-card mb-70" th:each="blog : ${listBlog}">
                     <div class="blog-img">
                         <img class="img-fluid" src="../images/blog/blog-st-1.png" alt>
                         <div class="category">
 <!--                            <a href="blog-grid.html">Medical Care</a>-->
-                                 <a th:text="${blog.blogTypeDTO.name}"></a>-->
+                                 <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>
                     <div class="blog-content">
@@ -239,7 +239,7 @@
 <!--                              <li><a href="blog-grid.html">August 12, 2022</a></li>-->
 <!--                              <li><a href="blog-grid.html">By, Nikon Brook</a></li>-->
                                 <li><a th:text="${blog.createDate}"></a></li>
-                                <li><a th:text="${blog.userDTO.userName}"></a></li>
+                                <li><a th:text="${blog.userName}"></a></li>
 
                             </ul>
                         </div>

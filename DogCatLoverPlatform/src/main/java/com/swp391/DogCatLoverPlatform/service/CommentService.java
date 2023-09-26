@@ -18,7 +18,7 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public List<CommentDTO> getAllComment(){
+    /*public List<CommentDTO> getAllComment(){
         List<CommentEntity> listComment =  commentRepository.findAll();
         List<CommentDTO> listCommnetDTO = new ArrayList<>();
         for(CommentEntity data : listComment){
@@ -36,7 +36,7 @@ public class CommentService {
 
         }
         return listCommnetDTO;
-     }
+     }*/
 
 }
 

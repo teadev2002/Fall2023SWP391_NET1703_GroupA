@@ -4,14 +4,11 @@ import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
 import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
 
 import java.util.List;
 
@@ -39,7 +36,21 @@ public class BlogController {
     @PostMapping("/{id}/edit")
     public String updateBlog(@PathVariable("id") int id, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) {
         blogService.updateBlog(id, blogUpdateDTO);
-        return "redirect:/blog-standard/" + id;
+        return "redirect:/view";
     }
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("blog", new BlogDTO());
+        return "create-blog-form";
+    }
+
+    // POST request to handle the create blog form submission
+    @PostMapping("/create")
+    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO) {
+        BlogDTO createdBlog = blogService.createBlog(blogDTO);
+
+        return "redirect:/view" ;
+    }
+
 
 }

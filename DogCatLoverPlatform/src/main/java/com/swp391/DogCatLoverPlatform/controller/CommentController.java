@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/comment")
 public class CommentController {
 
-    @Autowired
+/*    @Autowired
     CommentService commentService;
 
     @GetMapping ("/view")
@@ -24,5 +24,5 @@ public class CommentController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    
+    */
 }

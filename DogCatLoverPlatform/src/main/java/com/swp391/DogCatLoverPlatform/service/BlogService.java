@@ -6,6 +6,7 @@ import com.swp391.DogCatLoverPlatform.dto.BlogTypeDTO;
 import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
+import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,29 +20,18 @@ public class BlogService {
     BlogRepository blogRepository;
 
     @Autowired
-    private ModelMapperConfig modelMapperConfig;
+
+    ModelMapperConfig modelMapperConfig;
+
 
     public List<BlogDTO> GetAllBlog() {
         List<BlogEntity> listBlog = blogRepository.findAll();
         List<BlogDTO> listBlogDTO = new ArrayList<>();
-        // mapper
+
         for (BlogEntity i : listBlog) {
-            BlogDTO blogDTO = new BlogDTO();
-            blogDTO.setId(i.getId());
-            blogDTO.setImage(i.getImage());
-            blogDTO.setPrice(i.getMaxPrice());
-            blogDTO.setTitle(i.getTitle());
-            blogDTO.setContent(i.getContent());
-            blogDTO.setCreateDate(i.getCreateDate());
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(i,BlogDTO.class);
 
-            UserDTO userDTO = new UserDTO();
-            userDTO.setUserName(i.getUserEntity().getUserName());
-            blogDTO.setUserDTO(userDTO);
 
-            BlogTypeDTO blogTypeDTO = new BlogTypeDTO();
-            blogTypeDTO.setId(i.getBlogTypeEntity().getId());
-            blogTypeDTO.setName(i.getBlogTypeEntity().getName());
-            blogDTO.setBlogTypeDTO(blogTypeDTO);
 
             listBlogDTO.add(blogDTO);
         }
@@ -63,6 +53,7 @@ public class BlogService {
         modelMapperConfig.modelMapper().map(blogUpdateDTO,blogEntity);
         blogRepository.save(blogEntity);
     }
+
 //    public List<BlogDTO> GetBlogsByTitle(String title) {
 //        List<BlogEntity> listBlog = blogRepository.findByTitleContaining(title);
 //        List<BlogDTO> listBlogDTO = new ArrayList<>();
@@ -98,11 +89,14 @@ public class BlogService {
 //        // TODO Auto-generated method stub
 //        return null;
 //    }
-//
-//    public BlogDTO CreateBlog(BlogEntity createBlogReq) {
-//        blogRepository.save(createBlogReq);
-//        return null;
-//    }
+
+    public BlogDTO createBlog(BlogDTO blogDTO) {
+        BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
+        BlogEntity savedBlogEntity = blogRepository.save(blogEntity);
+        BlogDTO createdBlog = modelMapperConfig.modelMapper().map(savedBlogEntity, BlogDTO.class);
+        return createdBlog;
+    }
+
 //
 //    public void DeleteBlog(int id) {
 //        // TODO Auto-generated method stub
