@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!-- Mirrored from demo.egenslab.com/html/scooby/preview/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:17 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -225,20 +225,20 @@
                 <div class="form-wrapper wow fadeInUp" data-wow-duration="1.5s" data-wow-delay=".2s">
                     <div class="form-title">
                         <h3>Log In</h3>
-                        <p>New Member? <a href="sign-up.html">signup here</a></p>
+                        <p>New Member? <a th:href="@{sign-up}">signup here</a></p>
                     </div>
-                    <form class="w-100">
+                    <form class="w-100" th:action="@{/test/login}" method="post">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-inner">
                                     <label>Enter Your Email *</label>
-                                    <input type="email" placeholder="Enter Your Email">
+                                    <input type="email" name="email" placeholder="Enter Your Email" required>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-inner">
                                     <label>Password *</label>
-                                    <input type="password" name="password" id="password" placeholder="Password"/>
+                                    <input type="password" name="password" id="password" placeholder="Password" required/>
                                     <i class="bi bi-eye-slash" id="togglePassword"></i>
                                 </div>
                             </div>
@@ -377,5 +377,5 @@
 <script src="../js/main.js"></script>
 </body>
 
-<!-- Mirrored from demo.egenslab.com/html/scooby/preview/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:17 GMT -->
+
 </html>

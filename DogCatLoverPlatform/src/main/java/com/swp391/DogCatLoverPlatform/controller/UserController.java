@@ -98,13 +98,32 @@ public class UserController {
     }
 
     @PostMapping (value = "/sign-up-add")
-    public String addTodo(HttpServletRequest req){
+    public String addTodo(HttpServletRequest req,Model model){
+        boolean isSucces = false;
         String email = req.getParameter("email");
-        String fullname = req.getParameter("fullName");
+        String fullName = req.getParameter("fullName");
+        String userName = req.getParameter("userName");
         String password = req.getParameter("password");
-        String username = req.getParameter("userName");
-        userService.addUser(fullname,password,email,username);
-        return "redirect:/DogCatLoverPlatform/Login";
+        String password2 = req.getParameter("password2");
+
+        if(password2.equals(password) && userService.checkEmailExist(email) == false){
+            userService.addUser(fullName, password, email, userName);
+            isSucces = true;
+        }
+
+        model.addAttribute("isSuccess", isSucces);
+        return "redirect:/test/sign-up";
+    }
+
+    @PostMapping (value = "/login")
+    public String loginInto(HttpServletRequest req,Model model){
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        boolean check = userService.checkLogin(email,password);
+        if (check == true){
+            return "redirect:/test/home";
+        }
+            return "redirect:/test/login";
     }
 
     @GetMapping("/delete-user")

@@ -8,10 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 import java.util.List;
@@ -29,10 +28,18 @@ public class BlogController {
         return "blog-standard";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateBlog(@PathVariable int id, @RequestBody BlogUpdateDTO newBlog){
-        blogService.updateBlog(id,newBlog);
-        return new ResponseEntity<>("Update successfull",HttpStatus.OK);
+    @GetMapping("/{id}/edit")
+    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+        BlogDTO blogDTO = blogService.getBlogById(id);
+        model.addAttribute("blog", blogDTO);
+        return "update-blog-form";
+    }
+
+
+    @PostMapping("/{id}/edit")
+    public String updateBlog(@PathVariable("id") int id, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) {
+        blogService.updateBlog(id, blogUpdateDTO);
+        return "redirect:/blog-standard/" + id;
     }
 
 }

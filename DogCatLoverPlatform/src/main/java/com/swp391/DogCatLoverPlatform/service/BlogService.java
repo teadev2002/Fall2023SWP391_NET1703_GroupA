@@ -35,7 +35,6 @@ public class BlogService {
             blogDTO.setCreateDate(i.getCreateDate());
 
             UserDTO userDTO = new UserDTO();
-            userDTO.setId(i.getUserEntity().getId());
             userDTO.setUserName(i.getUserEntity().getUserName());
             blogDTO.setUserDTO(userDTO);
 
@@ -52,6 +51,10 @@ public class BlogService {
     public List<BlogDTO> GetBlogsPriceRange(double minPrice, double maxPrice) {
         // TODO Auto-generated method stub
         return null;
+    }
+    public BlogDTO getBlogById(int id){
+        BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
+        return modelMapperConfig.modelMapper().map(blogEntity,BlogDTO.class);
     }
 
     public void updateBlog(int id, BlogUpdateDTO blogUpdateDTO){

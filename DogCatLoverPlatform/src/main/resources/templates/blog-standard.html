@@ -251,7 +251,8 @@
 <!--                          for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>-->
                         <h4><a th:text="${blog.title}"></a></h4>
                         <p th:text="${blog.content}"></p>
-
+                        <a th:href="@{/{id}/edit(id=${blog.id})}">Update</a>
+                        </td>
                         <div class="more-btn">
                             <a href="blog-details.html"><span>Re</span>ad More</a>
                         </div>
