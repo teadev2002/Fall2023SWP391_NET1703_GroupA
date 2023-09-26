@@ -1,5 +1,6 @@
 package com.swp391.DogCatLoverPlatform.service;
 
+import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,21 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public UserDTO getUserByEmail(String email){
+        UserEntity user = userRepository.findByEmail(email);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUserName(user.getName());
+        userDTO.setFullName(user.getFullName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setAddress(user.getAddress());
+        userDTO.setImage(user.getImage());
+        userDTO.setPhone(user.getPhone());
+
+
+
+        return userDTO;
     }
 }
