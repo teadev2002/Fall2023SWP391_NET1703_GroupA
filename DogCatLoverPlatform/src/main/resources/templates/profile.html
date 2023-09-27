@@ -68,7 +68,7 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
+            <a th:href="@{/test/home}"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <ul class="menu-list">
-                <li><a href="index.html">Home</a></li>
+                <li><a th:href="@{/test/home}">Home</a></li>
 
                 <li><a href="about.html">About</a></li>
 
@@ -106,8 +106,8 @@
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="blog-standard.html">Exchange</a></li>
-                        <li><a href="blog-standard.html">Gift</a></li>
+                        <li><a th:href="@{/view}">Exchange</a></li>
+                        <li><a th:href="@{/view}">Gift</a></li>
                     </ul>
                 </li>
 
