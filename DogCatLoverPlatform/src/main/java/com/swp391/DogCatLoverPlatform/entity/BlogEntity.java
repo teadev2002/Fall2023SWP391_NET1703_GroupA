@@ -49,7 +49,7 @@ public class BlogEntity {
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name="id_blog_type",insertable = false, updatable = false) //Checked
+    @JoinColumn(name="id_blog_type") //Checked
     private BlogTypeEntity blogTypeEntity;  
 
     @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")   //Checked

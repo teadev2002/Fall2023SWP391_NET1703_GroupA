@@ -57,11 +57,7 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.4.4</version>
 		</dependency>
-<<<<<<< HEAD
 
-
-=======
->>>>>>> b3e421ed02465ff8a2f714f7e9206a85d209b5cf
 	</dependencies>
 
 	<build>

@@ -47,8 +47,10 @@ public class BlogService {
         return modelMapperConfig.modelMapper().map(blogEntity,BlogDTO.class);
     }
 
-    public BlogDTO createBlog(BlogDTO blogDTO) {
+    public BlogDTO createBlog(BlogDTO blogDTO, int blogTypeId) {
         BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
+        blogEntity.setBlogTypeEntity(new BlogTypeEntity()); // -- Quan trọng
+        blogEntity.getBlogTypeEntity().setId(blogTypeId);
         BlogEntity savedBlogEntity = blogRepository.save(blogEntity);
         BlogDTO createdBlog = modelMapperConfig.modelMapper().map(savedBlogEntity, BlogDTO.class);
         return createdBlog;
