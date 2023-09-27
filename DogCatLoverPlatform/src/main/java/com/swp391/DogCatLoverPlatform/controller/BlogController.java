@@ -56,7 +56,6 @@ public class BlogController {
     @PostMapping("/create")
     public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId) {
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId);
-
         return "redirect:/view" ;
     }
 
@@ -65,5 +64,6 @@ public class BlogController {
         blogService.deleteBlogById(id);
         return "redirect:/view";
     }
+
 
 }
