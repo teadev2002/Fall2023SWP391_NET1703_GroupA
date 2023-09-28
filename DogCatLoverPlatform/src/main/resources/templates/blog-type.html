@@ -307,7 +307,9 @@
                         </form>
 
                         <div class="more-btn mt-2">
+
                             <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><span>Re</span>ad More</a>
+
                         </div>
 
                     </div>
@@ -380,6 +382,7 @@
                                 </div>
                                 <div class="wc">
                                     <a href="blog-grid.html" th:text="${blog.createDate}"></a>
+
                                     <h6>
                                         <a href="blog-details.html" th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
                                     </h6>

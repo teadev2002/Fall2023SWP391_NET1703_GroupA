@@ -369,6 +369,7 @@
                                 </div>
                                 <div class="wc">
                                     <a href="blog-grid.html" th:text="${blog.createDate}"></a>
+
                                     <h6>
                                         <a href="blog-details.html" th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
                                     </h6>

@@ -88,4 +88,5 @@ public class BlogController {
         model.addAttribute("blog", blogDTO);
         return "blog-details";
     }
+
 }

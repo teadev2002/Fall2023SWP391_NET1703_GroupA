@@ -229,6 +229,7 @@
                     <div class="form-title">
                         <h3>Log In</h3>
                         <p>New Member? <a th:href="@{sign-up}">signup here</a></p>
+                        <div th:if="${param.check}">Đăng Nhập thất bại</div>
                     </div>
                     <form class="w-100" th:action="@{/index/login}" method="post">
                         <div class="row">
