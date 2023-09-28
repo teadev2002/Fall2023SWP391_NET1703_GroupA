@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/index")
 public class UserController {
 
 
@@ -109,9 +109,9 @@ public class UserController {
 
         }catch (Exception e){
             model.addAttribute("error","You didn't Login");
-            return "redirect:/test/login";
+            return "redirect:/index/login";
         }
-        return "redirect:/test/login";
+        return "redirect:/index/login";
     }
 
     @PostMapping(value ="/profile-update")
@@ -125,7 +125,7 @@ public class UserController {
         boolean isSuccess = userService.updateUser(fullname,username,phone,address,email);
 
 
-        return "redirect:/test/profile";
+        return "redirect:/index/profile";
     }
 
 
@@ -151,7 +151,7 @@ public class UserController {
         }
 
         model.addAttribute("isSuccess", isSucces);
-        return "redirect:/test/sign-up";
+        return "redirect:/index/sign-up";
     }
 
 
@@ -165,9 +165,9 @@ public class UserController {
             Cookie userCookie = new Cookie("User",email);
             userCookie.setMaxAge(3600); // Cookie will expire in 1 hour (you can adjust this as needed)
             resp.addCookie(userCookie);
-            return "redirect:/test/home";
+            return "redirect:/index/home";
         }
-        return "redirect:/test/login";
+        return "redirect:/index/login";
     }
 
     @GetMapping("/logout")
@@ -193,7 +193,7 @@ public class UserController {
         }
 
         // Redirect to the login page after logout
-        return "redirect:/test/login";
+        return "redirect:/index/login";
     }
 
 

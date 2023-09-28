@@ -66,34 +66,27 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
+            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" src="../images/header1-logo.svg"></a>
+                    <a th:href="@{/index/home}"><img alt="image" src="../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
                 </div>
             </div>
             <ul class="menu-list">
-                <li class="menu-item-has-children">
-                    <a href="#" class="drop-down">Home</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="index.html">Home One</a></li>
-                        <li><a href="index2.html">Home Two</a></li>
-                        <li><a href="index3.html">Home Three</a></li>
-                    </ul>
-                </li>
-                <li><a href="about.html">About</a></li>
+                <li><a th:href="@{/index/home}">Home</a></li>
+
+                <li><a th:href="@{/index/about}">About</a></li>
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
                         <li><a href="service-details.html">Daycare </a></li>
                         <li><a href="service-details.html">Grooming</a></li>
                         <li><a href="service-details.html">Boarding</a></li>
-                        <li><a href="service-details.html">Veterinary</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children active">

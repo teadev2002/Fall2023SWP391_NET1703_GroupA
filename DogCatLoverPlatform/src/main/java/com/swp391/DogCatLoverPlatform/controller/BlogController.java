@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 
 @Controller
+@RequestMapping("/blog")
 public class BlogController {
 
     @Autowired
@@ -42,7 +43,7 @@ public class BlogController {
     @PostMapping("/{id}/edit")
     public String updateBlog(@PathVariable("id") int id, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) {
         blogService.updateBlog(id, blogUpdateDTO);
-        return "redirect:/view";
+        return "redirect:/blog/view";
     }
     @GetMapping("/create")
     public String showCreateForm(Model model) {
@@ -56,13 +57,13 @@ public class BlogController {
     @PostMapping("/create")
     public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId) {
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId);
-        return "redirect:/view" ;
+        return "redirect:/blog/view" ;
     }
 
     @PostMapping("/{id}")
     public String deleteBlog(@PathVariable int id) {
         blogService.deleteBlogById(id);
-        return "redirect:/view";
+        return "redirect:/blog/view";
     }
 
 

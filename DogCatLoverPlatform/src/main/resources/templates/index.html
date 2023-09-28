@@ -67,12 +67,12 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a th:href="@{/test/home}"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
+            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" src="../images/header1-logo.svg"></a>
+                    <a th:href="@{/index/home}"><img alt="image" src="../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
@@ -80,9 +80,9 @@
             </div>
             <ul class="menu-list">
 
-                <li><a th:href="@{/test/home}">Home</a></li>
+                <li><a th:href="@{/index/home}">Home</a></li>
 
-                <li><a href="about.html">About</a></li>
+                <li><a th:href="@{/index/about}">About</a></li>
 
                 <li class="menu-item-has-children">
                     <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
@@ -106,8 +106,8 @@
                 <li class="menu-item-has-children">
                     <a href="#">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{/view}">Exchange</a></li>
-                        <li><a th:href="@{/view}">Gift</a></li>
+                        <li><a th:href="@{/blog/view}">Exchange</a></li>
+                        <li><a th:href="@{/blog/view}">Gift</a></li>
                     </ul>
                 </li>
 
@@ -177,7 +177,7 @@
                     </svg>
                 </a></li>
 
-                <li><a th:href="@{/test/profile}">
+                <li><a th:href="@{/index/profile}">
                     <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1585_341)">
                             <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
