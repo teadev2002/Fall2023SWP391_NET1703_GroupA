@@ -31,7 +31,7 @@ CREATE TABLE blog(
 	min_price double,
 	max_price double ,
 	status bit,
-	create_date date,
+	create_date DATETIME,
 	confirm bit,
 	
 	id_user_created int,
@@ -88,7 +88,7 @@ CREATE TABLE user_blog_comment(
 );
 
 ALTER TABLE users  ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
-ALTER TABLE blog ADD CONSTRAINT FK_id_user_blog FOREIGN KEY (id_user_create) REFERENCES users(id);
+ALTER TABLE blog ADD CONSTRAINT FK_id_user_blog FOREIGN KEY (id_user_created) REFERENCES users(id);
 ALTER TABLE booking ADD CONSTRAINT FK_id_blog_booking FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE booking ADD CONSTRAINT FK_id_user_booking FOREIGN KEY (id_user) REFERENCES users(id);
 ALTER TABLE booking_history ADD CONSTRAINT FK__booking_booking_history FOREIGN KEY (id_booking) REFERENCES booking(id);
