@@ -6,7 +6,7 @@ import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+//import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+//@RestController
 @Controller
 @RequestMapping("/index")
 public class UserController {
@@ -133,24 +133,24 @@ public class UserController {
         return "redirect:/index/profile";
     }
 
-    @GetMapping("/signinggoogle")
-    public Map<String, Object>currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
-        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
-        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
-        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
-        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-    }
-
-    public Root toPerson(Map<String, Object> map){
-        if(map== null){
-            return null;
-        }
-        Root root = new Root();
-        root.setEmail((String) map.get("email"));
-        root.setName((String) map.get("name"));
-        root.setPicture((String) map.get("picture"));
-        return root;
-    }
+//    @GetMapping("/signinggoogle")
+//    public Map<String, Object>currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
+//        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
+//    }
+//
+//    public Root toPerson(Map<String, Object> map){
+//        if(map== null){
+//            return null;
+//        }
+//        Root root = new Root();
+//        root.setEmail((String) map.get("email"));
+//        root.setName((String) map.get("name"));
+//        root.setPicture((String) map.get("picture"));
+//        return root;
+//    }
 
 
     @GetMapping("/sign-up")
