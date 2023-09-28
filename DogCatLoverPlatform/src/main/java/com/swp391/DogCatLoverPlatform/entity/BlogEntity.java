@@ -29,11 +29,10 @@ public class BlogEntity {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "min_price")
-    private double minPrice;
 
-    @Column(name = "max_price")
-    private double maxPrice;
+
+    @Column(name = "price")
+    private double  price;
 
     @Column(name = "status")
     private boolean status;

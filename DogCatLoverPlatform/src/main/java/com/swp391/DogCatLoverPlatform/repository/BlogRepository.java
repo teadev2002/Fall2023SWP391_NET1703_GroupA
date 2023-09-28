@@ -11,7 +11,7 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
 
         List<BlogEntity> findAll();
 
-        List<BlogEntity> findBymaxPriceBetween(double minPrice, double maxPrice);
+        //List<BlogEntity> findByPriceBetween(double minPrice, double maxPrice);
 
         List<BlogEntity> findByTitleContaining(String title);
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -113,6 +114,20 @@ public class UserController {
         return "redirect:/test/login";
     }
 
+    @PostMapping(value ="/profile-update")
+    public String profileUpdate(Model model, HttpServletRequest req){
+        String fullname = req.getParameter("fullName");
+        String username = req.getParameter("userName");
+        String address = req.getParameter("address");
+        String phone = req.getParameter("phone");
+        String email = req.getParameter("email");
+
+        boolean isSuccess = userService.updateUser(fullname,username,phone,address,email);
+
+
+        return "redirect:/test/profile";
+    }
+
 
     @GetMapping("/sign-up")
     public String listTodo(Model model){
@@ -139,6 +154,8 @@ public class UserController {
         return "redirect:/test/sign-up";
     }
 
+
+
     @PostMapping (value = "/login")
     public String loginInto(HttpServletRequest req, HttpServletResponse resp, Model model){
         String email = req.getParameter("email");
@@ -152,6 +169,33 @@ public class UserController {
         }
         return "redirect:/test/login";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req, HttpServletResponse resp) {
+        // Get the user's session
+        HttpSession session = req.getSession(false);
+
+        if (session != null) {
+            // Invalidate the session to log out the user
+            session.invalidate();
+        }
+
+        // Remove the "User" cookie by setting its max age to 0
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("User".equals(cookie.getName())) {
+                    cookie.setMaxAge(0); // Setting max age to 0 deletes the cookie
+                    resp.addCookie(cookie);
+                    break;
+                }
+            }
+        }
+
+        // Redirect to the login page after logout
+        return "redirect:/test/login";
+    }
+
 
     @GetMapping("/delete-user")
     public String deleteUser(HttpServletRequest req){
