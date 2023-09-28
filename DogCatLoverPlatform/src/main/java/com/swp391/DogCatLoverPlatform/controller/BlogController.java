@@ -80,4 +80,12 @@ public class BlogController {
         return "redirect:/blog/view";
     }
 
+    @GetMapping("/{id}/detail")
+    public String viewDetailsBlog(@PathVariable("id") int id, Model model) {
+        BlogDTO blogDTO = blogService.getBlogById(id);
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+        model.addAttribute("blog", blogDTO);
+        return "blog-details";
+    }
 }

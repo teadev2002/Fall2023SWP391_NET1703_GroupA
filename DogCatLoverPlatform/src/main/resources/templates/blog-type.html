@@ -278,7 +278,10 @@
                         <!--                          massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus-->
                         <!--                          for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>-->
                         <h4><a th:text="${blog.title}"></a></h4>
-                        <span style="margin-right: 4px;" th:text="${blog.content}"></span>
+
+                        <span style="margin-right: 4px;"
+                              th:text="${#strings.length(blog.content) > 100} ? ${blog.content.substring(0, 100) + '...'} : ${blog.content}">
+                        </span>
 
                         <!--Update-->
                         <a th:href="@{/blog/{id}/edit(id=${blog.id})}">
@@ -304,7 +307,7 @@
                         </form>
 
                         <div class="more-btn mt-2">
-                            <a href="blog-details.html"><span>Re</span>ad More</a>
+                            <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><span>Re</span>ad More</a>
                         </div>
 
                     </div>
@@ -344,26 +347,25 @@
                         <div class="widget-title">
                             <h3>Category</h3>
                         </div>
+
                         <ul class="wp-block-categoris-cloud">
-                            <li><a href="blog-grid.html"><span>Pet Grooming</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Exchange</span> <span><span
                                     class="number-of-categoris">(30)</span><i
                                     class="bi bi-arrow-right-short"></i></span></a></li>
-                            <li><a href="blog-grid.html"><span>Medical Care</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Gift</span> <span><span
                                     class="number-of-categoris">(18)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Bording</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
                                     class="number-of-categoris">(21)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Grooming</span> <span><span
                                     class="number-of-categoris">(25)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Walking</span> <span><span
+                            <li><a href="blog-grid.html"><span>Pet Boarding</span> <span><span
                                     class="number-of-categoris">(29)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Education Pet</span> <span><span
-                                    class="number-of-categoris">(31)</span><i
-                                    class="bi bi-arrow-right-short"></i></span> </a></li>
                         </ul>
+
                     </div>
 
                     <div class="single-widgets widget_egns_recent_post mb-30">
@@ -378,7 +380,8 @@
                                 </div>
                                 <div class="wc">
                                     <a href="blog-grid.html" th:text="${blog.createDate}"></a>
-                                    <h6><a href="blog-details.html" th:text="${blog.title}"></a>
+                                    <h6>
+                                        <a href="blog-details.html" th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>

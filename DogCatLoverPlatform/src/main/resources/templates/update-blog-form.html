@@ -322,6 +322,7 @@
     <div class="inner-div">
         <h1 class="text-center text-orange">Edit Blog</h1>
         <form th:action="@{/blog/{id}/edit(id=${blog.id})}" th:object="${blog}" method="post">
+
             <div class="mb-3 input-group">
                 <div class="input-group-prepend input-group-addon">
                         <span class="input-group-text">
@@ -330,6 +331,7 @@
                 </div>
                 <input class="form-control" type="text" id="title" name="title" th:field="*{title}">
             </div>
+
             <div class="mb-2 input-group">
                 <div class="input-group-prepend input-group-addon">
                         <span class="input-group-text">
@@ -359,7 +361,7 @@
                 <div style="margin-right: 12px;">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                <a class="btn btn-primary" href="/view">Quay lại</a>
+                <a class="btn btn-primary" href="/blog/view">Quay lại</a>
             </div>
         </form>
     </div>
