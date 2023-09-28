@@ -128,11 +128,13 @@
                             <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                         </svg>
                     </a></li>
+
                     <li><a href>
                         <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z"/>
                         </svg>
                     </a></li>
+
                     <li><a href>
                         <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_1585_341)">
@@ -142,12 +144,14 @@
                         </svg>
                     </a></li>
                 </ul>
+
                 <form class="mobile-menu-form">
                     <div class="input-with-btn d-flex flex-column">
                         <input type="text" placeholder="Search here...">
                         <button class="primary-btn1" type="submit">Search</button>
                     </div>
                 </form>
+
             </div>
         </div>
         <div class="nav-right d-flex jsutify-content-end align-items-center">
@@ -182,7 +186,7 @@
                     </svg>
                 </a></li>
 
-                <li><a th:href="@{/index/profile}">
+                <li><a th:href="@{/index/login}">
                     <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1585_341)">
                             <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
@@ -248,7 +252,7 @@
                 </div>
 
 
-                <div class="blog-st-card mb-70" th:each="blog : ${listBlog}">
+                <div class="blog-st-card mb-70" th:each="blog : ${blogs}">
                     <div class="blog-img">
                         <img class="img-fluid" src="../images/blog/blog-st-1.png" alt>
                         <div class="category">
@@ -256,17 +260,23 @@
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>
-
                     <div class="blog-content">
-                        <!--Content-->
+
                         <div class="blog-meta">
                             <ul>
+                                <!--                              <li><a href="blog-grid.html">August 12, 2022</a></li>-->
+                                <!--                              <li><a href="blog-grid.html">By, Nikon Brook</a></li>-->
                                 <li><a th:text="${blog.createDate}"></a></li>
                                 <li><a th:text="${blog.userName}"></a></li>
 
                             </ul>
                         </div>
 
+                        <!--                        <h4><a href="blog-details.html">Luctus justo quis feugiat lacus orcha ornare auguelon Intege gon-->
+                        <!--                            form together nicelon jogona.</a></h4>-->
+                        <!--                        <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi-->
+                        <!--                          massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus-->
+                        <!--                          for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>-->
                         <h4><a th:text="${blog.title}"></a></h4>
                         <span style="margin-right: 4px;" th:text="${blog.content}"></span>
 
@@ -283,15 +293,19 @@
                         <!--Delete-->
                         <form th:action="@{/blog/{id}(id=${blog.id})}" method="post">
                             <input type="hidden" name="_method" value="delete"/>
-                            <button type="submit" style="height: 0px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                                    <style> {
-                                        fill: #384352
-                                    }</style>
-                                    <path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
-                                </svg>
-                            </button>
+                               <button type="submit" style="height: 0px;">
+                                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                       <style> {
+                                           fill: #384352
+                                       }</style>
+                                       <path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
+                                   </svg>
+                               </button>
                         </form>
+
+                        <div class="more-btn mt-2">
+                            <a href="blog-details.html"><span>Re</span>ad More</a>
+                        </div>
 
                     </div>
                 </div>
@@ -325,6 +339,7 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="single-widgets widget_egns_categoris mb-30">
                         <div class="widget-title">
                             <h3>Category</h3>
@@ -367,6 +382,8 @@
                                     </h6>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
 

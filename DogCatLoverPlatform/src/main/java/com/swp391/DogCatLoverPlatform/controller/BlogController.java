@@ -17,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/blog")
+
 public class BlogController {
 
     @Autowired
@@ -29,7 +30,20 @@ public class BlogController {
     public String GetAllBlogs(Model model) {
         List<BlogDTO> list = blogService.GetAllBlog();
         model.addAttribute("listBlog", list);
+
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+
         return "blog-standard";
+    }
+    @GetMapping("/byType")
+    public String showBlogsByType(@RequestParam("type") String type, Model model) {
+        List<BlogDTO> blogs = blogService.getBlogsByType(type);
+        model.addAttribute("blogs", blogs);
+
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+        return "blog-type";
     }
 
     @GetMapping("/{id}/edit")
@@ -65,7 +79,5 @@ public class BlogController {
         blogService.deleteBlogById(id);
         return "redirect:/blog/view";
     }
-
-
 
 }

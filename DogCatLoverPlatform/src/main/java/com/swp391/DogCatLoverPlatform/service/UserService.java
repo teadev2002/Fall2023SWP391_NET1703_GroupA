@@ -23,6 +23,7 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(password);
         user.setName(username);
+        user.setImage("team-001.jpg");
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setId(1);
         user.setRoleEntity(roleEntity);
