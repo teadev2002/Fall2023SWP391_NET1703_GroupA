@@ -147,7 +147,7 @@ public class BlogService {
 
             return blogDTOs;
         } else {
-          
+
             return new ArrayList<>();
         }
     }

@@ -31,7 +31,7 @@ CREATE TABLE blog(
 	min_price double,
 	max_price double ,
 	status bit,
-	create_date DATETIME,
+	create_date DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	confirm bit,
 	
 	id_user_created int,
