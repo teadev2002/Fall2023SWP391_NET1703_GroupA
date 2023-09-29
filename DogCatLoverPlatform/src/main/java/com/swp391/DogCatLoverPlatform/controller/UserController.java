@@ -1,23 +1,29 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 
+import com.swp391.DogCatLoverPlatform.dto.Root;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
+//@RestController
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/index")
 public class UserController {
 
 
@@ -108,10 +114,43 @@ public class UserController {
 
         }catch (Exception e){
             model.addAttribute("error","You didn't Login");
-            return "redirect:/test/login";
+            return "redirect:/index/login";
         }
-        return "redirect:/test/login";
+        return "redirect:/index/login";
     }
+
+    @PostMapping(value ="/profile-update")
+    public String profileUpdate(Model model, HttpServletRequest req){
+        String fullname = req.getParameter("fullName");
+        String username = req.getParameter("userName");
+        String address = req.getParameter("address");
+        String phone = req.getParameter("phone");
+        String email = req.getParameter("email");
+
+        boolean isSuccess = userService.updateUser(fullname,username,phone,address,email);
+
+
+        return "redirect:/index/profile";
+    }
+
+//    @GetMapping("/signinggoogle")
+//    public Map<String, Object>currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
+//        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
+//    }
+//
+//    public Root toPerson(Map<String, Object> map){
+//        if(map== null){
+//            return null;
+//        }
+//        Root root = new Root();
+//        root.setEmail((String) map.get("email"));
+//        root.setName((String) map.get("name"));
+//        root.setPicture((String) map.get("picture"));
+//        return root;
+//    }
 
 
     @GetMapping("/sign-up")
@@ -123,7 +162,7 @@ public class UserController {
 
     @PostMapping (value = "/sign-up-add")
     public String addTodo(HttpServletRequest req,Model model){
-        boolean isSucces = false;
+        boolean isSuccess = false;
         String email = req.getParameter("email");
         String fullName = req.getParameter("fullName");
         String userName = req.getParameter("userName");
@@ -132,12 +171,16 @@ public class UserController {
 
         if(password2.equals(password) && userService.checkEmailExist(email) == false){
             userService.addUser(fullName, password, email, userName);
-            isSucces = true;
+            isSuccess = true;
+            model.addAttribute("isSuccess", isSuccess);
+            return "redirect:/index/login";
         }
 
-        model.addAttribute("isSuccess", isSucces);
-        return "redirect:/test/sign-up";
+        model.addAttribute("isSuccess", isSuccess);
+        return "redirect:/index/sign-up?isSuccess";
     }
+
+
 
     @PostMapping (value = "/login")
     public String loginInto(HttpServletRequest req, HttpServletResponse resp, Model model){
@@ -148,10 +191,37 @@ public class UserController {
             Cookie userCookie = new Cookie("User",email);
             userCookie.setMaxAge(3600); // Cookie will expire in 1 hour (you can adjust this as needed)
             resp.addCookie(userCookie);
-            return "redirect:/test/home";
+            return "redirect:/index/home";
         }
-        return "redirect:/test/login";
+        return "redirect:/index/login?check";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req, HttpServletResponse resp) {
+        // Get the user's session
+        HttpSession session = req.getSession(false);
+
+        if (session != null) {
+            // Invalidate the session to log out the user
+            session.invalidate();
+        }
+
+        // Remove the "User" cookie by setting its max age to 0
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("User".equals(cookie.getName())) {
+                    cookie.setMaxAge(0); // Setting max age to 0 deletes the cookie
+                    resp.addCookie(cookie);
+                    break;
+                }
+            }
+        }
+
+        // Redirect to the login page after logout
+        return "redirect:/index/login";
+    }
+
 
     @GetMapping("/delete-user")
     public String deleteUser(HttpServletRequest req){

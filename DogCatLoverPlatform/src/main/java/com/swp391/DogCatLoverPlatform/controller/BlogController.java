@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 
 @Controller
+@RequestMapping("/blog")
 
 public class BlogController {
 
@@ -56,7 +57,7 @@ public class BlogController {
     @PostMapping("/{id}/edit")
     public String updateBlog(@PathVariable("id") int id, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) {
         blogService.updateBlog(id, blogUpdateDTO);
-        return "redirect:/view";
+        return "redirect:/blog/view";
     }
     @GetMapping("/create")
     public String showCreateForm(Model model) {
@@ -70,16 +71,44 @@ public class BlogController {
     @PostMapping("/create")
     public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId) {
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId);
-        return "redirect:/view" ;
+        return "redirect:/blog/view" ;
     }
 
     @PostMapping("/{id}")
     public String deleteBlog(@PathVariable int id) {
         blogService.deleteBlogById(id);
-        return "redirect:/view";
+        return "redirect:/blog/view";
     }
 
+    @GetMapping("/{id}/detail")
+    public String viewDetailsBlog(@PathVariable("id") int id, Model model) {
+        BlogDTO blogDTO = blogService.getBlogById(id);
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+        model.addAttribute("blog", blogDTO);
+        return "blog-details";
+    }
 
+    @GetMapping("/search")
+    public String viewSearch(){
+        return "redirect:/blog/view";
+    }
 
+    @PostMapping("/search")
+    public String searchBlogByTitle(@RequestParam("title") String title ,Model model){
+        if(title.trim().isEmpty()){
+            List<BlogDTO> list = blogService.GetAllBlog();
+            model.addAttribute("listBlog", list);
+        }else{
+            List<BlogDTO> list = blogService.GetBlogsByTitle(title);
+            if(list.isEmpty()){
+                model.addAttribute("msg", "Không tìm thấy kết quả!!");
+            }else{
+                model.addAttribute("listBlogs", list);
+            }
+
+        }
+        return "blog-standard";
+    }
 
 }

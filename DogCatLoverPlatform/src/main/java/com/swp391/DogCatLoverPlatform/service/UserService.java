@@ -1,6 +1,7 @@
 package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(password);
         user.setName(username);
+        user.setImage("team-001.jpg");
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setId(1);
+        user.setRoleEntity(roleEntity);
         userRepository.save(user);
     }
 
@@ -60,9 +65,21 @@ public class UserService {
         userDTO.setAddress(user.getAddress());
         userDTO.setImage(user.getImage());
         userDTO.setPhone(user.getPhone());
-
+        userDTO.setRoleDTO(user.getRoleEntity().getName());
+        userDTO.setId_role(user.getRoleEntity().getId());
 
 
         return userDTO;
+    }
+
+
+    public boolean updateUser(String fullname, String username, String phone, String address, String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        userEntity.setFullName(fullname);
+        userEntity.setName(username);
+        userEntity.setAddress(address);
+        userEntity.setPhone(phone);
+        userRepository.save(userEntity);
+        return true;
     }
 }
