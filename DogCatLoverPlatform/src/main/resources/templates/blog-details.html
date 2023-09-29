@@ -230,8 +230,9 @@
                 <div class="blog-details-wrap mb-120">
 
                     <div class="post-thum">
-                        <img class="img-fluid" src="../../images/blog/blog-dt-img.png" alt="blog-dt-img">
+                        <img class="img-fluid" th:src="@{'../../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
+                            <a style="margin-right: 12px;" th:text="${blog.price} + '₫'"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>

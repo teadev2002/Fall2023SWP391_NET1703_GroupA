@@ -29,8 +29,6 @@ public class BlogEntity {
     @Column(name = "image")
     private String image;
 
-
-
     @Column(name = "price")
     private double  price;
 

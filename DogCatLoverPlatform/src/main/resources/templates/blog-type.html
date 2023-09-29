@@ -255,9 +255,9 @@
 
                 <div class="blog-st-card mb-70" th:each="blog : ${blogs}">
                     <div class="blog-img">
-                        <img class="img-fluid" src="../images/blog/blog-st-1.png" alt>
+                        <img class="img-fluid" th:src="@{'../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
-                            <!--                            <a href="blog-grid.html">Medical Care</a>-->
+                            <a style="margin-right: 12px;" th:text="${blog.price} + '₫'"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>
@@ -265,11 +265,8 @@
 
                         <div class="blog-meta">
                             <ul>
-                                <!--                              <li><a href="blog-grid.html">August 12, 2022</a></li>-->
-                                <!--                              <li><a href="blog-grid.html">By, Nikon Brook</a></li>-->
                                 <li><a th:text="${blog.createDate}"></a></li>
                                 <li><a th:text="${blog.userName}"></a></li>
-
                             </ul>
                         </div>
 

@@ -253,9 +253,9 @@
 
                 <div class="blog-st-card mb-70" th:each="blog : ${#lists.isEmpty(listBlogs) ? listBlog : listBlogs}">
                     <div class="blog-img">
-                        <img class="img-fluid" src="../images/blog/blog-st-1.png" alt>
+                        <img class="img-fluid" th:src="@{'../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
-                            <!--                            <a href="blog-grid.html">Medical Care</a>-->
+                            <a style="margin-right: 12px;" th:text="${blog.price} + '₫'"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>

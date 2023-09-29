@@ -21,7 +21,7 @@ public class BlogDTO {
     private String blogTypeName;
     private int id;
     private int blogTypeId;
-    //private double price;
+    private String price;
     private boolean status;
     //private boolean confirm;
 

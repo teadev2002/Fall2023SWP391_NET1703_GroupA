@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -67,9 +69,11 @@ public class BlogController {
         return "create-blog-form";
     }
 
-    // POST request to handle the create blog form submission
     @PostMapping("/create")
-    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId) {
+    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file) throws IOException {
+        // Lưu hình ảnh vào cơ sở dữ liệu và lấy đường dẫn
+        String imagePath = blogService.saveImageAndReturnPath(file);
+        blogDTO.setImage(imagePath);
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId);
         return "redirect:/blog/view" ;
     }

@@ -11,7 +11,11 @@ import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.BlogTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Service
@@ -31,8 +35,15 @@ public class BlogService {
         Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
         List<BlogDTO> listBlogDTO = new ArrayList<>();
 
-        for (BlogEntity i : listBlog) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(i, BlogDTO.class);
+        // Định dạng giá tiền ví dụ: 1560000 --> 1.560.000
+        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
+
+        for (BlogEntity blogEntity : listBlog) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            double price = blogEntity.getPrice();
+            String formattedPrice = decimalFormat.format(price);
+            blogDTO.setPrice(formattedPrice);
+
             listBlogDTO.add(blogDTO);
         }
         return listBlogDTO;
@@ -78,9 +89,15 @@ public class BlogService {
         Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
         List<BlogDTO> listBlogDTO = new ArrayList<>();
 
+        // Định dạng giá tiền ví dụ: 1560000 --> 1.560.000
+        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
+
         // mapper
         for (BlogEntity i : listBlog) {
             BlogDTO blogDTO = modelMapperConfig.modelMapper().map(i, BlogDTO.class);
+            double price = i.getPrice();
+            String formattedPrice = decimalFormat.format(price);
+            blogDTO.setPrice(formattedPrice);
             listBlogDTO.add(blogDTO);
         }
         return listBlogDTO;
@@ -122,13 +139,18 @@ public class BlogService {
     public List<BlogDTO> getBlogsByType(String name) {
         BlogTypeEntity blogTypeEntity = blogTypeRepository.findByName(name);
 
+        // Định dạng giá tiền ví dụ: 1560000 --> 1.560.000
+        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
+
         if (blogTypeEntity != null) {
             List<BlogEntity> blogEntities = blogRepository.findByBlogTypeEntity(blogTypeEntity);
-
             Collections.sort(blogEntities, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
             List<BlogDTO> blogDTOs = new ArrayList<>();
             for (BlogEntity blogEntity : blogEntities) {
                 BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+                double price = blogEntity.getPrice();
+                String formattedPrice = decimalFormat.format(price);
+                blogDTO.setPrice(formattedPrice);
                 blogDTOs.add(blogDTO);
             }
 
@@ -139,6 +161,12 @@ public class BlogService {
         }
     }
 
-
+    public String saveImageAndReturnPath(MultipartFile file) throws IOException {
+        String fileName = file.getOriginalFilename();
+        String imagePath = fileName;
+        File destination = new File(imagePath);
+        file.transferTo(destination);
+        return imagePath;
+    }
 
 }
