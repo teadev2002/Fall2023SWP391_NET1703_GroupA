@@ -270,11 +270,6 @@
                             </ul>
                         </div>
 
-                        <!--                        <h4><a href="blog-details.html">Luctus justo quis feugiat lacus orcha ornare auguelon Intege gon-->
-                        <!--                            form together nicelon jogona.</a></h4>-->
-                        <!--                        <p>Pellentesque maximus augue orci, quis congue purus iaculison id. Maecenas eu lorem quisesdoi-->
-                        <!--                          massal molestie dultona vulputate in sitagi amet diam. Cras eu odio sit amet ipsum cursus-->
-                        <!--                          for that gone posuere scelerisque justo in accumsan an tobanikon orphagomton.</p>-->
                         <h4><a th:text="${blog.title}"></a></h4>
 
                         <span style="margin-right: 4px;"
@@ -379,7 +374,7 @@
                         <div class="recent-post-wraper" th:each="blog : ${latestBlogs}">
                             <div class="widget-cnt mb-25">
                                 <div class="wi">
-                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img src="../images/blog/blog-sidebar-1.png"
+                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img th:src="@{'../images/blog/' + ${blog.imageSidebar}}"
                                                                                           alt="image"></a>
                                 </div>
                                 <div class="wc">

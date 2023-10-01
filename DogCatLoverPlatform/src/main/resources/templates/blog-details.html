@@ -455,7 +455,7 @@
                         <div class="recent-post-wraper" th:each="blog : ${latestBlogs}">
                             <div class="widget-cnt mb-25">
                                 <div class="wi">
-                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img src="../../images/blog/blog-sidebar-1.png"
+                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img th:src="@{'../../images/blog/' + ${blog.imageSidebar}}"
                                                                                           alt="image"></a>
                                 </div>
                                 <div class="wc">

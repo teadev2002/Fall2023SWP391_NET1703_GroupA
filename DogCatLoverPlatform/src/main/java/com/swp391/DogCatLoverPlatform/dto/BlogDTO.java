@@ -16,6 +16,7 @@ public class BlogDTO {
     private String title;
     private String content;
     private String image;
+    private String imageSidebar;
     private Date createDate;
     private String userName;
     private String blogTypeName;

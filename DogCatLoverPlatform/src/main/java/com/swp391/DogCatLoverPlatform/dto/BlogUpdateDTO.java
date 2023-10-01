@@ -11,4 +11,5 @@ public class BlogUpdateDTO {
     private String content;
     private boolean status;
     private double price;
+
 }
