@@ -28,9 +28,7 @@ public class BlogService {
 
     public List<BlogDTO> GetAllBlog() {
         List<BlogEntity> listBlog = blogRepository.findAll();
-
         Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
-
         List<BlogDTO> listBlogDTO = new ArrayList<>();
 
         for (BlogEntity i : listBlog) {
@@ -75,31 +73,19 @@ public class BlogService {
         blogRepository.save(blogEntity);
     }
 
-//    public List<BlogDTO> GetBlogsByTitle(String title) {
-//        List<BlogEntity> listBlog = blogRepository.findByTitleContaining(title);
-//        List<BlogDTO> listBlogDTO = new ArrayList<>();
-//        // mapper
-//        for (BlogEntity i : listBlog) {
-//            BlogDTO blogDTO = new BlogDTO();
-//            blogDTO.setId(i.getId());
-//            blogDTO.setImage(i.getImage());
-//            blogDTO.setPrice(i.getMaxPrice());
-//            blogDTO.setTitle(i.getTitle());
-//
-//            UserDTO userDTO = new UserDTO();
-//            userDTO.setId(i.getUserEntity().getId());
-//            userDTO.setUserName(i.getUserEntity().getUserName());
-//            blogDTO.setUserDTO(userDTO);
-//
-//            BlogTypeDTO blogTypeDTO = new BlogTypeDTO();
-//            blogTypeDTO.setId(i.getBlogTypeEntity().getId());
-//            blogTypeDTO.setName(i.getBlogTypeEntity().getName());
-//            blogDTO.setBlogTypeDTO(blogTypeDTO);
-//
-//            listBlogDTO.add(blogDTO);
-//        }
-//        return listBlogDTO;
-//    }
+    public List<BlogDTO> GetBlogsByTitle(String title) {
+        List<BlogEntity> listBlog = blogRepository.findByTitleContaining(title);
+        Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+        List<BlogDTO> listBlogDTO = new ArrayList<>();
+
+        // mapper
+        for (BlogEntity i : listBlog) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(i, BlogDTO.class);
+            listBlogDTO.add(blogDTO);
+        }
+        return listBlogDTO;
+    }
+
 //
 //    public List<BlogDTO> GetProfileBlogs(String userName) {
 //        // TODO Auto-generated method stub

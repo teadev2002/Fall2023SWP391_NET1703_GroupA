@@ -89,4 +89,26 @@ public class BlogController {
         return "blog-details";
     }
 
+    @GetMapping("/search")
+    public String viewSearch(){
+        return "redirect:/blog/view";
+    }
+
+    @PostMapping("/search")
+    public String searchBlogByTitle(@RequestParam("title") String title ,Model model){
+        if(title.trim().isEmpty()){
+            List<BlogDTO> list = blogService.GetAllBlog();
+            model.addAttribute("listBlog", list);
+        }else{
+            List<BlogDTO> list = blogService.GetBlogsByTitle(title);
+            if(list.isEmpty()){
+                model.addAttribute("msg", "Không tìm thấy kết quả!!");
+            }else{
+                model.addAttribute("listBlogs", list);
+            }
+
+        }
+        return "blog-standard";
+    }
+
 }

@@ -1,19 +1,29 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 
+import com.google.gson.Gson;
 import com.swp391.DogCatLoverPlatform.dto.Root;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.UserService;
+import com.swp391.DogCatLoverPlatform.util.JwtHelper;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+//import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.SecretKey;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,14 +31,20 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+//@RestController
 @Controller
 @RequestMapping("/index")
 public class UserController {
 
+    @Autowired
+    private JwtHelper jwtHelper;
+
 
     @Autowired
     UserService userService;
+
+
+    private Gson gson = new Gson();
 
     @GetMapping("/home")
     public String hello(){
@@ -133,24 +149,24 @@ public class UserController {
         return "redirect:/index/profile";
     }
 
-    @GetMapping("/signinggoogle")
-    public Map<String, Object>currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
-        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
-        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
-        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
-        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-    }
-
-    public Root toPerson(Map<String, Object> map){
-        if(map== null){
-            return null;
-        }
-        Root root = new Root();
-        root.setEmail((String) map.get("email"));
-        root.setName((String) map.get("name"));
-        root.setPicture((String) map.get("picture"));
-        return root;
-    }
+//    @GetMapping("/signinggoogle")
+//    public Map<String, Object>currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
+//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
+//        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
+//    }
+//
+//    public Root toPerson(Map<String, Object> map){
+//        if(map== null){
+//            return null;
+//        }
+//        Root root = new Root();
+//        root.setEmail((String) map.get("email"));
+//        root.setName((String) map.get("name"));
+//        root.setPicture((String) map.get("picture"));
+//        return root;
+//    }
 
 
     @GetMapping("/sign-up")
@@ -182,18 +198,52 @@ public class UserController {
 
 
 
-    @PostMapping (value = "/login")
+    @PostMapping ( "/login")
     public String loginInto(HttpServletRequest req, HttpServletResponse resp, Model model){
+//        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+//        String secrectString = Encoders.BASE64.encode(key.getEncoded());
+//
+//        System.out.println("Kiem tra "+secrectString);
+
+
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        boolean check = userService.checkLogin(email,password);
-        if (check == true){
-            Cookie userCookie = new Cookie("User",email);
-            userCookie.setMaxAge(3600); // Cookie will expire in 1 hour (you can adjust this as needed)
-            resp.addCookie(userCookie);
+//        boolean check = userService.checkLogin(email,password);
+//        if (check == true){
+//            Cookie userCookie = new Cookie("User",email);
+//            userCookie.setMaxAge(3600); // Cookie will expire in 1 hour (you can adjust this as needed)
+//            resp.addCookie(userCookie);
+//            return "redirect:/index/home";
+//        }
+//        return "redirect:/index/login?check";
+        boolean check = false;
+        UsernamePasswordAuthenticationToken authen = new UsernamePasswordAuthenticationToken(email,password);
+        authenticationManager.authenticate(authen);
+
+        //Lấy danh sách role đã lưu từ security context folder khi AuthenManager chứng thực thành công
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
+//        String jsonRole = gson.toJson(roles);
+//
+//        String token = jwtHelper.generateToken(jsonRole);
+
+        if(authenticationManager != null){
+            Cookie cookie = new Cookie("User", email);
+            cookie.setMaxAge(3600);
+            resp.addCookie(cookie);
+            //Lấy danh sách role đã lưu từ security context folder khi AuthenManager chứng thực thành công
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
+
+
+            String jsonRole = gson.toJson(roles);
+
+            String token = jwtHelper.generateToken(jsonRole);
+            System.out.println(token);
             return "redirect:/index/home";
         }
         return "redirect:/index/login?check";
+
     }
 
     @GetMapping("/logout")
@@ -228,6 +278,17 @@ public class UserController {
         int id = Integer.parseInt(req.getParameter("id"));
         userService.deleteUser(id);
         return "redirect:/DogCatLoverPlatform/Sign-up";
+    }
+
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> signin(@RequestParam String email, @RequestParam String password){
+        UsernamePasswordAuthenticationToken authen = new UsernamePasswordAuthenticationToken(email,password);
+        authenticationManager.authenticate(authen);
+        return new ResponseEntity<>("Hello Signup", HttpStatus.OK);
     }
 
 }
