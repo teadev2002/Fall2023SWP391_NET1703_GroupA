@@ -28,8 +28,7 @@ CREATE TABLE blog(
 	title varchar(100),
 	content text,
 	image varchar(255),
-	min_price double,
-	max_price double ,
+	price double,
 	status bit,
 	create_date DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	confirm bit,
@@ -73,7 +72,7 @@ CREATE TABLE booking_history(
 CREATE TABLE comment(
 	id int auto_increment,
 	description text,
-	create_date Date,
+	create_date DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	rating int,
 	id_user int,
 	primary key(id)
@@ -97,3 +96,14 @@ ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_user_user_blog_comment FOREIG
 ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_blog_user_blog_comment FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_comment_user_blog_comment FOREIGN KEY (id_comment) REFERENCES comment(id);
 ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
+
+
+
+
+SELECT comment.*, users.user_name
+FROM comment
+JOIN user_blog_comment ON comment.id = user_blog_comment.id_comment
+JOIN users ON user_blog_comment.id_user = users.id
+WHERE user_blog_comment.id_blog = :id_blog;
+
+

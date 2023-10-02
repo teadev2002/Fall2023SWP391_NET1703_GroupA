@@ -20,5 +20,6 @@ public class CommentDTO {
     private Date createDate;
     private int rating;
     UserBlogCommentDTO userBlogCommentDTO;
-    private UserDTO userEntity_CommentDTO;
+    private UserDTO userDTO;
+    private String userName;
 }
