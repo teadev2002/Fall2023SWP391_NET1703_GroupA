@@ -10,9 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -55,7 +58,7 @@ public class BlogController {
 
 
     @PostMapping("/{id}/edit")
-    public String updateBlog(@PathVariable("id") int id, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) {
+    public String updateBlog(@PathVariable("id") int id, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) throws ParseException {
         blogService.updateBlog(id, blogUpdateDTO);
         return "redirect:/blog/view";
     }
@@ -67,9 +70,13 @@ public class BlogController {
         return "create-blog-form";
     }
 
-    // POST request to handle the create blog form submission
     @PostMapping("/create")
-    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId) {
+    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file, @RequestParam("file-sidebar") MultipartFile fileSidebar) throws IOException {
+        // Lưu hình ảnh vào cơ sở dữ liệu và lấy đường dẫn
+        String imagePath = blogService.saveImageAndReturnPath(file);
+        String imageSidebar = blogService.saveImageAndReturnPath(fileSidebar);
+        blogDTO.setImage(imagePath);
+        blogDTO.setImageSidebar(imageSidebar);
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId);
         return "redirect:/blog/view" ;
     }

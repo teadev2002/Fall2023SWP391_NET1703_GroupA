@@ -253,9 +253,9 @@
 
                 <div class="blog-st-card mb-70" th:each="blog : ${#lists.isEmpty(listBlogs) ? listBlog : listBlogs}">
                     <div class="blog-img">
-                        <img class="img-fluid" src="../images/blog/blog-st-1.png" alt>
+                        <img class="img-fluid" th:src="@{'../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
-                            <!--                            <a href="blog-grid.html">Medical Care</a>-->
+                            <a style="margin-right: 12px;" th:text="${blog.price} + '₫'"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>
@@ -306,7 +306,7 @@
                 </div>
 
                 <!-- Thông báo lỗi tìm kiếm kết quả-->
-                <p style="color: red; font-family: var(--font-dosis);" th:text="${msg}"></p>
+                <p style="color: red; font-family: Helvetica; font-size: 14px;" th:text="${msg}"></p>
 
                 <div class="paginations-area d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
@@ -372,7 +372,7 @@
                         <div class="recent-post-wraper" th:each="blog : ${latestBlogs}">
                             <div class="widget-cnt mb-25">
                                 <div class="wi">
-                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img src="../images/blog/blog-sidebar-1.png"
+                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img th:src="@{'../images/blog/' + ${blog.imageSidebar}}"
                                                                      alt="image"></a>
                                 </div>
                                 <div class="wc">

@@ -10,4 +10,6 @@ public class BlogUpdateDTO {
     private String title;
     private String content;
     private boolean status;
+    private double price;
+
 }

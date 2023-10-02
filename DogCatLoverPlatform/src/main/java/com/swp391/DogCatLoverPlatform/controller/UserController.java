@@ -200,33 +200,11 @@ public class UserController {
 
     @PostMapping ( "/login")
     public String loginInto(HttpServletRequest req, HttpServletResponse resp, Model model){
-//        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//        String secrectString = Encoders.BASE64.encode(key.getEncoded());
-//
-//        System.out.println("Kiem tra "+secrectString);
-
-
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-//        boolean check = userService.checkLogin(email,password);
-//        if (check == true){
-//            Cookie userCookie = new Cookie("User",email);
-//            userCookie.setMaxAge(3600); // Cookie will expire in 1 hour (you can adjust this as needed)
-//            resp.addCookie(userCookie);
-//            return "redirect:/index/home";
-//        }
-//        return "redirect:/index/login?check";
         boolean check = false;
         UsernamePasswordAuthenticationToken authen = new UsernamePasswordAuthenticationToken(email,password);
         authenticationManager.authenticate(authen);
-
-        //Lấy danh sách role đã lưu từ security context folder khi AuthenManager chứng thực thành công
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
-//        String jsonRole = gson.toJson(roles);
-//
-//        String token = jwtHelper.generateToken(jsonRole);
-
         if(authenticationManager != null){
             Cookie cookie = new Cookie("User", email);
             cookie.setMaxAge(3600);
