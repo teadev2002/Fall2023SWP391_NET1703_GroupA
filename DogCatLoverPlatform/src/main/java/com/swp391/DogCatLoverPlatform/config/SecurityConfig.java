@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                     .antMatchers("/css/**", "/js/**", "/images/**", "/webfonts/**", "/fonts/**", "/video/**").permitAll()
                     .antMatchers("/index/**").permitAll()
+                    .antMatchers("/cdn-cgi/**").permitAll()
                     .antMatchers("/blog/view").permitAll()
                     .antMatchers("/blog/**").hasRole("USER")
                     .anyRequest().authenticated()
@@ -57,7 +58,7 @@ public class SecurityConfig {
 //                    .and()
 //                .logout()
 //                    .permitAll()
-                //.and()
+//                .and()
                 .build();
     }
 
