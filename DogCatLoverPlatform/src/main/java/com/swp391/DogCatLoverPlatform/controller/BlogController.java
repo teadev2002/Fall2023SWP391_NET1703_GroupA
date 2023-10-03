@@ -110,7 +110,6 @@ public class BlogController {
         return "blog-details";
     }
 
-
    /* @GetMapping("/blog/{id_blog}")
     public String viewBlogWithComments(@PathVariable int id_blog, Model model) {
         List<CommentDTO> comments = commentService.getCommentsByBlogId(id_blog);
@@ -153,6 +152,5 @@ public class BlogController {
         }
         return "blog-standard";
     }
-
 
 }

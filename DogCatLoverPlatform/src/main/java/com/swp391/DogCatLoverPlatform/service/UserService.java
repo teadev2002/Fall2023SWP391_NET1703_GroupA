@@ -5,6 +5,7 @@ import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,22 +13,33 @@ import java.util.List;
 @Service
 public class UserService {
 
-    public static int increase = 0;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     UserRepository userRepository;
 
-    public void addUser(String fullName, String password, String email, String username){
+    public boolean addUser(UserDTO userDTO){
+        boolean isSuccess = false;
         UserEntity user = new UserEntity();
-        user.setFullName(fullName);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setName(username);
+        user.setFullName(userDTO.getFullName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setName(userDTO.getUserName());
         user.setImage("team-001.jpg");
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setId(1);
         user.setRoleEntity(roleEntity);
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+            isSuccess = true;
+        }catch (Exception exception){
+            System.out.println("Thêm thất bại " + exception.getLocalizedMessage());
+            isSuccess = false;
+        }
+
+        return isSuccess;
     }
 
     public List<UserEntity> getAllUser(){

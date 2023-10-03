@@ -1,23 +1,34 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 
+import com.google.gson.Gson;
 import com.swp391.DogCatLoverPlatform.dto.Root;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
+import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.UserService;
+import com.swp391.DogCatLoverPlatform.util.JwtHelper;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import javax.crypto.SecretKey;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -26,108 +37,117 @@ import java.util.Map;
 @RequestMapping("/index")
 public class UserController {
 
+    @Autowired
+    private JwtHelper jwtHelper;
+
 
     @Autowired
     UserService userService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+
+    private Gson gson = new Gson();
+
     @GetMapping("/home")
-    public String hello(){
+    public String hello() {
         return "index";
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @GetMapping("/blog")
-    public String blogStandard(){
+    public String blogStandard() {
         return "blog-standard";
     }
 
     @GetMapping("/blog-details")
-    public String blogDetails(){
+    public String blogDetails() {
         return "blog-details";
     }
 
     @GetMapping("/about")
-    public String about(){
+    public String about() {
         return "about";
     }
 
     @GetMapping("/error")
-    public String error(){
+    public String error() {
         return "error";
     }
 
     @GetMapping("/contact")
-    public String contact(){
+    public String contact() {
         return "contact";
     }
 
     @GetMapping("/faq")
-    public String faq(){
+    public String faq() {
         return "faq";
     }
 
     @GetMapping("/pricing-plan")
-    public String pricingPlan(){
+    public String pricingPlan() {
         return "pricing-plan";
     }
 
     @GetMapping("/service-details")
-    public String serviceDetail(){
+    public String serviceDetail() {
         return "service-details";
     }
 
     @GetMapping("/cart")
-    public String cart(){
+    public String cart() {
         return "cart";
     }
 
     @GetMapping("/check-out")
-    public String checkOut(){
+    public String checkOut() {
         return "check-out";
     }
 
     @GetMapping("/3col-gallery")
-    public String gallery(){
+    public String gallery() {
         return "3col-gallery";
     }
 
     @GetMapping("/team")
-    public String team(){
+    public String team() {
         return "team";
     }
 
     @GetMapping("/profile")
-    public String profile(Model model, HttpServletRequest req){
+    public String profile(Model model, HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
         String email = null;
-        try{
-            for(Cookie c : cookies){
+        try {
+            for (Cookie c : cookies) {
                 email = c.getValue();
                 UserDTO user = userService.getUserByEmail(email);
                 model.addAttribute("user", user);
                 return "profile";
             }
 
-        }catch (Exception e){
-            model.addAttribute("error","You didn't Login");
+        } catch (Exception e) {
+            model.addAttribute("error", "You didn't Login");
             return "redirect:/index/login";
         }
         return "redirect:/index/login";
     }
 
-    @PostMapping(value ="/profile-update")
-    public String profileUpdate(Model model, HttpServletRequest req){
+    @PostMapping(value = "/profile-update")
+    public String profileUpdate(Model model, HttpServletRequest req) {
         String fullname = req.getParameter("fullName");
         String username = req.getParameter("userName");
         String address = req.getParameter("address");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
 
-        boolean isSuccess = userService.updateUser(fullname,username,phone,address,email);
+        boolean isSuccess = userService.updateUser(fullname, username, phone, address, email);
 
 
         return "redirect:/index/profile";
@@ -154,46 +174,48 @@ public class UserController {
 
 
     @GetMapping("/sign-up")
-    public String listTodo(Model model){
-        List<UserEntity> listUser = userService.getAllUser();
-        model.addAttribute("listUser",listUser);
+    public String listTodo(Model model) {
         return "sign-up";
     }
 
-    @PostMapping (value = "/sign-up-add")
-    public String addTodo(HttpServletRequest req,Model model){
-        boolean isSuccess = false;
-        String email = req.getParameter("email");
-        String fullName = req.getParameter("fullName");
-        String userName = req.getParameter("userName");
-        String password = req.getParameter("password");
-        String password2 = req.getParameter("password2");
-
-        if(password2.equals(password) && userService.checkEmailExist(email) == false){
-            userService.addUser(fullName, password, email, userName);
-            isSuccess = true;
-            model.addAttribute("isSuccess", isSuccess);
-            return "redirect:/index/login";
-        }
-
-        model.addAttribute("isSuccess", isSuccess);
-        return "redirect:/index/sign-up?isSuccess";
+    @PostMapping(value = "/sign-up-add")
+    public ResponseEntity<?> signup(@Valid @RequestBody UserDTO signUpRequest) {
+        boolean isSuccess = userService.addUser(signUpRequest);
+        BaseRespone baseRespone = new BaseRespone();
+        baseRespone.setStatusCode(200);
+        baseRespone.setMessage("");
+        baseRespone.setData(isSuccess);
+        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
     }
 
 
-
-    @PostMapping (value = "/login")
-    public String loginInto(HttpServletRequest req, HttpServletResponse resp, Model model){
+    @PostMapping("/login")
+    public ResponseEntity<?> loginInto(HttpServletRequest req, HttpServletResponse resp, Model model) {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        boolean check = userService.checkLogin(email,password);
-        if (check == true){
-            Cookie userCookie = new Cookie("User",email);
-            userCookie.setMaxAge(3600); // Cookie will expire in 1 hour (you can adjust this as needed)
-            resp.addCookie(userCookie);
-            return "redirect:/index/home";
+        UsernamePasswordAuthenticationToken authen = new UsernamePasswordAuthenticationToken(email, password);
+        authenticationManager.authenticate(authen);
+        if (authenticationManager != null) {
+            Cookie cookie = new Cookie("User", email);
+            cookie.setMaxAge(3600);
+            resp.addCookie(cookie);
         }
-        return "redirect:/index/login?check";
+        //Lấy danh sách role đã lưu từ security context folder khi AuthenManager chứng thực thành công
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
+
+
+        String jsonRole = gson.toJson(roles);
+
+        String token = jwtHelper.generateToken(jsonRole);
+
+        BaseRespone baseRespone = new BaseRespone();
+        baseRespone.setStatusCode(200);
+        baseRespone.setMessage("");
+        baseRespone.setData(token);
+
+        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+
     }
 
     @GetMapping("/logout")
@@ -224,10 +246,15 @@ public class UserController {
 
 
     @GetMapping("/delete-user")
-    public String deleteUser(HttpServletRequest req){
+    public String deleteUser(HttpServletRequest req) {
         int id = Integer.parseInt(req.getParameter("id"));
         userService.deleteUser(id);
         return "redirect:/DogCatLoverPlatform/Sign-up";
     }
+
+
+
+
+
 
 }

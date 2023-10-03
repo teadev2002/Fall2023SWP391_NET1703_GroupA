@@ -44,6 +44,12 @@ public class BlogService {
     }
 
 
+    public BlogDTO getBlogById(int id) {
+        BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
+        BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+        return blogDTO;
+    }
+
     public BlogDTO createBlog(BlogDTO blogDTO, int blogTypeId) {
         BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
         blogEntity.setBlogTypeEntity(new BlogTypeEntity()); // -- Quan trọng
@@ -58,20 +64,14 @@ public class BlogService {
 
         // Đặt thời gian tạo vào createdBlog
         createdBlog.setCreateDate(createDate);
-
         return createdBlog;
     }
 
     public void updateBlog(int id, BlogUpdateDTO blogUpdateDTO) {
         BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
+
         modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
         blogRepository.save(blogEntity);
-    }
-
-    public BlogDTO getBlogById(int id) {
-        BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
-        BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-        return blogDTO;
     }
 
     public List<BlogDTO> GetBlogsByTitle(String title) {
@@ -86,7 +86,6 @@ public class BlogService {
         }
         return listBlogDTO;
     }
-
 
     public void deleteBlogById(int id) {
         if (blogRepository.existsById(id)) {

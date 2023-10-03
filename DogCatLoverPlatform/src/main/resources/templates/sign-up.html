@@ -233,13 +233,13 @@
                         <p>Do you already have an account? <a th:href="@{login}">Log in here</a></p>
                         <div th:if="${param.isSuccess}">Đăng ký thất bại</div>
                     </div>
-                    <form class="w-100" th:action="@{/index/sign-up-add}" method="post">
+                    <form class="w-100">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-inner">
 
                                     <label>UserName *</label>
-                                    <input type="text" name="userName" required>
+                                    <input type="text" name="userName" id="userName" required>
 
                                 </div>
                             </div>
@@ -247,7 +247,7 @@
                                 <div class="form-inner">
 
                                     <label>FullName *</label>
-                                    <input type="text" name="fullName" required>
+                                    <input type="text" name="fullName" id="fullName" required>
 
                                 </div>
                             </div>
@@ -255,7 +255,7 @@
                                 <div class="form-inner">
                                     <label>Enter Your Email *</label>
 
-                                    <input type="email" name="email" required>
+                                    <input type="email" id="email" name="email" required>
 
                                 </div>
                             </div>
@@ -286,7 +286,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="account-btn">Create Account</button>
+                        <button class="account-btn" type="submit" id="btn-sign-up" >Create Account</button>
                     </form>
                     <div class="alternate-signup-box">
                         <h6>or signup WITH</h6>
@@ -409,6 +409,7 @@
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/masonry.pkgd.min.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/login.js"></script>
 </body>
 
 
