@@ -22,7 +22,7 @@ public class BlogDTO {
     private String blogTypeName;
     private int id;
     private int blogTypeId;
-    private String price;
+    private double price;
     private boolean status;
     //private boolean confirm;
 

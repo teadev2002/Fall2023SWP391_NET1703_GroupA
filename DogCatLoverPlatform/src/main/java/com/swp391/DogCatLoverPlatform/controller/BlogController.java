@@ -118,4 +118,5 @@ public class BlogController {
         return "blog-standard";
     }
 
+
 }
