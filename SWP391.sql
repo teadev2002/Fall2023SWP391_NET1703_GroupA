@@ -28,6 +28,7 @@ CREATE TABLE blog(
 	title varchar(100),
 	content text,
 	image varchar(255),
+	image_sidebar varchar(255),
 	price double,
 	status bit,
 	create_date DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
