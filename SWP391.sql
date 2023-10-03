@@ -28,10 +28,10 @@ CREATE TABLE blog(
 	title varchar(100),
 	content text,
 	image varchar(255),
-	min_price double,
-	max_price double ,
+	image_sidebar varchar(255),
+	price double,
 	status bit,
-	create_date DATETIME,
+	create_date DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	confirm bit,
 	
 	id_user_created int,
@@ -73,7 +73,7 @@ CREATE TABLE booking_history(
 CREATE TABLE comment(
 	id int auto_increment,
 	description text,
-	create_date Date,
+	create_date DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	rating int,
 	id_user int,
 	primary key(id)
