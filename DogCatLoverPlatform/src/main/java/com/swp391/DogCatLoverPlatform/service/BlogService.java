@@ -87,20 +87,8 @@ public class BlogService {
         return listBlogDTO;
     }
 
-//
-//    public List<BlogDTO> GetProfileBlogs(String userName) {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-//
-//    public List<BlogDTO> GetBlogByTypeName(String blogTypeName) {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-
 
     public void deleteBlogById(int id) {
-        // Check if the blog with the given ID exists
         if (blogRepository.existsById(id)) {
             blogRepository.deleteById(id);
         } else {
@@ -147,23 +135,5 @@ public class BlogService {
         file.transferTo(destination);
         return imagePath;
     }
-
-//    @Value("${your.project.images.directory}")
-//    private String imagesDirectory; // Đường dẫn đến thư mục images trong dự án của bạn
-//
-//    public String saveImageAndReturnPath(MultipartFile file) throws IOException {
-//        String fileName = file.getOriginalFilename();
-//        String imagePath = System.getProperty("user.dir") + File.separator + imagesDirectory + File.separator + "blog" + File.separator + fileName;
-//        File destination = new File(imagePath);
-//
-//        // Kiểm tra xem thư mục /images/blog đã tồn tại chưa, nếu chưa thì tạo mới
-//        File imagesBlogDir = new File(System.getProperty("user.dir") + File.separator + imagesDirectory + File.separator + "blog");
-//        if (!imagesBlogDir.exists()) {
-//            imagesBlogDir.mkdirs();
-//        }
-//
-//        file.transferTo(destination);
-//        return imagePath;
-//    }
 
 }

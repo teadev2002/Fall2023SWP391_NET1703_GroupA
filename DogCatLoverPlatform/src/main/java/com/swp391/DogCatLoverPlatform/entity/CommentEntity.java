@@ -7,12 +7,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="comment")
+@Entity(name = "comment")
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,18 +22,16 @@ public class CommentEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name="create_date")
+    @Column(name = "create_date")
     private Date createDate;
 
     @Column(name = "rating")
     private int rating;
 
-    @OneToOne(mappedBy = "commentEntity_UserBlogCommentEntity")
-    UserBlogCommentEntity userBlogCommentEntities_CommentEntity;
-
     @ManyToOne
-    @JoinColumn(name = "id_user")   //Checked
+    @JoinColumn(name = "id_user") // Checked
     private UserEntity userEntity_CommentEntity;
 
+    @OneToMany // Remove "mappedBy"
+    private List<UserBlogCommentEntity> userBlogCommentEntities_commentEntity;
 }
-
