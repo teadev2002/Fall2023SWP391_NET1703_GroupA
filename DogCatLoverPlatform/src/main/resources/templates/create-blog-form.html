@@ -129,36 +129,6 @@
             margin-left: 10px; /* Thêm khoảng trắng giữa hai nút */
         }
 
-        .previewImage {
-            height: 85px;
-            width: 196px;
-            border: 1px solid gray;
-            margin-bottom: 12px;
-            display: none;
-            position: relative;
-            margin-left: 50px;
-        }
-
-        .sidebarImage {
-            height: 85px;
-            width: 105px;
-            border: 1px solid gray;
-            margin-bottom: 12px;
-            display: none;
-            position: relative;
-        }
-
-        .previewImage img {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-        }
-
-        .sidebarImage img {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-        }
 
     </style>
     <title>Form Nhập Dữ Liệu</title>
@@ -315,19 +285,10 @@
                     <div>Import Image:</div>
                     <input type="file" class="form-control" id="image" name="file" required onchange="previewFile()">
                 </div>
-
-                <!--Sidebar-->
-                <div class="mb-3 input-group" style="width: 100px; margin-left: 20px;">
-                    <div>Import Sidebar:</div>
-                    <input type="file" class="form-control" id="imageSidebar" name="file-sidebar" required onchange="sidebarFile()">
-                </div>
-
             </div>
 
-            <div style="display: flex">
-                <div class="previewImage">  <img id="previewImage"></div>
-                <div class="sidebarImage">  <img id="sidebarImage"></div>
-            </div>
+            <div class="previewImage">  <img id="previewImage"></div>
+
 
 
             <div class="mb-3 input-group">

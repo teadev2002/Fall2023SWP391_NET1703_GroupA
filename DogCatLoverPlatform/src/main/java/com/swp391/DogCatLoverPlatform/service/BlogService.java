@@ -43,6 +43,18 @@ public class BlogService {
         return listBlogDTO;
     }
 
+    public List<BlogDTO> GetAllMyBlog(int id_user) {
+        List<BlogEntity> listBlog = blogRepository.findByUserEntityId(id_user);
+        Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+        List<BlogDTO> listBlogDTO = new ArrayList<>();
+
+        for (BlogEntity blogEntity : listBlog) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            listBlogDTO.add(blogDTO);
+        }
+        return listBlogDTO;
+    }
+
 
     public BlogDTO getBlogById(int id) {
         BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();

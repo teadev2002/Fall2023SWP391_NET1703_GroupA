@@ -29,9 +29,11 @@ public class CommentEntity {
     private int rating;
 
     @ManyToOne
-    @JoinColumn(name = "id_user") // Checked
+    @JoinColumn(name = "id_user")
     private UserEntity userEntity_CommentEntity;
 
-    @OneToMany // Remove "mappedBy"
-    private List<UserBlogCommentEntity> userBlogCommentEntities_commentEntity;
+    @ManyToOne
+    @JoinColumn(name = "id_blog")
+    private BlogEntity blogEntity_CommentEntity;
+
 }

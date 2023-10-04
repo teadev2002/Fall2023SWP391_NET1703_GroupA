@@ -76,13 +76,12 @@ public class BlogController {
         return "create-blog-form";
     }
 
+
     @PostMapping("/create")
-    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file, @RequestParam("file-sidebar") MultipartFile fileSidebar) throws IOException {
+    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file) throws IOException {
         // Lưu hình ảnh vào cơ sở dữ liệu và lấy đường dẫn
         String imagePath = blogService.saveImageAndReturnPath(file);
-        String imageSidebar = blogService.saveImageAndReturnPath(fileSidebar);
         blogDTO.setImage(imagePath);
-        blogDTO.setImageSidebar(imageSidebar);
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId);
         return "redirect:/blog/view" ;
     }
@@ -132,18 +131,24 @@ public class BlogController {
 
 
     @GetMapping("/search")
-    public String viewSearch(){
-        return "redirect:/blog/view";
+    public String viewSearch(Model model){
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+       return "redirect:/blog/view";
     }
 
     @PostMapping("/search")
     public String searchBlogByTitle(@RequestParam("title") String title ,Model model){
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+
         if(title.trim().isEmpty()){
             List<BlogDTO> list = blogService.GetAllBlog();
             model.addAttribute("listBlog", list);
         }else{
             List<BlogDTO> list = blogService.GetBlogsByTitle(title);
             if(list.isEmpty()){
+
                 model.addAttribute("msg", "Không tìm thấy kết quả!!");
             }else{
                 model.addAttribute("listBlogs", list);
@@ -151,6 +156,16 @@ public class BlogController {
 
         }
         return "blog-standard";
+    }
+
+    @GetMapping("/view/myblog/{id_user}")
+    public String viewMyBlog(@PathVariable("id_user") int id_user, Model model){
+       List<BlogDTO> list = blogService.GetAllMyBlog(id_user);
+       model.addAttribute("listBlog", list);
+
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+       return "myblog";
     }
 
 }

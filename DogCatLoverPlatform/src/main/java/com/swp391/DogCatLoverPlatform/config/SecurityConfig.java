@@ -48,7 +48,7 @@ public class SecurityConfig {
                     .antMatchers("/index/**").permitAll()
                     .antMatchers("/cdn-cgi/**").permitAll()
                     .antMatchers("/blog/view").permitAll()
-                    .antMatchers("/blog/**").hasRole("USER")
+                    .antMatchers("/blog/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

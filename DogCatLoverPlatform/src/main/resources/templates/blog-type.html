@@ -38,7 +38,6 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-
 </head>
 <body>
 
@@ -343,14 +342,14 @@
 
                     <div class="single-widgets widget_egns_recent_post mb-30">
 
-                        <div class="widget-title">
+                        <div class="widget-title" style="padding-bottom: 45px;">
                             <h3>Newest Posts</h3>
                         </div>
 
-                        <div class="recent-post-wraper" th:each="blog : ${latestBlogs}">
-                            <div class="widget-cnt mb-25">
-                                <div class="wi">
-                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img th:src="@{'../images/blog/' + ${blog.imageSidebar}}"
+                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage">
+                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img th:src="@{'../images/blog/' + ${blog.image}}"
                                                                                           alt="image"></a>
                                 </div>
                                 <div class="wc">
