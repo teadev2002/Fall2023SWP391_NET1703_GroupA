@@ -7,47 +7,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" href="../../images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" href="../../../images/sm-logo.svg" type="image/gif" sizes="20x20">
 
-    <link rel="stylesheet" th:href="@{../../css/all.css}">
-    <link rel="stylesheet" th:href="@{../../css/animate.css}">
+    <link rel="stylesheet" th:href="@{../../../css/all.css}">
+    <link rel="stylesheet" th:href="@{../../../css/animate.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{../../../css/bootstrap.min.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/boxicons.min.css}">
+    <link rel="stylesheet" th:href="@{../../../css/boxicons.min.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{../../../css/bootstrap-icons.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/jquery-ui.css}">
-    <link rel="stylesheet" th:href="@{../../css/aos.css}">
+    <link rel="stylesheet" th:href="@{../../../css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{../../../css/aos.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/swiper-bundle.css}">
+    <link rel="stylesheet" th:href="@{../../../css/swiper-bundle.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{../../../css/nice-select.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{../../../css/magnific-popup.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/jquery.fancybox.min.css}">
+    <link rel="stylesheet" th:href="@{../../../css/jquery.fancybox.min.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/odometer.css}">
+    <link rel="stylesheet" th:href="@{../../../css/odometer.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/datepicker.min.css}">
+    <link rel="stylesheet" th:href="@{../../../css/datepicker.min.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/uiicss.css}">
+    <link rel="stylesheet" th:href="@{../../../css/uiicss.css}">
 
-    <link rel="stylesheet" th:href="@{../../css/style.css}">
+    <link rel="stylesheet" th:href="@{../../../css/style.css}">
 </head>
 <body>
 
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../../images/header1-logo.svg"></a>
+            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../../../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a th:href="@{/index/home}"><img alt="image" src="../../images/header1-logo.svg"></a>
+                    <a th:href="@{/index/home}"><img alt="image" src="../../../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
@@ -171,7 +171,7 @@
 
 <div class="inner-page-banner">
     <div class="breadcrumb-vec-btm">
-        <img class="img-fluid" src="../../images/bg/inner-banner-btm-vec.png" alt>
+        <img class="img-fluid" src="../../../images/bg/inner-banner-btm-vec.png" alt>
     </div>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center">
@@ -189,9 +189,9 @@
             <div class="col-lg-6">
                 <div class="banner-img d-lg-block d-none">
                     <div class="banner-img-bg">
-                        <img class="img-fluid" src="../../images/bg/inner-banner-vec.png" alt>
+                        <img class="img-fluid" src="../../../images/bg/inner-banner-vec.png" alt>
                     </div>
-                    <img class="img-fluid" src="../../images/bg/inner-banner-img.png" alt>
+                    <img class="img-fluid" src="../../../images/bg/inner-banner-img.png" alt>
                 </div>
             </div>
         </div>
@@ -207,7 +207,7 @@
                 <div class="blog-details-wrap mb-120">
 
                     <div class="post-thum">
-                        <img class="img-fluid" th:src="@{'../../images/blog/' + ${blog.image}}" alt>
+                        <img class="img-fluid" th:src="@{'../../../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
                             <a style="margin-right: 12px;" th:text="${#numbers.formatCurrency(blog.price)}"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
@@ -223,6 +223,12 @@
 
                     <h2 class="post-title">
                         <a th:text="${blog.title}"></a>
+                        <!--Update-->
+                        <a th:href="@{/blog/{id}/edit(id=${blog.id})}">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="0.45em" viewBox="0 0 512 512">
+                                <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
+                            </svg>
+                        </a>
                     </h2>
 
                     <div class="post-content">
@@ -265,7 +271,7 @@
                                         <div class="c-header d-flex align-items-center justify-content-between">
                                             <div class="author-area">
                                                 <div class="author-img">
-                                                    <img src="../../images/blog/blog-author.png" alt>
+                                                    <img src="../../../images/blog/blog-author.png" alt>
                                                 </div>
                                                 <div class="author-details">
                                                     <!--                                                    <h5 class="mb-0" th:text="${comments.userName}"></h5>-->
@@ -273,7 +279,7 @@
                                                 </div>
                                             </div>
                                             <div class="replay-btn">
-                                                <a href="#"><img src="../../images/icon/replay-icon.svg" alt> Reply</a>
+                                                <a href="#"><img src="../../../images/icon/replay-icon.svg" alt> Reply</a>
                                             </div>
                                         </div>
                                         <div class="c-body">
@@ -359,7 +365,7 @@
                             <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''">
                                 <div class="wi sidebarImage">
                                     <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img
-                                            th:src="@{'../../images/blog/' + ${blog.image}}"
+                                            th:src="@{'../../../images/blog/' + ${blog.image}}"
                                             alt="image"></a>
                                 </div>
                                 <div class="wc">
@@ -416,7 +422,7 @@
                     <h3>Contacts</h3>
                     <div class="hotline mb-30">
                         <div class="hotline-icon">
-                            <img src="../../images/icon/phone-icon.svg" alt>
+                            <img src="../../../images/icon/phone-icon.svg" alt>
                         </div>
                         <div class="hotline-info">
                             <h6 class="mb-10"><a href="tel:+8801761111456">+880 176 1111 456</a></h6>
@@ -425,7 +431,7 @@
                     </div>
                     <div class="email mb-30">
                         <div class="email-icon">
-                            <img src="../../images/icon/envelope.svg" alt>
+                            <img src="../../../images/icon/envelope.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
@@ -440,7 +446,7 @@
                     </div>
                     <div class="email">
                         <div class="email-icon">
-                            <img src="../../images/icon/location.svg" alt>
+                            <img src="../../../images/icon/location.svg" alt>
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a>168/170, Avenue 01, Mirpur</a></h6>
@@ -492,24 +498,24 @@
 </footer>
 
 <script data-cfasync="false" src="../../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
-<script src="../../js/jquery-3.6.0.min.js"></script>
-<script src="../../js/jquery-ui.js"></script>
-<script src="../../js/jquery.timepicker.min.js"></script>
-<script src="../../js/bootstrap.bundle.min.js"></script>
-<script src="../../js/swiper-bundle.min.js"></script>
-<script src="../../js/aos.js"></script>
-<script src="../../js/jquery.nice-select.js"></script>
-<script src="../../js/jquery.fancybox.min.js"></script>
-<script src="../../js/morphext.min.js"></script>
-<script src="../../js/odometer.min.js"></script>
-<script src="../../js/jquery.marquee.min.js"></script>
-<script src="../../js/viewport.jquery.js"></script>
-<script src="../../js/isotope.pkgd.min.js"></script>
-<script src="../../js/SmoothScroll.js"></script>
-<script src="../../js/jquery.nice-number.min.js"></script>
-<script src="../../js/jquery.magnific-popup.min.js"></script>
-<script src="../../js/masonry.pkgd.min.js"></script>
-<script src="../../js/main.js"></script>
+<script src="../../../js/jquery-3.6.0.min.js"></script>
+<script src="../../../js/jquery-ui.js"></script>
+<script src="../../../js/jquery.timepicker.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
+<script src="../../../js/swiper-bundle.min.js"></script>
+<script src="../../../js/aos.js"></script>
+<script src="../../../js/jquery.nice-select.js"></script>
+<script src="../../../js/jquery.fancybox.min.js"></script>
+<script src="../../../js/morphext.min.js"></script>
+<script src="../../../js/odometer.min.js"></script>
+<script src="../../../js/jquery.marquee.min.js"></script>
+<script src="../../../js/viewport.jquery.js"></script>
+<script src="../../../js/isotope.pkgd.min.js"></script>
+<script src="../../../js/SmoothScroll.js"></script>
+<script src="../../../js/jquery.nice-number.min.js"></script>
+<script src="../../../js/jquery.magnific-popup.min.js"></script>
+<script src="../../../js/masonry.pkgd.min.js"></script>
+<script src="../../../js/main.js"></script>
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/blog-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:39 GMT -->

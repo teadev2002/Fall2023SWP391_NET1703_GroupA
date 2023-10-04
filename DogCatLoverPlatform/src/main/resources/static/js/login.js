@@ -27,7 +27,7 @@ $(document).ready(function () {
 
             }
 
-            console.log("server tra ve ", data)
+            console.log("server tra ưve ", data)
 
         }).fail(function (data) {
             alert("Sai email hoặc mật khẩu");

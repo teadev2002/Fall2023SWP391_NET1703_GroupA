@@ -16,12 +16,12 @@ public class BlogDTO {
     private String title;
     private String content;
     private String image;
-    //private String imageSidebar;
     private Date createDate;
     private String userName;
     private String blogTypeName;
     private int id;
     private int blogTypeId;
+    private int idUserCreated;
     private double price;
     private boolean status;
     //private boolean confirm;

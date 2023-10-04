@@ -29,9 +29,6 @@ public class BlogEntity {
     @Column(name = "image")
     private String image;
 
-//    @Column(name = "image_sidebar")
-//    private String imageSidebar;
-
     @Column(name = "price")
     private double  price;
 
@@ -57,5 +54,9 @@ public class BlogEntity {
 
     @OneToMany(mappedBy = "blogEntity_CommentEntity")
     List<CommentEntity> listComment_BlogEntity ;
+
+    @OneToOne(mappedBy = "blog_service")
+    private ServiceEntity serviceEntity;
+
 
 }
