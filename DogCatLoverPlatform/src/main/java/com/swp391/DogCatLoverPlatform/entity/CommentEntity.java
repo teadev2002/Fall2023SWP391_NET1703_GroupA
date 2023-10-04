@@ -32,4 +32,7 @@ public class CommentEntity {
     @JoinColumn(name = "id_user") // Checked
     private UserEntity userEntity_CommentEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "id_blog")
+    private BlogEntity blog_comment;
 }

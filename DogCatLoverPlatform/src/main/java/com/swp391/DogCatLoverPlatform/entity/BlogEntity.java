@@ -58,4 +58,7 @@ public class BlogEntity {
     @OneToOne(mappedBy = "blog_service")
     private ServiceEntity serviceEntity;
 
+    @OneToMany(mappedBy = "blog_comment")
+    private List<CommentEntity> commentEntities;
+
 }
