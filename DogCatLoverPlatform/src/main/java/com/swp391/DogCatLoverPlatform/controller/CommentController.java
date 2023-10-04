@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -15,14 +18,20 @@ import java.util.List;
 @RequestMapping("/comment")
 public class CommentController {
 
-/*    @Autowired
+  @Autowired
     CommentService commentService;
 
-    @GetMapping ("/view")
-    public ResponseEntity<?> getComment(){
-     List<CommentDTO> list =  commentService.getAllComment();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+   /* @GetMapping ("/view/{id}")
+    public ResponseEntity<?> getComment(Model model, @PathVariable int id){
+     List<CommentDTO> listCmt =  commentService.getCommentsByBlogId(id);
+     model.addAttribute("list",listCmt);
+        return new ResponseEntity<>(listCmt,HttpStatus.OK);
+    }*/
+   @PostMapping("/{id}")
+   public String deleteCmt(@PathVariable int id) {
+     commentService.deleteCmtById(id);
+     return "redirect:/blog/{id}/detail";
+   }
 
-    */
+
 }

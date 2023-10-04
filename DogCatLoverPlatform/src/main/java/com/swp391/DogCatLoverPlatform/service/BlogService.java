@@ -36,25 +36,14 @@ public class BlogService {
         Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
         List<BlogDTO> listBlogDTO = new ArrayList<>();
 
-        // Định dạng giá tiền ví dụ: 1560000 --> 1.560.000
-        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
-
         for (BlogEntity blogEntity : listBlog) {
             BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            double price = blogEntity.getPrice();
-            String formattedPrice = decimalFormat.format(price);
-            blogDTO.setPrice(formattedPrice);
-
             listBlogDTO.add(blogDTO);
         }
         return listBlogDTO;
     }
 
 
-    /*    public List<BlogDTO> GetBlogsPriceRange(double minPrice, double maxPrice) {
-            // TODO Auto-generated method stub
-            return null;
-        }*/
     public BlogDTO getBlogById(int id) {
         BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
         BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
@@ -75,7 +64,6 @@ public class BlogService {
 
         // Đặt thời gian tạo vào createdBlog
         createdBlog.setCreateDate(createDate);
-
         return createdBlog;
     }
 
@@ -91,34 +79,15 @@ public class BlogService {
         Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
         List<BlogDTO> listBlogDTO = new ArrayList<>();
 
-        // Định dạng giá tiền ví dụ: 1560000 --> 1.560.000
-        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
-
         // mapper
         for (BlogEntity i : listBlog) {
             BlogDTO blogDTO = modelMapperConfig.modelMapper().map(i, BlogDTO.class);
-            double price = i.getPrice();
-            String formattedPrice = decimalFormat.format(price);
-            blogDTO.setPrice(formattedPrice);
             listBlogDTO.add(blogDTO);
         }
         return listBlogDTO;
     }
 
-//
-//    public List<BlogDTO> GetProfileBlogs(String userName) {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-//
-//    public List<BlogDTO> GetBlogByTypeName(String blogTypeName) {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-
-
     public void deleteBlogById(int id) {
-        // Check if the blog with the given ID exists
         if (blogRepository.existsById(id)) {
             blogRepository.deleteById(id);
         } else {
@@ -142,18 +111,12 @@ public class BlogService {
     public List<BlogDTO> getBlogsByType(String name) {
         BlogTypeEntity blogTypeEntity = blogTypeRepository.findByName(name);
 
-        // Định dạng giá tiền ví dụ: 1560000 --> 1.560.000
-        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
-
         if (blogTypeEntity != null) {
             List<BlogEntity> blogEntities = blogRepository.findByBlogTypeEntity(blogTypeEntity);
             Collections.sort(blogEntities, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
             List<BlogDTO> blogDTOs = new ArrayList<>();
             for (BlogEntity blogEntity : blogEntities) {
                 BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-                double price = blogEntity.getPrice();
-                String formattedPrice = decimalFormat.format(price);
-                blogDTO.setPrice(formattedPrice);
                 blogDTOs.add(blogDTO);
             }
 
@@ -171,23 +134,5 @@ public class BlogService {
         file.transferTo(destination);
         return imagePath;
     }
-
-//    @Value("${your.project.images.directory}")
-//    private String imagesDirectory; // Đường dẫn đến thư mục images trong dự án của bạn
-//
-//    public String saveImageAndReturnPath(MultipartFile file) throws IOException {
-//        String fileName = file.getOriginalFilename();
-//        String imagePath = System.getProperty("user.dir") + File.separator + imagesDirectory + File.separator + "blog" + File.separator + fileName;
-//        File destination = new File(imagePath);
-//
-//        // Kiểm tra xem thư mục /images/blog đã tồn tại chưa, nếu chưa thì tạo mới
-//        File imagesBlogDir = new File(System.getProperty("user.dir") + File.separator + imagesDirectory + File.separator + "blog");
-//        if (!imagesBlogDir.exists()) {
-//            imagesBlogDir.mkdirs();
-//        }
-//
-//        file.transferTo(destination);
-//        return imagePath;
-//    }
 
 }

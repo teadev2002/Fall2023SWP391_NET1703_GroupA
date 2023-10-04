@@ -47,8 +47,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity")    //Checked
     List<BlogEntity> listBlogs;
 
-    @OneToMany(mappedBy = "userEntity_UserBlogCommentEntity")     //Checked
-    List<UserBlogCommentEntity> listUserBlogComment_UserEntity ;
+
 
     @OneToMany(mappedBy = "userEntity_CommentEntity")  //Checked
     List<CommentEntity> listComment_UserEntity ;

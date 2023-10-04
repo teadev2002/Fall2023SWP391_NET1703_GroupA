@@ -2,9 +2,12 @@ package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
 import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
+import com.swp391.DogCatLoverPlatform.dto.CommentDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
+import com.swp391.DogCatLoverPlatform.entity.CommentEntity;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BlogTypeService;
+import com.swp391.DogCatLoverPlatform.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,9 @@ public class BlogController {
 
     @Autowired
     BlogService blogService;
+
+    @Autowired
+    CommentService commentService;
 
     @Autowired
     BlogTypeService blogTypeService;
@@ -91,10 +97,39 @@ public class BlogController {
     public String viewDetailsBlog(@PathVariable("id") int id, Model model) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+
+        // Get comments for the blog by its ID
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
+
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
+
+        // Add the comments to the model
+        model.addAttribute("comments", comments);
+
         return "blog-details";
     }
+
+   /* @GetMapping("/blog/{id_blog}")
+    public String viewBlogWithComments(@PathVariable int id_blog, Model model) {
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id_blog);
+        model.addAttribute("comments", comments);
+        return "blog-details";
+    }*/
+
+   @GetMapping("/blog/{id_blog}")
+    public String viewBlogWithComments(@PathVariable int id_blog, Model model) {
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id_blog);
+        model.addAttribute("comments", comments);
+
+        BlogDTO blogDTO = blogService.getBlogById(id_blog);
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+        model.addAttribute("blog", blogDTO);
+
+        return "blog-details";
+    }
+
 
     @GetMapping("/search")
     public String viewSearch(){

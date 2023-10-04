@@ -50,13 +50,12 @@ public class BlogEntity {
 
     @ManyToOne
     @JoinColumn(name="id_blog_type") //Checked
-    private BlogTypeEntity blogTypeEntity;  
-
-    @OneToMany(mappedBy = "blogEntity_UserBlogCommentEntity")   //Checked
-    List<UserBlogCommentEntity> listUserBlogComment_BlogEntity;
+    private BlogTypeEntity blogTypeEntity;
 
     @OneToMany(mappedBy = "blogEntity_BookingEntity")
     List<BookingEntity> listBooking_BlogEntity;
 
+    @OneToOne(mappedBy = "blog_service")
+    private ServiceEntity serviceEntity;
 
 }
