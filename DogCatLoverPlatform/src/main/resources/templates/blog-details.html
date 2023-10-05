@@ -268,16 +268,13 @@
                                                     <img src="../../images/blog/blog-author.png" alt>
                                                 </div>
                                                 <div class="author-details">
-                                                    <!--                                                    <h5 class="mb-0" th:text="${comments.userName}"></h5>-->
-                                                    <!--                                                    <div class="c-date" th:text="${comments.createDate}" ></div>-->
+                                                    <h5 class="mb-0" th:text="${comments.userName}"></h5>
+                                                    <div class="c-date" th:text="${comments.createDate}"></div>
                                                 </div>
-                                            </div>
-                                            <div class="replay-btn">
-                                                <a href="#"><img src="../../images/icon/replay-icon.svg" alt> Reply</a>
                                             </div>
                                         </div>
                                         <div class="c-body">
-                                            <!--                                            <p th:text="${comments.description}"></p>-->
+                                            <p th:text="${comments.description}"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -289,12 +286,12 @@
                             <h2>Leave a Reply</h2>
                         </div>
 
-                        <form>
+                        <form th:action="@{/blog/create_comment}" th:object="${comment}" method="post">
                             <div class="row">
-
                                 <div class="col-lg-12">
                                     <div class="form-inner mb-40">
-                                        <textarea placeholder="Your message"></textarea>
+                                        <textarea name="description" placeholder="Your message..."></textarea>
+                                        <input type="hidden" name="id" th:field="${blog.id}">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -305,6 +302,7 @@
 
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

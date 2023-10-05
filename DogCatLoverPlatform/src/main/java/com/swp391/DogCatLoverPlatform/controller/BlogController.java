@@ -10,6 +10,7 @@ import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BlogTypeService;
 //import com.swp391.DogCatLoverPlatform.service.CommentService;
+import com.swp391.DogCatLoverPlatform.service.CommentService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class BlogController {
     @Autowired
     UserService userService;
 
-//    @Autowired
-//    CommentService commentService;
+    @Autowired
+    CommentService commentService;
 
     @Autowired
     BlogTypeService blogTypeService;
@@ -97,6 +98,16 @@ public class BlogController {
         return "redirect:/blog/view/myblog";
     }
 
+    @PostMapping("/create_comment")
+    public String createComment(@ModelAttribute("comment") CommentDTO commentDTO, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+        String description = req.getParameter("description");
+        int id_blog = Integer.parseInt(req.getParameter("id"));
+        CommentDTO comment = commentService.createComment(commentDTO, description, id_blog, user.getId());
+
+        return "redirect:/blog/"+id_blog+"/detail";
+    }
+
     @PostMapping("/delete")
     public String deleteBlog(HttpServletRequest req) {
         // Extract the user's ID from the cookies (if available)
@@ -112,14 +123,14 @@ public class BlogController {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
-//        // Get comments for the blog by its ID
-//        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
+        // Get comments for the blog by its ID
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
 
-//        // Add the comments to the model
-//        model.addAttribute("comments", comments);
+        // Add the comments to the model
+        model.addAttribute("comments", comments);
 
         return "blog-details";
     }
@@ -129,14 +140,14 @@ public class BlogController {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
-//        // Get comments for the blog by its ID
-//        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
+        // Get comments for the blog by its ID
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
 
-//        // Add the comments to the model
-//        model.addAttribute("comments", comments);
+        // Add the comments to the model
+        model.addAttribute("comments", comments);
 
         return "blog-details-myblog";
     }
@@ -181,7 +192,7 @@ public class BlogController {
         return "myblog";
     }
 
-    //Hàm cực kỳ quan trọng!!!
+    //GetUserIdFromCookie cực kỳ quan trọng!!!
     private UserDTO getUserIdFromCookie(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
         UserDTO userDTO = new UserDTO();

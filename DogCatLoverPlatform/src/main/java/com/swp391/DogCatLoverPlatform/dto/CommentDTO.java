@@ -1,18 +1,21 @@
 package com.swp391.DogCatLoverPlatform.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentDTO {
 
-    private int id;
     private String description;
-    private Date createDate;
-    private int rating;
-    private UserDTO userDTO;
+    private int id_user;
+    private int id_blog;
     private String userName;
+    private Date createDate;
+    private int id;
+//    private int rating;
+
 }
