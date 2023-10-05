@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,6 +68,17 @@ public class CommentService {
         createdComment.setCreateDate(createDate);
         return createdComment;
     }
+
+    public void deleteComment(int commentId) {
+        commentRepository.deleteById(commentId);
+    }
+    public CommentDTO getCommentById(int id) {
+        CommentEntity commentEntity = commentRepository.findById(id).orElseThrow();
+            CommentDTO commentDTO = modelMapperConfig.modelMapper().map(commentEntity, CommentDTO.class);
+            return commentDTO;
+
+    }
+
 }
 
 
