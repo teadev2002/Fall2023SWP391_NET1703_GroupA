@@ -13,7 +13,6 @@ public class CommentDTO {
     private String description;
     private Date createDate;
     private int rating;
-    UserBlogCommentDTO userBlogCommentDTO;
     private UserDTO userDTO;
     private String userName;
 }

@@ -29,9 +29,6 @@ public class BlogEntity {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "image_sidebar")
-    private String imageSidebar;
-
     @Column(name = "price")
     private double  price;
 
@@ -45,20 +42,21 @@ public class BlogEntity {
     private boolean confirm;
 
     @ManyToOne
-    @JoinColumn(name="id_user_created")     //Checked
+    @JoinColumn(name="id_user_created")
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name="id_blog_type") //Checked
+    @JoinColumn(name="id_blog_type")
     private BlogTypeEntity blogTypeEntity;
 
     @OneToMany(mappedBy = "blogEntity_BookingEntity")
     List<BookingEntity> listBooking_BlogEntity;
 
+    @OneToMany(mappedBy = "blogEntity_CommentEntity")
+    List<CommentEntity> listComment_BlogEntity ;
+
     @OneToOne(mappedBy = "blog_service")
     private ServiceEntity serviceEntity;
 
-    @OneToMany(mappedBy = "blog_comment")
-    private List<CommentEntity> commentEntities;
 
 }

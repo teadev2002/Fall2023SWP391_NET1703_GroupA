@@ -1,5 +1,6 @@
 package com.swp391.DogCatLoverPlatform.service;
 
+import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
@@ -12,7 +13,8 @@ import java.util.List;
 
 @Service
 public class UserService {
-
+    @Autowired
+    ModelMapperConfig modelMapperConfig;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -93,5 +95,11 @@ public class UserService {
         userEntity.setPhone(phone);
         userRepository.save(userEntity);
         return true;
+    }
+
+    public UserDTO getUserById(int id_user) {
+        UserEntity userEntity = userRepository.findById(id_user).orElseThrow();
+        UserDTO userDTO = modelMapperConfig.modelMapper().map(userEntity, UserDTO.class);
+        return userDTO;
     }
 }

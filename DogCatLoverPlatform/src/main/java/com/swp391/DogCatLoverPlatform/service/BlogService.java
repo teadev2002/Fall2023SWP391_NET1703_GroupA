@@ -7,8 +7,10 @@ import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
+import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.BlogTypeRepository;
+import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class BlogService {
     private BlogTypeRepository blogTypeRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     ModelMapperConfig modelMapperConfig;
 
 
@@ -43,6 +48,19 @@ public class BlogService {
         return listBlogDTO;
     }
 
+    public List<BlogDTO> GetAllMyBlog(int id_user) {
+        List<BlogEntity> listBlog = blogRepository.findByUserEntityId(id_user);
+        Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+        List<BlogDTO> listBlogDTO = new ArrayList<>();
+
+
+        for (BlogEntity blogEntity : listBlog) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            listBlogDTO.add(blogDTO);
+        }
+        return listBlogDTO;
+    }
+
 
     public BlogDTO getBlogById(int id) {
         BlogEntity blogEntity = blogRepository.findById(id).orElseThrow();
@@ -50,10 +68,13 @@ public class BlogService {
         return blogDTO;
     }
 
-    public BlogDTO createBlog(BlogDTO blogDTO, int blogTypeId) {
+    public BlogDTO createBlog(BlogDTO blogDTO, int blogTypeId, int idUserCreated) {
         BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
         blogEntity.setBlogTypeEntity(new BlogTypeEntity()); // -- Quan trọng
         blogEntity.getBlogTypeEntity().setId(blogTypeId);
+
+        UserEntity userEntity = userRepository.findById(idUserCreated).orElseThrow();
+        blogEntity.setUserEntity(userEntity);
 
         // Lấy thời gian tạo hiện tại
         Date createDate = new Date();

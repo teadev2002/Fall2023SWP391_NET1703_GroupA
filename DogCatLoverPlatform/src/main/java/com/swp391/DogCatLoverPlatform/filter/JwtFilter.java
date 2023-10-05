@@ -58,7 +58,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }else {
             //không hợp lệ
-            //System.out.println("Nội dung header không hợp lệ");
+
         }
 
         filterChain.doFilter(request,response);

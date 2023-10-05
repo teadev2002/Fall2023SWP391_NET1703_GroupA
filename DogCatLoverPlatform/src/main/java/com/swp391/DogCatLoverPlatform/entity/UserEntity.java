@@ -41,18 +41,16 @@ public class UserEntity {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name="id_role")         //Checked
+    @JoinColumn(name="id_role")
     private RoleEntity roleEntity;
 
-    @OneToMany(mappedBy = "userEntity")    //Checked
+    @OneToMany(mappedBy = "userEntity")
     List<BlogEntity> listBlogs;
 
-
-
-    @OneToMany(mappedBy = "userEntity_CommentEntity")  //Checked
+    @OneToMany(mappedBy = "userEntity_CommentEntity")
     List<CommentEntity> listComment_UserEntity ;
 
-    @OneToMany(mappedBy = "userEntity_BookingEntity") //Checked
+    @OneToMany(mappedBy = "userEntity_BookingEntity")
     List<BookingEntity> listBooking_UserEntity ;
 
 

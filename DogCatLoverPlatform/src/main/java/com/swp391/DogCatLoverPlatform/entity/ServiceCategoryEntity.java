@@ -22,5 +22,5 @@ public class ServiceCategoryEntity {
     private String name;
 
     @OneToMany(mappedBy = "service_category")     //Checked
-    private List<ServiceEntity> serviceEntityList;
+    private List<ServiceEntity> listService_ServiceCategory;
 }

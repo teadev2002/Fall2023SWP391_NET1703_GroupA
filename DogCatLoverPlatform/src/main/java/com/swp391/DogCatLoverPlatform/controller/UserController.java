@@ -126,10 +126,12 @@ public class UserController {
         String email = null;
         try {
             for (Cookie c : cookies) {
-                email = c.getValue();
-                UserDTO user = userService.getUserByEmail(email);
-                model.addAttribute("user", user);
-                return "profile";
+                if ("User".equals(c.getName())) {
+                    email = c.getValue();
+                    UserDTO user = userService.getUserByEmail(email);
+                    model.addAttribute("user", user);
+                    return "profile";
+                }
             }
 
         } catch (Exception e) {
@@ -198,6 +200,8 @@ public class UserController {
         if (authenticationManager != null) {
             Cookie cookie = new Cookie("User", email);
             cookie.setMaxAge(3600);
+            cookie.setDomain("localhost");
+            cookie.setPath("/");
             resp.addCookie(cookie);
         }
         //Lấy danh sách role đã lưu từ security context folder khi AuthenManager chứng thực thành công
@@ -234,6 +238,8 @@ public class UserController {
             for (Cookie cookie : cookies) {
                 if ("User".equals(cookie.getName())) {
                     cookie.setMaxAge(0); // Setting max age to 0 deletes the cookie
+                    cookie.setDomain("localhost");
+                    cookie.setPath("/");
                     resp.addCookie(cookie);
                     break;
                 }

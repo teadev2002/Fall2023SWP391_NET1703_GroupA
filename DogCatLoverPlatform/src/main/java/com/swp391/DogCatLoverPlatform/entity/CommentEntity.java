@@ -29,10 +29,11 @@ public class CommentEntity {
     private int rating;
 
     @ManyToOne
-    @JoinColumn(name = "id_user") // Checked
+    @JoinColumn(name = "id_user")
     private UserEntity userEntity_CommentEntity;
 
     @ManyToOne
     @JoinColumn(name = "id_blog")
-    private BlogEntity blog_comment;
+    private BlogEntity blogEntity_CommentEntity;
+
 }
