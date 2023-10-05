@@ -10,6 +10,7 @@ import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BlogTypeService;
 //import com.swp391.DogCatLoverPlatform.service.CommentService;
+import com.swp391.DogCatLoverPlatform.service.CommentService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class BlogController {
     @Autowired
     UserService userService;
 
-//    @Autowired
-//    CommentService commentService;
+    @Autowired
+    CommentService commentService;
 
     @Autowired
     BlogTypeService blogTypeService;
@@ -54,6 +55,7 @@ public class BlogController {
 
         return "blog-standard";
     }
+
     @GetMapping("/byType")
     public String showBlogsByType(@RequestParam("type") String type, Model model) {
         List<BlogDTO> blogs = blogService.getBlogsByType(type);
@@ -78,46 +80,62 @@ public class BlogController {
         return "redirect:/blog/view";
     }
 
-    @GetMapping("/create/{id_user}")
-    public String showCreateForm(@PathVariable("id_user") int id_user, Model model) {
-        List<BlogTypeEntity> listBlogType =  blogTypeService.getAllBlogType();
-        UserDTO userDTO = userService.getUserById(id_user);
-        model.addAttribute("user", userDTO);
+    @GetMapping("/create")
+    public String showCreateForm(Model model, HttpServletRequest req) {
+        List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
         model.addAttribute("blogTypes", listBlogType);
         model.addAttribute("blog", new BlogDTO());
         return "create-blog-form";
     }
 
-    @PostMapping("/create/{id_user}")
-    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @PathVariable("id_user") int id_user, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/create")
+    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file, HttpServletRequest req) throws IOException {
         // Lưu hình ảnh vào cơ sở dữ liệu và lấy đường dẫn
         String imagePath = blogService.saveImageAndReturnPath(file);
+        UserDTO user  = getUserIdFromCookie(req);
         blogDTO.setImage(imagePath);
-        BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId, id_user);
-        return "redirect:/blog/view/myblog/{id_user}" ;
+        BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId, user.getId());
+        return "redirect:/blog/view/myblog";
     }
 
-    @PostMapping("/{id}")
-    public String deleteBlog(@PathVariable int id, @RequestParam(name = "id_user") int id_user) {
-        blogService.deleteBlogById(id);
-        return "redirect:/blog/view/myblog/" + id_user;
+    @PostMapping("/delete")
+    public String deleteBlog(HttpServletRequest req) {
+        // Extract the user's ID from the cookies (if available)
+        int idBlog = Integer.parseInt(req.getParameter("idBlog"));
+        UserDTO user  = getUserIdFromCookie(req);
+        blogService.deleteBlogById(idBlog);
+        return "redirect:/blog/view/myblog";
     }
+
 
     @GetMapping("/{id}/detail")
     public String viewDetailsBlog(@PathVariable("id") int id, Model model) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
-//        // Get comments for the blog by its ID
-//        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
+        // Get comments for the blog by its ID
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
 
-//        // Add the comments to the model
-//        model.addAttribute("comments", comments);
+        // Add the comments to the model
+        model.addAttribute("comments", comments);
 
         return "blog-details";
+    }
+
+    @PostMapping("/create_comment")
+    public String createComment(HttpServletRequest request){
+        UserDTO userDTO = getUserIdFromCookie(request);
+        String description = request.getParameter("description");
+        int idBlog = Integer.parseInt(request.getParameter("id"));
+
+        System.out.println(idBlog);
+        System.out.println(userDTO.getId());
+        commentService.createComment(description,idBlog,userDTO.getId());
+
+        return  "redirect:/blog/"+idBlog+"/detail";
     }
 
     @GetMapping("/{id}/detail/myblog")
@@ -125,61 +143,40 @@ public class BlogController {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
-//        // Get comments for the blog by its ID
-//        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
+        // Get comments for the blog by its ID
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
 
-//        // Add the comments to the model
-//        model.addAttribute("comments", comments);
+        // Add the comments to the model
+        model.addAttribute("comments", comments);
 
         return "blog-details-myblog";
     }
 
 
-   /* @GetMapping("/blog/{id_blog}")
-    public String viewBlogWithComments(@PathVariable int id_blog, Model model) {
-        List<CommentDTO> comments = commentService.getCommentsByBlogId(id_blog);
-        model.addAttribute("comments", comments);
-        return "blog-details";
-    }*/
-
-//   @GetMapping("/blog/{id_blog}")
-//    public String viewBlogWithComments(@PathVariable int id_blog, Model model) {
-//        List<CommentDTO> comments = commentService.getCommentsByBlogId(id_blog);
-//        model.addAttribute("comments", comments);
-//
-//        BlogDTO blogDTO = blogService.getBlogById(id_blog);
-//        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
-//        model.addAttribute("latestBlogs", latestBlogs);
-//        model.addAttribute("blog", blogDTO);
-//
-//        return "blog-details";
-//    }
-
-
     @GetMapping("/search")
-    public String viewSearch(Model model){
+    public String viewSearch(Model model) {
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
-       return "redirect:/blog/view";
+        return "redirect:/blog/view";
     }
 
     @PostMapping("/search")
-    public String searchBlogByTitle(@RequestParam("title") String title ,Model model){
+    public String searchBlogByTitle(@RequestParam("title") String title, Model model) {
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
-        if(title.trim().isEmpty()){
+        if (title.trim().isEmpty()) {
             List<BlogDTO> list = blogService.GetAllBlog();
             model.addAttribute("listBlog", list);
-        }else{
+        } else {
             List<BlogDTO> list = blogService.GetBlogsByTitle(title);
-            if(list.isEmpty()){
+            if (list.isEmpty()) {
 
                 model.addAttribute("msg", "Không tìm thấy kết quả!!");
-            }else{
+            } else {
                 model.addAttribute("listBlogs", list);
             }
 
@@ -187,43 +184,30 @@ public class BlogController {
         return "blog-standard";
     }
 
-    @GetMapping("/view/myblog/{id_user}")
-    public String viewMyBlog(@PathVariable("id_user") int id_user, Model model, HttpServletResponse response){
-       List<BlogDTO> list = blogService.GetAllMyBlog(id_user);
-
-        String id_users = String.valueOf(id_user);
-        Cookie cookie = new Cookie("id_user", id_users);
-
-        // Đặt các thuộc tính cho cookie (nếu cần)
-        cookie.setMaxAge(24 * 60 * 60); // Đặt thời gian sống là 24 giờ (số giây)
-        cookie.setPath("/"); // Đặt path cho cookie, "/" có nghĩa là toàn bộ ứng dụng
-
-        // Thêm cookie vào phản hồi (response)
-        response.addCookie(cookie);
-
-       model.addAttribute("listBlog", list);
-
-       List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
-       model.addAttribute("latestBlogs", latestBlogs);
-//      model.addAttribute("id_user", id_user);
-       return "myblog";
+    @GetMapping("/view/myblog")
+    public String viewMyBlog(Model model, HttpServletResponse response, HttpServletRequest req) {
+        UserDTO user  = getUserIdFromCookie(req);
+        List<BlogDTO> list = blogService.GetAllMyBlog(user.getId());
+        model.addAttribute("listBlog", list);
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+        model.addAttribute("user", user);
+        return "myblog";
     }
 
-    //Test-Cookies
-    @GetMapping("/test")
-    public String viewTest(HttpServletRequest request){
-
-        Cookie[] cookies = request.getCookies();
+    //Hàm cực kỳ quan trọng!!!
+    private UserDTO getUserIdFromCookie(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        UserDTO userDTO = new UserDTO();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("id_user")) {
+                if ("User".equals(cookie.getName())) {
                     String email = cookie.getValue();
-                    System.out.println(email);
+                    userDTO = userService.getUserByEmail(email);
+                    return userDTO;
                 }
             }
         }
-
-        return "blog-standard";
+        return null;
     }
-
 }

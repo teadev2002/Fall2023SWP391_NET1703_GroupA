@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -102,4 +104,25 @@ public class UserService {
         UserDTO userDTO = modelMapperConfig.modelMapper().map(userEntity, UserDTO.class);
         return userDTO;
     }
+
+    //Lấy User từ Cookie
+    public UserDTO getUserByCookies(HttpServletRequest request) {
+
+        Cookie[] cookies = request.getCookies();
+        String email = "null";
+        try {
+            for (Cookie cookie : cookies) {
+                if ("User".equals(cookie.getName())) {
+                    email = cookie.getValue();
+                    UserDTO userDTO = getUserByEmail(email);
+                    System.out.println(userDTO.getId());
+                    return userDTO;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi không tìm thấy Cookies!");
+        }
+        return null;
+    }
+
 }

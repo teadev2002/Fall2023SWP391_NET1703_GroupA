@@ -258,9 +258,4 @@ public class UserController {
         return "redirect:/DogCatLoverPlatform/Sign-up";
     }
 
-
-
-
-
-
 }

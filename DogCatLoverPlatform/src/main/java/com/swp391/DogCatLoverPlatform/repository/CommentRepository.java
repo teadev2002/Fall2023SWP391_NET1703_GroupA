@@ -8,11 +8,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
-    @Query(value = "SELECT comment.*, users.user_name " +
-            "FROM comment " +
-            "JOIN user_blog_comment ON comment.id = user_blog_comment.id_comment " +
-            "JOIN users ON user_blog_comment.id_user = users.id " +
-            "WHERE user_blog_comment.id_blog = :id_blog", nativeQuery = true)
+    @Query(value = "SELECT c.*, u.user_name, u.full_name, u.email, u.phone, u.address, u.image\n" +
+            "FROM comment c\n" +
+            "JOIN users u ON c.id_user = u.id\n" +
+            "WHERE c.id_blog = :id_blog", nativeQuery = true)
     List<CommentEntity> findCommentsByBlogId(@Param("id_blog") Integer id_blog);
 }
 
