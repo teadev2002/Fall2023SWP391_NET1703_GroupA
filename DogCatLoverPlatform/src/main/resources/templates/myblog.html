@@ -216,7 +216,7 @@
 
                 <!-- Create-->
                 <div style="padding-left: 98%;">
-                    <a th:href="@{/blog/create/{id_user}(id_user=${id_user})}">
+                    <a th:href="@{/blog/create}">
                         <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
                             <style> {
                                 fill: #de9921
@@ -247,10 +247,13 @@
 
                         <h4 style="display: flex;">
                             <a th:text="${blog.title}"></a>
+
+
                             <!--Delete-->
-                            <form th:action="@{/blog/{id}(id=${blog.id})}" method="post" style="margin-left: 12px;">
-                                <input type="hidden" name="_method" value="delete"/>
-                                <input type="hidden" name="id_user" value="${id_user}"/>
+                            <form th:action="@{/blog/delete}" method="post" style="margin-left: 12px;">
+                                <input type="hidden" name="_method" value="DELETE"/>
+                                <input type="hidden" name="idBlog" th:value="${blog.id}"/>
+
                                 <button type="submit" style="height: 0px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="0.55em" viewBox="0 0 448 512">
                                         <style> {
@@ -260,6 +263,7 @@
                                     </svg>
                                 </button>
                             </form>
+
                         </h4>
 
                         <span style="margin-right: 4px;"
