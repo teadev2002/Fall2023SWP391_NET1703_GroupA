@@ -41,6 +41,24 @@
 </head>
 <body>
 
+<div class="top-bar" th:if="${user != null}">
+    <div class="container-lg container-fluid ">
+        <div class="row">
+            <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
+                <div class="social-area">
+                </div>
+                <div class="opening-time text-center">
+                    <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
+                </div>
+                <div class="contact-number" style="display: flex;">
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+                    &nbsp; &nbsp;<img src="../images/icon/support.svg" alt>
+                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}" >Đăng xuất</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">

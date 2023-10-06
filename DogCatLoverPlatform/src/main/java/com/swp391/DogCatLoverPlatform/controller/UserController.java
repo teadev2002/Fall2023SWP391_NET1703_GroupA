@@ -51,7 +51,9 @@ public class UserController {
     private Gson gson = new Gson();
 
     @GetMapping("/home")
-    public String hello() {
+    public String hello(Model model, HttpServletRequest req) {
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "index";
     }
 
@@ -71,7 +73,9 @@ public class UserController {
     }
 
     @GetMapping("/about")
-    public String about() {
+    public String about(Model model, HttpServletRequest req) {
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "about";
     }
 
@@ -81,7 +85,9 @@ public class UserController {
     }
 
     @GetMapping("/contact")
-    public String contact() {
+    public String contact(Model model, HttpServletRequest req) {
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "contact";
     }
 
@@ -258,4 +264,19 @@ public class UserController {
         return "redirect:/DogCatLoverPlatform/Sign-up";
     }
 
+    //GetUserIdFromCookie cực kỳ quan trọng!!!
+    private UserDTO getUserIdFromCookie(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        UserDTO userDTO = new UserDTO();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("User".equals(cookie.getName())) {
+                    String email = cookie.getValue();
+                    userDTO = userService.getUserByEmail(email);
+                    return userDTO;
+                }
+            }
+        }
+        return null;
+    }
 }

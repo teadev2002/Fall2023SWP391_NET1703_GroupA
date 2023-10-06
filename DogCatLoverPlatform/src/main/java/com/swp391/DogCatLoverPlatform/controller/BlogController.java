@@ -46,30 +46,38 @@ public class BlogController {
     BlogTypeService blogTypeService;
 
     @GetMapping("/view")
-    public String GetAllBlogs(Model model) {
+    public String GetAllBlogs(Model model, HttpServletRequest req) {
         List<BlogDTO> list = blogService.GetAllBlog();
         model.addAttribute("listBlog", list);
 
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "blog-standard";
     }
 
     @GetMapping("/byType")
-    public String showBlogsByType(@RequestParam("type") String type, Model model) {
+    public String showBlogsByType(@RequestParam("type") String type, Model model, HttpServletRequest req) {
         List<BlogDTO> blogs = blogService.getBlogsByType(type);
         model.addAttribute("blogs", blogs);
 
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "blog-type";
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+    public String showUpdateForm(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         model.addAttribute("blog", blogDTO);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "update-blog-form";
     }
 
@@ -83,6 +91,9 @@ public class BlogController {
     @GetMapping("/create")
     public String showCreateForm(Model model, HttpServletRequest req) {
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
+        UserDTO user  = getUserIdFromCookie(req);
+
+        model.addAttribute("user", user);
         model.addAttribute("blogTypes", listBlogType);
         model.addAttribute("blog", new BlogDTO());
         return "create-blog-form";
@@ -119,7 +130,7 @@ public class BlogController {
 
 
     @GetMapping("/{id}/detail")
-    public String viewDetailsBlog(@PathVariable("id") int id, Model model) {
+    public String viewDetailsBlog(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
@@ -128,6 +139,9 @@ public class BlogController {
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
 
         // Add the comments to the model
         model.addAttribute("comments", comments);
@@ -136,7 +150,7 @@ public class BlogController {
     }
 
     @GetMapping("/{id}/detail/myblog")
-    public String viewMyBlogDetails(@PathVariable("id") int id, Model model) {
+    public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
@@ -145,6 +159,9 @@ public class BlogController {
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
 
         // Add the comments to the model
         model.addAttribute("comments", comments);
@@ -154,16 +171,23 @@ public class BlogController {
 
 
     @GetMapping("/search")
-    public String viewSearch(Model model) {
+    public String viewSearch(Model model, HttpServletRequest req) {
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
         return "redirect:/blog/view";
     }
 
     @PostMapping("/search")
-    public String searchBlogByTitle(@RequestParam("title") String title, Model model) {
+    public String searchBlogByTitle(@RequestParam("title") String title, Model model, HttpServletRequest req) {
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
 
         if (title.trim().isEmpty()) {
             List<BlogDTO> list = blogService.GetAllBlog();
