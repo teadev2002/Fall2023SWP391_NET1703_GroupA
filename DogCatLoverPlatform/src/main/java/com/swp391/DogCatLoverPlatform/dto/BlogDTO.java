@@ -24,6 +24,7 @@ public class BlogDTO {
     private int idUserCreated;
     private double price;
     private boolean status;
+    private UserDTO userDTO;
     //private boolean confirm;
 
 }

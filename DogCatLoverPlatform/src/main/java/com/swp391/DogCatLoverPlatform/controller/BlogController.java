@@ -194,13 +194,23 @@ public class BlogController {
 
     @PostMapping("/delete_comment")
     public String deleteComment(@RequestParam("commentId") int commentId, HttpServletRequest req) {
-        UserDTO user = getUserIdFromCookie(req);
-        if (user != null) {
-            commentService.deleteComment(commentId);
-        }
+        UserDTO currentUser = getUserIdFromCookie(req);
         int blogId = Integer.parseInt(req.getParameter("blogId"));
+        BlogDTO blogDTO = blogService.getBlogById(blogId);
+
+
+        if (currentUser != null) {
+
+            if (blogDTO != null && currentUser.getUserName().equals(blogDTO.getUserName()))
+                commentService.deleteComment(commentId);
+            } else {
+
+            }
+
+
         return "redirect:/blog/" + blogId + "/detail";
     }
+
 
     //GetUserIdFromCookie cực kỳ quan trọng!!!
     private UserDTO getUserIdFromCookie(HttpServletRequest req) {
