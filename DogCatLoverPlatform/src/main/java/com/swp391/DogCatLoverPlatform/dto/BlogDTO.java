@@ -21,9 +21,10 @@ public class BlogDTO {
     private String blogTypeName;
     private int id;
     private int blogTypeId;
-    private int idUserCreated;
+    private int userId;
     private double price;
     private boolean status;
+    private UserDTO userDTO;
     //private boolean confirm;
 
 }

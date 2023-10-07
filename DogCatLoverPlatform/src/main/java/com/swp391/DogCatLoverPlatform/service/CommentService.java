@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,15 +40,6 @@ public class CommentService {
         return commentDTOs;
     }
 
-    public void deleteCmtById(int id) {
-
-        if (commentRepository.existsById(id)) {
-            commentRepository.deleteById(id);
-        } else {
-        }
-    }
-
-
     public CommentDTO createComment(CommentDTO commentDTO ,String description, int id_blog, int id_user) {
         CommentEntity commentEntity = modelMapperConfig.modelMapper().map(commentDTO, CommentEntity.class);
         commentEntity.setDescription(description);
@@ -67,6 +59,17 @@ public class CommentService {
         createdComment.setCreateDate(createDate);
         return createdComment;
     }
+
+    public void deleteComment(int commentId) {
+        commentRepository.deleteById(commentId);
+    }
+    public CommentDTO getCommentById(int id) {
+        CommentEntity commentEntity = commentRepository.findById(id).orElseThrow();
+        CommentDTO commentDTO = modelMapperConfig.modelMapper().map(commentEntity, CommentDTO.class);
+        return commentDTO;
+
+    }
+
 }
 
 

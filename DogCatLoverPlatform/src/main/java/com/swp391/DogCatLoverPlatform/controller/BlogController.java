@@ -113,8 +113,10 @@ public class BlogController {
     public String createComment(@ModelAttribute("comment") CommentDTO commentDTO, HttpServletRequest req){
         UserDTO user  = getUserIdFromCookie(req);
         String description = req.getParameter("description");
-        int id_blog = Integer.parseInt(req.getParameter("id"));
-        CommentDTO comment = commentService.createComment(commentDTO, description, id_blog, user.getId());
+
+        int id_blog = commentDTO.getId();
+        BlogDTO blog = blogService.getBlogById(id_blog);
+        commentService.createComment(commentDTO, description, id_blog, user.getId());
 
         return "redirect:/blog/"+id_blog+"/detail";
     }
@@ -149,13 +151,11 @@ public class BlogController {
         return "blog-details";
     }
 
+
     @GetMapping("/{id}/detail/myblog")
     public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
-
-        // Get comments for the blog by its ID
-        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
@@ -163,7 +163,9 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
         model.addAttribute("user", user);
 
+        // Get comments for the blog by its ID
         // Add the comments to the model
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
         model.addAttribute("comments", comments);
 
         return "blog-details-myblog";
@@ -215,6 +217,26 @@ public class BlogController {
         model.addAttribute("user", user);
         return "myblog";
     }
+
+    @PostMapping("/delete_comment")
+    public String deleteComment(@RequestParam("commentId") int commentId, HttpServletRequest req) {
+        UserDTO currentUser = getUserIdFromCookie(req);
+        int blogId = Integer.parseInt(req.getParameter("blogId"));
+        BlogDTO blogDTO = blogService.getBlogById(blogId);
+
+
+        if (currentUser != null) {
+
+            if (blogDTO != null && currentUser.getUserName().equals(blogDTO.getUserName()))
+                commentService.deleteComment(commentId);
+        } else {
+
+        }
+
+
+        return "redirect:/blog/" + blogId + "/detail";
+    }
+
 
     //GetUserIdFromCookie cực kỳ quan trọng!!!
     private UserDTO getUserIdFromCookie(HttpServletRequest req) {

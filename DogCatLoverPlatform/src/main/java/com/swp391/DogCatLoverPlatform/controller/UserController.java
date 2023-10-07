@@ -57,6 +57,11 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/staff")
+    public String viewDashboard(){
+        return "index-staff";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login";

@@ -235,7 +235,15 @@
 
                 <!-- Create-->
                 <div style="padding-left: 98%;">
-                    <a th:href="@{/blog/create}">
+                    <a th:if="${user != null}" th:href="@{/blog/create}">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
+                            <style> {
+                                fill: #de9921
+                            }</style>
+                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
+                        </svg>
+                    </a>
+                    <a th:if="${user == null}" th:href="@{/index/login}">
                         <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
                             <style> {
                                 fill: #de9921
@@ -270,9 +278,15 @@
                               th:text="${#strings.length(blog.content) > 100} ? ${blog.content.substring(0, 100) + '...'} : ${blog.content}">
                         </span>
 
-                        <div class="more-btn mt-2">
-                            <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><span>Re</span>ad More</a>
+                        <div class="more-btn mt-2" th:if="${user == null}">
+                            <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><span>Re</span>ad More</a>-->
                         </div>
+
+                        <div class="more-btn mt-2" th:if="${user != null}">
+                            <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"><span>Re</span>ad More</a>
+                        </div>
+
+
 
                     </div>
                 </div>
@@ -341,9 +355,11 @@
                             <h3>Newest Posts</h3>
                         </div>
 
-                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
-                            <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
-                                <div class="wi sidebarImage">
+
+<!--                        Newest Blog-->
+                        <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
                                     <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img
                                             th:src="@{'../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
@@ -351,6 +367,22 @@
                                     <a th:href="@{/blog/{id}/detail(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/{id}/detail(id=${blog.id})}"
+                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
+                                    <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"><img
+                                            th:src="@{'../images/blog/' + ${blog.image}}" alt="image"></a>
+                                </div>
+                                <div class="wc">
+                                    <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}" th:text="${blog.createDate}"></a>
+                                    <h6>
+                                        <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"
                                            th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
