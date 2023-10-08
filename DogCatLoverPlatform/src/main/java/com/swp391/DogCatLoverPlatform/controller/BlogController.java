@@ -46,30 +46,38 @@ public class BlogController {
     BlogTypeService blogTypeService;
 
     @GetMapping("/view")
-    public String GetAllBlogs(Model model) {
+    public String GetAllBlogs(Model model, HttpServletRequest req) {
         List<BlogDTO> list = blogService.GetAllBlog();
         model.addAttribute("listBlog", list);
 
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "blog-standard";
     }
 
     @GetMapping("/byType")
-    public String showBlogsByType(@RequestParam("type") String type, Model model) {
+    public String showBlogsByType(@RequestParam("type") String type, Model model, HttpServletRequest req) {
         List<BlogDTO> blogs = blogService.getBlogsByType(type);
         model.addAttribute("blogs", blogs);
 
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "blog-type";
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+    public String showUpdateForm(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         model.addAttribute("blog", blogDTO);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "update-blog-form";
     }
 
@@ -83,6 +91,9 @@ public class BlogController {
     @GetMapping("/create")
     public String showCreateForm(Model model, HttpServletRequest req) {
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
+        UserDTO user  = getUserIdFromCookie(req);
+
+        model.addAttribute("user", user);
         model.addAttribute("blogTypes", listBlogType);
         model.addAttribute("blog", new BlogDTO());
         return "create-blog-form";
@@ -98,6 +109,18 @@ public class BlogController {
         return "redirect:/blog/view/myblog";
     }
 
+    @PostMapping("/create_comment")
+    public String createComment(@ModelAttribute("comment") CommentDTO commentDTO, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+        String description = req.getParameter("description");
+
+        int id_blog = commentDTO.getId();
+        BlogDTO blog = blogService.getBlogById(id_blog);
+        commentService.createComment(commentDTO, description, id_blog, user.getId());
+
+        return "redirect:/blog/"+id_blog+"/detail";
+    }
+
     @PostMapping("/delete")
     public String deleteBlog(HttpServletRequest req) {
         // Extract the user's ID from the cookies (if available)
@@ -109,7 +132,7 @@ public class BlogController {
 
 
     @GetMapping("/{id}/detail")
-    public String viewDetailsBlog(@PathVariable("id") int id, Model model) {
+    public String viewDetailsBlog(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
@@ -118,6 +141,9 @@ public class BlogController {
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
 
         // Add the comments to the model
         model.addAttribute("comments", comments);
@@ -125,31 +151,21 @@ public class BlogController {
         return "blog-details";
     }
 
-    @PostMapping("/create_comment")
-    public String createComment(HttpServletRequest request){
-        UserDTO userDTO = getUserIdFromCookie(request);
-        String description = request.getParameter("description");
-        int idBlog = Integer.parseInt(request.getParameter("id"));
-
-        System.out.println(idBlog);
-        System.out.println(userDTO.getId());
-        commentService.createComment(description,idBlog,userDTO.getId());
-
-        return  "redirect:/blog/"+idBlog+"/detail";
-    }
 
     @GetMapping("/{id}/detail/myblog")
-    public String viewMyBlogDetails(@PathVariable("id") int id, Model model) {
+    public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
-
-        // Get comments for the blog by its ID
-        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
 
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
+        // Get comments for the blog by its ID
         // Add the comments to the model
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
         model.addAttribute("comments", comments);
 
         return "blog-details-myblog";
@@ -157,16 +173,23 @@ public class BlogController {
 
 
     @GetMapping("/search")
-    public String viewSearch(Model model) {
+    public String viewSearch(Model model, HttpServletRequest req) {
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
         return "redirect:/blog/view";
     }
 
     @PostMapping("/search")
-    public String searchBlogByTitle(@RequestParam("title") String title, Model model) {
+    public String searchBlogByTitle(@RequestParam("title") String title, Model model, HttpServletRequest req) {
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
 
         if (title.trim().isEmpty()) {
             List<BlogDTO> list = blogService.GetAllBlog();
@@ -195,7 +218,27 @@ public class BlogController {
         return "myblog";
     }
 
-    //Hàm cực kỳ quan trọng!!!
+    @PostMapping("/delete_comment")
+    public String deleteComment(@RequestParam("commentId") int commentId, HttpServletRequest req) {
+        UserDTO currentUser = getUserIdFromCookie(req);
+        int blogId = Integer.parseInt(req.getParameter("blogId"));
+        BlogDTO blogDTO = blogService.getBlogById(blogId);
+
+
+        if (currentUser != null) {
+
+            if (blogDTO != null && currentUser.getUserName().equals(blogDTO.getUserName()))
+                commentService.deleteComment(commentId);
+        } else {
+
+        }
+
+
+        return "redirect:/blog/" + blogId + "/detail";
+    }
+
+
+    //GetUserIdFromCookie cực kỳ quan trọng!!!
     private UserDTO getUserIdFromCookie(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
         UserDTO userDTO = new UserDTO();

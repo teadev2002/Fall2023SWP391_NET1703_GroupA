@@ -6,6 +6,8 @@ import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -123,6 +125,18 @@ public class UserService {
             System.out.println("Lỗi không tìm thấy Cookies!");
         }
         return null;
+    }
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+    public void sendOTP(String toEmail, String otp, UserDTO userDTO) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Your OTP Code");
+        message.setText("Your OTP code is: " + otp);
+        userRepository.updateOtpInUser(otp, userDTO.getId());
+        javaMailSender.send(message);
     }
 
 }

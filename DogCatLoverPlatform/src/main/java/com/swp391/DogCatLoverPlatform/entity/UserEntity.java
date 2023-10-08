@@ -40,6 +40,10 @@ public class UserEntity {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "otp")
+    private String otp;
+
+
     @ManyToOne
     @JoinColumn(name="id_role")
     private RoleEntity roleEntity;

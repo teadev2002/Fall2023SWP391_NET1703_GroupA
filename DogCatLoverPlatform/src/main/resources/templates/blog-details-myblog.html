@@ -36,8 +36,84 @@
     <link rel="stylesheet" th:href="@{../../../css/uiicss.css}">
 
     <link rel="stylesheet" th:href="@{../../../css/style.css}">
+
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px 5px rgba(0, 0, 0, 0.1);
+            margin-top: -25px;
+            z-index: 999;
+        }
+
+        .popup > * {
+            margin: 15px 0;
+        }
+
+        .confirmation-message {
+            display: none;
+        }
+
+    </style>
+
+    <script>
+        function showPopup() {
+            var popup = document.querySelector('.popup');
+            popup.style.display = 'block';
+
+        }
+
+        function hidePopup() {
+            var popup = document.querySelector('.popup');
+            popup.style.display = 'none';
+
+        }
+
+        function confirmTransaction() {
+            var popup = document.querySelector('.popup');
+            var confirmationMessage = document.querySelector('.confirmation-message');
+
+            // Ẩn cửa sổ popup
+            popup.style.display = 'none';
+
+            // Hiển thị thông báo
+            confirmationMessage.style.display = 'block';
+
+            // Tự động ẩn thông báo sau một khoảng thời gian (ví dụ: 3 giây)
+            setTimeout(function () {
+                confirmationMessage.style.display = 'none';
+            }, 4000); // 3 giây
+        }
+    </script>
+
 </head>
 <body>
+
+<div class="top-bar" th:if="${user != null}">
+    <div class="container-lg container-fluid ">
+        <div class="row">
+            <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
+                <div class="social-area">
+                </div>
+                <div class="opening-time text-center">
+                    <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
+                </div>
+                <div class="contact-number" style="display: flex;">
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
+                    &nbsp; &nbsp;<img src="../../../images/icon/support.svg" alt>
+                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}">Đăng xuất</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -223,12 +299,14 @@
 
                     <h2 class="post-title">
                         <a th:text="${blog.title}"></a>
+
                         <!--Update-->
-                        <a th:href="@{/blog/{id}/edit(id=${blog.id})}">
+                        <a th:if="${user.id == blog.userId}" th:href="@{/blog/{id}/edit(id=${blog.id})}">
                             <svg xmlns="http://www.w3.org/2000/svg" height="0.45em" viewBox="0 0 512 512">
                                 <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
                             </svg>
                         </a>
+
                     </h2>
 
                     <div class="post-content">
@@ -274,16 +352,54 @@
                                                     <img src="../../../images/blog/blog-author.png" alt>
                                                 </div>
                                                 <div class="author-details">
-                                                    <!--                                                    <h5 class="mb-0" th:text="${comments.userName}"></h5>-->
-                                                    <!--                                                    <div class="c-date" th:text="${comments.createDate}" ></div>-->
+                                                    <div style="display: flex;">
+                                                        <h5 class="mb-0" th:text="${comments.userName}"></h5> &nbsp;
+                                                        &nbsp;
+                                                        <!-- Icon trao đổi-->
+                                                        <a th:if="${user.id == blog.userId}" onclick="showPopup()"
+                                                           style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                                 viewBox="0 0 448 512">
+                                                                <path d="M438.6 150.6c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 96 32 96C14.3 96 0 110.3 0 128s14.3 32 32 32l306.7 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96zm-333.3 352c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 416 416 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96z"/>
+                                                            </svg>
+                                                        </a>
+
+                                                        <div class="popup">
+                                                            <h2>Bạn muốn giao dịch với người dùng này?</h2>
+                                                            <button type="button" class="btn btn-primary"
+                                                                    onclick="confirmTransaction()">Xác nhận
+                                                            </button> &nbsp;
+                                                            <a style="cursor: pointer" onclick="hidePopup()">Hủy</a>
+                                                        </div>
+
+                                                        &nbsp;
+                                                        <div class="confirmation-message">
+                                                            <p>Đã gửi yêu cầu.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="c-date" th:text="${comments.createDate}"></div>
                                                 </div>
                                             </div>
-                                            <div class="replay-btn">
-                                                <a href="#"><img src="../../../images/icon/replay-icon.svg" alt> Reply</a>
-                                            </div>
+
                                         </div>
-                                        <div class="c-body">
-                                            <!--                                            <p th:text="${comments.description}"></p>-->
+                                        <div class="c-body" style="display: flex;">
+                                            <span th:text="${comments.description}"></span> &nbsp;
+
+                                            <form th:action="@{/blog/delete_comment}" method="post">
+                                                <input type="hidden" name="commentId" th:value="${comments.id}">
+                                                <input type="hidden" name="blogId" th:value="${blog.id}">
+                                                <button th:if="${user.id == blog.userId}" style="height: 0px;"
+                                                        type="submit">
+                                                    <svg id="svg1" xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                         viewBox="0 0 512 512">
+
+                                                        <style>#svg1 {
+                                                            fill: #f52443
+                                                        }</style>
+                                                        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/>
+                                                    </svg>
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -295,12 +411,12 @@
                             <h2>Leave a Reply</h2>
                         </div>
 
-                        <form>
+                        <form th:action="@{/blog/create_comment}" th:object="${comment}" method="post">
                             <div class="row">
-
                                 <div class="col-lg-12">
                                     <div class="form-inner mb-40">
-                                        <textarea placeholder="Your message"></textarea>
+                                        <textarea name="description" placeholder="Your message..."></textarea>
+                                        <input type="hidden" name="id" th:field="${blog.id}">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -311,6 +427,7 @@
 
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -360,19 +477,33 @@
                             <h3>Newest Posts</h3>
                         </div>
 
-                        <div class="recent-post-wraper" style="padding-top: 0px;"
-                             th:each="blog , iterStat : ${latestBlogs}">
-                            <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''">
-                                <div class="wi sidebarImage">
+                        <!-- Newest Blog -->
+                        <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
                                     <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img
-                                            th:src="@{'../../../images/blog/' + ${blog.image}}"
-                                            alt="image"></a>
+                                            th:src="@{'../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
                                     <a th:href="@{/blog/{id}/detail(id=${blog.id})}" th:text="${blog.createDate}"></a>
-
                                     <h6>
                                         <a th:href="@{/blog/{id}/detail(id=${blog.id})}"
+                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
+                                    <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"><img
+                                            th:src="@{'../../../images/blog/' + ${blog.image}}" alt="image"></a>
+                                </div>
+                                <div class="wc">
+                                    <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}" th:text="${blog.createDate}"></a>
+                                    <h6>
+                                        <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"
                                            th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
@@ -516,6 +647,7 @@
 <script src="../../../js/jquery.magnific-popup.min.js"></script>
 <script src="../../../js/masonry.pkgd.min.js"></script>
 <script src="../../../js/main.js"></script>
+
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/blog-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:39 GMT -->

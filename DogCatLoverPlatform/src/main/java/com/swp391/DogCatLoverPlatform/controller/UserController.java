@@ -8,6 +8,7 @@ import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import com.swp391.DogCatLoverPlatform.util.JwtHelper;
+import com.swp391.DogCatLoverPlatform.util.OtpUtil;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
@@ -51,8 +52,15 @@ public class UserController {
     private Gson gson = new Gson();
 
     @GetMapping("/home")
-    public String hello() {
+    public String hello(Model model, HttpServletRequest req) {
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "index";
+    }
+
+    @GetMapping("/staff")
+    public String viewDashboard(){
+        return "index-staff";
     }
 
     @GetMapping("/login")
@@ -71,7 +79,9 @@ public class UserController {
     }
 
     @GetMapping("/about")
-    public String about() {
+    public String about(Model model, HttpServletRequest req) {
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "about";
     }
 
@@ -81,7 +91,9 @@ public class UserController {
     }
 
     @GetMapping("/contact")
-    public String contact() {
+    public String contact(Model model, HttpServletRequest req) {
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
         return "contact";
     }
 
@@ -258,4 +270,41 @@ public class UserController {
         return "redirect:/DogCatLoverPlatform/Sign-up";
     }
 
+    //GetUserIdFromCookie cực kỳ quan trọng!!!
+    private UserDTO getUserIdFromCookie(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        UserDTO userDTO = new UserDTO();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("User".equals(cookie.getName())) {
+                    String email = cookie.getValue();
+                    userDTO = userService.getUserByEmail(email);
+                    return userDTO;
+                }
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("/forgot")
+    public String forgot(){
+        return "forgotPassword";
+    }
+
+    @PostMapping("/send")
+    public ResponseEntity<?> sendOTP(HttpServletRequest request) {
+        String email = request.getParameter("email");
+        System.out.println(email);
+        UserDTO checkEmailExist = userService.getUserByEmail(email);
+        if(checkEmailExist != null) {
+            String otp = OtpUtil.generateOTP();
+            userService.sendOTP(email, otp, checkEmailExist);
+
+        }
+        BaseRespone baseRespone = new BaseRespone();
+        baseRespone.setStatusCode(200);
+        baseRespone.setMessage("");
+        baseRespone.setData(checkEmailExist);
+        return new ResponseEntity<>(baseRespone,HttpStatus.OK);
+    }
 }
