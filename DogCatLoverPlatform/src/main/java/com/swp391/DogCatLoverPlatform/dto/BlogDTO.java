@@ -25,6 +25,7 @@ public class BlogDTO {
     private double price;
     private boolean status;
     private UserDTO userDTO;
-    //private boolean confirm;
+    private String emailUserCreate;
+    private boolean confirm;
 
 }

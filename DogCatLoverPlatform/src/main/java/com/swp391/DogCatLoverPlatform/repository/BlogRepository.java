@@ -22,4 +22,6 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId")
         List<BlogEntity> findByUserEntityId(int userId);
 
+        List<BlogEntity> findByConfirm(boolean confirm);
+
 }

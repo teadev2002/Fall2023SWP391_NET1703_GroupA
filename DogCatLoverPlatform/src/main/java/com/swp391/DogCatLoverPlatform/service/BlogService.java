@@ -36,12 +36,21 @@ public class BlogService {
     ModelMapperConfig modelMapperConfig;
 
 
-    public List<BlogDTO> GetAllBlog() {
+    public List<BlogDTO> getPaginatedBlogs(int page, int size) {
         List<BlogEntity> listBlog = blogRepository.findAll();
         Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+
+        int totalBlogs = listBlog.size();
+        int totalPages = (int) Math.ceil((double) totalBlogs / size);
+
+        int fromIndex = (page - 1) * size;
+        int toIndex = Math.min(fromIndex + size, totalBlogs);
+
+        List<BlogEntity> paginatedBlogEntities = listBlog.subList(fromIndex, toIndex);
+
         List<BlogDTO> listBlogDTO = new ArrayList<>();
 
-        for (BlogEntity blogEntity : listBlog) {
+        for (BlogEntity blogEntity : paginatedBlogEntities) {
             BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
             listBlogDTO.add(blogDTO);
         }
@@ -95,7 +104,7 @@ public class BlogService {
         blogRepository.save(blogEntity);
     }
 
-    public List<BlogDTO> GetBlogsByTitle(String title) {
+    public List<BlogDTO> GetBlogsByTitle(String title, int page, int size) {
         List<BlogEntity> listBlog = blogRepository.findByTitleContaining(title);
         Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
         List<BlogDTO> listBlogDTO = new ArrayList<>();
@@ -155,5 +164,38 @@ public class BlogService {
         file.transferTo(destination);
         return imagePath;
     }
+
+    public List<BlogDTO> getBlogsPendingApproval() {
+        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(false);
+        List<BlogDTO> pendingBlogDTOs = new ArrayList<>();
+
+        for (BlogEntity blogEntity : pendingBlogs) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            pendingBlogDTOs.add(blogDTO);
+        }
+
+        return pendingBlogDTOs;
+    }
+    public void approveBlog(int blogId) {
+        BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
+        blogEntity.setConfirm(true);
+        blogRepository.save(blogEntity);
+    }
+
+    public List<BlogDTO> GetApprovedBlogs(int page, int size) {
+        List<BlogEntity> approvedBlogs = blogRepository.findByConfirm(true);
+        Collections.sort(approvedBlogs, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+        List<BlogDTO> approvedBlogDTOs = new ArrayList<>();
+
+        for (BlogEntity blogEntity : approvedBlogs) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            approvedBlogDTOs.add(blogDTO);
+        }
+
+        return approvedBlogDTOs;
+    }
+
+
+
 
 }

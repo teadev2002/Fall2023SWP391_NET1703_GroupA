@@ -122,3 +122,10 @@ ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_comment_user_blog_comment FOR
 ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN KEY (id_service_cate) REFERENCES service_category(id);
+
+
+
+
+
+
+
