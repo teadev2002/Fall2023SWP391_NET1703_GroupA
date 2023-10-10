@@ -40,16 +40,7 @@ public class CommentService {
         return commentDTOs;
     }
 
-    public void deleteCmtById(int id) {
-
-        if (commentRepository.existsById(id)) {
-            commentRepository.deleteById(id);
-        } else {
-        }
-    }
-
-
-    public CommentDTO createComment(CommentDTO commentDTO ,String description, int id_blog, int id_user) {
+    public CommentDTO createComment(CommentDTO commentDTO, String description, int id_blog, int id_user) {
         CommentEntity commentEntity = modelMapperConfig.modelMapper().map(commentDTO, CommentEntity.class);
         commentEntity.setDescription(description);
 
@@ -72,13 +63,14 @@ public class CommentService {
     public void deleteComment(int commentId) {
         commentRepository.deleteById(commentId);
     }
+
     public CommentDTO getCommentById(int id) {
         CommentEntity commentEntity = commentRepository.findById(id).orElseThrow();
-            CommentDTO commentDTO = modelMapperConfig.modelMapper().map(commentEntity, CommentDTO.class);
-            return commentDTO;
+
+        CommentDTO commentDTO = modelMapperConfig.modelMapper().map(commentEntity, CommentDTO.class);
+        return commentDTO;
 
     }
-
 }
 
 
