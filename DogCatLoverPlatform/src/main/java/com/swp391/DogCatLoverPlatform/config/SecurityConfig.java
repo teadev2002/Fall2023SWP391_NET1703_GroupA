@@ -49,7 +49,7 @@ public class SecurityConfig {
                     .antMatchers(HttpMethod.POST,"/index/login").permitAll()
                     .antMatchers(HttpMethod.POST,"/index/**").permitAll()
                     .antMatchers("/cdn-cgi/**").permitAll()
-                    .antMatchers(HttpMethod.GET,"/blog/**").permitAll()
+                    .antMatchers("/blog/**").permitAll()
                     .antMatchers(HttpMethod.POST,"/blog/**").hasRole("USER")
                     .anyRequest().authenticated()
                     .and()

@@ -300,15 +300,22 @@
 
                 <div class="paginations-area d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
+
+                    <!-- Phân trang-->
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#"><i
-                                    class="bi bi-arrow-left-short"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                            <li class="page-item"><a class="page-link" href="#">02</a></li>
-                            <li class="page-item"><a class="page-link" href="#">03</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="bi bi-arrow-right-short"></i></a>
+                            <li class="page-item" th:if="${currentPage > 1}">
+                                <a class="page-link" th:href="@{'/blog/view/myblog?page=' + ${currentPage-1}}"><i class="bi bi-arrow-left-short"></i></a>
+                            </li>
+
+                            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">
+                                <a class="page-link" th:href="@{'/blog/view/myblog?page=' + ${i}}" th:text="${i}"></a>
+                            </li>
+
+                            <li class="page-item" th:if="${currentPage < totalPage}">
+                                <a class="page-link" th:href="@{'/blog/view/myblog?page=' + ${currentPage+1}}"><i class="bi bi-arrow-right-short"></i></a>
                             </li>
                         </ul>
+
                     </nav>
                 </div>
             </div>
