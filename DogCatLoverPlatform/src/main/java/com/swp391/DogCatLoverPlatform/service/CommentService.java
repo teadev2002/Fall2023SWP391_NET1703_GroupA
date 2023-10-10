@@ -66,7 +66,6 @@ public class CommentService {
 
     public CommentDTO getCommentById(int id) {
         CommentEntity commentEntity = commentRepository.findById(id).orElseThrow();
-
         CommentDTO commentDTO = modelMapperConfig.modelMapper().map(commentEntity, CommentDTO.class);
         return commentDTO;
 
