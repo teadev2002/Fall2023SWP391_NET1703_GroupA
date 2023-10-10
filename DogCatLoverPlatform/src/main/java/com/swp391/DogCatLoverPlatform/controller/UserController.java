@@ -8,6 +8,7 @@ import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import com.swp391.DogCatLoverPlatform.util.JwtHelper;
+import com.swp391.DogCatLoverPlatform.util.OtpUtil;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
@@ -284,4 +285,27 @@ public class UserController {
         }
         return null;
     }
+
+    @GetMapping("/forgot")
+    public String forgot(){
+        return "forgotPassword";
+    }
+
+    @PostMapping("/send")
+    public ResponseEntity<?> sendOTP(HttpServletRequest request) {
+        String email = request.getParameter("email");
+        System.out.println(email);
+        UserDTO checkEmailExist = userService.getUserByEmail(email);
+        if(checkEmailExist != null) {
+            String otp = OtpUtil.generateOTP();
+            userService.sendOTP(email, otp, checkEmailExist);
+
+        }
+        BaseRespone baseRespone = new BaseRespone();
+        baseRespone.setStatusCode(200);
+        baseRespone.setMessage("");
+        baseRespone.setData(checkEmailExist);
+        return new ResponseEntity<>(baseRespone,HttpStatus.OK);
+    }
+
 }
