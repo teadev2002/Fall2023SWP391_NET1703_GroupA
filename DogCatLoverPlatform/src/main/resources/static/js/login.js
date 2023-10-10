@@ -69,5 +69,27 @@ $(document).ready(function () {
 
     })
 
+    $("#btn-check").click(function () {
+
+
+        var email = $("#email").val()
+        console.log( "email : ", email,);
+        $.ajax({
+            url: "http://localhost:8080/index/send",
+            method: "post",
+            data: {
+                email: email
+            }
+        }).done(function (data) {
+            console.log("server tra ve ", data)
+            alert("dã gửi otp vè địa chỉ mail của bạn");
+            window.location = "home";
+        }).fail(function (data) {
+            alert(" email chưa đăng ký tài khoản");
+        })
+
+
+    })
+
 
 })
