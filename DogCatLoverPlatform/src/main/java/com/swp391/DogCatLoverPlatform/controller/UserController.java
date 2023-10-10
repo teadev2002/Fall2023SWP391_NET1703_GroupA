@@ -307,4 +307,5 @@ public class UserController {
         baseRespone.setData(checkEmailExist);
         return new ResponseEntity<>(baseRespone,HttpStatus.OK);
     }
+
 }

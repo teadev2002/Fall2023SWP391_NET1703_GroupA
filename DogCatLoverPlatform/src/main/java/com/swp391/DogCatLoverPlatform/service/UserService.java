@@ -135,6 +135,22 @@ public class UserService {
         message.setTo(toEmail);
         message.setSubject("Your OTP Code");
         message.setText("Your OTP code is: " + otp);
+
+//        UserEntity userEntity = new UserEntity();
+//        userEntity.setId(userDTO.getId());
+//        userEntity.setName(userDTO.getUserName());
+//        userEntity.setEmail(userDTO.getEmail());
+//        userEntity.setFullName(userDTO.getFullName());
+//        userEntity.setAddress(userDTO.getAddress());
+//        userEntity.setImage(userDTO.getImage());
+//        userEntity.setPhone(userDTO.getPhone());
+//
+//        RoleEntity roleEntity = new RoleEntity();
+//        roleEntity.setId(userDTO.getId_role());
+//        userEntity.setRoleEntity(roleEntity);
+
+
+//        userEntity.setOtp(otp);
         userRepository.updateOtpInUser(otp, userDTO.getId());
         javaMailSender.send(message);
     }

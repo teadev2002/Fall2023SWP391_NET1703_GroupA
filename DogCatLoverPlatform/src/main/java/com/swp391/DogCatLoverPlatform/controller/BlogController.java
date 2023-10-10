@@ -46,8 +46,10 @@ public class BlogController {
     BlogTypeService blogTypeService;
 
     @GetMapping("/view")
-    public String GetAllBlogs(Model model, HttpServletRequest req) {
-        List<BlogDTO> list = blogService.GetAllBlog();
+
+    public String GetPaginatedBlogs(Model model, @RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "5") int size, HttpServletRequest req) {
+        List<BlogDTO> list = blogService.GetApprovedBlogs(page, size);
+
         model.addAttribute("listBlog", list);
 
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
@@ -57,6 +59,7 @@ public class BlogController {
         model.addAttribute("user", user);
         return "blog-standard";
     }
+
 
     @GetMapping("/byType")
     public String showBlogsByType(@RequestParam("type") String type, Model model, HttpServletRequest req) {
@@ -103,10 +106,16 @@ public class BlogController {
     public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file, HttpServletRequest req) throws IOException {
         // Lưu hình ảnh vào cơ sở dữ liệu và lấy đường dẫn
         String imagePath = blogService.saveImageAndReturnPath(file);
-        UserDTO user  = getUserIdFromCookie(req);
+        UserDTO user = getUserIdFromCookie(req);
         blogDTO.setImage(imagePath);
+
+        // Đánh dấu bài viết là "đang chờ xét duyệt"
+        blogDTO.setConfirm(false);
+
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId, user.getId());
-        return "redirect:/blog/view/myblog";
+
+        // Chuyển hướng thành viên đến trang viewStaff
+        return "redirect:/blog/view";
     }
 
     @PostMapping("/create_comment")
@@ -118,7 +127,8 @@ public class BlogController {
         BlogDTO blog = blogService.getBlogById(id_blog);
         commentService.createComment(commentDTO, description, id_blog, user.getId());
 
-        return "redirect:/blog/"+id_blog+"/detail";
+        // Chuyển hướng người dùng đến trang chi tiết của bài blog
+        return "redirect:/blog/" + id_blog + "/detail";
     }
 
     @PostMapping("/delete")
@@ -184,7 +194,12 @@ public class BlogController {
     }
 
     @PostMapping("/search")
-    public String searchBlogByTitle(@RequestParam("title") String title, Model model, HttpServletRequest req) {
+    public String searchBlogByTitle(
+            @RequestParam("title") String title,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size,
+            Model model, HttpServletRequest req) {
+
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
@@ -192,20 +207,20 @@ public class BlogController {
         model.addAttribute("user", user);
 
         if (title.trim().isEmpty()) {
-            List<BlogDTO> list = blogService.GetAllBlog();
+            List<BlogDTO> list = blogService.getPaginatedBlogs(page,size);
             model.addAttribute("listBlog", list);
         } else {
-            List<BlogDTO> list = blogService.GetBlogsByTitle(title);
+            List<BlogDTO> list = blogService.GetBlogsByTitle(title, page, size);
             if (list.isEmpty()) {
-
                 model.addAttribute("msg", "Không tìm thấy kết quả!!");
             } else {
                 model.addAttribute("listBlogs", list);
             }
-
         }
+
         return "blog-standard";
     }
+
 
     @GetMapping("/view/myblog")
     public String viewMyBlog(Model model, HttpServletResponse response, HttpServletRequest req) {
@@ -226,13 +241,11 @@ public class BlogController {
 
 
         if (currentUser != null) {
-
             if (blogDTO != null && currentUser.getUserName().equals(blogDTO.getUserName()))
                 commentService.deleteComment(commentId);
         } else {
 
         }
-
 
         return "redirect:/blog/" + blogId + "/detail";
     }
@@ -253,4 +266,27 @@ public class BlogController {
         }
         return null;
     }
+
+
+    @PostMapping("/staff/process")
+    public String processBlog(@RequestParam("blogId") int blogId, @RequestParam("action") String action) {
+        if ("approve".equals(action)) {
+            // Đánh dấu bài viết là đã được duyệt
+            blogService.approveBlog(blogId);
+        } else if ("reject".equals(action)) {
+            // Xóa bài viết
+            blogService.deleteBlogById(blogId);
+        }
+        return "redirect:/blog/staff";
+    }
+
+
+    //Quản lý Blog bên Staff
+    @GetMapping("/staff")
+    public String viewBlogManagement(Model model){
+        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
+        model.addAttribute("pendingBlogs", pendingBlogs);
+        return "table-staff";
+    }
+
 }

@@ -294,6 +294,11 @@
                                         </div>
                                         <div class="c-body">
                                             <p th:text="${comments.description}"></p>
+                                            <form th:action="@{/blog/delete_comment}" method="post">
+                                                <input type="hidden" name="commentId" th:value="${comments.id}">
+                                                <input type="hidden" name="blogId" th:value="${blog.id}">
+                                                <button type="submit">Xóa</button>
+                                            </form>
                                         </div>
 
                                     </div>

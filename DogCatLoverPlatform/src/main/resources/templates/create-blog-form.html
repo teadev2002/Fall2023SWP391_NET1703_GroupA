@@ -129,7 +129,6 @@
             margin-left: 10px; /* Thêm khoảng trắng giữa hai nút */
         }
 
-
     </style>
     <title>Form Create Blog</title>
 </head>
@@ -146,9 +145,9 @@
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
                 <div class="contact-number" style="display: flex;">
-                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
                     &nbsp; &nbsp;<img src="../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}" >Đăng xuất</a></span>
+                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}">Đăng xuất</a></span>
                 </div>
             </div>
         </div>
@@ -288,49 +287,52 @@
 <div class="containers" style="font-family: Helvetica;">
     <div class="inner-div">
         <h1 class="text-center text-orange">New Blog?</h1>
-        <form th:action="@{/blog/create}" th:object="${blog}" method="post" enctype="multipart/form-data" style="width: 395px;">
+
+        <form th:action="@{/blog/create}" th:object="${blog}" method="post" enctype="multipart/form-data"
+              style="width: 395px;">
             <div style="padding-left: 50px; display: flex; height: 60px; font-size: 14px;" class="mb-2 input-group">
                 <div class="form-group" style="padding-top: 12px;">
                     <label for="blogType"></label>
-                    <select id="blogType" name="blogTypeId" class="form-control">
-                        <option th:each="blogType : ${blogTypes}"
-                                th:value="${blogType.id}" th:text="${blogType.name}">
-                        </option>
+                    <select id="blogType" name="blogTypeId" class="form-control" onchange="togglePriceInput()">
+                        <option th:each="blogType : ${blogTypes}" th:value="${blogType.id}"
+                                th:text="${blogType.name}"></option>
                     </select>
                 </div>
 
-                <!--Hình ảnh-->
-                <div class="mb-3 input-group"  style="width: 100px; margin-left: 20px;">
+                <!-- Hình ảnh -->
+                <div class="mb-3 input-group" style="width: 100px; margin-left: 20px;">
                     <div>Import Image:</div>
                     <input type="file" class="form-control" id="image" name="file" required onchange="previewFile()">
                 </div>
             </div>
 
-            <div class="previewImage">  <img id="previewImage"></div>
 
+            <div class="previewImage"><img id="previewImage"></div>
 
 
             <div class="mb-3 input-group">
                 <div class="input-group-prepend input-group-addon">
-                        <span class="input-group-text">
-                            <i class="fas fa-user" style="font-size: 12px;"></i>
-                        </span>
+                    <span class="input-group-text">
+                        <i class="fas fa-user" style="font-size: 12px;"></i>
+                    </span>
                 </div>
                 <input class="form-control" type="text" id="title" name="title" th:field="*{title}"
                        placeholder="Your title..." required>
             </div>
 
+
             <div class="mb-3 input-group">
                 <div class="input-group-prepend input-group-addon">
-                        <span class="input-group-text">
-                            <i class="fas fa-comment" style="font-size: 12px;"></i>
-                        </span>
+                    <span class="input-group-text">
+                        <i class="fas fa-comment" style="font-size: 12px;"></i>
+                    </span>
                 </div>
                 <textarea class="form-control" id="content" name="content" th:field="*{content}" rows="4"
                           placeholder="Write something..." required></textarea>
             </div>
 
-            <div class="mb-3 input-group">
+
+            <div class="mb-3 input-group"  id="priceInput">
                 <div class="input-group-prepend input-group-addon">
                         <span class="input-group-text" style="margin-right: 4px;">
                             <svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 320 512"><style>svg {
@@ -352,6 +354,7 @@
                 <a class="btn btn-primary" href="/blog/view">Quay lại</a>
             </div>
         </form>
+
     </div>
 </div>
 
@@ -420,10 +423,29 @@
                 </div>
             </div>
         </div>
-
     </div>
 </footer>
 
+
+<script>
+    function togglePriceInput() {
+        var selectedValue = document.getElementById("blogType").value;
+        var priceInput = document.getElementById("priceInput");
+
+        if (selectedValue === "Exchange") {
+            priceInput.style.display = "block"; // Hiển thị
+        } else {
+            priceInput.style.display = "none"; // Ẩn
+        }
+    }
+
+    // Thêm sự kiện "change" vào phần chọn để kiểm tra khi người dùng thay đổi lựa chọn
+    $("#blogType").on("change", function() {
+        togglePriceInput();
+    });
+
+
+</script>
 
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
 <script src="../../js/jquery-3.6.0.min.js"></script>
