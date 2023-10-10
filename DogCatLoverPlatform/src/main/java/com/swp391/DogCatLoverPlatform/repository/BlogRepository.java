@@ -12,7 +12,7 @@ import java.util.List;
 public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
 
         List<BlogEntity> findAll();
-        List<BlogEntity> findTop3ByOrderByCreateDateDesc();
+        List<BlogEntity> findTop3ByConfirmOrderByCreateDateDesc(boolean confirm);
         List<BlogEntity> findByBlogTypeEntity(BlogTypeEntity blogTypeEntity);
 
         //List<BlogEntity> findByPriceBetween(double minPrice, double maxPrice);

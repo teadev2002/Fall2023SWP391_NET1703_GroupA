@@ -15,8 +15,8 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("minhtampro4545@gmail.com");
         message.setTo(to);
-        message.setSubject("Blog Rejection Notice");
-        message.setText("Your blog has been rejected due to the following reason:\n\n" + reason);
+        message.setSubject("Blog Notice");
+        message.setText("From Scooby with love:\n\n" + reason);
 
         javaMailSender.send(message);
     }

@@ -125,17 +125,18 @@ public class BlogService {
         }
     }
 
-    public List<BlogDTO> getThreeLatestBlogs() {
-        List<BlogEntity> latestBlogs = blogRepository.findTop3ByOrderByCreateDateDesc();
-        List<BlogDTO> latestBlogDTOs = new ArrayList<>();
+    public List<BlogDTO> getThreeLatestApprovedBlogs() {
+        List<BlogEntity> latestApprovedBlogs = blogRepository.findTop3ByConfirmOrderByCreateDateDesc(true);
+        List<BlogDTO> latestApprovedBlogDTOs = new ArrayList<>();
 
-        for (BlogEntity blogEntity : latestBlogs) {
+        for (BlogEntity blogEntity : latestApprovedBlogs) {
             BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            latestBlogDTOs.add(blogDTO);
+            latestApprovedBlogDTOs.add(blogDTO);
         }
 
-        return latestBlogDTOs;
+        return latestApprovedBlogDTOs;
     }
+
 
 
     public List<BlogDTO> getBlogsByType(String name) {

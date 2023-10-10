@@ -52,7 +52,7 @@ public class BlogController {
 
         model.addAttribute("listBlog", list);
 
-        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestApprovedBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
         UserDTO user  = getUserIdFromCookie(req);
@@ -66,7 +66,7 @@ public class BlogController {
         List<BlogDTO> blogs = blogService.getBlogsByType(type);
         model.addAttribute("blogs", blogs);
 
-        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestApprovedBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
         UserDTO user  = getUserIdFromCookie(req);
@@ -144,7 +144,7 @@ public class BlogController {
     @GetMapping("/{id}/detail")
     public String viewDetailsBlog(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
-        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestApprovedBlogs();
 
         // Get comments for the blog by its ID
         List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
@@ -165,7 +165,7 @@ public class BlogController {
     @GetMapping("/{id}/detail/myblog")
     public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
-        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestApprovedBlogs();
 
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("blog", blogDTO);
@@ -184,7 +184,7 @@ public class BlogController {
 
     @GetMapping("/search")
     public String viewSearch(Model model, HttpServletRequest req) {
-        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestApprovedBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
         UserDTO user  = getUserIdFromCookie(req);
@@ -200,7 +200,7 @@ public class BlogController {
             @RequestParam(name = "size", defaultValue = "5") int size,
             Model model, HttpServletRequest req) {
 
-        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestApprovedBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
         UserDTO user  = getUserIdFromCookie(req);
@@ -227,7 +227,7 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
         List<BlogDTO> list = blogService.GetAllMyBlog(user.getId());
         model.addAttribute("listBlog", list);
-        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestApprovedBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
         model.addAttribute("user", user);
         return "myblog";
@@ -275,14 +275,17 @@ public class BlogController {
             @RequestParam(value = "reason", required = false) String reason,
             HttpServletRequest req
     ) {
+        UserDTO user = getUserIdFromCookie(req);
         if ("approve".equals(action)) {
             // Approve the blog
             blogService.approveBlog(blogId);
+            emailService.sendRejectionEmail(user.getEmail(),reason);
+
         } else if ("reject".equals(action)) {
             // Reject the blog
             blogService.rejectBlog(blogId, reason); // Add this method to your BlogService
             // Send a rejection email
-            UserDTO user = getUserIdFromCookie(req);
+
             if (user != null) {
                 emailService.sendRejectionEmail(user.getEmail(), reason);
             }
