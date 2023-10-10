@@ -218,7 +218,9 @@
                                             <form th:action="@{'/blog/staff/process?blogId=' + ${blog.id}}" method="post">
                                                 <button class="btn btn-primary" type="submit" name="action" value="approve">Approve</button>
                                                 <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
+                                                <input type="text" name="reason" placeholder="Enter Reason" th:if="${#strings.isEmpty(blog.reason)}" required/>
                                             </form>
+
                                         </td>
                                     </tr>
 

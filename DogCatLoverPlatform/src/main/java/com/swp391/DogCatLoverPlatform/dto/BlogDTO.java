@@ -27,5 +27,7 @@ public class BlogDTO {
     private UserDTO userDTO;
     private String emailUserCreate;
     private boolean confirm;
+    private String reason;
+    private String schedule;
 
 }

@@ -182,6 +182,8 @@ public class BlogService {
         blogRepository.save(blogEntity);
     }
 
+
+
     public List<BlogDTO> GetApprovedBlogs(int page, int size) {
         List<BlogEntity> approvedBlogs = blogRepository.findByConfirm(true);
         Collections.sort(approvedBlogs, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
@@ -194,8 +196,24 @@ public class BlogService {
 
         return approvedBlogDTOs;
     }
+    public void rejectBlog(int blogId, String reason) {
+        // Find the blog by its ID
+        BlogEntity blog = blogRepository.findById(blogId).orElse(null);
 
+        if (blog != null) {
+            // Delete the blog from the database
+            blogRepository.delete(blog);
+        } else {
+            // Handle the case where the blog is not found by ID
+            // You can throw an exception, log an error, or handle it as per your requirements.
+        }
+    }
 
 
 
 }
+
+
+
+
+

@@ -7,11 +7,8 @@ import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import com.swp391.DogCatLoverPlatform.entity.CommentEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
-import com.swp391.DogCatLoverPlatform.service.BlogService;
-import com.swp391.DogCatLoverPlatform.service.BlogTypeService;
+import com.swp391.DogCatLoverPlatform.service.*;
 //import com.swp391.DogCatLoverPlatform.service.CommentService;
-import com.swp391.DogCatLoverPlatform.service.CommentService;
-import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -44,6 +41,9 @@ public class BlogController {
 
     @Autowired
     BlogTypeService blogTypeService;
+
+    @Autowired
+    EmailService emailService;
 
     @GetMapping("/view")
 
@@ -269,16 +269,28 @@ public class BlogController {
 
 
     @PostMapping("/staff/process")
-    public String processBlog(@RequestParam("blogId") int blogId, @RequestParam("action") String action) {
+    public String processBlog(
+            @RequestParam("blogId") int blogId,
+            @RequestParam("action") String action,
+            @RequestParam(value = "reason", required = false) String reason,
+            HttpServletRequest req
+    ) {
         if ("approve".equals(action)) {
-            // Đánh dấu bài viết là đã được duyệt
+            // Approve the blog
             blogService.approveBlog(blogId);
         } else if ("reject".equals(action)) {
-            // Xóa bài viết
-            blogService.deleteBlogById(blogId);
+            // Reject the blog
+            blogService.rejectBlog(blogId, reason); // Add this method to your BlogService
+            // Send a rejection email
+            UserDTO user = getUserIdFromCookie(req);
+            if (user != null) {
+                emailService.sendRejectionEmail(user.getEmail(), reason);
+            }
         }
         return "redirect:/blog/staff";
     }
+
+
 
 
     //Quản lý Blog bên Staff
