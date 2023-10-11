@@ -13,6 +13,7 @@ import com.swp391.DogCatLoverPlatform.repository.BlogTypeRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BlogService {
@@ -35,39 +37,43 @@ public class BlogService {
     @Autowired
     ModelMapperConfig modelMapperConfig;
 
+    //Test Phân trang
+    public Page<BlogDTO> GetApprovedBlogs(int pageNo, int pageSize) {
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
-    public List<BlogDTO> getPaginatedBlogs(int page, int size) {
-        List<BlogEntity> listBlog = blogRepository.findAll();
-        Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BlogEntity> blogPage = blogRepository.findByConfirm(true, pageable);
 
-        int totalBlogs = listBlog.size();
-        int totalPages = (int) Math.ceil((double) totalBlogs / size);
+        Page<BlogDTO> pageOfBlogDTO = blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 
-        int fromIndex = (page - 1) * size;
-        int toIndex = Math.min(fromIndex + size, totalBlogs);
+        return pageOfBlogDTO;
 
-        List<BlogEntity> paginatedBlogEntities = listBlog.subList(fromIndex, toIndex);
-
-        List<BlogDTO> listBlogDTO = new ArrayList<>();
-
-        for (BlogEntity blogEntity : paginatedBlogEntities) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            listBlogDTO.add(blogDTO);
-        }
-        return listBlogDTO;
     }
 
-    public List<BlogDTO> GetAllMyBlog(int id_user) {
-        List<BlogEntity> listBlog = blogRepository.findByUserEntityId(id_user);
-        Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
-        List<BlogDTO> listBlogDTO = new ArrayList<>();
+    public Page<BlogDTO> GetBlogsByTitle(String title, int pageNo, int pageSize) {
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BlogEntity> blogPage = blogRepository.findByTitleContainingAndConfirm(title, true, pageable);
 
-        for (BlogEntity blogEntity : listBlog) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            listBlogDTO.add(blogDTO);
-        }
-        return listBlogDTO;
+        return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
+    }
+
+    public Page<BlogDTO> GetAllMyBlog(int id_user, int pageNo, int pageSize) {
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
+
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, true, pageable);
+        //Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+        Page<BlogDTO> pageOfBlogDTO = listBlog.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
+
+        return pageOfBlogDTO;
     }
 
 
@@ -104,18 +110,7 @@ public class BlogService {
         blogRepository.save(blogEntity);
     }
 
-    public List<BlogDTO> GetBlogsByTitle(String title, int page, int size) {
-        List<BlogEntity> listBlog = blogRepository.findByTitleContaining(title);
-        Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
-        List<BlogDTO> listBlogDTO = new ArrayList<>();
 
-        // mapper
-        for (BlogEntity i : listBlog) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(i, BlogDTO.class);
-            listBlogDTO.add(blogDTO);
-        }
-        return listBlogDTO;
-    }
 
     public void deleteBlogById(int id) {
         if (blogRepository.existsById(id)) {
@@ -126,34 +121,30 @@ public class BlogService {
     }
 
     public List<BlogDTO> getThreeLatestBlogs() {
-        List<BlogEntity> latestBlogs = blogRepository.findTop3ByOrderByCreateDateDesc();
-        List<BlogDTO> latestBlogDTOs = new ArrayList<>();
+        List<BlogEntity> latestApprovedBlogs = blogRepository.findFirst3ByConfirmOrderByCreateDateDesc(true);
+        List<BlogDTO> latestApprovedBlogDTOs = latestApprovedBlogs.stream()
+                .map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class))
+                .collect(Collectors.toList());
 
-        for (BlogEntity blogEntity : latestBlogs) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            latestBlogDTOs.add(blogDTO);
-        }
-
-        return latestBlogDTOs;
+        return latestApprovedBlogDTOs;
     }
 
 
-    public List<BlogDTO> getBlogsByType(String name) {
+    public Page<BlogDTO> getBlogsByType(String name, int pageNo, int pageSize) {
         BlogTypeEntity blogTypeEntity = blogTypeRepository.findByName(name);
 
         if (blogTypeEntity != null) {
-            List<BlogEntity> blogEntities = blogRepository.findByBlogTypeEntity(blogTypeEntity);
-            Collections.sort(blogEntities, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
-            List<BlogDTO> blogDTOs = new ArrayList<>();
-            for (BlogEntity blogEntity : blogEntities) {
-                BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-                blogDTOs.add(blogDTO);
-            }
+            // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+            Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
-            return blogDTOs;
+            // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+            Page<BlogEntity> blogPage = blogRepository.findByBlogTypeEntityAndConfirm(blogTypeEntity, true, pageable);
+
+            return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
         } else {
-
-            return new ArrayList<>();
+            // Trả về trang rỗng nếu không tìm thấy loại blog
+            return Page.empty();
         }
     }
 
@@ -176,26 +167,29 @@ public class BlogService {
 
         return pendingBlogDTOs;
     }
+
     public void approveBlog(int blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
         blogEntity.setConfirm(true);
         blogRepository.save(blogEntity);
     }
 
-    public List<BlogDTO> GetApprovedBlogs(int page, int size) {
-        List<BlogEntity> approvedBlogs = blogRepository.findByConfirm(true);
-        Collections.sort(approvedBlogs, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
-        List<BlogDTO> approvedBlogDTOs = new ArrayList<>();
+    public void rejectBlog(int blogId, String reason) {
+        // Find the blog by its ID
+        BlogEntity blog = blogRepository.findById(blogId).orElse(null);
 
-        for (BlogEntity blogEntity : approvedBlogs) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            approvedBlogDTOs.add(blogDTO);
+        if (blog != null) {
+            // Delete the blog from the database
+            blogRepository.delete(blog);
+        } else {
+            // Handle the case where the blog is not found by ID
+            // You can throw an exception, log an error, or handle it as per your requirements.
         }
-
-        return approvedBlogDTOs;
     }
 
-
-
-
 }
+
+
+
+
+

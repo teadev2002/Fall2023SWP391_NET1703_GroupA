@@ -36,7 +36,6 @@
 
     <link rel="stylesheet" th:href="@{../css/style.css}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
 <body>
@@ -180,14 +179,17 @@
                     </svg>
                 </a></li>
 
-                <li><a th:href="@{/index/profile}">
-                    <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_1585_341)">
-                            <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
-                            <path d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
-                        </g>
-                    </svg>
-                </a></li>
+                <!--Dropdown User-->
+                <li>
+                    <a th:href="@{/index/profile}">
+                        <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_1585_341)">
+                                <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
+                                <path d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
+                            </g>
+                        </svg>
+                    </a>
+                </li>
 
             </ul>
             <div class="sidebar-button mobile-menu-btn ">
@@ -294,19 +296,29 @@
                 <!-- Thông báo lỗi tìm kiếm kết quả-->
                 <p style="color: red; font-family: Helvetica; font-size: 14px;" th:text="${msg}"></p>
 
+
                 <div class="paginations-area d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
+
+                <!--Test Phân trang-->
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#"><i
-                                    class="bi bi-arrow-left-short"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                            <li class="page-item"><a class="page-link" href="#">02</a></li>
-                            <li class="page-item"><a class="page-link" href="#">03</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="bi bi-arrow-right-short"></i></a>
+                            <li class="page-item" th:if="${currentPage > 1}">
+                                <a class="page-link" th:href="@{'/blog/view?page=' + ${currentPage-1}}"><i class="bi bi-arrow-left-short"></i></a>
+                            </li>
+
+                            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">
+                                <a class="page-link" th:href="@{'/blog/view?page=' + ${i}}" th:text="${i}"></a>
+                            </li>
+
+                            <li class="page-item" th:if="${currentPage < totalPage}">
+                                <a class="page-link" th:href="@{'/blog/view?page=' + ${currentPage+1}}"><i class="bi bi-arrow-right-short"></i></a>
                             </li>
                         </ul>
+
+
                     </nav>
                 </div>
+
             </div>
             <div class="col-lg-4">
                 <div class="widget-area">
@@ -529,6 +541,7 @@
 <script src="../js/masonry.pkgd.min.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/deleteBlog"></script>
+
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/blog-standard.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:35 GMT -->

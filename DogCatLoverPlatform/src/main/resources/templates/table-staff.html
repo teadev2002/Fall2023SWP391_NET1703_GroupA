@@ -45,7 +45,8 @@
 
                     <li class="nav-item dropdown navbar-search"><a class="nav-link dropdown-toggle hide"
                                                                    data-toggle="dropdown" href="#"><i
-                                                                 class="ficon ft-search"></i></a>
+                                                                    class="ficon ft-search"></i></a>
+
                         <ul class="dropdown-menu">
                             <li class="arrow_box">
                                 <form>
@@ -76,16 +77,20 @@
                         </div>
                     </li>
 
-                    <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
+
+                    <!--Dropdown User-->
+                    <li class="dropdown dropdown-user nav-item">
+                        <a class="dropdown-toggle nav-link dropdown-user-link"
                                                                    href="#" data-toggle="dropdown"> <span
-                            class="avatar avatar-online"><img
-                            src="../../images/portrait/small/avatar-s-19.png"
-                            alt="avatar"><i></i></span></a>
+                            class="avatar avatar-online"><img src="../../images/portrait/small/avatar-s-19.png"
+                                                              alt="avatar"><i></i></span></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="arrow_box_right"><a class="dropdown-item" href="#"><span
-                                    class="avatar avatar-online"><img
-                                    src="../../images/portrait/small/avatar-s-19.png" alt="avatar"><span
-                                    class="user-name text-bold-700 ml-1">John Doe</span></span></a>
+                            <div class="arrow_box_right">
+                                <a class="dropdown-item" href="#"><span
+                                    class="avatar avatar-online"><img src="../../images/portrait/small/avatar-s-19.png"
+                                                                      alt="avatar"><span
+                                    class="user-name text-bold-700 ml-1">John Doe</span></span>
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a
                                         class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a><a
@@ -96,6 +101,7 @@
                             </div>
                         </div>
                     </li>
+
                 </ul>
 
             </div>
@@ -193,7 +199,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle" th:text="${blog.title}"></h5>
+                                                            <h5 class="modal-title" style="font-weight: bold; margin-left: 200px;" id="exampleModalLongTitle" th:text="${blog.title}"></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -216,7 +222,9 @@
                                             <form th:action="@{'/blog/staff/process?blogId=' + ${blog.id}}" method="post">
                                                 <button class="btn btn-primary" type="submit" name="action" value="approve">Approve</button>
                                                 <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
+                                                <input type="text" name="reason" placeholder="Enter Notification" th:if="${#strings.isEmpty(blog.reason)}" required/>
                                             </form>
+
                                         </td>
                                     </tr>
 

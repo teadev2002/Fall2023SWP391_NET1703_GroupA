@@ -11,23 +11,18 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogDTO {
-
+public class ServiceDTO {
+    private int id;
+    private String schedule;
     private String title;
     private String content;
     private String image;
     private Date createDate;
     private String userName;
-    private String blogTypeName;
-    private int id;
-    private int blogTypeId;
-    private int userId;
     private double price;
     private boolean status;
-    private UserDTO userDTO;
+    private int id_user;
     private String emailUserCreate;
     private boolean confirm;
-    private String reason;
-    private String schedule;
-
+    private String serviceCateName;
 }

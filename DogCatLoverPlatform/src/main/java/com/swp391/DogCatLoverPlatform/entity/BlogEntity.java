@@ -55,8 +55,7 @@ public class BlogEntity {
     @OneToMany(mappedBy = "blogEntity_CommentEntity")
     List<CommentEntity> listComment_BlogEntity ;
 
-    @OneToOne(mappedBy = "blog_service")
-    private ServiceEntity serviceEntity;
+
 
 
 }
