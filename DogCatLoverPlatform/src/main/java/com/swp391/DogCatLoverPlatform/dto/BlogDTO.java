@@ -26,7 +26,7 @@ public class BlogDTO {
     private boolean status;
     private UserDTO userDTO;
     private String emailUserCreate;
-    private boolean confirm;
+    private Boolean confirm;
     private String reason;
     private String schedule;
 

@@ -70,6 +70,8 @@ public class BlogController {
         return "blog-standard";
     }
 
+
+
     @GetMapping("/view/myblog")
     public String viewMyBlog(Model model,
                              @RequestParam(defaultValue = "1") int page,
@@ -336,6 +338,13 @@ public class BlogController {
         }
         return null;
     }
+    //Quản lý Blog bên Staff
+    @GetMapping("/staff")
+    public String viewBlogManagement(Model model){
+        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
+        model.addAttribute("pendingBlogs", pendingBlogs);
+        return "table-staff";
+    }
 
 
     @PostMapping("/staff/process")
@@ -349,7 +358,7 @@ public class BlogController {
         if ("approve".equals(action)) {
             // Approve the blog
             blogService.approveBlog(blogId);
-            emailService.sendRejectionEmail(user.getEmail(),reason);
+            emailService.sendEmail(user.getEmail(),reason);
 
         } else if ("reject".equals(action)) {
             // Reject the blog
@@ -357,21 +366,37 @@ public class BlogController {
             // Send a rejection email
 
             if (user != null) {
-                emailService.sendRejectionEmail(user.getEmail(), reason);
+                emailService.sendEmail(user.getEmail(), reason);
             }
         }
         return "redirect:/blog/staff";
     }
 
-
-
-
-    //Quản lý Blog bên Staff
-    @GetMapping("/staff")
-    public String viewBlogManagement(Model model){
-        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
-        model.addAttribute("pendingBlogs", pendingBlogs);
-        return "table-staff";
+    @GetMapping("/trash")
+    public String viewBlogReject(Model model, @RequestParam(value = "updated", required = false) String updated) {
+        List<BlogDTO> rejectBlog = blogService.getBlogsReject();
+        model.addAttribute("rejectBlog", rejectBlog);
+        model.addAttribute("updated", updated);
+        return "trash";
     }
+
+
+    @PostMapping("/trash")
+    public String updateAndResubmitBlog(@RequestParam("blogId") int blogId, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) {
+        blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO);
+
+        return "redirect:/blog/trash";
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -52,6 +52,21 @@ public class BlogService {
 
     }
 
+    public Page<BlogDTO> GetRejectBlogs(int pageNo, int pageSize) {
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
+
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BlogEntity> blogPage = blogRepository.findByConfirm(false, pageable);
+
+        Page<BlogDTO> pageOfBlogDTO = blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
+
+        return pageOfBlogDTO;
+
+    }
+
+
     public Page<BlogDTO> GetBlogsByTitle(String title, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
@@ -91,6 +106,7 @@ public class BlogService {
         UserEntity userEntity = userRepository.findById(idUserCreated).orElseThrow();
         blogEntity.setUserEntity(userEntity);
 
+        blogEntity.setConfirm(null);
         // Lấy thời gian tạo hiện tại
         Date createDate = new Date();
         blogEntity.setCreateDate(createDate);
@@ -157,7 +173,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getBlogsPendingApproval() {
-        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(false);
+        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(null);
         List<BlogDTO> pendingBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : pendingBlogs) {
@@ -168,26 +184,47 @@ public class BlogService {
         return pendingBlogDTOs;
     }
 
+    public List<BlogDTO> getBlogsReject() {
+        List<BlogEntity> rejectBlogs = blogRepository.findByConfirm(false);
+        List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
+
+        for (BlogEntity blogEntity : rejectBlogs) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            rejectBlogDTOs.add(blogDTO);
+        }
+
+        return rejectBlogDTOs;
+    }
+
     public void approveBlog(int blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
         blogEntity.setConfirm(true);
         blogRepository.save(blogEntity);
     }
 
-    public void rejectBlog(int blogId, String reason) {
-        // Find the blog by its ID
-        BlogEntity blog = blogRepository.findById(blogId).orElse(null);
 
-        if (blog != null) {
-            // Delete the blog from the database
-            blogRepository.delete(blog);
-        } else {
-            // Handle the case where the blog is not found by ID
-            // You can throw an exception, log an error, or handle it as per your requirements.
-        }
+    public void rejectBlog(int blogId, String reason) {
+        BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
+        blogEntity.setConfirm(false);
+        blogEntity.setReason(reason);
+        blogRepository.save(blogEntity);
     }
 
+    public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO) {
+        BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
+        blogEntity.setConfirm(null);
+
+        modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
+        blogRepository.save(blogEntity);
+    }
+
+
+
+
+
 }
+
+
 
 
 

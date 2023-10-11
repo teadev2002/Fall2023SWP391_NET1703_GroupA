@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Trash</title>
+</head>
+<body>
+<h2>Rejected Blog</h2>
+<form th:action="@{/blog/trash}" method="post">
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Reason</th>
+      <th>Type</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Img</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="blog, status : ${rejectBlog}">
+      <td>
+        <input type="text" name="title" th:value="${blog.title}" />
+      </td>
+      <td>
+        <input type="text" name="content" th:value="${blog.content}" />
+      </td>
+      <td>
+        <input type="text" name="reason" th:value="${blog.reason}" readonly="readonly" />
+      </td>
+      <td>
+        <!-- Dropdown selection for "Type" -->
+        <select name="blogType">
+          <option value="Gift" th:selected="${blog.blogTypeName == 'Gift'}">Gift</option>
+          <option value="Exchange" th:selected="${blog.blogTypeName == 'Exchange'}">Exchange</option>
+        </select>
+      </td>
+      <td>
+        <input type="text" name="price" th:value="${blog.price}" />
+      </td>
+      <td>
+        <input type="text" name="status" th:value="${blog.status}" />
+      </td>
+      <td>
+        <img class="img-fluid" style="object-fit: contain" th:src="@{'../images/blog/' + ${blog.image}}" alt=""/>
+      </td>
+      <td>
+        <button type="submit">Update</button>
+        <a>Delete</a>
+        <input type="hidden" name="blogId" th:value="${blog.id}" />
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<div th:if="${updated}">
+  <p>Bài viết đã được cập nhật và đưa vào danh sách chờ duyệt thành công!</p>
+</div>
+</body>
+</html>

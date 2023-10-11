@@ -35,6 +35,7 @@ CREATE TABLE blog(
 	price double,
 	status bit,
 	create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	reason NVARCHAR(255),
 	confirm bit,
 	
 	id_user_created int,
@@ -119,6 +120,8 @@ ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN K
 
 
 
+ALTER TABLE blog
+ADD reason NVARCHAR(255);
 
 
 
