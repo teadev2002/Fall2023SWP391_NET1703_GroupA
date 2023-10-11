@@ -18,6 +18,7 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         Page<BlogEntity> findByBlogTypeEntityAndConfirm(BlogTypeEntity blogTypeEntity, boolean confirm, Pageable pageable);
         Page<BlogEntity> findByTitleContainingAndConfirm(String title, boolean confirm, Pageable pageable);
 
+
         @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm")
         Page<BlogEntity> findByUserEntityIdAndConfirm(int userId, boolean confirm, Pageable pageable);
 

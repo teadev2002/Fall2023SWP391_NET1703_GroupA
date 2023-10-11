@@ -8,11 +8,8 @@ import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import com.swp391.DogCatLoverPlatform.entity.CommentEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
-import com.swp391.DogCatLoverPlatform.service.BlogService;
-import com.swp391.DogCatLoverPlatform.service.BlogTypeService;
+import com.swp391.DogCatLoverPlatform.service.*;
 //import com.swp391.DogCatLoverPlatform.service.CommentService;
-import com.swp391.DogCatLoverPlatform.service.CommentService;
-import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,6 +47,8 @@ public class BlogController {
     @Autowired
     BlogTypeService blogTypeService;
 
+    @Autowired
+    EmailService emailService;
 
     //Test phân trang
     @GetMapping("/view")
@@ -150,6 +149,9 @@ public class BlogController {
             model.addAttribute("totalPage", list.getTotalPages());
             model.addAttribute("currentPage", page);
             model.addAttribute("listBlog", list);
+
+            return "redirect:/blog/view";
+
         } else {
             // Trường hợp có tiêu đề, phân trang theo tiêu đề
             Page<BlogDTO> lists = blogService.GetBlogsByTitle(title, page, size);
@@ -337,16 +339,31 @@ public class BlogController {
 
 
     @PostMapping("/staff/process")
-    public String processBlog(@RequestParam("blogId") int blogId, @RequestParam("action") String action) {
+    public String processBlog(
+            @RequestParam("blogId") int blogId,
+            @RequestParam("action") String action,
+            @RequestParam(value = "reason", required = false) String reason,
+            HttpServletRequest req
+    ) {
+        UserDTO user = getUserIdFromCookie(req);
         if ("approve".equals(action)) {
-            // Đánh dấu bài viết là đã được duyệt
+            // Approve the blog
             blogService.approveBlog(blogId);
+            emailService.sendRejectionEmail(user.getEmail(),reason);
+
         } else if ("reject".equals(action)) {
-            // Xóa bài viết
-            blogService.deleteBlogById(blogId);
+            // Reject the blog
+            blogService.rejectBlog(blogId, reason); // Add this method to your BlogService
+            // Send a rejection email
+
+            if (user != null) {
+                emailService.sendRejectionEmail(user.getEmail(), reason);
+            }
         }
         return "redirect:/blog/staff";
     }
+
+
 
 
     //Quản lý Blog bên Staff

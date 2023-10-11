@@ -13,10 +13,7 @@ import com.swp391.DogCatLoverPlatform.repository.BlogTypeRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,10 +39,12 @@ public class BlogService {
 
     //Test Phân trang
     public Page<BlogDTO> GetApprovedBlogs(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
-        Page<BlogEntity> blogPage = blogRepository.findByConfirm(true, pageable);
-        List<BlogEntity> listBlog = blogPage.getContent();
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BlogEntity> blogPage = blogRepository.findByConfirm(true, pageable);
 
         Page<BlogDTO> pageOfBlogDTO = blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 
@@ -54,15 +53,22 @@ public class BlogService {
     }
 
     public Page<BlogDTO> GetBlogsByTitle(String title, int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<BlogEntity> blogPage = blogRepository.findByTitleContainingAndConfirm(title, true, pageable);
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BlogEntity> blogPage = blogRepository.findByTitleContainingAndConfirm(title, true, pageable);
 
         return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
     }
 
     public Page<BlogDTO> GetAllMyBlog(int id_user, int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
+
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, true, pageable);
         //Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
         Page<BlogDTO> pageOfBlogDTO = listBlog.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
@@ -128,7 +134,11 @@ public class BlogService {
         BlogTypeEntity blogTypeEntity = blogTypeRepository.findByName(name);
 
         if (blogTypeEntity != null) {
-            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+            Sort sort = Sort.by(Sort.Order.desc("createDate"));
+
+            // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
             Page<BlogEntity> blogPage = blogRepository.findByBlogTypeEntityAndConfirm(blogTypeEntity, true, pageable);
 
             return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
@@ -157,11 +167,29 @@ public class BlogService {
 
         return pendingBlogDTOs;
     }
+
     public void approveBlog(int blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
         blogEntity.setConfirm(true);
         blogRepository.save(blogEntity);
     }
 
+    public void rejectBlog(int blogId, String reason) {
+        // Find the blog by its ID
+        BlogEntity blog = blogRepository.findById(blogId).orElse(null);
+
+        if (blog != null) {
+            // Delete the blog from the database
+            blogRepository.delete(blog);
+        } else {
+            // Handle the case where the blog is not found by ID
+            // You can throw an exception, log an error, or handle it as per your requirements.
+        }
+    }
 
 }
+
+
+
+
+

@@ -79,18 +79,13 @@ CREATE TABLE comment(
 	create_date Date,
 	rating int,
 	
+	id_blog int,
 	id_user int,
 	
 	primary key(id)
 );
 
-CREATE TABLE user_blog_comment(
-	id_blog int,
-	id_user int,
-	id_comment int,
-	
-	primary key(id_user,id_blog,id_comment)
-);
+
 
 CREATE TABLE service_category(
     id int auto_increment,
@@ -116,9 +111,7 @@ ALTER TABLE booking ADD CONSTRAINT FK_id_blog_booking FOREIGN KEY (id_blog) REFE
 ALTER TABLE booking ADD CONSTRAINT FK_id_user_booking FOREIGN KEY (id_user) REFERENCES users(id);
 ALTER TABLE booking_history ADD CONSTRAINT FK__booking_booking_history FOREIGN KEY (id_booking) REFERENCES booking(id);
 ALTER TABLE comment ADD CONSTRAINT FK_id_user_comment FOREIGN KEY (id_user) REFERENCES users(id);
-ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_user_user_blog_comment FOREIGN KEY (id_user) REFERENCES users(id);
-ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_blog_user_blog_comment FOREIGN KEY (id_blog) REFERENCES blog(id);
-ALTER TABLE user_blog_comment ADD CONSTRAINT FK_id_comment_user_blog_comment FOREIGN KEY (id_comment) REFERENCES comment(id);
+ALTER TABLE comment ADD CONSTRAINT FK_id_blog_comment FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN KEY (id_service_cate) REFERENCES service_category(id);

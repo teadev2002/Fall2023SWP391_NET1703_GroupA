@@ -301,7 +301,7 @@
                     <nav aria-label="Page navigation example">
 
                         <!-- Test Phân trang-->
-                        <ul class="pagination">
+                        <ul class="pagination" >
                             <li class="page-item" th:if="${currentPage > 1}">
                                 <a class="page-link" th:href="@{'/blog/searchTitle?title=' + ${title} + '&page=' + ${currentPage-1}}"><i class="bi bi-arrow-left-short"></i></a>
                             </li>
@@ -314,7 +314,6 @@
                                 <a class="page-link" th:href="@{'/blog/searchTitle?title=' + ${title} + '&page=' + ${currentPage+1}}"><i class="bi bi-arrow-right-short"></i></a>
                             </li>
                         </ul>
-
 
                     </nav>
                 </div>

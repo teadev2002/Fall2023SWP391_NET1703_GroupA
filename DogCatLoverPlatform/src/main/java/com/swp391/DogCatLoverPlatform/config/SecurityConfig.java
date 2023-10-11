@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                     .antMatchers("/css/**", "/js/**", "/images/**", "/webfonts/**", "/fonts/**", "/video/**").permitAll()
                     .antMatchers(HttpMethod.GET,"/index/**").permitAll()
+                    .antMatchers(HttpMethod.POST,"/services/**").permitAll()
                     .antMatchers(HttpMethod.POST,"/index/login").permitAll()
                     .antMatchers(HttpMethod.POST,"/index/**").permitAll()
                     .antMatchers("/cdn-cgi/**").permitAll()
