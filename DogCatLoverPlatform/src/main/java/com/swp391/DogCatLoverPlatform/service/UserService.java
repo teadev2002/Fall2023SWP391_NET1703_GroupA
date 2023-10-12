@@ -192,5 +192,21 @@ public class UserService {
         javaMailSender.send(message);
     }
 
+    public UserEntity getUserWithAuthority(HttpServletRequest req){
+        String email = null;
+        for(Cookie c : req.getCookies()){
+            System.out.println("cookie: "+c.getName()+" value: "+c.getValue());
+            if(c.getName().equals("User")){
+                email = c.getValue();
+            }
+        }
+        if (email == null){
+            return null;
+        }
+        else {
+            return userRepository.findByEmail(email);
+        }
+    }
+
 
 }

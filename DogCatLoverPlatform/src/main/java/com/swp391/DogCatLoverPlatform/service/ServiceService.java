@@ -21,7 +21,7 @@ public class ServiceService {
     @Autowired
     BlogRepository blogRepository;
 
-    public ServiceEntity createService(String Content, int price, String title, int id_user, int serviceCategory){
+    public ServiceEntity createService(String Content, int price, String title, int id_user, int serviceCategory, String image){
         ServiceEntity serviceEntity = new ServiceEntity();
 
         ServiceCategoryEntity serviceCategoryEntity = new ServiceCategoryEntity();
@@ -34,7 +34,7 @@ public class ServiceService {
         blogEntity.setConfirm(false);
         blogEntity.setStatus(false);
         blogEntity.setContent(Content);
-        blogEntity.setImage("");
+        blogEntity.setImage(image);
         blogEntity.setPrice(price);
         blogEntity.setTitle(title);
         UserEntity userEntity = new UserEntity();
@@ -80,6 +80,7 @@ public class ServiceService {
         serviceDTO.setConfirm(s.get().getBlog_service().isConfirm());
         serviceDTO.setCreateDate(s.get().getBlog_service().getCreateDate());
         serviceDTO.setServiceCateName(s.get().getService_category().getName());
+        serviceDTO.setId_blog(s.get().getBlog_service().getId());
         serviceDTO.setId(s.get().getId());
         return serviceDTO ;
     }

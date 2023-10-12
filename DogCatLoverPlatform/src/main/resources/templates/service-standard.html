@@ -206,11 +206,11 @@
     <div class="row justify-content-center align-items-center text-center">
       <div class="col-lg-6 align-items-center">
         <div class="banner-content">
-          <h1>Blog Standard</h1>
+          <h1>Service Standard</h1>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Blog Standard</li>
+              <li class="breadcrumb-item active" aria-current="page">Service Standard</li>
             </ol>
           </nav>
         </div>
@@ -235,7 +235,7 @@
 
         <!-- Create-->
         <div style="padding-left: 98%;">
-          <a th:if="${user != null}" th:href="@{/blog/create}">
+          <a th:if="${user != null}" th:href="@{/service/create}">
             <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
               <style> {
                 fill: #de9921
@@ -279,11 +279,18 @@
                         </span>
 
             <div class="more-btn mt-2" th:if="${user == null}">
-              <a th:href="@{/blog/{id}/detail(id=${service.id})}"><span>Re</span>ad More</a>-->
+              <form th:action="@{/service/detail}" method="get">
+                <input type="hidden" name="id" th:value="${service.id}">
+                <span><button type="submit">Read More</button></span>
+              </form>
             </div>
 
             <div class="more-btn mt-2" th:if="${user != null}">
-              <a th:href="@{/blog/{id}/detail/myblog(id=${service.id})}"><span>Re</span>ad More</a>
+              <form th:action="@{/service/detail/myblog}" method="get">
+                <input type="hidden" name="id" th:value="${service.id}">
+                <span><button type="submit">Read More</button></span>
+              </form>
+
             </div>
 
 
@@ -312,7 +319,7 @@
         <div class="widget-area">
           <div class="single-widgets widget_search mb-30">
 
-            <form th:action="@{/blog/search}" method="post">
+            <form th:action="@{/service/search}" method="post">
               <div class="wp-block-search__inside-wrapper ">
                 <input type="search" id="wp-block-search__input-1" class="wp-block-search__input"
                        name="title" value placeholder="Search Here" required>
@@ -331,10 +338,10 @@
             </div>
 
             <ul class="wp-block-categoris-cloud">
-              <li><a th:href="@{/blog/byType(type='Exchange')}"><span>Pet Exchange</span> <span><span
+              <li><a th:href="@{/service/byType(type='Exchange')}"><span>Pet Exchange</span> <span><span
                       class="number-of-categoris">(30)</span><i
                       class="bi bi-arrow-right-short"></i></span></a></li>
-              <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
+              <li><a th:href="@{/service/byType(type='Gift')}"><span>Pet Gift</span> <span><span
                       class="number-of-categoris">(18)</span><i
                       class="bi bi-arrow-right-short"></i></span> </a></li>
               <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
@@ -360,13 +367,13 @@
             <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
               <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                 <div class="wi sidebarImage" >
-                  <a th:href="@{/blog/{id}/detail(id=${service.id})}"><img
-                          th:src="@{'../images/blog/' + ${service.image}}" alt="image"></a>
+                  <a th:href="@{/service/{id}/detail(id=${service.id})}"><img
+                          th:src="@{'../images/service/' + ${service.image}}" alt="image"></a>
                 </div>
                 <div class="wc">
-                  <a th:href="@{/blog/{id}/detail(id=${service.id})}" th:text="${service.createDate}"></a>
+                  <a th:href="@{/service/{id}/detail(id=${service.id})}" th:text="${service.createDate}"></a>
                   <h6>
-                    <a th:href="@{/blog/{id}/detail(id=${service.id})}"
+                    <a th:href="@{/service/{id}/detail(id=${service.id})}"
                        th:text="${#strings.length(service.title) > 50} ? ${service.title.substring(0, 50) + '...'} : ${service.title}"></a>
                   </h6>
                 </div>
@@ -376,13 +383,13 @@
             <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
               <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                 <div class="wi sidebarImage" >
-                  <a th:href="@{/blog/{id}/detail/myblog(id=${service.id})}"><img
-                          th:src="@{'../images/blog/' + ${service.image}}" alt="image"></a>
+                  <a th:href="@{/service/{id}/detail/myblog(id=${service.id})}"><img
+                          th:src="@{'../images/service/' + ${service.image}}" alt="image"></a>
                 </div>
                 <div class="wc">
-                  <a th:href="@{/blog/{id}/detail/myblog(id=${service.id})}" th:text="${service.createDate}"></a>
+                  <a th:href="@{/service/{id}/detail/myblog(id=${service.id})}" th:text="${service.createDate}"></a>
                   <h6>
-                    <a th:href="@{/blog/{id}/detail/myblog(id=${service.id})}"
+                    <a th:href="@{/service/{id}/detail/myblog(id=${service.id})}"
                        th:text="${#strings.length(service.title) > 50} ? ${service.title.substring(0, 50) + '...'} : ${service.title}"></a>
                   </h6>
                 </div>
@@ -399,8 +406,8 @@
             </div>
 
             <p class="wp-block-tag-cloud">
-              <a th:href="@{/blog/byType(type='Exchange')}">Exchange</a>
-              <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
+              <a th:href="@{/service/byType(type='Exchange')}">Exchange</a>
+              <a th:href="@{/service/byType(type='Gift')}">Gift</a>
               <a href="blog-grid.html">Daycare</a>
               <a href="blog-grid.html">Boarding</a>
               <a href="blog-grid.html">Grooming</a>

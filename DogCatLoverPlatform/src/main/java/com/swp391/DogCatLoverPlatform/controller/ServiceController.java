@@ -35,21 +35,22 @@ public class ServiceController {
 
     @GetMapping("/detail")
     public String viewDetailService(Model model, HttpServletRequest request){
-        //int id  = Integer.parseInt(request.getParameter("id"));
-        ServiceDTO  serviceDTO = serviceService.getServiceDetail(2);
+        int id  = Integer.parseInt(request.getParameter("id"));
+        ServiceDTO  serviceDTO = serviceService.getServiceDetail(id);
         model.addAttribute("service",serviceDTO);
         return "service-details";
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> createService(HttpServletRequest request){
-        String Content = request.getParameter("Content");
+        String image = request.getParameter("image");
+        String Content = request.getParameter("content");
         int price = Integer.parseInt(request.getParameter("price"));
         String title = request.getParameter("title");
         UserDTO userDTO = getUserIdFromCookie(request);
         int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
 
-        ServiceEntity serviceEntity = serviceService.createService(Content,price,title,userDTO.getId(),serviceCategory);
+        ServiceEntity serviceEntity = serviceService.createService(Content,price,title,userDTO.getId(),serviceCategory,image);
 
         return new ResponseEntity<>(serviceEntity, HttpStatus.OK);
     }
