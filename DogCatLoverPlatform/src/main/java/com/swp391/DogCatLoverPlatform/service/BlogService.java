@@ -1,15 +1,14 @@
 package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
-import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
-import com.swp391.DogCatLoverPlatform.dto.BlogTypeDTO;
-import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
+import com.swp391.DogCatLoverPlatform.entity.PetCategoryEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.BlogTypeRepository;
+import com.swp391.DogCatLoverPlatform.repository.PetCategoryRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +35,9 @@ public class BlogService {
 
     @Autowired
     ModelMapperConfig modelMapperConfig;
+
+    @Autowired
+    private PetCategoryRepository petCategoryRepository;
 
     //Test Phân trang
     public Page<BlogDTO> GetApprovedBlogs(int pageNo, int pageSize) {
@@ -102,20 +104,45 @@ public class BlogService {
         BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
         blogEntity.setBlogTypeEntity(new BlogTypeEntity()); // -- Quan trọng
         blogEntity.getBlogTypeEntity().setId(blogTypeId);
+/*
+        PetCategoryDTO petCategoryDTO = new PetCategoryDTO();
+        PetCategoryEntity petCategoryEntity = new PetCategoryEntity();
+        petCategoryEntity.setName(petCategoryDTO.getName());
+        petCategoryEntity.setBreed(petCategoryDTO.getBreed());
+        petCategoryEntity.setAge(petCategoryDTO.getAge());
+        petCategoryEntity.setColor(petCategoryDTO.getColor());
+        petCategoryEntity.setWeight(petCategoryDTO.getWeight());
 
+        // Save the petCategory entity to the database
+        PetCategoryEntity savedPetCategory = petCategoryRepository.save(petCategoryEntity);*/
+
+        // Retrieve the UserEntity by ID
         UserEntity userEntity = userRepository.findById(idUserCreated).orElseThrow();
+
+        // Set the confirm field to a suitable value (e.g., false)
+        blogEntity.setConfirm(null);
+
+        // Set the createDate field to the current date and time
+        Date createDateTime = new Date();
+        blogEntity.setCreateDate(createDateTime);
+
+/*
+        // Associate the saved petCategoryEntity with the blogEntity
+        blogEntity.setPetCategoryEntity(savedPetCategory);
+*/
+
+        // Set the userEntity
         blogEntity.setUserEntity(userEntity);
 
-        blogEntity.setConfirm(null);
-        // Lấy thời gian tạo hiện tại
-        Date createDate = new Date();
-        blogEntity.setCreateDate(createDate);
-
+        // Save the BlogEntity
         BlogEntity savedBlogEntity = blogRepository.save(blogEntity);
+
+        // Map the saved BlogEntity back to a BlogDTO
         BlogDTO createdBlog = modelMapperConfig.modelMapper().map(savedBlogEntity, BlogDTO.class);
 
-        // Đặt thời gian tạo vào createdBlog
-        createdBlog.setCreateDate(createDate);
+        // Set the createDate field in the createdBlog
+        createdBlog.setCreateDate(createDateTime);
+
         return createdBlog;
     }
 

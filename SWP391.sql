@@ -1,5 +1,5 @@
 CREATE database swp391;
-DROP database swp391;
+/*DROP database swp391;*/
 Use swp391;
 
 CREATE TABLE users(
@@ -37,9 +37,11 @@ CREATE TABLE blog(
 	create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	reason NVARCHAR(255),
 	confirm bit,
+	pet_type bit,
 	
 	id_user_created int,
 	id_blog_type int,
+	pet_category_id int,
 	
 	primary key(id)
 );
@@ -104,6 +106,18 @@ CREATE TABLE service(
     
     primary key(id)
 );
+CREATE TABLE pet_category (
+    id int auto_increment,
+    name varchar(50),
+    breed varchar(100),
+    age int,
+    color varchar(50),
+    weight double,
+    
+    id_blog int,
+    
+    primary key(id)
+);
 
 
 ALTER TABLE users  ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
@@ -116,12 +130,13 @@ ALTER TABLE comment ADD CONSTRAINT FK_id_blog_comment FOREIGN KEY (id_blog) REFE
 ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN KEY (id_service_cate) REFERENCES service_category(id);
+ALTER TABLE pet_category ADD CONSTRAINT FK_id_blog_pet_category FOREIGN KEY (id_blog) REFERENCES blog(id);
+ALTER TABLE blog ADD CONSTRAINT FK_pet_category_blog FOREIGN KEY (pet_category_id) REFERENCES pet_category(id);
 
 
 
 
-ALTER TABLE blog
-ADD reason NVARCHAR(255);
+
 
 
 

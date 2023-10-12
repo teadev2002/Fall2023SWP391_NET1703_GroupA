@@ -33,7 +33,7 @@
       </td>
       <td>
         <!-- Dropdown selection for "Type" -->
-        <select name="blogType">
+        <select name="blogTypeName">
           <option value="Gift" th:selected="${blog.blogTypeName == 'Gift'}">Gift</option>
           <option value="Exchange" th:selected="${blog.blogTypeName == 'Exchange'}">Exchange</option>
         </select>
@@ -48,16 +48,39 @@
         <img class="img-fluid" style="object-fit: contain" th:src="@{'../images/blog/' + ${blog.image}}" alt=""/>
       </td>
       <td>
-        <button type="submit">Update</button>
-        <a>Delete</a>
+        <button type="submit" name="action" value="resubmit">Update</button>
+        <button type="button" th:onclick="'javascript:confirmDelete(\'' + ${blog.id} + '\')'">Delete</button>
         <input type="hidden" name="blogId" th:value="${blog.id}" />
       </td>
     </tr>
     </tbody>
   </table>
 </form>
-<div th:if="${updated}">
-  <p>Bài viết đã được cập nhật và đưa vào danh sách chờ duyệt thành công!</p>
-</div>
+
+<script th:inline="javascript">
+  function confirmDelete(blogId) {
+    if (confirm('Are you sure you want to delete this blog?')) {
+      var form = document.createElement('form');
+      form.method = 'post';
+      form.action = '/blog/trash';
+      form.style.display = 'none';
+
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.name = 'action';
+      input.value = 'delete';
+      form.appendChild(input);
+
+      input = document.createElement('input');
+      input.type = 'text';
+      input.name = 'blogId';
+      input.value = blogId;
+      form.appendChild(input);
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
+</script>
 </body>
 </html>

@@ -44,6 +44,10 @@ public class BlogEntity {
     @Column(name = "reason")
     private String reason;
 
+    @Column(name = "pet_type")
+    private boolean petType;
+
+
     @ManyToOne
     @JoinColumn(name="id_user_created")
     private UserEntity userEntity;
@@ -61,5 +65,8 @@ public class BlogEntity {
     @OneToOne(mappedBy = "blog_service")
     private ServiceEntity serviceEntity;
 
+    @OneToOne
+    @JoinColumn(name = "pet_category_id")
+    private PetCategoryEntity petCategoryEntity;
 
 }
