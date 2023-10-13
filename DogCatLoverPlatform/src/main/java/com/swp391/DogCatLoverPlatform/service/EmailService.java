@@ -11,7 +11,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendRejectionEmail(String to, String reason) {
+    public void sendEmail(String to, String reason) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("minhtampro4545@gmail.com");
         message.setTo(to);

@@ -1,9 +1,6 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
-import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
-import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
-import com.swp391.DogCatLoverPlatform.dto.CommentDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import com.swp391.DogCatLoverPlatform.entity.CommentEntity;
@@ -69,6 +66,8 @@ public class BlogController {
         model.addAttribute("user", user);
         return "blog-standard";
     }
+
+
 
     @GetMapping("/view/myblog")
     public String viewMyBlog(Model model,
@@ -224,20 +223,32 @@ public class BlogController {
     }
 
     @PostMapping("/create")
-    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file, HttpServletRequest req) throws IOException {
+    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file, @RequestParam("pet_type") Boolean petType, HttpServletRequest req) throws IOException {
         // Lưu hình ảnh vào cơ sở dữ liệu và lấy đường dẫn
         String imagePath = blogService.saveImageAndReturnPath(file);
         UserDTO user = getUserIdFromCookie(req);
         blogDTO.setImage(imagePath);
 
         // Đánh dấu bài viết là "đang chờ xét duyệt"
-        blogDTO.setConfirm(false);
+        blogDTO.setConfirm(null);
+
+  /*      // Create a PetCategoryDTO based on the petCateId
+
+        // Check if petType is not null
+        if (petType != null) {
+            blogDTO.setPet_type(petType);
+        } else {
+            blogDTO.setPet_type(false); // For example, setting it to false as a default
+        }*/
 
         BlogDTO createdBlog = blogService.createBlog(blogDTO, blogTypeId, user.getId());
 
         // Chuyển hướng thành viên đến trang viewStaff
         return "redirect:/blog/view";
     }
+
+
+
 
     @PostMapping("/create_comment")
     public String createComment(@ModelAttribute("comment") CommentDTO commentDTO, HttpServletRequest req){
@@ -336,6 +347,13 @@ public class BlogController {
         }
         return null;
     }
+    //Quản lý Blog bên Staff
+    @GetMapping("/staff")
+    public String viewBlogManagement(Model model){
+        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
+        model.addAttribute("pendingBlogs", pendingBlogs);
+        return "table-staff";
+    }
 
 
     @PostMapping("/staff/process")
@@ -349,7 +367,7 @@ public class BlogController {
         if ("approve".equals(action)) {
             // Approve the blog
             blogService.approveBlog(blogId);
-            emailService.sendRejectionEmail(user.getEmail(),reason);
+            emailService.sendEmail(user.getEmail(),reason);
 
         } else if ("reject".equals(action)) {
             // Reject the blog
@@ -357,21 +375,48 @@ public class BlogController {
             // Send a rejection email
 
             if (user != null) {
-                emailService.sendRejectionEmail(user.getEmail(), reason);
+                emailService.sendEmail(user.getEmail(), reason);
             }
         }
         return "redirect:/blog/staff";
     }
 
-
-
-
-    //Quản lý Blog bên Staff
-    @GetMapping("/staff")
-    public String viewBlogManagement(Model model){
-        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
-        model.addAttribute("pendingBlogs", pendingBlogs);
-        return "table-staff";
+    @GetMapping("/trash")
+    public String viewBlogReject(Model model, @RequestParam(value = "updated", required = false) String updated) {
+        List<BlogDTO> rejectBlog = blogService.getBlogsReject();
+        model.addAttribute("rejectBlog", rejectBlog);
+        model.addAttribute("updated", updated);
+        return "trash";
     }
+
+
+    @PostMapping("/trash")
+    public String updateAndResubmitOrDeleteBlog(
+            @RequestParam("blogId") int blogId,
+            @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO,
+            @RequestParam("action") String action) {
+
+        if ("resubmit".equals(action)) {
+            // Update the blog and set its confirmation status to null
+            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO);
+        } else if ("delete".equals(action)) {
+            // Delete the blog
+            blogService.deleteBlogById(blogId);
+        }
+
+        return "redirect:/blog/trash";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -22,7 +22,7 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm")
         Page<BlogEntity> findByUserEntityIdAndConfirm(int userId, boolean confirm, Pageable pageable);
 
-        List<BlogEntity> findByConfirm(boolean confirm);
+        List<BlogEntity> findByConfirm(Boolean confirm);
         Page<BlogEntity> findByConfirm(boolean confirm, Pageable pageable);
 
 }

@@ -20,6 +20,7 @@ description varchar(255)
 );
 
 CREATE TABLE blog(
+<<<<<<< HEAD
 id int auto_increment primary key,
 title varchar(100),
 content text,
@@ -30,6 +31,22 @@ create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 confirm bit,
 id_user_created int,
 id_blog_type int
+=======
+	id int auto_increment,
+	title varchar(100),
+	content text,
+	image varchar(255),
+	image_sidebar varchar(255),
+	price double,
+	status bit,
+	create_date DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	confirm bit,
+	
+	id_user_created int,
+	id_blog_type int,
+	
+	primary key(id)
+>>>>>>> 219e23a34c5029ad7679127c7e51b540625f14f7
 );
 
 CREATE TABLE blog_type(
