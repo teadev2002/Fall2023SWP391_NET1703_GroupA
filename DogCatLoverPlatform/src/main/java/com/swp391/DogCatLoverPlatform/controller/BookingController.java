@@ -44,7 +44,7 @@ public class BookingController {
         if(userDTO == null){
             return "redirect:/index/login";
         }
-        List<BookingEntity> list = bookingEntityRepository.findByUserCreate(userDTO.getId());
+        List<BookingDTO> list = bookingService.getBookingManager(userDTO.getId());
         model.addAttribute("listBooking", list);
         model.addAttribute("quantity", list.size());
 
@@ -55,8 +55,6 @@ public class BookingController {
     @Autowired
     private BookingEntityRepository bookingEntityRepository;
 
-    @Autowired
-    private BlogRepository blogRepository;
 
 
 

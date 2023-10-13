@@ -24,6 +24,6 @@ public class ServiceDTO {
     private int id_user;
     private int id_blog;
     private String emailUserCreate;
-    private boolean confirm;
+    private Boolean confirm;
     private String serviceCateName;
 }

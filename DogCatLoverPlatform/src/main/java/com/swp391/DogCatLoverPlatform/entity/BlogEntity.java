@@ -40,7 +40,7 @@ public class BlogEntity {
     private Date createDate;
 
     @Column(name = "confirm")
-    private boolean confirm;
+    private Boolean confirm;
 
     @ManyToOne
     @JoinColumn(name="id_user_created")

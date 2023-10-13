@@ -247,7 +247,7 @@
                     <thead class="thead-default">
                     <tr>
                         <th>Booking id</th>
-                        <th class="floatr">Created date</th>
+                        <th class="floatr">Service Created date</th>
                         <th>Booking date</th>
                         <th class="floatr">Tổng tiền</th>
                         <th>Pay method</th>
@@ -258,12 +258,12 @@
                     <tbody th:each="booking : ${listBooking}">
                     <tr>
                         <td><a class="yls pointer-event" th:text="${booking.id}"></a></td>
-                        <td class="floatr" th:text="${booking.create_date}"></td>
+                        <td class="floatr" th:text="${booking.blogDTO.createDate}"></td>
                         <td th:text="${booking.bookingDate}+', '+${booking.bookingTime}"></td>
                         <td class="floatr"><span class="yls" th:text="${#numbers.formatDecimal(booking.total_price, 0, 'COMMA', 0, 'POINT')}"></span></td>
                         <td><span class="span_pending" th:text="${booking.paying_method}"></span></td>
-                        <td class="floatr"><span class="span_" th:text="${booking.blogEntity_BookingEntity.title}"></span></td>
-                        <td th:text="${booking.userEntity_BookingEntity.email}"></td>
+                        <td class="floatr"><span class="span_" th:text="${booking.blogDTO.title}"></span></td>
+                        <td th:text="${booking.userDTO.email}"></td>
                     </tr>
                     </tbody>
                 </table>

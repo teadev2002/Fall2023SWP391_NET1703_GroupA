@@ -31,7 +31,7 @@ public class ServiceService {
         BlogEntity blogEntity = new BlogEntity();
         Date date = new Date();
         blogEntity.setCreateDate(date);
-        blogEntity.setConfirm(false);
+        blogEntity.setConfirm(null);
         blogEntity.setStatus(false);
         blogEntity.setContent(Content);
         blogEntity.setImage(image);
@@ -52,18 +52,20 @@ public class ServiceService {
         List<ServiceEntity> serviceEntityList = serviceRepository.findAll();
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
         for(ServiceEntity s : serviceEntityList){
-            ServiceDTO serviceDTO = new ServiceDTO();
-            serviceDTO.setUserName(s.getBlog_service().getUserEntity().getName());
-            serviceDTO.setEmailUserCreate(s.getBlog_service().getUserEntity().getEmail());
-            serviceDTO.setContent(s.getBlog_service().getContent());
-            serviceDTO.setPrice(s.getBlog_service().getPrice());
-            serviceDTO.setTitle(s.getBlog_service().getTitle());
-            serviceDTO.setImage(s.getBlog_service().getImage());
-            serviceDTO.setConfirm(s.getBlog_service().isConfirm());
-            serviceDTO.setCreateDate(s.getBlog_service().getCreateDate());
-            serviceDTO.setServiceCateName(s.getService_category().getName());
-            serviceDTO.setId(s.getId());
-            serviceDTOList.add(serviceDTO);
+            if(s.getBlog_service().getConfirm().equals(true)) {
+                ServiceDTO serviceDTO = new ServiceDTO();
+                serviceDTO.setUserName(s.getBlog_service().getUserEntity().getName());
+                serviceDTO.setEmailUserCreate(s.getBlog_service().getUserEntity().getEmail());
+                serviceDTO.setContent(s.getBlog_service().getContent());
+                serviceDTO.setPrice(s.getBlog_service().getPrice());
+                serviceDTO.setTitle(s.getBlog_service().getTitle());
+                serviceDTO.setImage(s.getBlog_service().getImage());
+                serviceDTO.setConfirm(s.getBlog_service().getConfirm());
+                serviceDTO.setCreateDate(s.getBlog_service().getCreateDate());
+                serviceDTO.setServiceCateName(s.getService_category().getName());
+                serviceDTO.setId(s.getId());
+                serviceDTOList.add(serviceDTO);
+            }
         }
         return serviceDTOList;
     }
@@ -77,7 +79,7 @@ public class ServiceService {
         serviceDTO.setPrice(s.get().getBlog_service().getPrice());
         serviceDTO.setTitle(s.get().getBlog_service().getTitle());
         serviceDTO.setImage(s.get().getBlog_service().getImage());
-        serviceDTO.setConfirm(s.get().getBlog_service().isConfirm());
+        serviceDTO.setConfirm(s.get().getBlog_service().getConfirm());
         serviceDTO.setCreateDate(s.get().getBlog_service().getCreateDate());
         serviceDTO.setServiceCateName(s.get().getService_category().getName());
         serviceDTO.setId_blog(s.get().getBlog_service().getId());
