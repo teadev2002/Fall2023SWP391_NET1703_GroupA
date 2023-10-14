@@ -25,6 +25,7 @@ title varchar(100),
 content text,
 image varchar(255),
 price double,
+reason nvarchar(255),
 status bit,
 create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 confirm bit,
@@ -75,6 +76,13 @@ CREATE TABLE service(
     id_service_cate int
 );
 
+CREATE TABLE request(
+	id int auto_increment primary key,
+	create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	id_blog int,
+	id_user int	
+);
+
 ALTER TABLE users ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
 ALTER TABLE blog ADD CONSTRAINT FK_id_user_blog FOREIGN KEY (id_user_created) REFERENCES users(id);
 ALTER TABLE booking ADD CONSTRAINT FK_id_blog_booking FOREIGN KEY (id_blog) REFERENCES blog(id);
@@ -85,3 +93,5 @@ ALTER TABLE comment ADD CONSTRAINT FK_id_blog_comment FOREIGN KEY (id_blog) REFE
 ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN KEY (id_service_cate) REFERENCES service_category(id);
+ALTER TABLE request ADD CONSTRAINT FK_id_blog_request FOREIGN KEY (id_blog) REFERENCES blog(id);
+ALTER TABLE request ADD CONSTRAINT FK_id_user_request FOREIGN KEY (id_user) REFERENCES users(id);
