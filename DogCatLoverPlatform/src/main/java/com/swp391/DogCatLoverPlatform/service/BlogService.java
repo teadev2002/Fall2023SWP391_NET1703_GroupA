@@ -238,13 +238,18 @@ public class BlogService {
     }
 
     public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO) {
-        BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
+        BlogEntity blogEntity = blogRepository.findById(blogId)
+                .orElseThrow(() -> new NoSuchElementException("Blog not found with ID: " + blogId));
+
+        // Set the 'confirm' property to null
         blogEntity.setConfirm(null);
 
+        // Update the remaining properties using ModelMapper
         modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
+
+        // Save the updated entity
         blogRepository.save(blogEntity);
     }
-
 
 
 
