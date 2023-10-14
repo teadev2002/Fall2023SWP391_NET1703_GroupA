@@ -62,11 +62,17 @@ public class BlogEntity {
     @OneToMany(mappedBy = "blogEntity_CommentEntity")
     List<CommentEntity> listComment_BlogEntity ;
 
-    @OneToOne(mappedBy = "blog_service")
-    private ServiceEntity serviceEntity;
 
     @OneToOne
     @JoinColumn(name = "pet_category_id")
     private PetCategoryEntity petCategoryEntity;
+
+/*    @OneToOne
+    @JoinColumn(name = "pet_category_id")
+    private PetCategoryEntity petCategoryEntity;*/
+
+    public Boolean isConfirm() {
+        return confirm;
+    }
 
 }

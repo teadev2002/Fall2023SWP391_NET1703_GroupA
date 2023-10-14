@@ -238,6 +238,7 @@ public class BlogService {
     }
 
     public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO) {
+
         BlogEntity blogEntity = blogRepository.findById(blogId)
                 .orElseThrow(() -> new NoSuchElementException("Blog not found with ID: " + blogId));
 
@@ -248,8 +249,10 @@ public class BlogService {
         modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
 
         // Save the updated entity
+
         blogRepository.save(blogEntity);
     }
+
 
 
 

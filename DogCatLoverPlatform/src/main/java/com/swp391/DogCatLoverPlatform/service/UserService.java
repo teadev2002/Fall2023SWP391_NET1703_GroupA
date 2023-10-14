@@ -6,13 +6,22 @@ import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -155,5 +164,33 @@ public class UserService {
         userRepository.updateOtpInUser(otp, userDTO.getId());
         javaMailSender.send(message);
     }
+
+    public void sendEmail(String email) throws IOException, MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        // Sử dụng MimeMessageHelper để xử lý email có phần kèm
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        // Thiết lập địa chỉ email người nhận và tiêu đề
+        helper.setTo(email);
+        helper.setSubject("Xác nhận giao dịch");
+
+
+        Path imagePath = Paths.get("D:\\SWPGIT12\\DogCatLoverPlatform\\src\\main\\resources\\static\\images\\blog\\blog-dog-12.png");
+        byte[] imageBytes = Files.readAllBytes(imagePath);
+        InputStreamSource imageSource = new ByteArrayResource(imageBytes);
+        helper.addAttachment("image.png", imageSource);
+
+        // Thêm nội dung email với hình ảnh
+        String emailContent = "<h1>Nhấn vào đây để xác nhận giao dịch:</h1>" +
+                "<button><a href=' http://localhost:8080/index/home'>Xác nhận </a   ></button>";
+        helper.setText(emailContent, true);
+
+
+
+        // Gửi email
+        javaMailSender.send(message);
+    }
+
 
 }
