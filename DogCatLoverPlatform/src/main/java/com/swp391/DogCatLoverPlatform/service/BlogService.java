@@ -1,15 +1,14 @@
 package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
-import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
-import com.swp391.DogCatLoverPlatform.dto.BlogTypeDTO;
-import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
+
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.BlogTypeRepository;
+
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +36,9 @@ public class BlogService {
     @Autowired
     ModelMapperConfig modelMapperConfig;
 
+//    @Autowired
+//    private PetCategoryRepository petCategoryRepository;
+
     //Test Phân trang
     public Page<BlogDTO> GetApprovedBlogs(int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
@@ -51,6 +53,21 @@ public class BlogService {
         return pageOfBlogDTO;
 
     }
+
+    public Page<BlogDTO> GetRejectBlogs(int pageNo, int pageSize) {
+        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
+        Sort sort = Sort.by(Sort.Order.desc("createDate"));
+
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        Page<BlogEntity> blogPage = blogRepository.findByConfirm(false, pageable);
+
+        Page<BlogDTO> pageOfBlogDTO = blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
+
+        return pageOfBlogDTO;
+
+    }
+
 
     public Page<BlogDTO> GetBlogsByTitle(String title, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
@@ -87,19 +104,45 @@ public class BlogService {
         BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
         blogEntity.setBlogTypeEntity(new BlogTypeEntity()); // -- Quan trọng
         blogEntity.getBlogTypeEntity().setId(blogTypeId);
+/*
+        PetCategoryDTO petCategoryDTO = new PetCategoryDTO();
+        PetCategoryEntity petCategoryEntity = new PetCategoryEntity();
+        petCategoryEntity.setName(petCategoryDTO.getName());
+        petCategoryEntity.setBreed(petCategoryDTO.getBreed());
+        petCategoryEntity.setAge(petCategoryDTO.getAge());
+        petCategoryEntity.setColor(petCategoryDTO.getColor());
+        petCategoryEntity.setWeight(petCategoryDTO.getWeight());
 
+        // Save the petCategory entity to the database
+        PetCategoryEntity savedPetCategory = petCategoryRepository.save(petCategoryEntity);*/
+
+        // Retrieve the UserEntity by ID
         UserEntity userEntity = userRepository.findById(idUserCreated).orElseThrow();
+
+        // Set the confirm field to a suitable value (e.g., false)
+        blogEntity.setConfirm(null);
+
+        // Set the createDate field to the current date and time
+        Date createDateTime = new Date();
+        blogEntity.setCreateDate(createDateTime);
+
+/*
+        // Associate the saved petCategoryEntity with the blogEntity
+        blogEntity.setPetCategoryEntity(savedPetCategory);
+*/
+
+        // Set the userEntity
         blogEntity.setUserEntity(userEntity);
 
-        // Lấy thời gian tạo hiện tại
-        Date createDate = new Date();
-        blogEntity.setCreateDate(createDate);
-
+        // Save the BlogEntity
         BlogEntity savedBlogEntity = blogRepository.save(blogEntity);
+
+        // Map the saved BlogEntity back to a BlogDTO
         BlogDTO createdBlog = modelMapperConfig.modelMapper().map(savedBlogEntity, BlogDTO.class);
 
-        // Đặt thời gian tạo vào createdBlog
-        createdBlog.setCreateDate(createDate);
+        // Set the createDate field in the createdBlog
+        createdBlog.setCreateDate(createDateTime);
+
         return createdBlog;
     }
 
@@ -157,7 +200,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getBlogsPendingApproval() {
-        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(false);
+        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(null);
         List<BlogDTO> pendingBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : pendingBlogs) {
@@ -168,26 +211,55 @@ public class BlogService {
         return pendingBlogDTOs;
     }
 
+    public List<BlogDTO> getBlogsReject() {
+        List<BlogEntity> rejectBlogs = blogRepository.findByConfirm(false);
+        List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
+
+        for (BlogEntity blogEntity : rejectBlogs) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            rejectBlogDTOs.add(blogDTO);
+        }
+
+        return rejectBlogDTOs;
+    }
+
     public void approveBlog(int blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
         blogEntity.setConfirm(true);
         blogRepository.save(blogEntity);
     }
 
-    public void rejectBlog(int blogId, String reason) {
-        // Find the blog by its ID
-        BlogEntity blog = blogRepository.findById(blogId).orElse(null);
 
-        if (blog != null) {
-            // Delete the blog from the database
-            blogRepository.delete(blog);
-        } else {
-            // Handle the case where the blog is not found by ID
-            // You can throw an exception, log an error, or handle it as per your requirements.
-        }
+    public void rejectBlog(int blogId, String reason) {
+        BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
+        blogEntity.setConfirm(false);
+        blogEntity.setReason(reason);
+        blogRepository.save(blogEntity);
     }
 
+    public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO) {
+
+        BlogEntity blogEntity = blogRepository.findById(blogId)
+                .orElseThrow(() -> new NoSuchElementException("Blog not found with ID: " + blogId));
+
+        // Set the 'confirm' property to null
+        blogEntity.setConfirm(null);
+
+        // Update the remaining properties using ModelMapper
+        modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
+
+        // Save the updated entity
+
+        blogRepository.save(blogEntity);
+    }
+
+
+
+
+
 }
+
+
 
 
 

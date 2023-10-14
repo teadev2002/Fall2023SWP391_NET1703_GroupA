@@ -11,5 +11,8 @@ public class BlogUpdateDTO {
     private String content;
     private boolean status;
     private double price;
+    private String blogTypeName;
+    private Boolean confirm;
+    private String reason;
 
 }

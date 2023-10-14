@@ -26,4 +26,12 @@ public class ServiceDTO {
     private String emailUserCreate;
     private Boolean confirm;
     private String serviceCateName;
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
 }

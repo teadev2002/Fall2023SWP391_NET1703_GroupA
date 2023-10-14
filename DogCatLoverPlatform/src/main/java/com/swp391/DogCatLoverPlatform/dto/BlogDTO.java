@@ -24,10 +24,20 @@ public class BlogDTO {
     private int userId;
     private double price;
     private boolean status;
+    private boolean pet_type;
     private UserDTO userDTO;
     private String emailUserCreate;
-    private boolean confirm;
+    private Boolean confirm;
     private String reason;
     private String schedule;
+
+
+    private PetCategoryDTO petCategoryDTO;
+    private String petName;
+    private String breed;
+    private int age;
+    private String color;
+    private double weight;
+
 
 }

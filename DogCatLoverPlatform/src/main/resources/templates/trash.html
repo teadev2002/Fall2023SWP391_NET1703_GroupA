@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trash</title>
+    <!-- Include Bootstrap CSS for styling and responsiveness -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .responsive-table {
+            overflow-x: auto;
+        }
+
+        body {
+            /*background: linear-gradient(to right, #fcdccc, #f79465);*/
+            position: relative;
+            margin: 0;
+            height: 100vh;
+            background-size: 200% 200%;
+            animation: gradientShift 8s infinite alternate;
+            background-image: linear-gradient(360deg, #fcdccc, #f79465);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 100% 0%;
+            }
+            100% {
+                background-position: 0% 100%;
+            }
+        }
+
+
+        .table {
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+            color: white;
+            font-weight: bold;
+            border-radius: 3px solid #f1f1f1;
+            /*position: absolute;*/
+            /*top: 50%;*/
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+            text-align: center;
+
+            position: absolute;
+            bottom: 40vh;
+            top: 8cm;
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5" style="display: block">
+    <h2 class="mb-4" style="justify-content: center; text-align: center; color: white;
+                        font-weight: bold;">Rejected Blog</h2>
+    <form th:action="@{/blog/trash}" method="post">
+        <div class="responsive-table">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th style="padding-right: 70px; ">Title</th>
+                    <th style="padding-right: 70px; ">Content</th>
+                    <th>Reason</th>
+                    <th style="padding-right: 90px; ">Type</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Img</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog, status : ${rejectBlog}">
+                    <td>
+                        <input type="text" class="form-control" name="title" th:value="${blog.title}"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="content" th:value="${blog.content}"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="reason" th:value="${blog.reason}"
+                               readonly="readonly"/>
+                    </td>
+                    <td>
+                        <!-- Dropdown selection for "Type" -->
+                        <select class="form-control" name="blogTypeName">
+                            <option value="Gift" th:selected="${blog.blogTypeName == 'Gift'}">Gift</option>
+                            <option value="Exchange" th:selected="${blog.blogTypeName == 'Exchange'}">Exchange</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="price" th:value="${blog.price}"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="status" th:value="${blog.status}"/>
+                    </td>
+                    <td>
+                        <img class="img-fluid" style="object-fit: contain" th:src="@{'../images/blog/' + ${blog.image}}"
+                             alt=""/>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" name="action" value="resubmit">Update</button>
+                        <button type="button" class="btn btn-danger"
+                                th:onclick="'javascript:confirmDelete(\'' + ${blog.id} + '\')'">Delete
+                        </button>
+                        <input type="hidden" name="blogId" th:value="${blog.id}"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+
+    <script th:inline="javascript">
+        function confirmDelete(blogId) {
+            if (confirm('Are you sure you want to delete this blog?')) {
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.action = '/blog/trash';
+                form.style.display = 'none';
+
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'action';
+                input.value = 'delete';
+                form.appendChild(input);
+
+                input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'blogId';
+                input.value = blogId;
+                form.appendChild(input);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+</div>
+
+<!-- Include Bootstrap JS and Popper.js for added functionality like modals, tooltips, etc. (optional) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

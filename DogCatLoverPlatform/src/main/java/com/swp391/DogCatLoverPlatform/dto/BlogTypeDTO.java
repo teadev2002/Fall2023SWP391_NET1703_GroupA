@@ -14,4 +14,5 @@ public class BlogTypeDTO {
     private int id;
     private String name;
 
+
 }
