@@ -1,5 +1,6 @@
 package com.swp391.DogCatLoverPlatform.repository;
 
+import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.entity.BookingEntity;
 import com.swp391.DogCatLoverPlatform.entity.CommentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +21,7 @@ public interface BookingEntityRepository extends JpaRepository<BookingEntity,Int
 
     @Query(value = "select b.* from booking b inner JOIN blog bl on bl.id = b.id_blog where bl.id_user_created = ?1",nativeQuery = true)
     public List<BookingEntity> findByUserCreate(Integer idUser);
+
+    @Query(value = "select b.* from booking b inner JOIN blog bl on bl.id = b.id_blog where b.id_user = ?1",nativeQuery = true)
+    public List<BookingEntity> findByUserBooking(int idUser);
 }

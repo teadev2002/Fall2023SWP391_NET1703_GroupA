@@ -2,23 +2,17 @@ package com.swp391.DogCatLoverPlatform.controller;
 
 
 import com.google.gson.Gson;
-import com.swp391.DogCatLoverPlatform.dto.Root;
+import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
-import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
+import com.swp391.DogCatLoverPlatform.service.RequestService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import com.swp391.DogCatLoverPlatform.util.JwtHelper;
 import com.swp391.DogCatLoverPlatform.util.OtpUtil;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Encoders;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,20 +21,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import javax.crypto.SecretKey;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 
 //@RestController
 @Controller
@@ -50,6 +38,8 @@ public class UserController {
     @Autowired
     private JwtHelper jwtHelper;
 
+    @Autowired
+    private RequestService requestService;
 
     @Autowired
     UserService userService;
@@ -64,18 +54,21 @@ public class UserController {
     public String hello(Model model, HttpServletRequest req) {
         UserDTO user  = getUserIdFromCookie(req);
         model.addAttribute("user", user);
-        return "index";
-    }
 
-    @GetMapping("/staff")
-    public String viewDashboard(){
-        return "index-staff";
+        //Hiện số lượng list
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
+
+        return "index";
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
     }
+
 
     @GetMapping("/blog")
     public String blogStandard() {
@@ -103,6 +96,12 @@ public class UserController {
     public String contact(Model model, HttpServletRequest req) {
         UserDTO user  = getUserIdFromCookie(req);
         model.addAttribute("user", user);
+
+        //Hiện số lượng list
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         return "contact";
     }
 
@@ -150,6 +149,8 @@ public class UserController {
                 if ("User".equals(c.getName())) {
                     email = c.getValue();
                     UserDTO user = userService.getUserByEmail(email);
+                    List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                    model.addAttribute("count", bookingDTOS.size());
                     model.addAttribute("user", user);
                     return "profile";
                 }

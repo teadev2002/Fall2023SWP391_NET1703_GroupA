@@ -51,12 +51,8 @@ public class BookingController {
         return "booking-manager";
     }
 
-
     @Autowired
     private BookingEntityRepository bookingEntityRepository;
-
-
-
 
     @GetMapping("/booking-by-date-and-blog")
     public ResponseEntity<?> findByDateAndBlog(@RequestParam("date") Date date, @RequestParam("id") Integer idBlog){

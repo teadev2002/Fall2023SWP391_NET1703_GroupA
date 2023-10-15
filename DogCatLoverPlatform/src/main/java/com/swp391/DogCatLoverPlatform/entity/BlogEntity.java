@@ -42,14 +42,11 @@ public class BlogEntity {
     @Column(name = "confirm")
     private Boolean confirm;
 
-
     @Column(name = "reason")
     private String reason;
 
     @Column(name = "pet_type")
     private boolean petType;
-
-
 
     @ManyToOne
     @JoinColumn(name="id_user_created")
@@ -69,6 +66,8 @@ public class BlogEntity {
     @JsonIgnore
     List<CommentEntity> listComment_BlogEntity ;
 
+    @OneToMany(mappedBy = "blogEntity_Request")
+    List<RequestEntity> listRequest_BlogEntity ;
 
 //    @OneToOne
 //    @JoinColumn(name = "pet_category_id")
