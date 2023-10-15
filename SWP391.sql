@@ -29,8 +29,12 @@ reason nvarchar(255),
 status bit,
 create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 confirm bit,
+pet_type bit,
+
 id_user_created int,
-id_blog_type int
+id_blog_type int,
+id_pet_category int 
+	
 );
 
 CREATE TABLE blog_type(
@@ -83,6 +87,18 @@ CREATE TABLE request(
 	id_user int	
 );
 
+CREATE TABLE pet_category (
+    id int auto_increment primary key,
+    name varchar(50),
+    breed varchar(100),
+    age int,
+    color varchar(50),
+    weight double,
+    
+    id_blog int
+);
+
+
 ALTER TABLE users ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
 ALTER TABLE blog ADD CONSTRAINT FK_id_user_blog FOREIGN KEY (id_user_created) REFERENCES users(id);
 ALTER TABLE booking ADD CONSTRAINT FK_id_blog_booking FOREIGN KEY (id_blog) REFERENCES blog(id);
@@ -95,3 +111,5 @@ ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFE
 ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN KEY (id_service_cate) REFERENCES service_category(id);
 ALTER TABLE request ADD CONSTRAINT FK_id_blog_request FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE request ADD CONSTRAINT FK_id_user_request FOREIGN KEY (id_user) REFERENCES users(id);
+ALTER TABLE pet_category ADD CONSTRAINT FK_id_blog_pet_category FOREIGN KEY (id_blog) REFERENCES blog(id);
+ALTER TABLE blog ADD CONSTRAINT FK_pet_category_blog FOREIGN KEY (id_pet_category) REFERENCES pet_category(id);
