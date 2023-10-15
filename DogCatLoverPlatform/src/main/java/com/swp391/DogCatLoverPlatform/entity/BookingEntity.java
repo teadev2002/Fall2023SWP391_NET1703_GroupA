@@ -1,12 +1,18 @@
 package com.swp391.DogCatLoverPlatform.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.swp391.DogCatLoverPlatform.config.SqlTimeDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +29,15 @@ public class BookingEntity {
 
     @Column(name = "create_date")
     private Date create_date;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "booking_date")
+    private java.sql.Date bookingDate;
+
+    @JsonFormat(pattern = "HH:mm")
+    @JsonDeserialize(using = SqlTimeDeserializer.class)
+    @Column(name = "booking_time")
+    private Time bookingTime;
 
     @Column(name = "total_price")
     private double total_price;
@@ -43,7 +58,8 @@ public class BookingEntity {
 
 
     @OneToMany(mappedBy = "bookingEntity")
-    List<BookingHistoryEntity> listBookingHistory;
+    @JsonIgnore
+    List<BookingHistoryEntity> listBookingHistory = new ArrayList<>();
 
 
 }

@@ -49,6 +49,7 @@ public class SecurityConfig {
                     .antMatchers(HttpMethod.POST,"/services/**").permitAll()
                     .antMatchers("/service/**").permitAll()
                     .antMatchers("/staff/**").permitAll()
+                    .antMatchers("/booking/**").permitAll()
                     .antMatchers(HttpMethod.POST,"/index/login").permitAll()
                     .antMatchers(HttpMethod.POST,"/index/**").permitAll()
                     .antMatchers("/cdn-cgi/**").permitAll()

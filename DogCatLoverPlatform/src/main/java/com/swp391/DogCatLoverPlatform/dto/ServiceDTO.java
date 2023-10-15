@@ -22,7 +22,16 @@ public class ServiceDTO {
     private double price;
     private boolean status;
     private int id_user;
+    private int id_blog;
     private String emailUserCreate;
-    private boolean confirm;
+    private Boolean confirm;
     private String serviceCateName;
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
 }

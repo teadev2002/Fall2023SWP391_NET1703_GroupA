@@ -149,6 +149,8 @@ public class UserController {
                 if ("User".equals(c.getName())) {
                     email = c.getValue();
                     UserDTO user = userService.getUserByEmail(email);
+                    List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                    model.addAttribute("count", bookingDTOS.size());
                     model.addAttribute("user", user);
                     return "profile";
                 }

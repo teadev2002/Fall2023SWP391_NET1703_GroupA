@@ -311,8 +311,7 @@
 
                 <div class="paginations-area d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
-
-                <!--Test Phân trang-->
+                        <!--Test Phân trang-->
                         <ul class="pagination">
                             <li class="page-item" th:if="${currentPage > 1}">
                                 <a class="page-link" th:href="@{'/blog/view?page=' + ${currentPage-1}}"><i class="bi bi-arrow-left-short"></i></a>
@@ -380,7 +379,7 @@
                         </div>
 
 
-<!--                        Newest Blog-->
+                        <!--                        Newest Blog-->
                         <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
                             <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                                 <div class="wi sidebarImage" >
@@ -558,3 +557,59 @@
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/blog-standard.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:35 GMT -->
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
