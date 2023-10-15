@@ -55,7 +55,8 @@ public class BlogEntity {
     @OneToMany(mappedBy = "blogEntity_CommentEntity")
     List<CommentEntity> listComment_BlogEntity ;
 
-
+    @OneToMany(mappedBy = "blogEntity_Request")
+    List<RequestEntity> listRequest_BlogEntity ;
 
 
 }

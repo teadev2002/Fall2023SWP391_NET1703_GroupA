@@ -1,34 +1,23 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
-import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
-import com.swp391.DogCatLoverPlatform.dto.BlogUpdateDTO;
-import com.swp391.DogCatLoverPlatform.dto.CommentDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
-import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
+import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
-import com.swp391.DogCatLoverPlatform.entity.CommentEntity;
-import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.*;
 //import com.swp391.DogCatLoverPlatform.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.data.domain.PageRequest;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.data.domain.Pageable;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/blog")
@@ -42,6 +31,9 @@ public class BlogController {
     UserService userService;
 
     @Autowired
+    RequestService requestService;
+
+    @Autowired
     CommentService commentService;
 
     @Autowired
@@ -49,6 +41,39 @@ public class BlogController {
 
     @Autowired
     EmailService emailService;
+
+
+    @PostMapping("/view/send-request")
+    public String addRequest(
+            @RequestParam(name = "userId") int userId,
+            @RequestParam(name = "blogId") int blogId,
+            RedirectAttributes redirectAttributes,
+            @ModelAttribute("request") RequestDTO requestDTO) {
+
+       boolean isExist = requestService.checkExistRequest(userId, blogId);
+       if(isExist){
+           redirectAttributes.addFlashAttribute("error", "Yêu cầu của bạn đang được duyệt!");
+       }else{
+           requestService.AddRequest(requestDTO,userId, blogId);
+           redirectAttributes.addFlashAttribute("sent", "Yêu cầu của bạn đã được gửi!");
+       }
+
+        return "redirect:/blog/"+blogId+"/detail/myblog";
+    }
+
+    //View List Request
+    @GetMapping("/view/view-request")
+    public String viewListRequest(Model model, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+            model.addAttribute("listBlog", bookingDTOS);
+        }
+        return "list-request";
+    }
+
 
     //Test phân trang
     @GetMapping("/view")
@@ -62,11 +87,19 @@ public class BlogController {
         model.addAttribute("currentPage", page);
         model.addAttribute("listBlog", list);
 
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
+        //Hiện số lượng list
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
+
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
 
-        UserDTO user  = getUserIdFromCookie(req);
-        model.addAttribute("user", user);
+
         return "blog-standard";
     }
 
@@ -78,6 +111,11 @@ public class BlogController {
                              HttpServletRequest req) {
 
         UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
 
         Page<BlogDTO> list = blogService.GetAllMyBlog(user.getId(), page, size);
@@ -107,6 +145,10 @@ public class BlogController {
         model.addAttribute("latestBlogs", latestBlogs);
 
         UserDTO user  = getUserIdFromCookie(req);
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
 
         return "redirect:/blog/view";
@@ -128,6 +170,11 @@ public class BlogController {
         model.addAttribute("latestBlogs", latestBlogs);
 
         UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
 
         return "blog-search-title";
@@ -140,7 +187,12 @@ public class BlogController {
             @RequestParam(defaultValue = "3") int size,
             Model model, HttpServletRequest req) {
 
-        UserDTO user = getUserIdFromCookie(req);
+        UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
 
         if (title.trim().isEmpty()) {
@@ -149,6 +201,11 @@ public class BlogController {
             model.addAttribute("totalPage", list.getTotalPages());
             model.addAttribute("currentPage", page);
             model.addAttribute("listBlog", list);
+
+            if(user != null){
+                List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                model.addAttribute("count", bookingDTOS.size());
+            }
 
             return "redirect:/blog/view";
 
@@ -159,12 +216,24 @@ public class BlogController {
             model.addAttribute("currentPage", page);
             model.addAttribute("listBlogs", lists);
             model.addAttribute("title", title);
+            if(user != null){
+                List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                model.addAttribute("count", bookingDTOS.size());
+            }
 
             if (lists.isEmpty()) {
                 model.addAttribute("msg", "Không tìm thấy kết quả!!");
+                if(user != null){
+                    List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                    model.addAttribute("count", bookingDTOS.size());
+                }
             } else {
                 model.addAttribute("listBlogs", lists);
                 model.addAttribute("title", title);
+                if(user != null){
+                    List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                    model.addAttribute("count", bookingDTOS.size());
+                }
             }
         }
 
@@ -191,16 +260,26 @@ public class BlogController {
         model.addAttribute("latestBlogs", latestBlogs);
 
         UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
         return "blog-type";
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable("id") int id, Model model, HttpServletRequest req) {
+    public String viewUpdateForm(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         model.addAttribute("blog", blogDTO);
 
         UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
         return "update-blog-form";
     }
@@ -213,11 +292,17 @@ public class BlogController {
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model, HttpServletRequest req) {
+    public String viewCreateForm(Model model, HttpServletRequest req) {
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
+
         UserDTO user  = getUserIdFromCookie(req);
 
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
+
         model.addAttribute("blogTypes", listBlogType);
         model.addAttribute("blog", new BlogDTO());
         return "create-blog-form";
@@ -274,6 +359,11 @@ public class BlogController {
         model.addAttribute("blog", blogDTO);
 
         UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
 
         // Add the comments to the model
@@ -284,7 +374,7 @@ public class BlogController {
 
 
     @GetMapping("/{id}/detail/myblog")
-    public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req) {
+    public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req, RedirectAttributes redirectAttributes) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
 
@@ -292,12 +382,27 @@ public class BlogController {
         model.addAttribute("blog", blogDTO);
 
         UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            model.addAttribute("count", bookingDTOS.size());
+        }
         model.addAttribute("user", user);
 
         // Get comments for the blog by its ID
         // Add the comments to the model
         List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
         model.addAttribute("comments", comments);
+
+        String error = (String) redirectAttributes.getFlashAttributes().get("error");
+        String sent = (String) redirectAttributes.getFlashAttributes().get("sent");
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+
+        if(sent != null){
+            model.addAttribute("sent", sent);
+        }
 
         return "blog-details-myblog";
     }
@@ -363,15 +468,5 @@ public class BlogController {
         return "redirect:/blog/staff";
     }
 
-
-
-
-    //Quản lý Blog bên Staff
-    @GetMapping("/staff")
-    public String viewBlogManagement(Model model){
-        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
-        model.addAttribute("pendingBlogs", pendingBlogs);
-        return "table-staff";
-    }
 
 }
