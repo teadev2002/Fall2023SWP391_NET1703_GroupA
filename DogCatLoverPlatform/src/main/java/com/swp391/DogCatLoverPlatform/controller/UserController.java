@@ -4,8 +4,10 @@ package com.swp391.DogCatLoverPlatform.controller;
 import com.google.gson.Gson;
 import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.RequestService;
+import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import com.swp391.DogCatLoverPlatform.util.JwtHelper;
 import com.swp391.DogCatLoverPlatform.util.OtpUtil;
@@ -47,6 +49,8 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    UserNotificationService userNotificationService;
 
     private Gson gson = new Gson();
 
@@ -57,8 +61,10 @@ public class UserController {
 
         //Hiện số lượng list
         if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
-            model.addAttribute("count", bookingDTOS.size());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
         }
 
         return "index";
@@ -99,8 +105,10 @@ public class UserController {
 
         //Hiện số lượng list
         if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
-            model.addAttribute("count", bookingDTOS.size());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
         }
         return "contact";
     }
@@ -140,6 +148,17 @@ public class UserController {
         return "team";
     }
 
+    //Xem profile user của phần List Request
+    @GetMapping("/profile/{userId}")
+    public String profile(Model model, @PathVariable int userId) {
+        // Sử dụng userId để truy vấn thông tin người dùng và chuẩn bị dữ liệu cho view
+        UserDTO user = userService.getUserById(userId);
+        model.addAttribute("user", user);
+
+        return "profile-user-request";
+    }
+
+    //Xem profile user của chính chủ
     @GetMapping("/profile")
     public String profile(Model model, HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
@@ -149,8 +168,10 @@ public class UserController {
                 if ("User".equals(c.getName())) {
                     email = c.getValue();
                     UserDTO user = userService.getUserByEmail(email);
+                    List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
                     List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
-                    model.addAttribute("count", bookingDTOS.size());
+                    int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+                    model.addAttribute("count", totalCount);
                     model.addAttribute("user", user);
                     return "profile";
                 }

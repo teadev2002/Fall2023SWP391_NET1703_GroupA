@@ -44,23 +44,9 @@ public class BlogService {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
-        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> blogPage = blogRepository.findByConfirm(true, pageable);
-
-        Page<BlogDTO> pageOfBlogDTO = blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
-
-        return pageOfBlogDTO;
-
-    }
-
-    public Page<BlogDTO> GetRejectBlogs(int pageNo, int pageSize) {
-        // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
-        Sort sort = Sort.by(Sort.Order.desc("createDate"));
-
-        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> blogPage = blogRepository.findByConfirm(false, pageable);
+        Page<BlogEntity> blogPage = blogRepository.findByConfirmAndStatusTrue(true, pageable);
 
         Page<BlogDTO> pageOfBlogDTO = blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 
@@ -73,9 +59,9 @@ public class BlogService {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
-        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> blogPage = blogRepository.findByTitleContainingAndConfirm(title, true, pageable);
+        Page<BlogEntity> blogPage = blogRepository.findByTitleContainingAndConfirmAndStatusTrue(title, true, pageable);
 
         return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
     }
@@ -84,10 +70,10 @@ public class BlogService {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
-        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, true, pageable);
-        //Collections.sort(listBlog, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+
         Page<BlogDTO> pageOfBlogDTO = listBlog.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 
         return pageOfBlogDTO;
@@ -121,6 +107,8 @@ public class BlogService {
 
         // Set the confirm field to a suitable value (e.g., false)
         blogEntity.setConfirm(null);
+
+        blogEntity.setStatus(true);
 
         // Set the createDate field to the current date and time
         Date createDateTime = new Date();
@@ -164,7 +152,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getThreeLatestBlogs() {
-        List<BlogEntity> latestApprovedBlogs = blogRepository.findFirst3ByConfirmOrderByCreateDateDesc(true);
+        List<BlogEntity> latestApprovedBlogs = blogRepository.findFirst3ByConfirmAndStatusTrueOrderByCreateDateDesc(true);
         List<BlogDTO> latestApprovedBlogDTOs = latestApprovedBlogs.stream()
                 .map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class))
                 .collect(Collectors.toList());
@@ -182,7 +170,7 @@ public class BlogService {
 
             // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-            Page<BlogEntity> blogPage = blogRepository.findByBlogTypeEntityAndConfirm(blogTypeEntity, true, pageable);
+            Page<BlogEntity> blogPage = blogRepository.findByBlogTypeEntityAndConfirmAndStatusTrue(blogTypeEntity, true, pageable);
 
             return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
         } else {
@@ -200,7 +188,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getBlogsPendingApproval() {
-        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(null);
+        List<BlogEntity> pendingBlogs = blogRepository.findByConfirmAndStatusTrue(null);
         List<BlogDTO> pendingBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : pendingBlogs) {
@@ -212,7 +200,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getBlogsReject() {
-        List<BlogEntity> rejectBlogs = blogRepository.findByConfirm(false);
+        List<BlogEntity> rejectBlogs = blogRepository.findByConfirmAndStatusTrue(false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {

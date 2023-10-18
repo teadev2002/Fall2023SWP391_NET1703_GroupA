@@ -2,16 +2,17 @@ package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
-import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
-import com.swp391.DogCatLoverPlatform.entity.BookingEntity;
-import com.swp391.DogCatLoverPlatform.entity.RequestEntity;
-import com.swp391.DogCatLoverPlatform.entity.UserEntity;
+import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
+import com.swp391.DogCatLoverPlatform.entity.*;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.RequestRepository;
+import com.swp391.DogCatLoverPlatform.repository.UserNotificationRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,9 @@ public class RequestService {
     @Autowired
     private RequestRepository requestRepository;
 
+    @Autowired
+    private UserNotificationRepository userNotificationRepository;
+
     public boolean checkExistRequest(int userId, int blogId){
         boolean isExist = false;    //true (tồn tại),  false (chưa tồn tại)
 
@@ -47,8 +51,10 @@ public class RequestService {
 
             RequestEntity request = modelMapperConfig.modelMapper().map(requestDTO, RequestEntity.class);
 
-             Date createDate = new Date();
-             request.setCreateDate(createDate);
+            Date createDate = new Date();
+            request.setCreateDate(createDate);
+
+            request.setStatus(true);
 
             UserEntity userEntity = userRepository.findById(userId).orElseThrow();
             request.setUserEntity_Request(userEntity);
@@ -70,5 +76,60 @@ public class RequestService {
                 .collect(Collectors.toList());
 
         return listRequested;
+    }
+
+//    public String viewBlogOwnerName(int id_user_created){
+//       String blogOwnerName = requestRepository.findBlogOwnerName(id_user_created);
+//
+//        return blogOwnerName;
+//    }
+
+    public void acceptedRequest(UserNotificationDTO userNotificationDTO, int userIdRequest, int userIdAccepted, int requestId, int blogId) {
+        String accepted = "Your request is accepted!";
+        String denied = "Your request is denied!";
+
+        //Lấy user Accepted (User_Sender)
+        UserEntity userAccepted = userRepository.findById(userIdAccepted).orElseThrow();
+
+        //Tìm Blog theo Id
+        BlogEntity blog = blogRepository.findById(blogId).orElseThrow();
+
+        //Duyệt qua danh sách các Request được gửi lên, theo id Blog
+        List<RequestEntity> listRequest = requestRepository.findAllByIdBlog(blogId);
+
+        //Duyệt qua từng request gửi lên theo id bài Blog, lấy Id của từng người gửi request.
+        for(RequestEntity userRequest: listRequest){
+            //Tạo ra mỗi notification mới sau mỗi lần lặp
+            UserNotificationEntity userNotificationEntity = modelMapperConfig.modelMapper().map(userNotificationDTO, UserNotificationEntity.class);
+
+            //Cập nhật lại trạng thái để Hidden đi
+            userRequest.setStatus(false);
+
+            //Set lại trạng thái để ẩn bài Blog đi
+            blog.setStatus(false);
+
+            //Lấy id user gửi Request
+             int userId = userRequest.getUserEntity_Request().getId();
+
+
+            //Gửi message: accepted <--> Còn không thì gửi denied
+            userNotificationEntity.setMessage(userId == userIdRequest ? accepted : denied);
+
+            //Người gửi
+            userNotificationEntity.setUserEntity_UserNotification(userAccepted);
+
+            //Lấy user IdReceiver
+            userNotificationEntity.setIdReceiver(userId);
+
+            Date createDateTime = new Date();
+            userNotificationEntity.setCreateDate(createDateTime);
+
+            RequestEntity request = requestRepository.findById(requestId).orElseThrow();
+            userNotificationEntity.setRequestEntity(request);
+
+            userNotificationRepository.save(userNotificationEntity);
+        }
+
+
     }
 }

@@ -261,7 +261,7 @@
                     <div class="blog-img">
                         <img class="img-fluid" th:src="@{'../../../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
-                            <a style="margin-right: 12px;" th:text="${#numbers.formatCurrency(blog.price)}"></a>
+                            <a th:if="${blog.blogTypeId != 2}" style="margin-right: 12px;" th:text="${blog.price} + '$'"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>

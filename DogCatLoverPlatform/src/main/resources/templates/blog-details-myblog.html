@@ -57,9 +57,6 @@
             margin: 15px 0;
         }
 
-        .confirmation-message {
-            display: none;
-        }
 
     </style>
 
@@ -302,7 +299,7 @@
                     <div class="post-thum">
                         <img class="img-fluid" th:src="@{'../../../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
-                            <a style="margin-right: 12px;" th:text="${#numbers.formatCurrency(blog.price)}"></a>
+                            <a th:if="${blog.blogTypeId != 2}" style="margin-right: 12px;" th:text="${blog.price} + '$'"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>
@@ -341,9 +338,9 @@
                             <input type="hidden" id="blogId" name="blogId" th:value="${blog.id}">
 
                             <span class="popup">
-                                <h2>Bạn muốn gửi một yêu cầu giao dịch?</h2>
-                                <button type="submit" class="btn btn-primary" onclick="confirmTransaction()">Xác nhận</button>
-                                <a style="cursor: pointer; font-weight: normal; font-size: 25px;" onclick="hidePopup()">Hủy</a>
+                                <h2>Do you want to send a request?</h2>
+                                <button type="submit" class="btn btn-primary" onclick="confirmTransaction()">Yes</button>
+                                <a style="cursor: pointer; font-weight: normal; font-size: 25px;" onclick="hidePopup()">Cancel</a>
                             </span>
                         </form>
 
