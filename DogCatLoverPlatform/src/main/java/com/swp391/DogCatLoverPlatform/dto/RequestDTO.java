@@ -16,8 +16,10 @@ public class RequestDTO {
     private int id;
     private Date createDate;
     private String userName;
+    private String userId;
     private String blogTitle;
     private String blogTypeName;
     private int blogId;
+
 
 }

@@ -83,7 +83,7 @@
                 <li><a th:href="@{/index/about}">About</a></li>
 
                 <li class="menu-item-has-children">
-                    <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
                         <li><a href="service-details.html">Daycare </a></li>
                         <li><a href="service-details.html">Grooming</a></li>
@@ -252,7 +252,7 @@
                                             </div>
                                             <input onchange="loadTime()" type="date" class="form-control" id="chooseDate">
                                             <div class="appointment-inner">
-                                                <input id="id_blog" th:value="${service.id_blog}">
+                                                <input type="hidden" id="id_blog" th:value="${service.id_blog}">
                                                 <h3 class="choosetime">Chọn giờ</h3>
                                                 <div class="group-time-items" id="listTime">
                                                     <!--								<span class="time-item active">-->

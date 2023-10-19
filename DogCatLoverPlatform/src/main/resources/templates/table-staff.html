@@ -167,14 +167,16 @@
                                     <tbody>
                                     <tr th:each="blog : ${pendingBlogs}">
                                         <td th:text="${blog.title}"></td>
-                                        <td > <img class="img-fluid" style="object-fit: contain" th:src="@{'../../images/blog/' + ${blog.image}}" alt></td>
-                                        <td>Dog</td>
+
+                                        <td > <img class="img-fluid" style="object-fit: contain" th:src="@{'../images/blog/' + ${blog.image}}" alt></td>
+                                        <td th:text="${blog.petType}"></td>
+
                                         <td>England</td>
 
                                 <!-- Blog Content-->
                                         <td>
                                             <span th:id="${'blogContent-' + blog.id}"
-                                                th:text="${#strings.length(blog.content) > 50 ? blog.content.substring(0, 50) + '...' : blog.content}"></span>
+                                                th:text="${#strings.length(blog.content) > 30 ? blog.content.substring(0, 30) + '...' : blog.content}"></span>
                                             <span type="button" data-toggle="modal" data-target="#exampleModalLong" style="color: red; font-weight: bold;">Read more</span>
                                             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
@@ -196,7 +198,7 @@
                                             </div>
                                         </td>
 
-                                        <td th:text="${#numbers.formatCurrency(blog.price)}"></td>
+                                        <td th:text="${blog.price} + '$'"></td>
                                         <td th:text="${blog.userName}"></td>
                                         <td th:text="${blog.blogTypeName}"></td>
                                         <td>

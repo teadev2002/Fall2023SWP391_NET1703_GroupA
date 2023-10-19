@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface ServiceRepository extends JpaRepository<ServiceEntity, Integer> {
     @Query("SELECT s FROM service s  JOIN blog b ON s.blog_service = b.id WHERE b.confirm = :confirm")
-    List<ServiceEntity> findByConfirm( Boolean confirm);
+    List<ServiceEntity> findByConfirm(Boolean confirm);
 }

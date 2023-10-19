@@ -13,31 +13,39 @@ import java.util.Date;
 @AllArgsConstructor
 public class BlogDTO {
 
+
+    private int id;
     private String title;
     private String content;
     private String image;
     private Date createDate;
-    private String userName;
-    private String blogTypeName;
-    private int id;
-    private int blogTypeId;
-    private int userId;
     private double price;
     private boolean status;
     private boolean pet_type;
-    private UserDTO userDTO;
-    private String emailUserCreate;
     private Boolean confirm;
     private String reason;
     private String schedule;
 
 
-    private PetCategoryDTO petCategoryDTO;
-    private String petName;
-    private String breed;
-    private int age;
-    private String color;
-    private double weight;
+    private UserDTO userDTO;
+    private String userName;
+    private int userId;
+    private String emailUserCreate;
 
+    private BlogTypeDTO blogTypeDTO;
+    private String blogTypeName;
+    private int blogTypeId;
+
+    private PetTypeDTO petTypeDTO;
+    private int petTypeId;
+    private String petType;
+
+
+
+
+
+
+
+    private PetCategoryDTO petCategory; // Change the property name to 'petCategory'
 
 }

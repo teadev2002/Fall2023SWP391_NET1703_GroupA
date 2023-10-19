@@ -93,9 +93,9 @@
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
                 <div class="contact-number" style="display: flex;">
-                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
                     &nbsp; &nbsp;<img src="../../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}" >Đăng xuất</a></span>
+                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}">Đăng xuất</a></span>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
                 <li><a th:href="@{/index/about}">About</a></li>
 
                 <li class="menu-item-has-children">
-                    <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
                         <li><a href="service-details.html">Daycare </a></li>
                         <li><a href="service-details.html">Grooming</a></li>
@@ -276,7 +276,8 @@
                     <div class="post-thum">
                         <img class="img-fluid" th:src="@{'../../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
-                            <a style="margin-right: 12px;" th:text="${#numbers.formatCurrency(blog.price)}"></a>
+                            <a th:if="${blog.blogTypeId != 2}" style="margin-right: 12px;"
+                               th:text="${blog.price} + '$'"></a>
                             <a th:text="${blog.blogTypeName}"></a>-->
                         </div>
                     </div>
@@ -291,21 +292,31 @@
                     <h2 class="post-title">
                         <a th:text="${blog.title}"></a>
 
-                        <!--Icon trao đổi-->
-                        <a th:if="${user == null}" onclick="showPopup()"
-                           style="cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="0.5em"
-                                 viewBox="0 0 448 512">
-                                <path d="M438.6 150.6c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 96 32 96C14.3 96 0 110.3 0 128s14.3 32 32 32l306.7 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96zm-333.3 352c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 416 416 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96z"/>
-                            </svg>
-                        </a>
+                        <span th:if="${user == null}">
+                            <a th:if="${blog.blogTypeId == 2}" onclick="showPopup()" style="cursor: pointer;">
+                                <!-- Icon Gift -->
+                                <svg xmlns="http://www.w3.org/2000/svg" height="0.5em"
+                                     viewBox="0 0 448 512">
+                                   <path d="M438.6 150.6c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 96 32 96C14.3 96 0 110.3 0 128s14.3 32 32 32l306.7 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96zm-333.3 352c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 416 416 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96z"/>
+                                </svg>
+                            </a>
+
+                            <a th:if="${blog.blogTypeId == 1}" onclick="showPopup()" style="cursor: pointer;">
+                                <!-- Icon Sell (Exchange) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" height="0.5em"
+                                     viewBox="0 0 576 512">
+                                <path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"/>
+                                </svg>
+                            </a>
+                        </span>
 
                         <span class="popup">
                             <h5>Có vẻ như bạn chưa đăng nhập, bạn có muốn chuyển hướng tới trang đăng nhập?</h5>
                             <button type="button" class="btn btn-primary"
                                     onclick="confirmAndRedirect()">Xác nhận
                             </button> &nbsp;
-                            <a style="cursor: pointer; font-weight: normal; font-size: 16px;" onclick="hidePopup()">Hủy</a>
+                            <a style="cursor: pointer; font-weight: normal; font-size: 16px;"
+                               onclick="hidePopup()">Hủy</a>
                         </span>
 
 
@@ -366,7 +377,8 @@
                                             <form th:action="@{/blog/delete_comment}" method="post">
                                                 <input type="hidden" name="commentId" th:value="${comments.id}">
                                                 <input type="hidden" name="blogId" th:value="${blog.id}">
-                                                <button th:if="${user!=null and user.id == blog.userId}" style="height: 0px;"
+                                                <button th:if="${user!=null and user.id == blog.userId}"
+                                                        style="height: 0px;"
                                                         type="submit">
                                                     <svg id="svg1" xmlns="http://www.w3.org/2000/svg" height="1em"
                                                          viewBox="0 0 512 512">
@@ -390,7 +402,6 @@
                         <div class="comments-title">
                             <h2>Leave a Reply</h2>
                         </div>
-
 
 
                         <form th:action="@{/blog/create_comment}" th:object="${comment}" method="post">
@@ -460,9 +471,11 @@
                         </div>
 
                         <!-- Newest Blog -->
-                        <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
-                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
-                                <div class="wi sidebarImage" >
+                        <div class="recent-post-wraper" style="padding-top: 0px;"
+                             th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user == null}" class="widget-cnt"
+                                 th:classappend="${iterStat.index < 2} ? 'mb-25' : ''">
+                                <div class="wi sidebarImage">
                                     <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img
                                             th:src="@{'../../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
@@ -476,14 +489,17 @@
                             </div>
                         </div>
 
-                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
-                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
-                                <div class="wi sidebarImage" >
+                        <div class="recent-post-wraper" style="padding-top: 0px;"
+                             th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user != null}" class="widget-cnt"
+                                 th:classappend="${iterStat.index < 2} ? 'mb-25' : ''">
+                                <div class="wi sidebarImage">
                                     <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"><img
                                             th:src="@{'../../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}" th:text="${blog.createDate}"></a>
+                                    <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"
+                                       th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"
                                            th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>

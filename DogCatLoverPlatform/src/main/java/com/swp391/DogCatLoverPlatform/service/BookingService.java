@@ -70,10 +70,11 @@ public class BookingService {
             bookingDTO.setId(booking.getId());
             bookingDTO.setBookingDate(booking.getBookingDate());
             bookingDTO.setBookingTime(booking.getBookingTime());
-            bookingDTO.setTotal_price(booking.getTotal_price());
+            bookingDTO.setTotal_price(booking.getBlogEntity_BookingEntity().getPrice());
             bookingDTO.setPaying_method(booking.getPaying_method());
             bookingDTO.setBlogDTO(blogDTO);
             bookingDTO.setUserDTO(userDTO);
+            bookingDTO.setStatus(booking.isStatus());
             bookingDTOList.add(bookingDTO);
         }
         return bookingDTOList;
@@ -97,5 +98,17 @@ public class BookingService {
             bookingDTOList.add(bookingDTO);
         }
         return bookingDTOList;
+    }
+
+    public void updateStatus(int id_user) {
+        List<BookingDTO> list = findByUserBooking(id_user);
+        for(BookingDTO dto : list){
+            bookingEntityRepository.updateStatus(dto.getId());
+        }
+
+    }
+
+    public void deleteById(int id_booking) {
+        bookingEntityRepository.deleteById(id_booking);
     }
 }
