@@ -114,7 +114,7 @@
 <div class="row">
   <div class="col-75">
     <div class="container">
-      <form method="post"  action="/pay">
+      <form method="post"  action="/paymethod/pay">
         <div class="col-50">
           <h3>Payment</h3>
           <label>Accepted Cards</label>
@@ -139,9 +139,10 @@
 
         <input type="submit" value="Continue to checkout" class="btn">
       </form>
+
     </div>
   </div>
-  <div class="col-25">
+  <input type="submit" value="Continue to checkout"  id="btn-pay">
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
       <p><a href="#">Product 1</a> <span class="price">$1</span></p>
@@ -153,6 +154,43 @@
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Find the "btn-pay" element by its ID
+    var btnPay = document.getElementById("btn-pay");
+    var price = 20; // Giá trị bạn muốn truyền
+    var currency = "USD"; // Giá trị bạn muốn truyền
+    var method = "PAYPAL"; // Giá trị bạn muốn truyền
+    var intent = "sale"; // Giá trị bạn muốn truyền
+    var description = "test"; // Giá trị bạn muốn truyền
+    // Add a click event listener to the button
+    btnPay.addEventListener("click", function () {
+      // Bạn có thể gán giá trị từ các phần tử HTML vào biến JavaScript
 
+
+// Sử dụng jQuery để thực hiện AJAX POST request
+      $.ajax({
+        url: "http://localhost:8080/paymethod/pay",
+        method: "POST",
+        data: {
+          price: price,
+          currency: currency,
+          method: method,
+          intent: intent,
+          description: description
+        },
+        success: function (response) {
+          // Xử lý response từ server nếu cần
+          console.log("Yêu cầu thành công:", response);
+          // Ví dụ: Redirect hoặc hiển thị thông báo
+        },
+        error: function (xhr, status, error) {
+          // Xử lý lỗi nếu có
+          console.error("Yêu cầu thất bại:", status, error);
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>

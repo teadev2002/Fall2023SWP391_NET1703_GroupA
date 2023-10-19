@@ -56,5 +56,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity_BookingEntity")
     List<BookingEntity> listBooking_UserEntity ;
 
+    @OneToMany(mappedBy = "userEntity_Request")
+    List<RequestEntity> listRequest_UserEntity ;
 
 }

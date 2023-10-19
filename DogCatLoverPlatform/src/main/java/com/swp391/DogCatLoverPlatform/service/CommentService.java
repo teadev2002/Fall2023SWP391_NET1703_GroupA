@@ -1,20 +1,15 @@
 package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
-import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
 import com.swp391.DogCatLoverPlatform.dto.CommentDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
-import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import com.swp391.DogCatLoverPlatform.entity.CommentEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +20,7 @@ public class CommentService {
 
     @Autowired
     private ModelMapperConfig modelMapperConfig;
+
 
     public List<CommentDTO> getCommentsByBlogId(int blogId) {
         List<CommentEntity> commentEntities = commentRepository.findCommentsByBlogId(blogId);
@@ -39,6 +35,20 @@ public class CommentService {
 
         return commentDTOs;
     }
+
+
+
+//    public List<CommentDTO> getCommentsByUserId(int userId, int blogId){
+//        List<CommentEntity> commentEntities = commentRepository.findCommentsRequest(userId, blogId);
+//        List<CommentDTO> commentRequest = new ArrayList<>();
+//
+//        for(CommentEntity commentEntity : commentEntities){
+//            CommentDTO commentDTO = modelMapperConfig.modelMapper().map(commentEntity, CommentDTO.class);
+//            commentRequest.add(commentDTO);
+//        }
+//
+//        return commentRequest;
+//    }
 
     public CommentDTO createComment(CommentDTO commentDTO, String description, int id_blog, int id_user) {
         CommentEntity commentEntity = modelMapperConfig.modelMapper().map(commentDTO, CommentEntity.class);

@@ -13,22 +13,22 @@
     <meta name="author" content="ThemeSelect">
 
     <title>Staff - Pending Blogs</title>
-    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
+    <link rel="icon" href="../../images/sm-logo.svg" type="image/gif" sizes="20x20">
     <link rel="shortcut icon" type="image/x-icon"
           href="https://demos.themeelection.com/chameleon-free-bootstrap-admin-template/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700"
           rel="stylesheet">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link th:href="@{../maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{../../maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css}" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" th:href="@{../css/vendors.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../vendors/css/forms/toggle/switchery.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../css/plugins/forms/switch.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../css/core/colors/palette-switch.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../css/app-lite.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../css/core/menu/menu-types/vertical-menu.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../css/core/colors/palette-gradient.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/vendors.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../vendors/css/forms/toggle/switchery.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/plugins/forms/switch.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/core/colors/palette-switch.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/app-lite.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/core/menu/menu-types/vertical-menu.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/core/colors/palette-gradient.css}">
 
 </head>
 <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click"
@@ -116,7 +116,7 @@
         <ul class="nav navbar-nav flex-row justify-content-center" style="background-color: black;">
             <li class="nav-item" style="margin-top: 20px;"><a th:href="@{/index/home}"><img alt="image"
                                                                                             class="img-fluid"
-                                                                                            src="../images/header1-logo.svg"></a>
+                                                                                            src="../../images/header1-logo.svg"></a>
             </li>
         </ul>
     </div>
@@ -167,8 +167,10 @@
                                     <tbody>
                                     <tr th:each="blog : ${pendingBlogs}">
                                         <td th:text="${blog.title}"></td>
+
                                         <td > <img class="img-fluid" style="object-fit: contain" th:src="@{'../images/blog/' + ${blog.image}}" alt></td>
                                         <td th:text="${blog.petType}"></td>
+
                                         <td>England</td>
 
                                 <!-- Blog Content-->
@@ -203,7 +205,7 @@
                                             <form th:action="@{'/blog/staff/process?blogId=' + ${blog.id}}" method="post">
                                                 <button class="btn btn-primary" type="submit" name="action" value="approve">Approve</button>
                                                 <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
-                                                <input type="text" name="reason" placeholder="Enter Notification" required/> <!--th:if="${#strings.isEmpty(blog.reason)}"-->
+                                                <input type="text" name="reason" placeholder="Enter Notification" required/>
                                             </form>
 
                                         </td>

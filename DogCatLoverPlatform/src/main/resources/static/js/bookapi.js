@@ -76,7 +76,7 @@ async function createAppointment(){
     });
     if(response.status < 300){
         alert("Thành công!")
-        window.location.reload()
+        window.location.href = '/service/cart'
     }
     if(response.status === 417 || response.status == 417){
         var logErr = await response.json();
