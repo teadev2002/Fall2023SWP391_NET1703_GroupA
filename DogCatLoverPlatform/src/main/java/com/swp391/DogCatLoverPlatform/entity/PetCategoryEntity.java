@@ -34,7 +34,4 @@ public class PetCategoryEntity {
     private BlogEntity blogEntity;
 
 
-
-
-
 }

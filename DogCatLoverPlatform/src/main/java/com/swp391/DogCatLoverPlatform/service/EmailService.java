@@ -20,14 +20,4 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
-
-    public void sendInvoiceEmail(String to, String subject, String content) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("mintampro4545@gmail.com"); // Update with your email
-        message.setTo(to);
-        message.setSubject("Invoice Payment");
-        message.setText("this is invoice" +content);
-
-        javaMailSender.send(message);
-    }
 }

@@ -14445,6 +14445,34 @@ footer.style2 .social-area ul li:hover a i {
     margin-top: 25px
 }
 
+/*Code thêm*/
+.previewImage {
+    height: 110px;
+    width: 342px;
+    border: 1px solid gray;
+    margin-bottom: 12px;
+    display: none;
+    position: relative;
+    margin-left: 50px;
+}
+
+.previewImage img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebarImage {
+    height: 85px;
+    width: 105px;
+}
+
+.sidebarImage img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
 .lbin{
     margin-bottom: 7px;
 }
@@ -14537,34 +14565,7 @@ footer.style2 .social-area ul li:hover a i {
 .floatr{
     text-align: right !important;
 }
-.sidebarImage {
-    height: 85px;
-    width: 105px;
-}
 
-.sidebarImage img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-
-<<<<<<< HEAD
-.previewImage {
-    height: 110px;
-    width: 342px;
-    border: 1px solid gray;
-    margin-bottom: 12px;
-    display: none;
-    position: relative;
-    margin-left: 50px;
-}
-
-.previewImage img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-=======
 /*Notification*/
 .button__notification {
     color: white;
@@ -14585,4 +14586,3 @@ footer.style2 .social-area ul li:hover a i {
     right: 0;
 }
 
->>>>>>> a7cbc366e1aa05ffc792959e5e3c6e1bf9e484d1

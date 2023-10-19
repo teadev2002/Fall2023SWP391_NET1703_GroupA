@@ -4,7 +4,7 @@ import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.BookingEntity;
 import com.swp391.DogCatLoverPlatform.exception.MessageException;
-import com.swp391.DogCatLoverPlatform.repository.BookingRepository;
+import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
 import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +45,19 @@ public class BookingController {
     }
 
     @Autowired
-    private BookingRepository bookingEntityRepository;
+    private BookingEntityRepository bookingEntityRepository;
 
     @GetMapping("/booking-by-date-and-blog")
     public ResponseEntity<?> findByDateAndBlog(@RequestParam("date") Date date, @RequestParam("id") Integer idBlog){
         List<BookingDTO> dtos = bookingService.getByDateAndIdblog(date,idBlog);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/delete")
+    public String deleteBooking (HttpServletRequest request){
+        int id_booking = Integer.parseInt(request.getParameter("id_booking"));
+        bookingService.deleteById(id_booking);
+        return "redirect:/service/cart";
     }
 
     @PostMapping("/create-booking")

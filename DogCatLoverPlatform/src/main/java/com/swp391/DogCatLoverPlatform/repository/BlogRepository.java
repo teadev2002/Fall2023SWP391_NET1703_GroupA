@@ -14,15 +14,16 @@ import java.util.List;
 public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
 
         List<BlogEntity> findAll();
-        List<BlogEntity> findFirst3ByConfirmOrderByCreateDateDesc(boolean confirm);
-        Page<BlogEntity> findByBlogTypeEntityAndConfirm(BlogTypeEntity blogTypeEntity, boolean confirm, Pageable pageable);
-        Page<BlogEntity> findByTitleContainingAndConfirm(String title, boolean confirm, Pageable pageable);
+        List<BlogEntity> findFirst3ByConfirmAndStatusTrueOrderByCreateDateDesc(boolean confirm);
+        Page<BlogEntity> findByBlogTypeEntityAndConfirmAndStatusTrue(BlogTypeEntity blogTypeEntity, boolean confirm, Pageable pageable);
+        Page<BlogEntity> findByTitleContainingAndConfirmAndStatusTrue(String title, boolean confirm, Pageable pageable);
 
 
-        @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm")
+        @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm AND b.status = true")
         Page<BlogEntity> findByUserEntityIdAndConfirm(int userId, boolean confirm, Pageable pageable);
 
-        List<BlogEntity> findByConfirm(Boolean confirm);
-        Page<BlogEntity> findByConfirm(boolean confirm, Pageable pageable);
+        List<BlogEntity> findByConfirmAndStatusTrue(Boolean confirm);
+        Page<BlogEntity> findByConfirmAndStatusTrue(boolean confirm, Pageable pageable);
+
 
 }

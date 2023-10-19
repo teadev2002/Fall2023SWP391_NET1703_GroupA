@@ -160,7 +160,7 @@
                 <li><a th:href="@{/index/about}">About</a></li>
 
                 <li class="menu-item-has-children">
-                    <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
                         <li><a href="service-details.html">Daycare </a></li>
                         <li><a href="service-details.html">Grooming</a></li>
@@ -306,13 +306,13 @@
             </div>
 
             <!--Pet type-->
+
             <div class="form-check">
                 <select id="" name="idPetType" class="form-control" onchange="togglePriceInput()">
                     <option th:each="petTypes : ${petTypes}" th:value="${petTypes.id}"
                             th:text="${petTypes.type}"></option>
                 </select>
             </div>
-
 
 
             <div class="previewImage"><img id="previewImage"></div>
@@ -352,6 +352,7 @@
                 <input class="form-control" type="text" id="price" name="price" th:field="*{price}"
                        placeholder="Set price..." required>
             </div>
+
 
             <!--Pet category-->
             <div class="mb-3 input-group">
@@ -405,12 +406,23 @@
             </div>
 
 
+<!--            <div class="mb-3 input-group">-->
+<!--                <div class="input-group-prepend input-group-addon">-->
+<!--            <span class="input-group-text">-->
+<!--                <i class="fas fa-weight" style="font-size: 12px;"></i>-->
+<!--            </span>-->
+<!--                </div>-->
+<!--                <input class="form-control" type="number" id="petCategory.weight" name="petCategory.weight"-->
+<!--                       placeholder="Pet Weight" required>-->
+<!--            </div>-->
+
+
             <!-- Đặt cả nút "Submit" và nút "Quay lại" ở giữa -->
             <div class="button-container">
                 <div style="margin-right: 12px;">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                <a class="btn btn-primary" href="/blog/view">Quay lại</a>
+                <a class="btn btn-primary" href="/blog/view">Back</a>
             </div>
         </form>
 

@@ -4,6 +4,7 @@ import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.dto.ServiceDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.entity.ServiceEntity;
+import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.ServiceService;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @Controller

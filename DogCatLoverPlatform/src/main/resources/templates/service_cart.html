@@ -182,6 +182,7 @@
           <th>Booking date</th>
           <th class="floatr">Tổng tiền</th>
           <th class="floatr">Blog name</th>
+          <th class="floatr"></th>
         </tr>
         </thead>
         <tbody th:each="booking : ${listBooking}">
@@ -190,6 +191,7 @@
           <td th:text="${booking.bookingDate}+', '+${booking.bookingTime}"></td>
           <td class="floatr"><span class="yls" th:text="${#numbers.formatDecimal(booking.total_price, 0, 'COMMA', 0, 'POINT')}"></span></td>
           <td class="floatr"><span class="span_" th:text="${booking.blogDTO.title}"></span></td>
+          <td class="floatr"><a th:href="@{'/booking/delete?id_booking='+${booking.id}}">DELETE</a></td>
         </tr>
         </tbody>
       </table>
@@ -208,11 +210,11 @@
           <i class="fa fa-cc-discover" style="color:orange;"></i>
         </div>
         <label for="price">Total</label>
-        <input type="text" id="price" name="price" th:value="${totalPrice}">
+        <input type="text" id="price" name="price" th:value="${totalPrice}" readonly>
         <label for="currency">Currency</label>
         <input type="text" id="currency" name="currency" placeholder="Enter Currency" value="USD">
         <label for="method">Payment Method</label>
-        <input type="text" id="method" name="method" placeholder="Payment Method">
+        <input type="text" id="method" name="method" placeholder="Payment Method" value="PAYPAL">
         <label for="intent">Intent</label>
         <input type="text" id="intent" name="intent" value="sale">
         <label for="description">Payment Description</label>
