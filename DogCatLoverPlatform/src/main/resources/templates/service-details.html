@@ -248,7 +248,7 @@
                                             </div>
                                             <input onchange="loadTime()" type="date" class="form-control" id="chooseDate">
                                             <div class="appointment-inner">
-                                                <input id="id_blog" th:value="${service.id_blog}">
+                                                <input type="hidden" id="id_blog" th:value="${service.id_blog}">
                                                 <h3 class="choosetime">Chọn giờ</h3>
                                                 <div class="group-time-items" id="listTime">
                                                     <!--								<span class="time-item active">-->

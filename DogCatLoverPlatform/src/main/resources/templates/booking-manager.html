@@ -261,7 +261,11 @@
                         <td class="floatr" th:text="${booking.blogDTO.createDate}"></td>
                         <td th:text="${booking.bookingDate}+', '+${booking.bookingTime}"></td>
                         <td class="floatr"><span class="yls" th:text="${#numbers.formatDecimal(booking.total_price, 0, 'COMMA', 0, 'POINT')}"></span></td>
-                        <td><span class="span_pending" th:text="${booking.paying_method}"></span></td>
+                        <td>
+                           <!-- <span class="span_pending" th:text="${booking.status}"></span>-->
+                            <span  class="span_pending" th:if="${booking.status == true}">Đã thanh toán</span>
+                            <span  class="span_pending" th:if="${booking.status == false}">Chưa thanh toán</span>
+                        </td>
                         <td class="floatr"><span class="span_" th:text="${booking.blogDTO.title}"></span></td>
                         <td th:text="${booking.userDTO.email}"></td>
                     </tr>

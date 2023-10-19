@@ -49,10 +49,10 @@ public class ServiceService {
     }
 
     public List<ServiceDTO> getAllService(){
-        List<ServiceEntity> serviceEntityList = serviceRepository.findAll();
+        List<ServiceEntity> serviceEntityList = serviceRepository.findByConfirm(true);
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
         for(ServiceEntity s : serviceEntityList){
-            if(s.getBlog_service().getConfirm().equals(true)) {
+            if(s.getBlog_service().getConfirm().equals(true) && s.getBlog_service().getConfirm() != null) {
                 ServiceDTO serviceDTO = new ServiceDTO();
                 serviceDTO.setUserName(s.getBlog_service().getUserEntity().getName());
                 serviceDTO.setEmailUserCreate(s.getBlog_service().getUserEntity().getEmail());

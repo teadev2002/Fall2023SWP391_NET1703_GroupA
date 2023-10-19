@@ -85,47 +85,7 @@ public class BlogService {
         BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
         return blogDTO;
     }
-   /* public BlogDTO createBlog(BlogDTO blogDTO, int blogTypeId, int petTypeId, int idUserCreated, PetCategoryDTO petCategoryDTO) {
-        BlogEntity blogEntity = modelMapperConfig.modelMapper().map(blogDTO, BlogEntity.class);
 
-        // Set the blog type
-        BlogTypeEntity blogTypeEntity = blogTypeRepository.findById(blogTypeId).orElseThrow();
-        blogEntity.setBlogTypeEntity(blogTypeEntity);
-
-        // Set the pet type
-        PetTypeEntity petTypeEntity = petTypeRepository.findById(petTypeId).orElseThrow();
-        blogEntity.setPetTypeEntity(petTypeEntity);
-
-        // Retrieve the UserEntity by ID
-        UserEntity userEntity = userRepository.findById(idUserCreated).orElseThrow();
-
-        // Set the confirm field to a suitable value (e.g., false)
-        blogEntity.setConfirm(false);
-
-        blogEntity.setStatus(true);
-
-        // Set the createDate field to the current date and time
-        blogEntity.setCreateDate(new Date());
-
-        // Map the userEntity to the blogEntity
-        blogEntity.setUserEntity(userEntity);
-
-        // Create a new PetCategoryEntity
-        PetCategoryEntity petCategoryEntity = modelMapperConfig.modelMapper().map(petCategoryDTO, PetCategoryEntity.class);
-
-        // Save the new PetCategoryEntity to the database
-        PetCategoryEntity savedPetCategoryEntity = petCategoryRepository.save(petCategoryEntity);
-        // Set the petCategoryEntity in the blogEntity
-        blogEntity.setPetCategoryEntity(savedPetCategoryEntity);
-
-        // Save the BlogEntity
-        BlogEntity savedBlogEntity = blogRepository.save(blogEntity);
-
-        // Map the saved BlogEntity back to a BlogDTO
-        BlogDTO createdBlog = modelMapperConfig.modelMapper().map(savedBlogEntity, BlogDTO.class);
-
-        return createdBlog;
-    }*/
 
     public BlogEntity createNewBlog(int blogType, int petType, String image, String title, String content, double price, String petName, String petBreed, int petAge, double petWeight, String petColor, int id_user_create) {
         BlogEntity blogEntity = new BlogEntity();
