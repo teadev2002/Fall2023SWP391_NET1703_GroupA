@@ -59,7 +59,7 @@ public class UserController {
         UserDTO user  = getUserIdFromCookie(req);
         model.addAttribute("user", user);
 
-        //Hiện số lượng list
+        //Hiện số lượng thông báo
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
@@ -90,6 +90,14 @@ public class UserController {
     public String about(Model model, HttpServletRequest req) {
         UserDTO user  = getUserIdFromCookie(req);
         model.addAttribute("user", user);
+
+        //Hiện số lượng thông báo
+        if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
         return "about";
     }
 

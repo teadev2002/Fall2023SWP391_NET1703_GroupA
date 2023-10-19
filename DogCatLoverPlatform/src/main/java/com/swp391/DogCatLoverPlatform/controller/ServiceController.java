@@ -1,9 +1,13 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
+import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.ServiceDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
 import com.swp391.DogCatLoverPlatform.entity.ServiceEntity;
+import com.swp391.DogCatLoverPlatform.service.RequestService;
 import com.swp391.DogCatLoverPlatform.service.ServiceService;
+import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,11 +29,28 @@ public class ServiceController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserNotificationService userNotificationService;
+
+    @Autowired
+    RequestService requestService;
 
     @GetMapping("/view")
-    public String viewAllService(Model model){
+    public String viewAllService(Model model, HttpServletRequest req){
         List<ServiceDTO>  serviceDTOList = serviceService.getAllService();
         model.addAttribute("listService",serviceDTOList);
+
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
+        //Hiện thông báo (trường hợp có)
+        if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
         return "service-standard";
     }
 
@@ -38,11 +59,23 @@ public class ServiceController {
         int id  = Integer.parseInt(request.getParameter("id"));
         ServiceDTO  serviceDTO = serviceService.getServiceDetail(id);
         model.addAttribute("service",serviceDTO);
+
+        UserDTO user  = getUserIdFromCookie(request);
+        model.addAttribute("user", user);
+
+        //Hiện thông báo (trường hợp có)
+        if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
         return "service-details";
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createService(HttpServletRequest request){
+    public ResponseEntity<?> createService(Model model, HttpServletRequest request){
         String image = request.getParameter("image");
         String Content = request.getParameter("content");
         int price = Integer.parseInt(request.getParameter("price"));
@@ -51,6 +84,17 @@ public class ServiceController {
         int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
 
         ServiceEntity serviceEntity = serviceService.createService(Content,price,title,userDTO.getId(),serviceCategory,image);
+
+        UserDTO user  = getUserIdFromCookie(request);
+        model.addAttribute("user", user);
+
+        //Hiện thông báo (trường hợp có)
+        if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
 
         return new ResponseEntity<>(serviceEntity, HttpStatus.OK);
     }

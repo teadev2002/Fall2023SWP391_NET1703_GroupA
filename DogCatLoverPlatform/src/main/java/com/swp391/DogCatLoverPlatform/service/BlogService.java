@@ -155,7 +155,7 @@ public class BlogService {
         Date date = new Date();
         blogEntity.setCreateDate(date);
         blogEntity.setConfirm(null);
-        blogEntity.setStatus(false);
+        blogEntity.setStatus(true);
         blogEntity.setContent(content);
         blogEntity.setImage(image);
         blogEntity.setPrice(price);
@@ -163,9 +163,6 @@ public class BlogService {
         blogRepository.save(blogEntity);
         return blogEntity ;
     }
-
-
-
 
 
 
