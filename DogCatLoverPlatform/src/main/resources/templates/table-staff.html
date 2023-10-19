@@ -167,8 +167,10 @@
                                     <tbody>
                                     <tr th:each="blog : ${pendingBlogs}">
                                         <td th:text="${blog.title}"></td>
-                                        <td> <img class="img-fluid" style="object-fit: contain" th:src="@{'../../images/blog/' + ${blog.image}}" alt></td>
-                                        <td>Dog</td>
+
+                                        <td > <img class="img-fluid" style="object-fit: contain" th:src="@{'../images/blog/' + ${blog.image}}" alt></td>
+                                        <td th:text="${blog.petType}"></td>
+
                                         <td>England</td>
 
                                 <!-- Blog Content-->

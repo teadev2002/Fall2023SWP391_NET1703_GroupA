@@ -3,10 +3,14 @@ package com.swp391.DogCatLoverPlatform.controller;
 import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
+import com.swp391.DogCatLoverPlatform.entity.*;
 import com.swp391.DogCatLoverPlatform.service.*;
 //import com.swp391.DogCatLoverPlatform.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +43,13 @@ public class BlogController {
 
     @Autowired
     BlogTypeService blogTypeService;
+
+    @Autowired
+    PetCategoryService petCategoryService;
+
+    @Autowired
+    PetTypeService petTypeService;
+
 
     @Autowired
     EmailService emailService;
@@ -343,6 +354,8 @@ public class BlogController {
     public String viewCreateForm(Model model, HttpServletRequest req) {
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
 
+        List<PetTypeEntity> listPettype = petTypeService.getAllPetType();
+
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
@@ -354,35 +367,31 @@ public class BlogController {
         model.addAttribute("user", user);
 
         model.addAttribute("blogTypes", listBlogType);
+        model.addAttribute("petTypes",listPettype);
         model.addAttribute("blog", new BlogDTO());
         return "create-blog-form";
     }
 
-    @PostMapping("/create")
-    public String createBlog(@ModelAttribute("blog") BlogDTO blogDTO, @RequestParam("blogTypeId") int blogTypeId, @RequestParam("file") MultipartFile file, HttpServletRequest req) throws IOException {
-        // Lưu hình ảnh vào cơ sở dữ liệu và lấy đường dẫn
-        String imagePath = blogService.saveImageAndReturnPath(file);
-        UserDTO user = getUserIdFromCookie(req);
-        blogDTO.setImage(imagePath);
 
-        // Đánh dấu bài viết là "đang chờ xét duyệt"
-        blogDTO.setConfirm(null);
+@PostMapping("/create")
+public String createNewBlog(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
+    int blogType = Integer.parseInt(request.getParameter("idBlogType"));
+    int petType = Integer.parseInt(request.getParameter("idPetType"));
+    String image = blogService.saveImageAndReturnPath(file);
+    String title = request.getParameter("title");
+    String content = request.getParameter("content");
+    double price = Double.parseDouble(request.getParameter("price"));
+    String petName = request.getParameter("petName");
+    String petBreed = request.getParameter("petBreed");
+    int petAge = Integer.parseInt(request.getParameter("petAge"));
+    double petWeight = Double.parseDouble(request.getParameter("petWeight"));
+    String petColor = request.getParameter("petColor");
+    UserDTO userDTO = getUserIdFromCookie(request);
+    BlogEntity blogEntity = blogService.createNewBlog(blogType,petType,image,title,content,price,petName,petBreed,petAge,petWeight,petColor,userDTO.getId());
 
-  /*      // Create a PetCategoryDTO based on the petCateId
 
-        // Check if petType is not null
-        if (petType != null) {
-            blogDTO.setPet_type(petType);
-        } else {
-            blogDTO.setPet_type(false); // For example, setting it to false as a default
-        }*/
-
-        blogService.createBlog(blogDTO, blogTypeId, user.getId());
-
-        // Chuyển hướng thành viên đến trang viewStaff
-        return "redirect:/blog/view";
-    }
-
+    return "redirect:/blog/view";
+}
 
 
 
@@ -544,21 +553,25 @@ public class BlogController {
     @GetMapping("/trash")
     public String viewBlogReject(Model model, @RequestParam(value = "updated", required = false) String updated) {
         List<BlogDTO> rejectBlog = blogService.getBlogsReject();
+        List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
+        List<PetTypeEntity> listPettype = petTypeService.getAllPetType();
         model.addAttribute("rejectBlog", rejectBlog);
+        model.addAttribute("blogTypes", listBlogType);
+        model.addAttribute("petTypes",listPettype);
         model.addAttribute("updated", updated);
         return "trash";
     }
 
-
     @PostMapping("/trash")
     public String updateAndResubmitOrDeleteBlog(
             @RequestParam("blogId") int blogId,
+            @RequestParam("blogTypeId") int blogTypeId,
             @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO,
             @RequestParam("action") String action) {
 
         if ("resubmit".equals(action)) {
             // Update the blog and set its confirmation status to null
-            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO);
+            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO, blogTypeId);
         } else if ("delete".equals(action)) {
             // Delete the blog
             blogService.deleteBlogById(blogId);

@@ -45,8 +45,6 @@ public class BlogEntity {
     @Column(name = "reason")
     private String reason;
 
-    @Column(name = "pet_type")
-    private boolean petType;
 
     @ManyToOne
     @JoinColumn(name="id_user_created")
@@ -58,6 +56,12 @@ public class BlogEntity {
     @JsonIgnore
     private BlogTypeEntity blogTypeEntity;
 
+    @ManyToOne
+    @JoinColumn(name="id_pet_type")
+    @JsonIgnore
+    private PetTypeEntity petTypeEntity;
+
+
     @OneToMany(mappedBy = "blogEntity_BookingEntity")
     @JsonIgnore
     List<BookingEntity> listBooking_BlogEntity;
@@ -66,16 +70,17 @@ public class BlogEntity {
     @JsonIgnore
     List<CommentEntity> listComment_BlogEntity ;
 
+
     @OneToMany(mappedBy = "blogEntity_Request")
     List<RequestEntity> listRequest_BlogEntity ;
 
-//    @OneToOne
-//    @JoinColumn(name = "pet_category_id")
-//    private PetCategoryEntity petCategoryEntity;
+    @OneToOne
+    @JoinColumn(name = "id_pet_category")
+    private PetCategoryEntity petCategoryEntity;
 
-/*    @OneToOne
-    @JoinColumn(name = "pet_category_id")
-    private PetCategoryEntity petCategoryEntity;*/
+
+
+
 
 
 
