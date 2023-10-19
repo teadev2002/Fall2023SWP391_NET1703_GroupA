@@ -17,6 +17,7 @@ public class PetCategoryEntity {
     @Column(name = "name")
     private String name;
 
+
     @Column(name = "breed")
     private String breed;
 
@@ -33,5 +34,7 @@ public class PetCategoryEntity {
     private BlogEntity blogEntity;
 
 
-    // Constructors, getters, and setters
+
+
+
 }

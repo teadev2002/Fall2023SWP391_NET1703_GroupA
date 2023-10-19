@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/service-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:10:49 GMT -->
 <head>
@@ -228,60 +228,76 @@
                 <div class="tab-content tab-content1" id="v-pills-tabContent">
                     <div class="tab-pane fade active show" id="v-pills-img1" role="tabpanel"
                          aria-labelledby="v-pills-img1-tab">
-                        <img class="img-fluid" src="../images/bg/card-big-01.png" alt>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-img2" role="tabpanel" aria-labelledby="v-pills-img2-tab">
-                        <img class="img-fluid" src="../images/bg/card-big-02.png" alt>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-img3" role="tabpanel" aria-labelledby="v-pills-img3-tab">
-                        <img class="img-fluid" src="../images/bg/card-big-03.png" alt>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-img4" role="tabpanel" aria-labelledby="v-pills-img4-tab">
-                        <img class="img-fluid" src="../images/bg/card-big-04.png" alt>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-img5" role="tabpanel" aria-labelledby="v-pills-img5-tab">
-                        <img class="img-fluid" src="../images/bg/card-big-05.png" alt>
+                        <img class="img-fluid" th:src="@{'../images/blog/' + ${service.image}}" alt>
                     </div>
                 </div>
+
             </div>
             <div class="col-lg-5">
                 <div class="services-datails-content">
                     <div class="banner-title">
-                        <h2>Day Care</h2>
+                        <h2 th:text="${service.title}"></h2>
                         <div class="currency">
-                            <h5>$50.00-$80.00</h5>
+                            <h5 th:text="${service.price}" ></h5>
                         </div>
                     </div>
                     <div class="service-area">
-                        <form>
+                        <div>
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="form-inner">
-                                        <label>Duration</label>
-                                        <select id="duration">
-                                            <option>Choose an option</option>
-                                            <option>Full Day (over 5 hrs)</option>
-                                            <option>Half Day (under 5 hrs)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-inner date">
-                                        <label>Date</label>
-                                        <input autocomplete="off" type="text" id="datepicker" placeholder="DD/MM/YYYY">
-                                    </div>
-                                </div>
-                                <div class="shop-quantity d-flex flex-wrap align-items-center justify-content-start mb-20">
-                                    <div class="quantity d-flex align-items-center">
-                                        <div class="quantity-nav nice-number d-flex align-items-center">
-                                            <input type="number" value="1" min="1">
+                                        <div class="single-widgets widget_egns_categoris mb-30">
+                                            <div class="widget-title">
+                                                <h3>Chọn ngày khám</h3>
+                                            </div>
+                                            <input onchange="loadTime()" type="date" class="form-control" id="chooseDate">
+                                            <div class="appointment-inner">
+                                                <input id="id_blog" th:value="${service.id_blog}">
+                                                <h3 class="choosetime">Chọn giờ</h3>
+                                                <div class="group-time-items" id="listTime">
+                                                    <!--								<span class="time-item active">-->
+                                                    <!--									08:00-->
+                                                    <!--								</span><span class="time-item">-->
+                                                    <!--									08:30-->
+                                                    <!--								</span><span class="time-item">-->
+                                                    <!--									09:00-->
+                                                    <!--								</span>-->
+                                                </div>
+                                                <p id="datecs"></p>
+                                                <span class="errors" id="timeerror">Appointment Time not blank(*)</span>
+                                                <br><button onclick="createAppointment()" class="btn btn-warning form-control primary-btn3">Đăng Ký</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <a href="cart.html" class="primary-btn3">Add to cart</a>
                                 </div>
-
+                                <!--                                <div class="col-lg-12">-->
+                                <!--                                    <div class="form-inner date">-->
+                                <!--                                        <label>Date</label>-->
+                                <!--                                        <input autocomplete="off" type="text" id="datepicker" placeholder="DD/MM/YYYY">-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="shop-quantity d-flex flex-wrap align-items-center justify-content-start mb-20">-->
+                                <!--                                    <div class="quantity d-flex align-items-center">-->
+                                <!--                                        <div class="quantity-nav nice-number d-flex align-items-center">-->
+                                <!--                                            <input type="number" value="1" min="1">-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                    <a href="cart.html" class="primary-btn3">Add to cart</a>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="pyment-method">-->
+                                <!--                                    <h6>Guaranted Safe Checkout</h6>-->
+                                <!--                                    <ul>-->
+                                <!--                                        <li><img src="../images/icon/visa2.svg" alt></li>-->
+                                <!--                                        <li><img src="../images/icon/amex.svg" alt></li>-->
+                                <!--                                        <li><img src="../images/icon/discover.svg" alt></li>-->
+                                <!--                                        <li><img src="../images/icon/mastercard.svg" alt></li>-->
+                                <!--                                        <li><img src="../images/icon/stripe.svg" alt></li>-->
+                                <!--                                        <li><img src="../images/icon/paypal.svg" alt></li>-->
+                                <!--                                        <li><img src="../images/icon/pay.svg" alt></li>-->
+                                <!--                                    </ul>-->
+                                <!--                                </div>-->
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -722,6 +738,8 @@
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/masonry.pkgd.min.js"></script>
 <script src="../js/main.js"></script>
+<script src="../../js/bookapi.js"></script>
+<script src="../js/bookapi.js"></script>
 </body>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/service-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:10:57 GMT -->
