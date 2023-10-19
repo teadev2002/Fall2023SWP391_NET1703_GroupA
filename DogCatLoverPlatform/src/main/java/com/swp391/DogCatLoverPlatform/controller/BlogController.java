@@ -53,9 +53,6 @@ public class BlogController {
                                   @RequestParam(name="blogId") int blogId,
                                   @ModelAttribute("request") UserNotificationDTO userNotificationDTO){
 
-        System.out.println(userIdAccepted);
-        System.out.println(userIdRequest);
-        System.out.println(requestId);
         requestService.acceptedRequest(userNotificationDTO, userIdRequest, userIdAccepted, requestId, blogId);
 
 

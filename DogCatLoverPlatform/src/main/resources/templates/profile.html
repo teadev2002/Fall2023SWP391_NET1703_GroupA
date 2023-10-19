@@ -81,7 +81,7 @@
                 <li><a th:href="@{/index/about}">About</a></li>
 
                 <li class="menu-item-has-children">
-                    <a href="#">Services</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
                         <li><a href="service-details.html">Daycare </a></li>
                         <li><a href="service-details.html">Grooming</a></li>
@@ -255,7 +255,7 @@
                     </div>
                     <div class="mt-5 text-center">
                         <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
-                        <button class="btn btn-primary profile-button" type="button"><a th:href="@{/index/home}"></a>Back</button>
+                        <a th:href="@{/index/home}"><button class="btn btn-primary profile-button" type="button">Back</button></a>
                     </div>
                 </form>
             </div>

@@ -109,7 +109,7 @@ public class RequestService {
             blog.setStatus(false);
 
             //Lấy id user gửi Request
-             int userId = userRequest.getUserEntity_Request().getId();
+            int userId = userRequest.getUserEntity_Request().getId();
 
 
             //Gửi message: accepted <--> Còn không thì gửi denied
