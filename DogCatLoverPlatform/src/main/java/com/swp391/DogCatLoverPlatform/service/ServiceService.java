@@ -1,12 +1,14 @@
 package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
+import com.swp391.DogCatLoverPlatform.dto.ServiceCategoryDTO;
 import com.swp391.DogCatLoverPlatform.dto.ServiceDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.ServiceCategoryEntity;
 import com.swp391.DogCatLoverPlatform.entity.ServiceEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
+import com.swp391.DogCatLoverPlatform.repository.ServiceCategoryRepository;
 import com.swp391.DogCatLoverPlatform.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,7 @@ public class ServiceService {
         Date date = new Date();
         blogEntity.setCreateDate(date);
         blogEntity.setConfirm(null);
-        blogEntity.setStatus(false);
+        blogEntity.setStatus(true);
         blogEntity.setContent(Content);
         blogEntity.setImage(image);
         blogEntity.setPrice(price);
@@ -85,6 +87,23 @@ public class ServiceService {
         serviceDTO.setId_blog(s.get().getBlog_service().getId());
         serviceDTO.setId(s.get().getId());
         return serviceDTO ;
+    }
+
+    @Autowired
+    ServiceCategoryRepository serviceCategoryRepository;
+
+    public List<ServiceCategoryDTO> getServiceCategoryEntityList(){
+        List<ServiceCategoryEntity> serviceCategoryEntityList = serviceCategoryRepository.findAll();
+        List<ServiceCategoryDTO> serviceCategoryDTOList = new ArrayList<>();
+
+        for (ServiceCategoryEntity s : serviceCategoryEntityList){
+            ServiceCategoryDTO serviceCategoryDTO = new ServiceCategoryDTO();
+            serviceCategoryDTO.setId(s.getId());
+            serviceCategoryDTO.setName(s.getName());
+
+            serviceCategoryDTOList.add(serviceCategoryDTO);
+        }
+        return  serviceCategoryDTOList;
     }
 
 

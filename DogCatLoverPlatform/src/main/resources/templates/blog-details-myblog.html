@@ -391,7 +391,17 @@
                         </form>
 
                         <!-- Form cho Sell (Exchange)-->
-                        <form method="post" action="" >
+                        <form method="post" action="/paymethod/paysell" >
+
+                            <input type="hidden" id="price" name="price" th:value="${blog.price}" readonly>
+
+                            <input type="hidden" id="currency" name="currency" placeholder="Enter Currency" value="USD">
+
+                            <input type="hidden" id="method" name="method" placeholder="Payment Method" value="PAYPAL">
+
+                            <input type="hidden" id="intent" name="intent" value="sale">
+
+                            <input type="hidden" id="description" name="description" value="sell" placeholder="Payment Description">
 
 
                             <span class="popupSell">

@@ -286,7 +286,7 @@
             </div>
 
             <div class="more-btn mt-2" th:if="${user != null}">
-              <form th:action="@{/service/detail/myblog}" method="get">
+              <form th:action="@{/service/detail}" method="get">
                 <input type="hidden" name="id" th:value="${service.id}">
                 <span><button type="submit">Read More</button></span>
               </form>

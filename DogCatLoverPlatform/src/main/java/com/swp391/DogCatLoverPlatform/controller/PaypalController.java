@@ -30,6 +30,8 @@ public class PaypalController {
     public static final String SUCCESS_URL = "/pay/success";
     public static final String CANCEL_URL = "/pay/cancel";
 
+    public static final String SUCCESSSELL_URL = "/paysell/success";
+
     @GetMapping("")
     public String home() {
         return "home";
@@ -39,8 +41,30 @@ public class PaypalController {
     public String payment(@ModelAttribute("order") Order order) {
         try {
             Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
+
                     order.getIntent(), order.getDescription(), "http://localhost:8080/paymethod" + CANCEL_URL,
                     "http://localhost:8080/paymethod" + SUCCESS_URL);
+
+            for(Links link:payment.getLinks()) {
+                if(link.getRel().equals("approval_url")) {
+                    return "redirect:"+link.getHref();
+                }
+            }
+
+        } catch (PayPalRESTException e) {
+
+            e.printStackTrace();
+        }
+        return "redirect:/service/cart";
+    }
+    @PostMapping("/paysell")
+    public String paymentSell(@ModelAttribute("order") Order order) {
+        try {
+            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
+
+                    order.getIntent(), order.getDescription(), "http://localhost:8080/paymethod" + CANCEL_URL,
+                    "http://localhost:8080/paymethod" + SUCCESSSELL_URL);
+
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
                     return "redirect:"+link.getHref();
@@ -67,6 +91,21 @@ public class PaypalController {
             if (payment.getState().equals("approved")) {
                 UserDTO userDTO = getUserIdFromCookie(request);
                 bookingService.updateStatus(userDTO.getId());
+                return "success";
+            }
+        } catch (PayPalRESTException e) {
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping(value = SUCCESSSELL_URL)
+    public String successPaySell(HttpServletRequest request, @RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+        try {
+            Payment payment = service.executePayment(paymentId, payerId);
+            System.out.println(payment.toJSON());
+            if (payment.getState().equals("approved")) {
+
                 return "success";
             }
         } catch (PayPalRESTException e) {

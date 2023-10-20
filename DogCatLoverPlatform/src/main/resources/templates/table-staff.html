@@ -169,7 +169,9 @@
                                         <td th:text="${blog.title}"></td>
 
                                         <td > <img class="img-fluid" style="object-fit: contain" th:src="@{'../images/blog/' + ${blog.image}}" alt></td>
-                                        <td th:text="${blog.petType}"></td>
+
+                                        <td th:if="${blog.petType  != null} " th:text="${blog.petType}"></td>
+                                        <td th:if="${blog.petType  == null} " > Service</td>
 
                                         <td>England</td>
 
@@ -200,7 +202,9 @@
 
                                         <td th:text="${blog.price} + '$'"></td>
                                         <td th:text="${blog.userName}"></td>
-                                        <td th:text="${blog.blogTypeName}"></td>
+
+                                        <td th:if="${blog.blogTypeName  != null} " th:text="${blog.blogTypeName}"></td>
+                                        <td th:if="${blog.blogTypeName  == null} " > Service</td>
                                         <td>
                                             <form th:action="@{'/blog/staff/process?blogId=' + ${blog.id}}" method="post">
                                                 <button class="btn btn-primary" type="submit" name="action" value="approve">Approve</button>

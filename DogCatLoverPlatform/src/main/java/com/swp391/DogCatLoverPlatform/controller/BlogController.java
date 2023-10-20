@@ -343,7 +343,6 @@ public class BlogController {
         return "update-blog-form";
     }
 
-
     @PostMapping("/{id}/edit")
     public String updateBlog(@PathVariable("id") int id, @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO) throws ParseException {
         blogService.updateBlog(id, blogUpdateDTO);
