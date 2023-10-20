@@ -236,6 +236,9 @@ public class BlogService {
         blogRepository.save(blogEntity);
     }
 
+    public void updateBlogToFalse(int idBlog){
+        blogRepository.updateStatus(idBlog);
+    }
 
 
 
