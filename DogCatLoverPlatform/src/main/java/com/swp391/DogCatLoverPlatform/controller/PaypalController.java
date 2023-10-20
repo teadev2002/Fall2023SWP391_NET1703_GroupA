@@ -2,6 +2,7 @@ package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.Order;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.PaypalService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
@@ -26,6 +27,9 @@ public class PaypalController {
     BookingService bookingService;
     @Autowired
     UserService userService;
+
+    @Autowired
+    BlogService blogService;
 
     public static final String SUCCESS_URL = "/pay/success";
     public static final String CANCEL_URL = "/pay/cancel";
@@ -62,8 +66,8 @@ public class PaypalController {
         try {
             Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
 
-                    order.getIntent(), order.getDescription(), "http://localhost:8080/paymethod" + CANCEL_URL,
-                    "http://localhost:8080/paymethod" + SUCCESSSELL_URL);
+                    order.getIntent(), order.getDescription(),"http://localhost:8080/paymethod" + CANCEL_URL,
+                    "http://localhost:8080/paymethod" + SUCCESSSELL_URL+"?idBlog="+order.getIdBlog());
 
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
@@ -103,9 +107,11 @@ public class PaypalController {
     public String successPaySell(HttpServletRequest request, @RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
         try {
             Payment payment = service.executePayment(paymentId, payerId);
+            int idBlog = Integer.parseInt(request.getParameter("idBlog"));
             System.out.println(payment.toJSON());
             if (payment.getState().equals("approved")) {
 
+                blogService.updateBlogToFalse(idBlog);
                 return "success";
             }
         } catch (PayPalRESTException e) {
