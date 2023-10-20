@@ -5,9 +5,21 @@ import com.swp391.DogCatLoverPlatform.dto.*;
 
 import com.swp391.DogCatLoverPlatform.entity.ServiceEntity;
 
+
 import com.swp391.DogCatLoverPlatform.service.*;
 
 import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
+
+
+import com.swp391.DogCatLoverPlatform.service.RequestService;
+
+import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
+import com.swp391.DogCatLoverPlatform.service.BlogService;
+import com.swp391.DogCatLoverPlatform.service.BookingService;
+
+import com.swp391.DogCatLoverPlatform.service.ServiceService;
+import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
+import com.swp391.DogCatLoverPlatform.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,19 +63,19 @@ public class ServiceController {
     public String viewAllService(Model model,
                                  @RequestParam(defaultValue = "1") int page,
                                  @RequestParam(defaultValue = "3") int size,
-                                 HttpServletRequest req){
+                                 HttpServletRequest req) {
 
 
         Page<ServiceDTO> serviceDTOList = serviceService.getAllService(page, size);
         model.addAttribute("totalPage", serviceDTOList.getTotalPages());
         model.addAttribute("currentPage", page);
-        model.addAttribute("listService",serviceDTOList);
+        model.addAttribute("listService", serviceDTOList);
 
-        UserDTO user  = getUserIdFromCookie(req);
+        UserDTO user = getUserIdFromCookie(req);
         model.addAttribute("user", user);
 
         //Hiện thông báo (trường hợp có)
-        if(user != null){
+        if (user != null) {
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -77,11 +89,11 @@ public class ServiceController {
     }
 
     @GetMapping("/detail/{id}")
-    public String viewDetailService(@PathVariable("id") int id,  Model model, HttpServletRequest request){
-        ServiceDTO  serviceDTO = serviceService.getServiceDetail(id);
-        model.addAttribute("service",serviceDTO);
+    public String viewDetailService(@PathVariable("id") int id, Model model, HttpServletRequest request) {
+        ServiceDTO serviceDTO = serviceService.getServiceDetail(id);
+        model.addAttribute("service", serviceDTO);
 
-        UserDTO user  = getUserIdFromCookie(request);
+        UserDTO user = getUserIdFromCookie(request);
         model.addAttribute("user", user);
 
         //Lấy comment by Blog Id
@@ -89,24 +101,32 @@ public class ServiceController {
         model.addAttribute("comments", comments);
 
         //Hiện thông báo (trường hợp có)
-        if(user != null){
+        if (user != null) {
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
-
-
-
         return "service-details";
     }
 
-    @PostMapping("/create")
 
-    public ResponseEntity<?> createService(Model model,@RequestParam("file")MultipartFile file, HttpServletRequest request) throws IOException {
+    @GetMapping("/create")
+    public String createService(Model model, HttpServletRequest req) {
+        List<ServiceCategoryDTO> listServiceCategory = serviceService.getServiceCategoryEntityList();
+        UserDTO user = getUserIdFromCookie(req);
+
+        model.addAttribute("user", user);
+        model.addAttribute("serviceCategories", listServiceCategory);
+        model.addAttribute("service", new ServiceDTO());
+
+        return "service-create-form";
+    }
+
+    @PostMapping("/create")
+    public String createService(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws IOException {
 
         String image = blogService.saveImageAndReturnPath(file);
-
         String Content = request.getParameter("content");
         int price = Integer.parseInt(request.getParameter("price"));
         String title = request.getParameter("title");
@@ -114,26 +134,27 @@ public class ServiceController {
         System.out.println(userDTO.getId());
         int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
 
-        ServiceEntity serviceEntity = serviceService.createService(Content,price,title,userDTO.getId(),serviceCategory,image);
+        serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image);
 
-        UserDTO user  = getUserIdFromCookie(request);
+        UserDTO user = getUserIdFromCookie(request);
         model.addAttribute("user", user);
 
+
         //Hiện thông báo (trường hợp có)
-        if(user != null){
+        if (user != null) {
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
 
-        return new ResponseEntity<>(serviceEntity, HttpStatus.OK);
+        return "redirect:/service/view";
     }
 
     @GetMapping("cart")
-    public String cart(HttpServletRequest request, Model model){
+    public String cart(HttpServletRequest request, Model model) {
         UserDTO userDTO = getUserIdFromCookie(request);
-        if(userDTO == null){
+        if (userDTO == null) {
             return "redirect:/index/login";
         }
         List<BookingDTO> list = bookingService.findByUserBooking(userDTO.getId());
@@ -165,3 +186,4 @@ public class ServiceController {
         return null;
     }
 }
+

@@ -308,8 +308,8 @@
 
             <!--Pet type-->
 
-            <div class="form-check">
-                <select id="" name="idPetType" class="form-control" onchange="togglePriceInput()">
+            <div class="form-check" style="margin-bottom: 25px; width: 370px; margin-left: 25px;">
+                <select id="" name="idPetType" class="form-control">
                     <option th:each="petTypes : ${petTypes}" th:value="${petTypes.id}"
                             th:text="${petTypes.type}"></option>
                 </select>

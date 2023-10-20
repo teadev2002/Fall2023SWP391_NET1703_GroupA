@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public interface ServiceRepository extends JpaRepository<ServiceEntity, Integer> {
+
     @Query(value = "SELECT s.*, b.title FROM service s  JOIN blog b ON s.id_blog = b.id WHERE b.confirm = :confirm", nativeQuery = true)
     Page<ServiceEntity> findByConfirm(Boolean confirm, Pageable pageable);
 
@@ -21,4 +22,5 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Integer>
             "ORDER BY b.create_date  DESC \n" +
             "LIMIT 3", nativeQuery = true)
     List<ServiceEntity> findFirst3OrderByCreateDateDesc();
+
 }
