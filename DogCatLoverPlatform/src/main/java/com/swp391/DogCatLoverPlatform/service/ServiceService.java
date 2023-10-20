@@ -1,5 +1,6 @@
 package com.swp391.DogCatLoverPlatform.service;
 
+import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
 import com.swp391.DogCatLoverPlatform.dto.ServiceDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
@@ -9,9 +10,11 @@ import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceService {
@@ -20,6 +23,9 @@ public class ServiceService {
     ServiceRepository serviceRepository;
     @Autowired
     BlogRepository blogRepository;
+
+    @Autowired
+    ModelMapperConfig modelMapperConfig;
 
     public ServiceEntity createService(String Content, int price, String title, int id_user, int serviceCategory, String image){
         ServiceEntity serviceEntity = new ServiceEntity();
@@ -48,12 +54,23 @@ public class ServiceService {
         return serviceEntity;
     }
 
-    public List<ServiceDTO> getAllService(){
-        List<ServiceEntity> serviceEntityList = serviceRepository.findByConfirm(true);
+    public Page<ServiceDTO> getAllService(int pageNo, int pageSize) {
+        // Định nghĩa trường sắp xếp là "createDate" trong đối tượng BlogDTO của ServiceDTO.
+        Sort sort = Sort.by(Sort.Order.desc("b.create_date"));
+
+        // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
+        Page<ServiceEntity> serviceEntityList = serviceRepository.findByConfirm(true, pageable);
+
+        // Tạo một danh sách chứa các đối tượng ServiceDTO.
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
-        for(ServiceEntity s : serviceEntityList){
-            if(s.getBlog_service().getConfirm().equals(true) && s.getBlog_service().getConfirm() != null) {
+
+        for (ServiceEntity s : serviceEntityList) {
+            if (s.getBlog_service().getConfirm() != null && s.getBlog_service().getConfirm().equals(true)) {
                 ServiceDTO serviceDTO = new ServiceDTO();
+
+                // Truy cập đối tượng BlogDTO trong ServiceDTO để lấy createDate.
                 serviceDTO.setUserName(s.getBlog_service().getUserEntity().getName());
                 serviceDTO.setEmailUserCreate(s.getBlog_service().getUserEntity().getEmail());
                 serviceDTO.setContent(s.getBlog_service().getContent());
@@ -67,7 +84,9 @@ public class ServiceService {
                 serviceDTOList.add(serviceDTO);
             }
         }
-        return serviceDTOList;
+
+        // Sử dụng PageImpl để tạo một trang mới từ danh sách ServiceDTO và pageable.
+        return new PageImpl<>(serviceDTOList, pageable, serviceEntityList.getTotalElements());
     }
 
     public ServiceDTO getServiceDetail(int id_service){
@@ -87,5 +106,14 @@ public class ServiceService {
         return serviceDTO ;
     }
 
+
+    public List<ServiceDTO> getThreeLatestBlogs() {
+        List<ServiceEntity> latestApprovedServices = serviceRepository.findFirst3OrderByCreateDateDesc();
+        List<ServiceDTO> latestApprovedServiceDTOs = latestApprovedServices.stream()
+                .map(serviceEntity -> modelMapperConfig.modelMapper().map(serviceEntity, ServiceDTO.class))
+                .collect(Collectors.toList());
+
+        return latestApprovedServiceDTOs;
+    }
 
 }

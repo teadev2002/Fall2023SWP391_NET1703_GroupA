@@ -146,6 +146,7 @@
 
       </div>
     </div>
+
     <div class="nav-right d-flex jsutify-content-end align-items-center">
       <ul>
 
@@ -168,32 +169,49 @@
 
         </li>
 
-        <li><a href="#">
+        <!--Notification-->
+        <li th:if="${user != null}">
+          <a class="button__notification" th:href="@{/blog/view/view-request}">
+            <svg  width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
+            </svg>
+          </a>
+          <!--Số lượng thông báo-->
+          <span th:if="${count != 0}" class="button__notification__badge" th:text="${count}"></span>
+        </li>
+
+        <li  th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom" title="Bạn cần đăng nhập để xem thông báo">
           <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
           </svg>
         </a></li>
+        <!-- end notification -->
 
-        <li><a href="cart.html">
+
+        <li><a th:href="@{/service/cart}">
           <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z"/>
           </svg>
         </a></li>
 
-        <li><a th:href="@{/index/profile}">
-          <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_1585_341)">
-              <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
-              <path d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
-            </g>
-          </svg>
-        </a></li>
+        <!--Dropdown User-->
+        <li>
+          <a th:href="@{/index/profile}">
+            <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_1585_341)">
+                <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
+                <path d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
+              </g>
+            </svg>
+          </a>
+        </li>
 
       </ul>
       <div class="sidebar-button mobile-menu-btn ">
         <i class="bi bi-list"></i>
       </div>
     </div>
+
   </div>
 </header>
 
@@ -278,22 +296,17 @@
                   th:text="${#strings.length(service.content) > 100} ? ${service.content.substring(0, 100) + '...'} : ${service.content}">
                         </span>
 
-            <div class="more-btn mt-2" th:if="${user == null}">
-              <form th:action="@{/service/detail}" method="get">
-                <input type="hidden" name="id" th:value="${service.id}">
-                <span><button type="submit">Read More</button></span>
-              </form>
+            <div class="more-btn mt-2">
+              <a th:href="@{/service/detail/{id}(id=${service.id})}"><span>Re</span>ad More</a>
             </div>
 
-            <div class="more-btn mt-2" th:if="${user != null}">
-              <form th:action="@{/service/detail/myblog}" method="get">
-                <input type="hidden" name="id" th:value="${service.id}">
-                <span><button type="submit">Read More</button></span>
-              </form>
+<!--            <div class="more-btn mt-2" th:if="${user != null}">-->
+<!--              <form th:action="@{/service/detail/myblog}" method="get">-->
+<!--                <input type="hidden" name="id" th:value="${service.id}">-->
+<!--                <span><button type="submit">Read More</button></span>-->
+<!--              </form>-->
 
-            </div>
-
-
+<!--            </div>-->
 
           </div>
         </div>
@@ -303,15 +316,21 @@
 
         <div class="paginations-area d-flex justify-content-center">
           <nav aria-label="Page navigation example">
+            <!--Test Phân trang-->
             <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#"><i
-                      class="bi bi-arrow-left-short"></i></a></li>
-              <li class="page-item active"><a class="page-link" href="#">01</a></li>
-              <li class="page-item"><a class="page-link" href="#">02</a></li>
-              <li class="page-item"><a class="page-link" href="#">03</a></li>
-              <li class="page-item"><a class="page-link" href="#"><i class="bi bi-arrow-right-short"></i></a>
+              <li class="page-item" th:if="${currentPage > 1}">
+                <a class="page-link" th:href="@{'/service/view?page=' + ${currentPage-1}}"><i class="bi bi-arrow-left-short"></i></a>
+              </li>
+
+              <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">
+                <a class="page-link" th:href="@{'/service/view?page=' + ${i}}" th:text="${i}"></a>
+              </li>
+
+              <li class="page-item" th:if="${currentPage < totalPage}">
+                <a class="page-link" th:href="@{'/service/view?page=' + ${currentPage+1}}"><i class="bi bi-arrow-right-short"></i></a>
               </li>
             </ul>
+
           </nav>
         </div>
       </div>
@@ -319,7 +338,7 @@
         <div class="widget-area">
           <div class="single-widgets widget_search mb-30">
 
-            <form th:action="@{/service/search}" method="post">
+            <form th:action="@{/blog/search}" method="post">
               <div class="wp-block-search__inside-wrapper ">
                 <input type="search" id="wp-block-search__input-1" class="wp-block-search__input"
                        name="title" value placeholder="Search Here" required>
@@ -338,10 +357,10 @@
             </div>
 
             <ul class="wp-block-categoris-cloud">
-              <li><a th:href="@{/service/byType(type='Exchange')}"><span>Pet Exchange</span> <span><span
+              <li><a th:href="@{/blog/byType(type='Exchange')}"><span>Pet Exchange</span> <span><span
                       class="number-of-categoris">(30)</span><i
                       class="bi bi-arrow-right-short"></i></span></a></li>
-              <li><a th:href="@{/service/byType(type='Gift')}"><span>Pet Gift</span> <span><span
+              <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
                       class="number-of-categoris">(18)</span><i
                       class="bi bi-arrow-right-short"></i></span> </a></li>
               <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
@@ -364,33 +383,33 @@
 
 
             <!--                        Newest Blog-->
-            <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+            <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
               <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                 <div class="wi sidebarImage" >
-                  <a th:href="@{/service/{id}/detail(id=${service.id})}"><img
-                          th:src="@{'../images/service/' + ${service.image}}" alt="image"></a>
+                  <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}"><img
+                          th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
                 </div>
                 <div class="wc">
-                  <a th:href="@{/service/{id}/detail(id=${service.id})}" th:text="${service.createDate}"></a>
+                  <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}" th:text="${service.blog.createDate}"></a>
                   <h6>
-                    <a th:href="@{/service/{id}/detail(id=${service.id})}"
-                       th:text="${#strings.length(service.title) > 50} ? ${service.title.substring(0, 50) + '...'} : ${service.title}"></a>
+                    <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}"
+                       th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
                   </h6>
                 </div>
               </div>
             </div>
 
-            <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+            <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
               <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                 <div class="wi sidebarImage" >
-                  <a th:href="@{/service/{id}/detail/myblog(id=${service.id})}"><img
-                          th:src="@{'../images/service/' + ${service.image}}" alt="image"></a>
+                  <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}"><img
+                          th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
                 </div>
                 <div class="wc">
-                  <a th:href="@{/service/{id}/detail/myblog(id=${service.id})}" th:text="${service.createDate}"></a>
+                  <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}" th:text="${service.blog.createDate}"></a>
                   <h6>
-                    <a th:href="@{/service/{id}/detail/myblog(id=${service.id})}"
-                       th:text="${#strings.length(service.title) > 50} ? ${service.title.substring(0, 50) + '...'} : ${service.title}"></a>
+                    <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}"
+                       th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
                   </h6>
                 </div>
               </div>

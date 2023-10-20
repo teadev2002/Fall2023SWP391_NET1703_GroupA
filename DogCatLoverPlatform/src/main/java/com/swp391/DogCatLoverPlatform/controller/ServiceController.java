@@ -1,25 +1,16 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 
-import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
 
-import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
-
-import com.swp391.DogCatLoverPlatform.dto.ServiceDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
 import com.swp391.DogCatLoverPlatform.entity.ServiceEntity;
 
-import com.swp391.DogCatLoverPlatform.service.RequestService;
+import com.swp391.DogCatLoverPlatform.service.*;
 
 import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
-import com.swp391.DogCatLoverPlatform.service.BlogService;
-import com.swp391.DogCatLoverPlatform.service.BookingService;
 
-import com.swp391.DogCatLoverPlatform.service.ServiceService;
-import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
-import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,6 +32,10 @@ public class ServiceController {
     ServiceService serviceService;
     @Autowired
     UserService userService;
+
+    @Autowired
+    CommentService commentService;
+
     @Autowired
     BookingService bookingService;
     @Autowired
@@ -53,8 +48,15 @@ public class ServiceController {
     RequestService requestService;
 
     @GetMapping("/view")
-    public String viewAllService(Model model, HttpServletRequest req){
-        List<ServiceDTO>  serviceDTOList = serviceService.getAllService();
+    public String viewAllService(Model model,
+                                 @RequestParam(defaultValue = "1") int page,
+                                 @RequestParam(defaultValue = "3") int size,
+                                 HttpServletRequest req){
+
+
+        Page<ServiceDTO> serviceDTOList = serviceService.getAllService(page, size);
+        model.addAttribute("totalPage", serviceDTOList.getTotalPages());
+        model.addAttribute("currentPage", page);
         model.addAttribute("listService",serviceDTOList);
 
         UserDTO user  = getUserIdFromCookie(req);
@@ -68,17 +70,23 @@ public class ServiceController {
             model.addAttribute("count", totalCount);
         }
 
+        List<ServiceDTO> latestServices = serviceService.getThreeLatestBlogs();
+        model.addAttribute("latestService", latestServices);
+
         return "service-standard";
     }
 
-    @GetMapping("/detail")
-    public String viewDetailService(Model model, HttpServletRequest request){
-        int id  = Integer.parseInt(request.getParameter("id"));
+    @GetMapping("/detail/{id}")
+    public String viewDetailService(@PathVariable("id") int id,  Model model, HttpServletRequest request){
         ServiceDTO  serviceDTO = serviceService.getServiceDetail(id);
         model.addAttribute("service",serviceDTO);
 
         UserDTO user  = getUserIdFromCookie(request);
         model.addAttribute("user", user);
+
+        //Lấy comment by Blog Id
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(serviceDTO.getId_blog());
+        model.addAttribute("comments", comments);
 
         //Hiện thông báo (trường hợp có)
         if(user != null){
@@ -87,6 +95,8 @@ public class ServiceController {
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
+
+
 
         return "service-details";
     }
