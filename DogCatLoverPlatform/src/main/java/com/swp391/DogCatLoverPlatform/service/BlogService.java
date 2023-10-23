@@ -180,7 +180,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getBlogsPendingApproval() {
-        List<BlogEntity> pendingBlogs = blogRepository.findByConfirmAndStatusTrue(null);
+        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(null);
         List<BlogDTO> pendingBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : pendingBlogs) {
@@ -196,8 +196,9 @@ public class BlogService {
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            rejectBlogDTOs.add(blogDTO);
+                BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+                rejectBlogDTOs.add(blogDTO);
+
         }
 
         return rejectBlogDTOs;
@@ -236,6 +237,9 @@ public class BlogService {
         blogRepository.save(blogEntity);
     }
 
+    public void updateBlogToFalse(int idBlog){
+        blogRepository.updateStatus(idBlog);
+    }
 
 
 

@@ -27,6 +27,8 @@ public class ServiceDTO {
     private Boolean confirm;
     private String serviceCateName;
 
+    private BlogDTO blog;
+
     public boolean isConfirm() {
         return confirm;
     }

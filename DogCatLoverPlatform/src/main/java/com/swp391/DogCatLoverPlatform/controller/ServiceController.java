@@ -5,6 +5,12 @@ import com.swp391.DogCatLoverPlatform.dto.*;
 
 import com.swp391.DogCatLoverPlatform.entity.ServiceEntity;
 
+
+import com.swp391.DogCatLoverPlatform.service.*;
+
+import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
+
+
 import com.swp391.DogCatLoverPlatform.service.RequestService;
 
 import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
@@ -14,7 +20,9 @@ import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.ServiceService;
 import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,6 +44,10 @@ public class ServiceController {
     ServiceService serviceService;
     @Autowired
     UserService userService;
+
+    @Autowired
+    CommentService commentService;
+
     @Autowired
     BookingService bookingService;
     @Autowired
@@ -48,8 +60,15 @@ public class ServiceController {
     RequestService requestService;
 
     @GetMapping("/view")
-    public String viewAllService(Model model, HttpServletRequest req) {
-        List<ServiceDTO> serviceDTOList = serviceService.getAllService();
+    public String viewAllService(Model model,
+                                 @RequestParam(defaultValue = "1") int page,
+                                 @RequestParam(defaultValue = "3") int size,
+                                 HttpServletRequest req) {
+
+
+        Page<ServiceDTO> serviceDTOList = serviceService.getAllService(page, size);
+        model.addAttribute("totalPage", serviceDTOList.getTotalPages());
+        model.addAttribute("currentPage", page);
         model.addAttribute("listService", serviceDTOList);
 
         UserDTO user = getUserIdFromCookie(req);
@@ -63,17 +82,23 @@ public class ServiceController {
             model.addAttribute("count", totalCount);
         }
 
+        List<ServiceDTO> latestServices = serviceService.getThreeLatestBlogs();
+        model.addAttribute("latestService", latestServices);
+
         return "service-standard";
     }
 
-    @GetMapping("/detail")
-    public String viewDetailService(Model model, HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+    @GetMapping("/detail/{id}")
+    public String viewDetailService(@PathVariable("id") int id, Model model, HttpServletRequest request) {
         ServiceDTO serviceDTO = serviceService.getServiceDetail(id);
         model.addAttribute("service", serviceDTO);
 
         UserDTO user = getUserIdFromCookie(request);
         model.addAttribute("user", user);
+
+        //Lấy comment by Blog Id
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(serviceDTO.getId_blog());
+        model.addAttribute("comments", comments);
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
@@ -82,14 +107,14 @@ public class ServiceController {
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
-
         return "service-details";
     }
+
 
     @GetMapping("/create")
     public String createService(Model model, HttpServletRequest req) {
         List<ServiceCategoryDTO> listServiceCategory = serviceService.getServiceCategoryEntityList();
-        UserDTO user  = getUserIdFromCookie(req);
+        UserDTO user = getUserIdFromCookie(req);
 
         model.addAttribute("user", user);
         model.addAttribute("serviceCategories", listServiceCategory);
@@ -99,66 +124,66 @@ public class ServiceController {
     }
 
     @PostMapping("/create")
-        public String createService (@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws
-        IOException {
+    public String createService(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws IOException {
 
-            String image = blogService.saveImageAndReturnPath(file);
-            String Content = request.getParameter("content");
-            int price = Integer.parseInt(request.getParameter("price"));
-            String title = request.getParameter("title");
-            UserDTO userDTO = getUserIdFromCookie(request);
-            System.out.println(userDTO.getId());
-            int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
+        String image = blogService.saveImageAndReturnPath(file);
+        String Content = request.getParameter("content");
+        int price = Integer.parseInt(request.getParameter("price"));
+        String title = request.getParameter("title");
+        UserDTO userDTO = getUserIdFromCookie(request);
+        System.out.println(userDTO.getId());
+        int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
 
-            ServiceEntity serviceEntity = serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image);
+        serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image);
 
-            UserDTO user = getUserIdFromCookie(request);
-            model.addAttribute("user", user);
+        UserDTO user = getUserIdFromCookie(request);
+        model.addAttribute("user", user);
 
-            //Hiện thông báo (trường hợp có)
-            if (user != null) {
-                List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-                List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
-                int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
-                model.addAttribute("count", totalCount);
-            }
 
-            return "redirect:/service/view";
+        //Hiện thông báo (trường hợp có)
+        if (user != null) {
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
         }
 
-        @GetMapping("cart")
-        public String cart (HttpServletRequest request, Model model){
-            UserDTO userDTO = getUserIdFromCookie(request);
-            if (userDTO == null) {
-                return "redirect:/index/login";
-            }
-            List<BookingDTO> list = bookingService.findByUserBooking(userDTO.getId());
+        return "redirect:/service/view";
+    }
 
-            double price = 0;
-            for (BookingDTO booking : list) {
-                price += booking.getTotal_price();
-                System.out.println(price);
-            }
-            model.addAttribute("listBooking", list);
-            model.addAttribute("quantity", list.size());
-            model.addAttribute("totalPrice", price);
-            return "service_cart";
+    @GetMapping("cart")
+    public String cart(HttpServletRequest request, Model model) {
+        UserDTO userDTO = getUserIdFromCookie(request);
+        if (userDTO == null) {
+            return "redirect:/index/login";
         }
+        List<BookingDTO> list = bookingService.findByUserBooking(userDTO.getId());
 
-        //GetUserIdFromCookie cực kỳ quan trọng!!!
-        private UserDTO getUserIdFromCookie (HttpServletRequest req){
-            Cookie[] cookies = req.getCookies();
-            UserDTO userDTO = new UserDTO();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if ("User".equals(cookie.getName())) {
-                        String email = cookie.getValue();
-                        userDTO = userService.getUserByEmail(email);
-                        return userDTO;
-                    }
+        double price = 0;
+        for (BookingDTO booking : list) {
+            price += booking.getTotal_price();
+            System.out.println(price);
+        }
+        model.addAttribute("listBooking", list);
+        model.addAttribute("quantity", list.size());
+        model.addAttribute("totalPrice", price);
+        return "service_cart";
+    }
+
+    //GetUserIdFromCookie cực kỳ quan trọng!!!
+    private UserDTO getUserIdFromCookie(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        UserDTO userDTO = new UserDTO();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("User".equals(cookie.getName())) {
+                    String email = cookie.getValue();
+                    userDTO = userService.getUserByEmail(email);
+                    return userDTO;
                 }
             }
-            return null;
         }
+        return null;
     }
+}
 

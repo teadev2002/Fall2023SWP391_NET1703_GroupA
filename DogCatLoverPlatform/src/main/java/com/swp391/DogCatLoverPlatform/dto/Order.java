@@ -16,4 +16,5 @@ public class Order {
     private String intent;
     private String description;
 
+    private int idBlog;
 }

@@ -299,7 +299,7 @@
       <div style="padding-left: 50px; display: flex; height: 60px; font-size: 14px;" class="mb-2 input-group">
         <div class="form-group" style="padding-top: 12px;">
           <label for="serviceCategory"></label>
-          <select id="serviceCategory" name="serviceCategory" class="form-control" onchange="togglePriceInput()">
+          <select id="serviceCategory" name="serviceCategory" class="form-control">
             <option th:each="serviceCategory : ${serviceCategories}" th:value="${serviceCategory.id}"
                     th:text="${serviceCategory.name}"></option>
           </select>
@@ -313,9 +313,6 @@
       </div>
 
       <!--Pet type-->
-
-
-
 
       <div class="previewImage"><img id="previewImage"></div>
 

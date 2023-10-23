@@ -2,8 +2,11 @@ package com.swp391.DogCatLoverPlatform.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +37,11 @@ public class PaypalService {
             String successUrl) throws PayPalRESTException{
         Amount amount = new Amount();
         amount.setCurrency(currency);
-        total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        amount.setTotal(String.format("%.2f", total));
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("#.00", symbols);
+        String formattedTotal = df.format(total);
+
+        amount.setTotal(formattedTotal);
 
         Transaction transaction = new Transaction();
         transaction.setDescription(description);

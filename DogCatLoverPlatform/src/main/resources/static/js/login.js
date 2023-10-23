@@ -23,14 +23,18 @@ $(document).ready(function () {
         }).done(function (data) {
             if (data && data.statusCode == 200) {
                 localStorage.setItem("token", data.data)
-                window.location = "home";
+                if (data.message == "[ROLE_ADMIN]") {
+                window.location = "../blog/staff";
+                }else{
+                    window.location = "home";
+                }
 
-            }
+            }else{
+                alert("Sai email hoặc mật khẩu")
+        }
 
-            console.log("server tra ưve ", data)
+            console.log("server tra ve ", data)
 
-        }).fail(function (data) {
-            alert("Sai email hoặc mật khẩu");
         })
 
     })
