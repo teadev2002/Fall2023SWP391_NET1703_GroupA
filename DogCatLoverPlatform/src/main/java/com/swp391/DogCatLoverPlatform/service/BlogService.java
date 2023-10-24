@@ -200,8 +200,9 @@ public class BlogService {
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
-            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-            rejectBlogDTOs.add(blogDTO);
+                BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+                rejectBlogDTOs.add(blogDTO);
+
         }
 
         return rejectBlogDTOs;

@@ -123,10 +123,10 @@
 
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="active"><a th:href="@{/index/staff}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
+            <li class="active"><a th:href="@{/staff/view}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
             </li>
 
-            <li class=" nav-item"><a th:href="@{/blog/staff}"><i class="ft-credit-card"></i><span class="menu-title"
+            <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title"
                                                                                                   data-i18n="">Pending Blog</span></a>
             </li>
         </ul>
@@ -206,10 +206,11 @@
                                         <td th:if="${blog.blogTypeName  != null} " th:text="${blog.blogTypeName}"></td>
                                         <td th:if="${blog.blogTypeName  == null} " > Service</td>
                                         <td>
-                                            <form th:action="@{'/blog/staff/process?blogId=' + ${blog.id}}" method="post">
+                                            <form th:action="@{/blog/staff/process}" method="post">
                                                 <button class="btn btn-primary" type="submit" name="action" value="approve">Approve</button>
                                                 <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
                                                 <input type="text" name="reason" placeholder="Enter Notification" required/>
+                                                <input type="hidden" name="blogId" th:value="${blog.id}"  />
                                             </form>
 
                                         </td>

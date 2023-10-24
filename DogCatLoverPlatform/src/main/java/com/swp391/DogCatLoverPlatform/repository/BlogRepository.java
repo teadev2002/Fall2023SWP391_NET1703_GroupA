@@ -32,6 +32,7 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         //Hiển thị danh sách Blog trên giao diện chính (trước khi thực hiện sell, gift) --> Confirm: true (bắt buộc)
         Page<BlogEntity> findByConfirmAndStatusNotNull(boolean confirm, Pageable pageable);
 
+
         @Transactional
         @Modifying
         @Query("UPDATE blog b SET b.status = false WHERE b.id = :id")

@@ -152,6 +152,7 @@ public class ServiceController {
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }

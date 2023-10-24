@@ -272,17 +272,17 @@
                                     <div class="form-inner">
                                         <div class="single-widgets widget_egns_categoris mb-30">
                                             <div class="widget-title">
-                                                <h3>Chọn ngày khám</h3>
+                                                <h3>Choose day</h3>
                                             </div>
                                             <input onchange="loadTime()" type="date" class="form-control" id="chooseDate">
                                             <div class="appointment-inner">
                                                 <input type="hidden" id="id_blog" th:value="${service.id_blog}">
-                                                <h3 class="choosetime">Chọn giờ</h3>
+                                                <h3 class="choosetime">Choose Time</h3>
                                                 <div class="group-time-items" id="listTime">
                                                 </div>
                                                 <p id="datecs"></p>
                                                 <span class="errors" id="timeerror">Appointment Time not blank(*)</span>
-                                                <br><button onclick="createAppointment()" class="btn btn-warning form-control primary-btn3">Đăng Ký</button>
+                                                <br><button onclick="createAppointment()" class="btn btn-warning form-control primary-btn3">Booking</button>
                                             </div>
                                         </div>
                                     </div>

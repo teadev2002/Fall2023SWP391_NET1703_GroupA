@@ -18,6 +18,7 @@ public class UserDTO {
     private String phone;
     private String address;
     private String image;
+    private String description;
     private int id_role;
     private String roleDTO;
 }
