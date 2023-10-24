@@ -76,17 +76,34 @@
             margin: 15px 0;
         }
 
+        .list-request{
+            max-height: 372px;
+            max-width: 416px;
+            Overflow: scroll;
+        }
 
     </style>
 
     <script>
-        function showPopup() {
+        //Popup cho Xác nhận Request
+        function showPopup(requestId) {
+            var popup = document.getElementById(requestId);
+            popup.style.display = 'block';
+        }
+
+        function hidePopup() {
+            var popup = document.querySelector('.popup');
+            popup.style.display = 'none';
+        }
+
+
+        function showPopupGift() {
             var popup = document.querySelector('.popup');
             popup.style.display = 'block';
 
         }
 
-        function hidePopup() {
+        function hidePopupGift() {
             var popup = document.querySelector('.popup');
             popup.style.display = 'none';
 
@@ -352,11 +369,13 @@
                             <svg xmlns="http://www.w3.org/2000/svg" height="0.45em" viewBox="0 0 512 512">
                                 <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
                             </svg>
+                            &nbsp;
                         </a>
 
+
                         <!-- Icon Gift-->
-                        <span th:if="${blog.blogTypeId == 2}">
-                            <a th:if="${user != null and user.id != blog.userId}" onclick="showPopup()"
+                        <span th:if="${blog.blogTypeId == 2 and blog.status != false}">
+                            <a th:if="${user != null and user.id != blog.userId }" onclick="showPopupGift()"
                                style="cursor: pointer;">
                             <svg xmlns="http://www.w3.org/2000/svg" height="0.5em"
                                  viewBox="0 0 448 512">
@@ -365,8 +384,9 @@
                             </a>
                         </span>
 
+
                         <!-- Icon Sell (Exchange)-->
-                        <span style="margin-left: 4px;" th:if="${blog.blogTypeId == 1}">
+                        <span style="margin-left: 4px;" th:if="${blog.blogTypeId == 1 and blog.status != false}">
                             <a th:if="${user != null and user.id != blog.userId}" onclick="showPopupSell()"
                             style="cursor: pointer;">
 
@@ -377,6 +397,16 @@
                             </a>
                         </span>
 
+                        <!-- Thông báo đóng bài viết  -->
+                        <span th:if="${blog.blogTypeId == 2 and blog.status == false}">
+                            <p class="alert alert-danger"
+                               style="height: 30px; display: flex; align-items: center; padding: 8px; margin-top: 12px;">The Blog has been closed!</p>
+                        </span>
+
+                        <span th:if="${blog.blogTypeId == 1 and blog.status == false}">
+                            <p class="alert alert-danger"
+                               style="height: 30px; display: flex; align-items: center; padding: 8px; margin-top: 12px;">The Blog has been closed!</p>
+                        </span>
 
                         <!-- Form cho Gift-->
                         <form method="post" th:action="@{/blog/view/send-request}" th:object="${request}">
@@ -387,7 +417,7 @@
                                 <h2>Do you want to send a request?</h2>
                                 <button type="submit" class="btn btn-primary"
                                         onclick="confirmTransaction()">Yes</button>
-                                <a style="cursor: pointer; font-weight: normal; font-size: 25px;" onclick="hidePopup()">Cancel</a>
+                                <a style="cursor: pointer; font-weight: normal; font-size: 25px;" onclick="hidePopupGift()">Cancel</a>
                             </span>
                         </form>
 
@@ -396,7 +426,7 @@
 
                             <input type="hidden" id="price" name="price" th:value="${blog.price}" readonly>
 
-                            <input type="text" id="idBlog" name="idBlog"  th:value="${blog.id}">
+                            <input type="hidden" id="idBlog" name="idBlog"  th:value="${blog.id}">
 
                             <input type="hidden" id="currency" name="currency" placeholder="Enter Currency" value="USD">
 
@@ -451,10 +481,10 @@
                         <div class="social-area">
                             <span>Share:</span>
                             <ul class="social-link d-flex align-items-center">
-                                <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
-                                <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
-                                <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
-                                <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
+                                <li><a ><i class="bx bxl-facebook"></i></a></li>
+                                <li><a ><i class="bx bxl-twitter"></i></a></li>
+                                <li><a ><i class="bx bxl-pinterest-alt"></i></a></li>
+                                <li><a ><i class="bx bxl-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -578,12 +608,13 @@
                         </ul>
 
                     </div>
+
+                    <!-- Newest Blog -->
                     <div class="single-widgets widget_egns_recent_post mb-30">
                         <div class="widget-title" style="padding-bottom: 45px;">
                             <h3>Newest Posts</h3>
                         </div>
 
-                        <!-- Newest Blog -->
                         <div class="recent-post-wraper" style="padding-top: 0px;"
                              th:each="blog , iterStat : ${latestBlogs}">
                             <div th:if="${user == null}" class="widget-cnt"
@@ -620,40 +651,85 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <div class="single-widgets widget_egns_tag mb-30">
 
+
+                    <!--List User Request được gửi đến-->
+                    <div th:if="${user.id == blog.userId}" class="single-widgets widget_egns_tag mb-30 list-request">
                         <div class="widget-title">
-                            <h3>All Tag</h3>
+                            <h3>List User Request</h3>
                         </div>
 
-                        <p class="wp-block-tag-cloud">
-                            <a th:href="@{/blog/byType(type='Exchange')}">Exchange</a>
-                            <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
-                            <a href="blog-grid.html">Daycare</a>
-                            <a href="blog-grid.html">Boarding</a>
-                            <a href="blog-grid.html">Grooming</a>
-                            <a href="blog-grid.html">Services</a>
-                        </p>
+                        <table class="table text-white mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">UserName</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
 
-                    </div>
-                    <div class="single-widgets widget_egns_social">
-                        <div class="widget-title">
-                            <h3>Social</h3>
+                            <tbody>
+                                <tr th:each="request : ${listBlog}" class="fw-normal" th:class="${request.status == false} ? 'alert alert-secondary' : 'alert alert-success'">
+                                    <div th:if="${blog.id == request.blogId}">
+                                        <th>
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                 alt="avatar 1" style="width: 45px; height: auto;">
+                                            <a style="text-decoration: none; color: black;"
+                                               th:href="@{'/index/profile/' + ${request.userId}}">
+                                                <span class="ms-2" th:text="${request.userName}"></span>
+                                            </a>
+
+                                        </th>
+
+                                        <!-- Nút Check Accept-->
+                                        <td class="align-middle">
+
+                                            <a th:value="${request.Id}" th:attr="data-request-id=${request.Id}"
+                                               onclick="showPopup(this.getAttribute('data-request-id'))"
+                                               style="cursor: pointer;">
+                                                <i class="fas fa-check fa-lg text-success me-3"></i>
+                                            </a>
+
+
+                                            <form method="post" th:action="@{/blog/accepted-request}">
+                                                <span th:id="${request.Id}" class="popup"
+                                                      style="color: black; font-family: var(--font-dosis)">
+                                                    <input type="hidden" id="requestId" name="requestId"
+                                                           th:value="${request.Id}">
+                                                    <input type="hidden" id="currentUserId" name="currentUserId"
+                                                           th:value="${currentUserId}">
+                                                    <input type="hidden" id="requestUserId" name="requestUserId"
+                                                           th:value="${request.userId}">
+                                                    <input type="hidden" id="blogsId" name="blogId" th:value="${request.blogId}">
+                                                    <h2>Are you sure about your choice?</h2>
+                                                    <button type="submit" class="btn btn-primary">Yes</button>
+                                                    <a style="cursor: pointer; font-weight: normal; font-size: 25px;"
+                                                       onclick="hidePopup()">Cancel</a>
+                                                </span>
+                                            </form>
+
+                                        </td>
+
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!--Báo lỗi-->
+                        <div th:if="${notice}" class="alert alert-danger"
+                             style="height: 30px; display: flex; align-items: center; padding: 8px; margin-top: 12px;">
+                            <span th:text="${notice}"
+                                  style="font-size:18px ; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></span>
                         </div>
-                        <ul class="social-link d-flex align-items-center">
-                            <li><a href="https://www.facebook.com"><i class="bx bxl-facebook"></i></a></li>
-                            <li><a href="https://twitter.com"><i class="bx bxl-twitter"></i></a></li>
-                            <li><a href="https://www.pinterest.com"><i class="bx bxl-pinterest-alt"></i></a></li>
-                            <li><a href="https://www.instagram.com"><i class="bx bxl-instagram"></i></a></li>
-                        </ul>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 
 <footer>
