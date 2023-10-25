@@ -43,6 +43,7 @@ public class PaypalController {
 
     @PostMapping("/pay")
     public String payment(@ModelAttribute("order") Order order) {
+        order.setCurrency("USD");
         try {
             Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
 

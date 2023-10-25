@@ -37,6 +37,8 @@ public class PaypalService {
             String successUrl) throws PayPalRESTException{
         Amount amount = new Amount();
         amount.setCurrency(currency);
+
+        //Currency for Dũng
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat df = new DecimalFormat("#.00", symbols);
         String formattedTotal = df.format(total);

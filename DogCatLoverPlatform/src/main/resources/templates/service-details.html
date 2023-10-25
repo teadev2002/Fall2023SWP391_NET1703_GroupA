@@ -261,6 +261,7 @@
                 <div class="services-datails-content">
                     <div class="banner-title">
                         <h2 th:text="${service.title}"></h2>
+                        <h5> <b th:text="${service.dateStart}"></b> - <b th:text="${service.dateEnd}"></b > </h5>
                         <div class="currency">
                             <h5 th:text="${service.price} + '$'"  ></h5>
                         </div>
@@ -277,6 +278,8 @@
                                             <input onchange="loadTime()" type="date" class="form-control" id="chooseDate">
                                             <div class="appointment-inner">
                                                 <input type="hidden" id="id_blog" th:value="${service.id_blog}">
+                                                <input type="hidden" id="dateStart" th:value="${service.dateStart}">
+                                                <input type="hidden" id="dateEnd" th:value="${service.dateEnd}">
                                                 <h3 class="choosetime">Choose Time</h3>
                                                 <div class="group-time-items" id="listTime">
                                                 </div>

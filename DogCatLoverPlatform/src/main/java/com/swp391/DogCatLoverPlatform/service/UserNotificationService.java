@@ -3,12 +3,14 @@ package com.swp391.DogCatLoverPlatform.service;
 import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
+import com.swp391.DogCatLoverPlatform.entity.RequestEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserNotificationEntity;
 import com.swp391.DogCatLoverPlatform.repository.UserNotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,5 +29,16 @@ public class UserNotificationService {
                 .collect(Collectors.toList());
 
         return listNotificated;
+    }
+
+    public boolean checkExistAcceptedRequest(int userId, int blogId){
+        boolean isExist = false;    //true (tồn tại),  false (chưa tồn tại)
+
+        List<UserNotificationEntity> requested = userNotificationRepository.findAllByUserSenderAndIdBlog(userId, blogId);
+        if(!requested.isEmpty()){
+            isExist = true;
+        }
+
+        return isExist;
     }
 }

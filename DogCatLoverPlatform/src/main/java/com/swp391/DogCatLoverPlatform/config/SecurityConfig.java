@@ -59,8 +59,8 @@ public class SecurityConfig {
                     .antMatchers(HttpMethod.POST,"/services/**").permitAll()
                     .antMatchers("/booking/**").permitAll()
 
-                    .antMatchers("/blog/staff").hasRole("ADMIN")
-                    .antMatchers("/blog/staff/**").hasRole("ADMIN")
+                    .antMatchers("/staff").hasRole("ADMIN")
+                    .antMatchers("/staff/**").hasRole("ADMIN")
 
                     .anyRequest().authenticated()
                     .and()

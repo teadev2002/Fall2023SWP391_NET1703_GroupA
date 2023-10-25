@@ -212,7 +212,7 @@
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                 <img id="user-image" class="rounded-circle mt-5" width="150px" height="150px"
-                     th:src="@{'../images/bg/team/'+${user.image}}" >
+                     th:src="@{'../images/avatar/'+${user.image}}" >
                 <input type="hidden" name="image" th:value="${user.image}">
                 <span class="font-weight-bold" th:text="${user.userName}"></span>
                 <span class="text-black-50" th:text="${user.email}"></span>
@@ -254,6 +254,10 @@
                             <input type="text" class="form-control" name="role" placeholder="Your Role"
                                    th:value="${user.id_role}" th:field="*{roleDTO}" readonly>
                         </div>
+<!--                        <div class="col-md-12"><label class="labels">Your Bio</label>-->
+<!--                            <textarea type="text" class="form-control" name="description" placeholder="Your Bio" rows="4"-->
+<!--                                      th:field="${user.description}" ></textarea>-->
+<!--                        </div>-->
 
                     </div>
                     <div class="mt-5 text-center">
@@ -273,15 +277,15 @@
                 </div>
 
                 <br>
-                <div class="col-md-12" ><label class="labels">Experience in Designing</label>
-                    <input type="text" class="form-control" name="userDescription" placeholder="Your Role"
-                            th:field="${user.description}" >
+                <div class="col-md-12" ><label class="labels">Experience</label>
+                    <textarea type="text" class="form-control" name="description" placeholder="Your Bio" rows="4"
+                            th:field="${user.description}" ></textarea>
                 </div>
 
                 <br>
                 <div class="d-flex justify-content-between align-items-center experience">
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/blog/view/myblog}"><i class="fa fa-plus"></i>&nbsp;View My Blog</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/blog/view/myblog}"><i class="fa fa-plus"></i>&nbsp;View My Blog</a></span>
+                    <span class="border px-3 p-1 add-experience"><a th:href="@{/blog/view/myblog}"><i class="fa fa-plus"></i>&nbsp;My Booking History</a></span>
+                    <span class="border px-3 p-1 add-experience"><a th:href="@{/booking/manager}"><i class="fa fa-plus"></i>&nbsp;Booking Manager</a></span>
                 </div>
 <!--                <div class="col-md-12"><label class="labels">Additional Details</label>-->
 <!--                    <input type="text" class="form-control" placeholder="additional details" value="">-->

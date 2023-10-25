@@ -24,7 +24,7 @@ $(document).ready(function () {
             if (data && data.statusCode == 200) {
                 localStorage.setItem("token", data.data)
                 if (data.message == "[ROLE_ADMIN]") {
-                window.location = "../blog/staff";
+                window.location = "../staff/view";
                 }else{
                     window.location = "home";
                 }

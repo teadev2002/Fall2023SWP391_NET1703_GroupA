@@ -39,14 +39,14 @@ public class BlogService {
     @Autowired
     private PetTypeRepository petTypeRepository;
 
-    //Test Phân trang
+    //Phân trang cho Blog
     public Page<BlogDTO> GetApprovedBlogs(int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
         // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> blogPage = blogRepository.findByConfirmAndStatusTrue(true, pageable);
+        Page<BlogEntity> blogPage = blogRepository.findByConfirmAndStatusNotNull(true, pageable);
 
         Page<BlogDTO> pageOfBlogDTO = blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 
@@ -55,13 +55,15 @@ public class BlogService {
     }
 
 
+
+
     public Page<BlogDTO> GetBlogsByTitle(String title, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
         // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> blogPage = blogRepository.findByTitleContainingAndConfirmAndStatusTrue(title, true, pageable);
+        Page<BlogEntity> blogPage = blogRepository.findByTitleContainingAndConfirmAndStatusNotNull(title, true, pageable);
 
         return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
     }
@@ -144,7 +146,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getThreeLatestBlogs() {
-        List<BlogEntity> latestApprovedBlogs = blogRepository.findFirst3ByConfirmAndStatusTrueOrderByCreateDateDesc(true);
+        List<BlogEntity> latestApprovedBlogs = blogRepository.findFirst3ByConfirmAndStatusNotNullOrderByCreateDateDesc(true);
         List<BlogDTO> latestApprovedBlogDTOs = latestApprovedBlogs.stream()
                 .map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class))
                 .collect(Collectors.toList());
@@ -162,7 +164,7 @@ public class BlogService {
 
             // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createdAt giảm dần.
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-            Page<BlogEntity> blogPage = blogRepository.findByBlogTypeEntityAndConfirmAndStatusTrue(blogTypeEntity, true, pageable);
+            Page<BlogEntity> blogPage = blogRepository.findByBlogTypeEntityAndConfirmAndStatusNotNull(blogTypeEntity, true, pageable);
 
             return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
         } else {
@@ -179,6 +181,7 @@ public class BlogService {
         return imagePath;
     }
 
+    //Hàng chờ Blog
     public List<BlogDTO> getBlogsPendingApproval() {
         List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(null);
         List<BlogDTO> pendingBlogDTOs = new ArrayList<>();
@@ -191,8 +194,9 @@ public class BlogService {
         return pendingBlogDTOs;
     }
 
+    //Thùng rác chứa các Blog bị từ chối
     public List<BlogDTO> getBlogsReject() {
-        List<BlogEntity> rejectBlogs = blogRepository.findByConfirmAndStatusTrue(false);
+        List<BlogEntity> rejectBlogs = blogRepository.findByConfirm(false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
@@ -204,13 +208,14 @@ public class BlogService {
         return rejectBlogDTOs;
     }
 
+    //Blog được chấp nhận
     public void approveBlog(int blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
         blogEntity.setConfirm(true);
         blogRepository.save(blogEntity);
     }
 
-
+    //Blog bị từ chối
     public void rejectBlog(int blogId, String reason) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
         blogEntity.setConfirm(false);

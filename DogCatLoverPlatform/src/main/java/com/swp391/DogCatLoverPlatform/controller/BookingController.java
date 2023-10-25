@@ -30,6 +30,17 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
+    @GetMapping("/history")
+    public ResponseEntity<?> history(Model model, HttpServletRequest request){
+        UserDTO userDTO = getUserIdFromCookie(request);
+
+        if(userDTO == null){
+            return new ResponseEntity<>("ko có quyền vào",HttpStatus.OK);
+        }
+       List<BookingDTO> list = bookingService.getBookingHistory(userDTO.getId());
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
     @GetMapping("/manager")
     public String manager(Model model, HttpServletRequest req) {
         UserDTO userDTO = getUserIdFromCookie(req);

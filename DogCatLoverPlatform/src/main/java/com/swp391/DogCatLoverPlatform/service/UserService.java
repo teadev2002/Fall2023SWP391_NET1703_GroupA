@@ -42,9 +42,32 @@ public class UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setName(userDTO.getUserName());
-        user.setImage("team-001.jpg");
+        user.setImage("ava-06.jpg");
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setId(1);
+        user.setRoleEntity(roleEntity);
+        try {
+            userRepository.save(user);
+            isSuccess = true;
+        }catch (Exception exception){
+            System.out.println("Thêm thất bại " + exception.getLocalizedMessage());
+            isSuccess = false;
+        }
+
+        return isSuccess;
+    }
+
+    //thêm mới staff
+    public boolean addStaff(UserDTO userDTO){
+        boolean isSuccess = false;
+        UserEntity user = new UserEntity();
+        user.setFullName(userDTO.getFullName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setName(userDTO.getUserName());
+        user.setImage("ava-06.jpg");
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setId(3);
         user.setRoleEntity(roleEntity);
         try {
             userRepository.save(user);

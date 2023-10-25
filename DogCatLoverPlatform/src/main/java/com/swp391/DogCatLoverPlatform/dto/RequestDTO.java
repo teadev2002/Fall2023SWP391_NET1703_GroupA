@@ -19,7 +19,9 @@ public class RequestDTO {
     private String userId;
     private String blogTitle;
     private String blogTypeName;
+    private String blogPetType;
     private int blogId;
+    private Boolean status;
 
 
 }

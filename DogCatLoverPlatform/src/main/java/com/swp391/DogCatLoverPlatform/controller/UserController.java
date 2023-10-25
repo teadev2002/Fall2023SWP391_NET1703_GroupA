@@ -68,7 +68,7 @@ public class UserController {
         //Hiện số lượng thông báo
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -100,7 +100,7 @@ public class UserController {
         //Hiện số lượng thông báo
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -120,7 +120,7 @@ public class UserController {
         //Hiện số lượng list
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -183,7 +183,7 @@ public class UserController {
                     email = c.getValue();
                     UserDTO user = userService.getUserByEmail(email);
                     List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-                    List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                    List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
                     int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
                     model.addAttribute("count", totalCount);
                     model.addAttribute("user", user);
@@ -211,7 +211,7 @@ public class UserController {
         String address = req.getParameter("address");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
-        String description = req.getParameter("userDescription");
+        String description = req.getParameter("description");
 
         boolean isSuccess = userService.updateUser(fullname, username, phone, address, email, image, description);
 

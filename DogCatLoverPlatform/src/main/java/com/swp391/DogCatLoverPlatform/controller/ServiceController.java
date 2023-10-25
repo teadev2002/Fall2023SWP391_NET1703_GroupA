@@ -34,6 +34,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -77,7 +78,7 @@ public class ServiceController {
         //Hiện thông báo (trường hợp có)
         if (user != null) {
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -103,7 +104,7 @@ public class ServiceController {
         //Hiện thông báo (trường hợp có)
         if (user != null) {
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -120,6 +121,14 @@ public class ServiceController {
         model.addAttribute("serviceCategories", listServiceCategory);
         model.addAttribute("service", new ServiceDTO());
 
+        //Hiện thông báo (trường hợp có)
+        if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
         return "service-create-form";
     }
 
@@ -127,6 +136,8 @@ public class ServiceController {
     public String createService(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws IOException {
 
         String image = blogService.saveImageAndReturnPath(file);
+        Date startDate = Date.valueOf(request.getParameter("dateStart"));
+        Date endDate = Date.valueOf(request.getParameter("dateEnd"));
         String Content = request.getParameter("content");
         int price = Integer.parseInt(request.getParameter("price"));
         String title = request.getParameter("title");
@@ -134,16 +145,17 @@ public class ServiceController {
         System.out.println(userDTO.getId());
         int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
 
-        serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image);
+        serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image, startDate, endDate);
 
         UserDTO user = getUserIdFromCookie(request);
         model.addAttribute("user", user);
 
 
         //Hiện thông báo (trường hợp có)
-        if (user != null) {
+        if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }

@@ -289,11 +289,11 @@
                         </ul>
                     </div>
 
-                    <h2 class="post-title">
-                        <a th:text="${blog.title}"></a>
+                    <h2 class="post-title" style="display: flex;">
+                        <a th:text="${blog.title}"></a> &nbsp;
 
                         <span th:if="${user == null}">
-                            <a th:if="${blog.blogTypeId == 2}" onclick="showPopup()" style="cursor: pointer;">
+                            <a th:if="${blog.blogTypeId == 2 and blog.status != false}" onclick="showPopup()" style="cursor: pointer;">
                                 <!-- Icon Gift -->
                                 <svg xmlns="http://www.w3.org/2000/svg" height="0.5em"
                                      viewBox="0 0 448 512">
@@ -301,7 +301,7 @@
                                 </svg>
                             </a>
 
-                            <a th:if="${blog.blogTypeId == 1}" onclick="showPopup()" style="cursor: pointer;">
+                            <a th:if="${blog.blogTypeId == 1 and blog.status != false}" onclick="showPopup()" style="cursor: pointer;">
                                 <!-- Icon Sell (Exchange) -->
                                 <svg xmlns="http://www.w3.org/2000/svg" height="0.5em"
                                      viewBox="0 0 576 512">
@@ -309,6 +309,18 @@
                                 </svg>
                             </a>
                         </span>
+
+                        <!-- Thông báo đóng bài viết  -->
+                        <span th:if="${blog.blogTypeId == 2 and blog.status == false}">
+                                <p class="alert alert-danger"
+                                   style="height: 30px; display: flex; align-items: center; padding: 8px; margin-top: 12px;">The Blog has been closed!</p>
+                            </span>
+
+                        <span th:if="${blog.blogTypeId == 1 and blog.status == false}">
+                                <p class="alert alert-danger"
+                                   style="height: 30px; display: flex; align-items: center; padding: 8px; margin-top: 12px;">The Blog has been closed!</p>
+                        </span>
+
 
                         <span class="popup">
                             <h5>Looks like you're not logged in, do you want to redirect to the login page?</h5>
