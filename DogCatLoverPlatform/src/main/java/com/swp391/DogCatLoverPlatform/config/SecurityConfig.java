@@ -54,6 +54,7 @@ public class SecurityConfig {
                     .antMatchers(HttpMethod.POST,"/index/**").permitAll()
                     .antMatchers("/cdn-cgi/**").permitAll()
                     .antMatchers("/blog/**").permitAll()
+                    .antMatchers("/invoice/**").permitAll()
                     .antMatchers("/paymethod/**").permitAll()
                     .antMatchers("/").permitAll()
                     .antMatchers(HttpMethod.POST,"/blog/**").hasRole("USER")

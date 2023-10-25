@@ -24,6 +24,7 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm AND b.status = true")
         Page<BlogEntity> findByUserEntityIdAndConfirm(int userId, boolean confirm, Pageable pageable);
 
+        List<BlogEntity> findByConfirm(Boolean confirm);
         List<BlogEntity> findByConfirmAndStatusTrue(Boolean confirm);
         Page<BlogEntity> findByConfirmAndStatusTrue(boolean confirm, Pageable pageable);
 
@@ -31,5 +32,7 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Modifying
         @Query("UPDATE blog b SET b.status = false WHERE b.id = :id")
         void updateStatus(int id);
+
+        List<BlogEntity> findByUserEntityIdAndConfirmAndStatusTrue(Integer userId, Boolean confirm);
 
 }

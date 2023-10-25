@@ -180,7 +180,7 @@ public class BlogService {
     }
 
     public List<BlogDTO> getBlogsPendingApproval() {
-        List<BlogEntity> pendingBlogs = blogRepository.findByConfirmAndStatusTrue(null);
+        List<BlogEntity> pendingBlogs = blogRepository.findByConfirm(null);
         List<BlogDTO> pendingBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : pendingBlogs) {
@@ -191,8 +191,8 @@ public class BlogService {
         return pendingBlogDTOs;
     }
 
-    public List<BlogDTO> getBlogsReject() {
-        List<BlogEntity> rejectBlogs = blogRepository.findByConfirmAndStatusTrue(false);
+    public List<BlogDTO> getBlogsReject(int userId) {
+        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirmAndStatusTrue(userId, false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
@@ -202,6 +202,7 @@ public class BlogService {
 
         return rejectBlogDTOs;
     }
+
 
     public void approveBlog(int blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();

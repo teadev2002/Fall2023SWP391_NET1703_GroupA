@@ -40,7 +40,7 @@ public class ServiceService {
         Date date = new Date();
         blogEntity.setCreateDate(date);
         blogEntity.setConfirm(null);
-        blogEntity.setStatus(true);
+        blogEntity.setStatus(false);
         blogEntity.setContent(Content);
         blogEntity.setImage(image);
         blogEntity.setPrice(price);
