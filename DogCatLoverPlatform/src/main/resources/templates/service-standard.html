@@ -50,10 +50,12 @@
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
-                <div class="contact-number" style="display: flex;">
-                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
-                    &nbsp; &nbsp;<img src="../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}">Đăng xuất</a></span>
+                <div class="contact-number" style="display: flex; align-items: center;">
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+                    &nbsp; &nbsp;
+                    <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+                    &nbsp; &nbsp;
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
             </div>
         </div>
@@ -297,17 +299,13 @@
                               th:text="${#strings.length(service.content) > 100} ? ${service.content.substring(0, 100) + '...'} : ${service.content}">
                         </span>
 
-                        <div class="more-btn mt-2">
+                        <div class="more-btn mt-2" th:if="${user == null}">
                             <a th:href="@{/service/detail/{id}(id=${service.id})}"><span>Re</span>ad More</a>
                         </div>
 
-                        <!--            <div class="more-btn mt-2" th:if="${user != null}">-->
-                        <!--              <form th:action="@{/service/detail/myblog}" method="get">-->
-                        <!--                <input type="hidden" name="id" th:value="${service.id}">-->
-                        <!--                <span><button type="submit">Read More</button></span>-->
-                        <!--              </form>-->
-
-                        <!--            </div>-->
+                        <div class="more-btn mt-2" th:if="${user != null}">
+                            <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><span>Re</span>ad More</a>
+                        </div>
 
                     </div>
                 </div>
@@ -387,13 +385,13 @@
                         <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
                             <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                                 <div class="wi sidebarImage" >
-                                    <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}"><img
+                                    <a th:href="@{/service/detail/{id}(id=${service.id})}"><img
                                             th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}" th:text="${service.blog.createDate}"></a>
+                                    <a th:href="@{/service/detail/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                                     <h6>
-                                        <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}"
+                                        <a th:href="@{/service/detail/{id}(id=${service.id})}"
                                            th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
                                     </h6>
                                 </div>
@@ -403,13 +401,13 @@
                         <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
                             <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                                 <div class="wi sidebarImage" >
-                                    <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}"><img
+                                    <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><img
                                             th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}" th:text="${service.blog.createDate}"></a>
+                                    <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                                     <h6>
-                                        <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}"
+                                        <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"
                                            th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
                                     </h6>
                                 </div>

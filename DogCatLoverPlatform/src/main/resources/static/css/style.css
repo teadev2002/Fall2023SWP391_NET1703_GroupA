@@ -9807,7 +9807,7 @@ footer.style2 .social-area ul li:hover a i {
 
 @media (max-width: 576px) {
     .services-details-area .services-datails-content {
-        padding: 50px 20px
+        padding: 50px 20px;
     }
 }
 
@@ -14586,3 +14586,22 @@ footer.style2 .social-area ul li:hover a i {
     right: 0;
 }
 
+.avatar
+{
+    position: relative;
+    display: inline-block;
+    max-width: 36px;
+    vertical-align: bottom;
+    white-space: nowrap;
+    border-radius: 1000px;
+}
+
+.avatar img
+{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border: 0 none;
+    border-radius: 1000px;
+}

@@ -143,10 +143,12 @@
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
-                <div class="contact-number" style="display: flex;">
+                <div class="contact-number" style="display: flex; align-items: center;">
                     Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
-                    &nbsp; &nbsp;<img src="../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}" >Đăng xuất</a></span>
+                    &nbsp; &nbsp;
+                    <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+                    &nbsp; &nbsp;
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
             </div>
         </div>

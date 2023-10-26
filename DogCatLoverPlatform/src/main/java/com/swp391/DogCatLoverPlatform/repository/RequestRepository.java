@@ -17,8 +17,9 @@ public interface RequestRepository extends JpaRepository<RequestEntity, Integer>
     @Query(value = "SELECT r.* ,u.user_name, b.title  FROM request r \n" +
             "JOIN blog b ON r.id_blog = b.id \n" +
             "JOIN users u  ON r.id_user  = u.id \n" +
-            "WHERE b.id_user_created = :id_user_created AND r.status is NOT NULL", nativeQuery = true)
+            "WHERE b.id_user_created = :id_user_created", nativeQuery = true)
     List<RequestEntity> findAllRequestToBlogOwner(Integer id_user_created);
+
 
     //Danh sách các Blog được gửi request, hiển thị bên trang list-request.html  (Dũng)
     @Query(value = "SELECT DISTINCT b.title, r.id_blog, " +

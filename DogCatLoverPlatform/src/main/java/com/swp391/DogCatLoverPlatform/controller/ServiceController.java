@@ -59,6 +59,61 @@ public class ServiceController {
     @Autowired
     RequestService requestService;
 
+
+    @GetMapping("/view/myservice/details/{id}")
+    public String viewMyServiceDetail(@PathVariable("id") int id, Model model, HttpServletRequest req){
+        List<ServiceDTO> latestServices = serviceService.getThreeLatestBlogs();
+        model.addAttribute("latestService", latestServices);
+
+        ServiceDTO serviceDTO = serviceService.getServiceDetail(id);
+        model.addAttribute("service", serviceDTO);
+
+        UserDTO user = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
+        //Lấy comment by Blog Id
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(serviceDTO.getId_blog());
+        model.addAttribute("comments", comments);
+
+        //Hiện thông báo (trường hợp có)
+        if (user != null) {
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
+        return "service-details-myservice";
+    }
+
+    //View My Blog Service
+    @GetMapping("/view/myservice")
+    public String viewMyService(Model model,
+                                @RequestParam(defaultValue = "1") int page,
+                                @RequestParam(defaultValue = "3") int size,
+                                HttpServletRequest req) {
+
+        UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+        model.addAttribute("user", user);
+
+        Page<ServiceDTO> listMyService = serviceService.GetAllMyService(user.getId(), page, size);
+        model.addAttribute("totalPage", listMyService.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("listService", listMyService);
+
+
+        List<ServiceDTO> latestServices = serviceService.getThreeLatestBlogs();
+        model.addAttribute("latestService", latestServices);
+        return "myservice";
+    }
+
     @GetMapping("/view")
     public String viewAllService(Model model,
                                  @RequestParam(defaultValue = "1") int page,

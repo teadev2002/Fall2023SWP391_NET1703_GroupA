@@ -55,8 +55,6 @@ public class BlogService {
     }
 
 
-
-
     public Page<BlogDTO> GetBlogsByTitle(String title, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
@@ -68,13 +66,14 @@ public class BlogService {
         return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
     }
 
+    //View My Blog
     public Page<BlogDTO> GetAllMyBlog(int id_user, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
         // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, true, pageable);
+        Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, pageable);
 
         Page<BlogDTO> pageOfBlogDTO = listBlog.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 

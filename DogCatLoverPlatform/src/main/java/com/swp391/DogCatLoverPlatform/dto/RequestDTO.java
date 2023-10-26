@@ -17,6 +17,7 @@ public class RequestDTO {
     private Date createDate;
     private String userName;
     private String userId;
+    private String userImage;
     private String blogTitle;
     private String blogTypeName;
     private String blogPetType;
