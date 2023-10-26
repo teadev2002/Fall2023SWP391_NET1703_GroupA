@@ -3,6 +3,9 @@ var listTime = ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00',
 async function loadTime(){
     time = null;
     var dates = document.getElementById("chooseDate").value;
+    var startDate = document.getElementById("dateStart").value;
+    var endDate = document.getElementById("dateEnd").value;
+
     var id = document.getElementById("id_blog").value;
     console.log(window.location.pathname)
     console.log(id)
@@ -13,26 +16,35 @@ async function loadTime(){
         headers: new Headers({
         })
     });
-    var list = await response.json();
-    console.log(list)
 
-    var main = ''
-    for(i=0; i<listTime.length; i++){
-        var check = false;
-        for(j=0; j<list.length; j++){
-            var t = list[j].bookingTime.split(":")[0] +":"+list[j].bookingTime.split(":")[1]
-            if(t == listTime[i]){
-                check = true;
+    var chooseDateObj = new Date(dates);
+    var startDateObj = new Date(startDate);
+    var endDateObj = new Date(endDate);
+    if (chooseDateObj >= startDateObj && chooseDateObj <= endDateObj) {
+        var list = await response.json();
+        console.log(list)
+
+        var main = ''
+        for (i = 0; i < listTime.length; i++) {
+            var check = false;
+            for (j = 0; j < list.length; j++) {
+                var t = list[j].bookingTime.split(":")[0] + ":" + list[j].bookingTime.split(":")[1]
+                if (t == listTime[i]) {
+                    check = true;
+                }
+            }
+            if (check == false) {
+                main += `</span><span onclick="chooseTime(this,'${listTime[i]}')" class="time-item">${listTime[i]}</span>`
+            } else {
+                main += `</span><span class="time-item useds">${listTime[i]}</span>`
             }
         }
-        if(check == false){
-            main += `</span><span onclick="chooseTime(this,'${listTime[i]}')" class="time-item">${listTime[i]}</span>`
-        }
-        else{
-            main += `</span><span class="time-item useds">${listTime[i]}</span>`
-        }
+        document.getElementById("listTime").innerHTML = main
+    }else {
+        // `chooseDate` không nằm trong khoảng thời gian bắt đầu và kết thúc
+        alert("Ngày bạn chọn không nằm trong khoảng thời gian dịch vụ.");
+        window.location.reload()
     }
-    document.getElementById("listTime").innerHTML = main
 }
 
 var time = null;

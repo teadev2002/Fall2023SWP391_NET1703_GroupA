@@ -29,12 +29,14 @@ public class ServiceService {
     @Autowired
     ModelMapperConfig modelMapperConfig;
 
-    public ServiceEntity createService(String Content, int price, String title, int id_user, int serviceCategory, String image){
+    public ServiceEntity createService(String Content, int price, String title, int id_user, int serviceCategory, String image, java.sql.Date startDate, java.sql.Date endDate){
         ServiceEntity serviceEntity = new ServiceEntity();
 
         ServiceCategoryEntity serviceCategoryEntity = new ServiceCategoryEntity();
         serviceCategoryEntity.setId(serviceCategory);
         serviceEntity.setService_category(serviceCategoryEntity);
+        serviceEntity.setDate_start(startDate);
+        serviceEntity.setDate_end(endDate);
 
         BlogEntity blogEntity = new BlogEntity();
         Date date = new Date();
@@ -104,6 +106,8 @@ public class ServiceService {
         serviceDTO.setCreateDate(s.get().getBlog_service().getCreateDate());
         serviceDTO.setServiceCateName(s.get().getService_category().getName());
         serviceDTO.setId_blog(s.get().getBlog_service().getId());
+        serviceDTO.setDateStart(s.get().getDate_start());
+        serviceDTO.setDateEnd(s.get().getDate_end());
         serviceDTO.setId(s.get().getId());
         return serviceDTO ;
     }

@@ -27,6 +27,9 @@ public interface BookingEntityRepository extends JpaRepository<BookingEntity,Int
     @Query(value = "select b.* from booking b inner JOIN blog bl on bl.id = b.id_blog where b.id_user = ?1 AND b.status= false",nativeQuery = true)
     public List<BookingEntity> findByUserBooking(int idUser);
 
+    @Query(value = "select b.* from booking b inner JOIN blog bl on bl.id = b.id_blog where b.id_user = ?1 AND b.status= true",nativeQuery = true)
+    public List<BookingEntity> findByUserBookingHistory(int idUser);
+
     @Transactional
     @Modifying
     @Query("UPDATE booking b SET b.status = true WHERE b.id = :id")

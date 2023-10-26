@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Trash</title>
+
     <!-- Include Bootstrap CSS for styling and responsiveness -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -14,12 +15,25 @@
 
         body {
             /*background: linear-gradient(to right, #fcdccc, #f79465);*/
-            position: relative;
-            margin: 0;
-            height: 100vh;
-            background-size: 200% 200%;
-            animation: gradientShift 8s infinite alternate;
-            background-image: linear-gradient(360deg, #fcdccc, #f79465);
+            /*position: relative;*/
+            /*margin: 0;*/
+            /*height: 100vh;*/
+            /*background-size: 200% 200%;*/
+            /*animation: gradientShift 8s infinite alternate;*/
+            /*background-image: linear-gradient(360deg, #fcdccc, #f79465);*/
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            background-image: url("../../images/blog/catdog.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: -1;
+            filter: blur(5px);
         }
 
         @keyframes gradientShift {
@@ -57,7 +71,7 @@
 </head>
 
 <body>
-
+<div class="background"></div>
 <div class="container mt-5" style="display: block">
     <h2 class="mb-4" style="justify-content: center; text-align: center; color: white;
                         font-weight: bold;">Rejected Blog</h2>
@@ -68,8 +82,8 @@
                 <tr>
                     <th style="padding-right: 70px; ">Title</th>
                     <th style="padding-right: 70px; ">Content</th>
-                    <th>Reason</th>
-                    <th style="padding-right: 90px; ">Blog Type</th>
+                    <th style="padding-right: 70px; ">Reason</th>
+                    <th style="padding-right: 50px; ">Blog Type</th>
                     <th style="padding-right: 90px; ">Pet Type</th>
                     <th>Price</th>
                     <th>Status</th>
@@ -98,15 +112,16 @@
                         </select>
                     </td>
 
-                  <td>
-                      <div class="form-check">
-                          <select id="" name="idPetType" class="form-control" onchange="togglePriceInput()">
-                              <option th:each="petTypes : ${petTypes}" th:value="${petTypes.id}"
-                                      th:text="${petTypes.type}" th:selected="${petTypes.id==blog.petTypeId}"></option>
-                          </select>
-                      </div>
+                    <td>
+                        <div class="form-check">
+                            <select id="" name="idPetType" class="form-control" onchange="togglePriceInput()">
+                                <option th:each="petTypes : ${petTypes}" th:value="${petTypes.id}"
+                                        th:text="${petTypes.type}"
+                                        th:selected="${petTypes.id==blog.petTypeId}"></option>
+                            </select>
+                        </div>
 
-                  </td>
+                    </td>
 
                     <td>
                         <input type="text" class="form-control" name="price" th:value="${blog.price}"/>
@@ -130,33 +145,33 @@
             </table>
         </div>
     </form>
-
-    <script th:inline="javascript">
-        function confirmDelete(blogId) {
-            if (confirm('Are you sure you want to delete this blog?')) {
-                var form = document.createElement('form');
-                form.method = 'post';
-                form.action = '/blog/trash';
-                form.style.display = 'none';
-
-                var input = document.createElement('input');
-                input.type = 'text';
-                input.name = 'action';
-                input.value = 'delete';
-                form.appendChild(input);
-
-                input = document.createElement('input');
-                input.type = 'text';
-                input.name = 'blogId';
-                input.value = blogId;
-                form.appendChild(input);
-
-                document.body.appendChild(form);
-                form.submit();
-            }
-        }
-    </script>
 </div>
+<script th:inline="javascript">
+    function confirmDelete(blogId) {
+        if (confirm('Are you sure you want to delete this blog?')) {
+            var form = document.createElement('form');
+            form.method = 'post';
+            form.action = '/blog/trash';
+            form.style.display = 'none';
+
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'action';
+            input.value = 'delete';
+            form.appendChild(input);
+
+            input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'blogId';
+            input.value = blogId;
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+
 
 <!-- Include Bootstrap JS and Popper.js for added functionality like modals, tooltips, etc. (optional) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

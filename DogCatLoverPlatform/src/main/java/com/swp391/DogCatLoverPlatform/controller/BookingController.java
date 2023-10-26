@@ -30,6 +30,18 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
+    @GetMapping("/history")
+    public String history(Model model, HttpServletRequest request){
+        UserDTO userDTO = getUserIdFromCookie(request);
+
+        if(userDTO == null){
+            return null;
+        }
+       List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
+        model.addAttribute("listHistory",listHistory);
+        return "booking-history";
+    }
+
     @GetMapping("/manager")
     public String manager(Model model, HttpServletRequest req) {
         UserDTO userDTO = getUserIdFromCookie(req);

@@ -211,7 +211,7 @@ public class UserController {
         String address = req.getParameter("address");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
-        String description = req.getParameter("userDescription");
+        String description = req.getParameter("description");
 
         boolean isSuccess = userService.updateUser(fullname, username, phone, address, email, image, description);
 

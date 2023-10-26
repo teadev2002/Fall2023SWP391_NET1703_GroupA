@@ -22,4 +22,5 @@ public class BookingDTO {
     private boolean status;
     private BlogDTO blogDTO;
     private UserDTO userDTO;
+
 }
