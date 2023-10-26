@@ -23,8 +23,11 @@ $(document).ready(function () {
         }).done(function (data) {
             if (data && data.statusCode == 200) {
                 localStorage.setItem("token", data.data)
-                if (data.message == "[ROLE_ADMIN]") {
+                if (data.message == "[ROLE_ADMIN]" || data.message == "[ROLE_STAFF]") {
                 window.location = "../staff/view";
+                }else if(data.message == "[ROLE_NULL]" ){
+                    window.alert("Your Account Has Been Disable");
+                    window.location = "logout";
                 }else{
                     window.location = "home";
                 }

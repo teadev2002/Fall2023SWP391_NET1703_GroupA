@@ -50,10 +50,12 @@
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
-                <div class="contact-number" style="display: flex;">
+                <div class="contact-number" style="display: flex; align-items: center;">
                     Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
-                    &nbsp; &nbsp;<img src="../../../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}" >Đăng xuất</a></span>
+                    &nbsp; &nbsp;
+                    <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+                    &nbsp;
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
             </div>
         </div>
@@ -81,11 +83,6 @@
 
                 <li class="menu-item-has-children">
                     <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
-                    </ul>
                 </li>
 
                 <li class="menu-item-has-children">
@@ -101,7 +98,7 @@
                 <li class="menu-item-has-children">
                     <a th:href="@{/blog/view}">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{/blog/byType(type='Exchange')}">Exchange</a></li>
+                        <li><a th:href="@{/blog/byType(type='Sell')}">Sell</a></li>
                         <li><a th:href="@{/blog/byType(type='Gift')}">Gift</a></li>
                     </ul>
                 </li>
@@ -275,12 +272,17 @@
                             </ul>
                         </div>
 
-                        <h4 style="display: flex;">
+                        <h4 class="post-title" style="display: flex;">
                             <a th:text="${blog.title}"></a>
 
+                            <!-- Thông báo Blog đang chờ được duyệt-->
+                            <span th:if="${blog.confirm == null}" style="margin-left: 12px;">
+                            <p class="alert alert-secondary"
+                               style=" align-items: center; padding: 0px 8px; margin-bottom: 0px;">On Pending to Approve!</p>
+                             </span>
 
                             <!--Delete-->
-                            <form th:action="@{/blog/delete}" method="post" style="margin-left: 12px;">
+                            <form th:if="${blog.confirm == true}"  th:action="@{/blog/delete}" method="post" style="margin-left: 12px;">
                                 <input type="hidden" name="_method" value="DELETE"/>
                                 <input type="hidden" name="idBlog" th:value="${blog.id}"/>
 
@@ -301,7 +303,7 @@
                         </span>
 
                         <div class="more-btn mt-2">
-                            <a th:href="@{/blog/{id}/detail/myblog(id=${blog.id})}"><span>Re</span>ad More</a>
+                            <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"><span>Re</span>ad More</a>
                         </div>
 
                     </div>
@@ -354,7 +356,7 @@
                         </div>
 
                         <ul class="wp-block-categoris-cloud">
-                            <li><a th:href="@{/blog/byType(type='Exchange')}"><span>Pet Exchange</span> <span><span
+                            <li><a th:href="@{/blog/byType(type='Sell')}"><span>Pet Sell</span> <span><span
                                     class="number-of-categoris">(30)</span><i
                                     class="bi bi-arrow-right-short"></i></span></a></li>
                             <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
@@ -378,21 +380,40 @@
                             <h3>Newest Posts</h3>
                         </div>
 
-                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
-                            <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
-                                <div class="wi sidebarImage">
-                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}"><img th:src="@{'../../../images/blog/' + ${blog.image}}"
-                                                                                          alt="image"></a>
+
+                        <!--                        Newest Blog-->
+                        <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
+                                    <a th:href="@{/blog/detail/{id}(id=${blog.id})}"><img
+                                            th:src="@{'../../../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="@{/blog/{id}/detail(id=${blog.id})}" th:text="${blog.createDate}"></a>
-
+                                    <a th:href="@{/blog/detail/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
-                                        <a th:href="@{/blog/{id}/detail(id=${blog.id})}" th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                        <a th:href="@{/blog/detail/{id}(id=${blog.id})}"
+                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
+                                    <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"><img
+                                            th:src="@{'../../../images/blog/' + ${blog.image}}" alt="image"></a>
+                                </div>
+                                <div class="wc">
+                                    <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
+                                    <h6>
+                                        <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"
+                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
 
@@ -403,7 +424,7 @@
                         </div>
 
                         <p class="wp-block-tag-cloud">
-                            <a th:href="@{/blog/byType(type='Exchange')}">Exchange</a>
+                            <a th:href="@{/blog/byType(type='Sell')}">Sell</a>
                             <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
                             <a href="blog-grid.html">Daycare</a>
                             <a href="blog-grid.html">Boarding</a>

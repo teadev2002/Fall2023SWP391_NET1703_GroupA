@@ -48,10 +48,13 @@
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
-                <div class="contact-number" style="display: flex;">
+                <div class="contact-number" style="display: flex; align-items: center;">
                     Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
-                    &nbsp; &nbsp;<img src="../../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}">Đăng xuất</a></span>
+                    &nbsp; &nbsp;
+                    <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}"
+                                                            alt="avatar"></span>
+                    &nbsp; &nbsp;
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}">Logout</a></span>
                 </div>
             </div>
         </div>
@@ -80,11 +83,6 @@
 
                 <li class="menu-item-has-children">
                     <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
-                    </ul>
                 </li>
 
                 <li class="menu-item-has-children">
@@ -100,7 +98,7 @@
                 <li class="menu-item-has-children">
                     <a th:href="@{/blog/view}">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{/blog/byType(type='Exchange')}">Exchange</a></li>
+                        <li><a th:href="@{/blog/byType(type='Sell')}">Sell</a></li>
                         <li><a th:href="@{/blog/byType(type='Gift')}">Gift</a></li>
                     </ul>
                 </li>
@@ -171,7 +169,7 @@
                 <!--Notification-->
                 <li th:if="${user != null}">
                     <a class="button__notification" th:href="@{/blog/view/view-request}">
-                        <svg  width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                         </svg>
                     </a>
@@ -179,7 +177,8 @@
                     <span th:if="${count != 0}" class="button__notification__badge" th:text="${count}"></span>
                 </li>
 
-                <li  th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom" title="Bạn cần đăng nhập để xem thông báo">
+                <li th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom"
+                                               title="Bạn cần đăng nhập để xem thông báo">
                     <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                     </svg>
@@ -261,9 +260,9 @@
                 <div class="services-datails-content">
                     <div class="banner-title">
                         <h2 th:text="${service.title}"></h2>
-                        <h5> <b th:text="${service.dateStart}"></b> - <b th:text="${service.dateEnd}"></b > </h5>
+                        <h5><b th:text="${service.dateStart}"></b> - <b th:text="${service.dateEnd}"></b></h5>
                         <div class="currency">
-                            <h5 th:text="${service.price} + '$'"  ></h5>
+                            <h5 th:text="${service.price} + '$'"></h5>
                         </div>
                     </div>
                     <div class="service-area">
@@ -275,7 +274,8 @@
                                             <div class="widget-title">
                                                 <h3>Choose day</h3>
                                             </div>
-                                            <input onchange="loadTime()" type="date" class="form-control" id="chooseDate">
+                                            <input onchange="loadTime()" type="date" class="form-control"
+                                                   id="chooseDate">
                                             <div class="appointment-inner">
                                                 <input type="hidden" id="id_blog" th:value="${service.id_blog}">
                                                 <input type="hidden" id="dateStart" th:value="${service.dateStart}">
@@ -285,7 +285,18 @@
                                                 </div>
                                                 <p id="datecs"></p>
                                                 <span class="errors" id="timeerror">Appointment Time not blank(*)</span>
-                                                <br><button onclick="createAppointment()" class="btn btn-warning form-control primary-btn3">Booking</button>
+                                                <br>
+
+                                                <button th:if="${user != null and user.id != service.blog.userId}"
+                                                        onclick="createAppointment()"
+                                                        class="btn btn-warning form-control primary-btn3">Booking
+                                                </button>
+
+                                                <button th:if="${user == null}"
+                                                        onclick="createAppointment()"
+                                                        class="btn btn-warning form-control primary-btn3">Booking
+                                                </button>
+
                                             </div>
                                         </div>
                                     </div>
@@ -330,7 +341,7 @@
                             <div class="row g-lg-4 gy-5">
                                 <div th:each="comments : ${comments}" class="col-lg-8">
 
-                                <!-- Hiển thị Review -->
+                                    <!-- Hiển thị Review -->
                                     <div class="review-list-area">
                                         <ul class="review-list">
                                             <li>
@@ -341,8 +352,10 @@
                                                     <div class="review-content">
                                                         <div class="c-header d-flex align-items-center">
                                                             <div class="review-meta">
-                                                                <h5 class="mb-0"><a th:text="${comments.userName} + ' , '"></a></h5>
-                                                                <div class="c-date" th:text="${comments.createDate}"></div>
+                                                                <h5 class="mb-0"><a
+                                                                        th:text="${comments.userName} + ' , '"></a></h5>
+                                                                <div class="c-date"
+                                                                     th:text="${comments.createDate}"></div>
                                                             </div>
 
                                                         </div>
@@ -354,7 +367,7 @@
                                                             <li><i class="bi bi-star-fill"></i></li>
                                                         </ul>
                                                         <div class="c-body">
-                                                            <p th:text="${comments.description}"> </p>
+                                                            <p th:text="${comments.description}"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -372,39 +385,38 @@
                                             <h3>Leave A Reply</h3>
                                         </div>
                                         <form>
-                                                <div class="col-lg-12">
-                                                    <div class="form-inner mb-10">
-                                                        <textarea placeholder="Message..."></textarea>
-                                                    </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-inner mb-10">
+                                                    <textarea placeholder="Message..."></textarea>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-inner2 mb-30">
-                                                        <div class="review-rate-area">
-                                                            <p>Your Rating</p>
-                                                            <div class="rate">
-                                                                <input type="radio" id="star5" name="rate" value="5">
-                                                                <label for="star5" title="text">5 stars</label>
-                                                                <input type="radio" id="star4" name="rate" value="4">
-                                                                <label for="star4" title="text">4 stars</label>
-                                                                <input type="radio" id="star3" name="rate" value="3">
-                                                                <label for="star3" title="text">3 stars</label>
-                                                                <input type="radio" id="star2" name="rate" value="2">
-                                                                <label for="star2" title="text">2 stars</label>
-                                                                <input type="radio" id="star1" name="rate" value="1">
-                                                                <label for="star1" title="text">1 star</label>
-                                                            </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-inner2 mb-30">
+                                                    <div class="review-rate-area">
+                                                        <p>Your Rating</p>
+                                                        <div class="rate">
+                                                            <input type="radio" id="star5" name="rate" value="5">
+                                                            <label for="star5" title="text">5 stars</label>
+                                                            <input type="radio" id="star4" name="rate" value="4">
+                                                            <label for="star4" title="text">4 stars</label>
+                                                            <input type="radio" id="star3" name="rate" value="3">
+                                                            <label for="star3" title="text">3 stars</label>
+                                                            <input type="radio" id="star2" name="rate" value="2">
+                                                            <label for="star2" title="text">2 stars</label>
+                                                            <input type="radio" id="star1" name="rate" value="1">
+                                                            <label for="star1" title="text">1 star</label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-inner two">
-                                                        <button class="primary-btn3 btn-lg" type="submit">Post Comment
-                                                        </button>
-                                                    </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-inner two">
+                                                    <button class="primary-btn3 btn-lg" type="submit">Post Comment
+                                                    </button>
                                                 </div>
                                             </div>
-                                        </form>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -412,8 +424,9 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+</div>
 </div>
 
 

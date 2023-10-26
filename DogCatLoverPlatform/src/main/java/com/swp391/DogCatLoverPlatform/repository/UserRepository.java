@@ -8,11 +8,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,Integer>  {
     UserEntity findByEmailAndPassword(String email, String password);
     UserEntity findByEmail(String email);
+
+
+    @Query("SELECT u FROM users u " +
+            "WHERE u.roleEntity.name = 'ROLE_STAFF' OR u.roleEntity.name = 'ROLE_NULL' ")
+    List<UserEntity> findAllStaffAndNull();
+
 
     @Transactional
     @Modifying
@@ -23,4 +30,5 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer>  {
     @Modifying
     @Query("UPDATE users u SET u.password = :password WHERE u.id = :id")
     void updatePassInUser(@Param("password") String password, @Param("id") int id);
+
 }

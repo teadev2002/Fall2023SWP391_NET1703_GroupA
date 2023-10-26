@@ -21,8 +21,9 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         Page<BlogEntity> findByTitleContainingAndConfirmAndStatusNotNull(String title, boolean confirm, Pageable pageable);
 
 
-        @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm AND b.status is not null")
-        Page<BlogEntity> findByUserEntityIdAndConfirm(int userId, boolean confirm, Pageable pageable);
+        //View My Blog
+        @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.status is not null")
+        Page<BlogEntity> findByUserEntityIdAndConfirm(int userId, Pageable pageable);
 
 
         //Hiển thị bên Blog Pending Approve             Confirm: null (bắt buộc)
@@ -37,5 +38,7 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Modifying
         @Query("UPDATE blog b SET b.status = false WHERE b.id = :id")
         void updateStatus(int id);
+
+        List<BlogEntity> findByUserEntityIdAndConfirmAndStatusTrue(Integer userId, Boolean confirm);
 
 }

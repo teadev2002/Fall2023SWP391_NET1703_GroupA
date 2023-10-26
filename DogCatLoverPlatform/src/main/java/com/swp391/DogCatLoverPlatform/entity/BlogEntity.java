@@ -78,6 +78,8 @@ public class BlogEntity {
     @JoinColumn(name = "id_pet_category")
     private PetCategoryEntity petCategoryEntity;
 
+    @OneToMany(mappedBy = "blogEntity")
+    private List<InvoiceEntity> invoices;
 
 
 

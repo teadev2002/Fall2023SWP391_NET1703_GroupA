@@ -68,13 +68,14 @@ public class BlogService {
         return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
     }
 
+    //View My Blog
     public Page<BlogDTO> GetAllMyBlog(int id_user, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
         // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, true, pageable);
+        Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, pageable);
 
         Page<BlogDTO> pageOfBlogDTO = listBlog.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 
@@ -194,9 +195,9 @@ public class BlogService {
         return pendingBlogDTOs;
     }
 
-    //Thùng rác chứa các Blog bị từ chối
-    public List<BlogDTO> getBlogsReject() {
-        List<BlogEntity> rejectBlogs = blogRepository.findByConfirm(false);
+
+    public List<BlogDTO> getBlogsReject(int userId) {
+        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirmAndStatusTrue(userId, false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
@@ -207,6 +208,7 @@ public class BlogService {
 
         return rejectBlogDTOs;
     }
+
 
     //Blog được chấp nhận
     public void approveBlog(int blogId) {

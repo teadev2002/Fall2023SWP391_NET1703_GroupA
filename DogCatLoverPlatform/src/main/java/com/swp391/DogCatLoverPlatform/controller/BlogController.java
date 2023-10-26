@@ -33,6 +33,9 @@ public class BlogController {
     BlogService blogService;
 
     @Autowired
+    ServiceService serviceService;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -75,7 +78,7 @@ public class BlogController {
             requestService.acceptedRequest(userNotificationDTO, userIdRequest, userIdAccepted, requestId, blogId);
         }
 
-        return "redirect:/blog/" + blogId + "/detail/myblog";
+        return "redirect:/blog/detail/myblog/" + blogId ;
     }
 
     //Gửi request (Dũng)
@@ -94,12 +97,12 @@ public class BlogController {
            redirectAttributes.addFlashAttribute("sent", "Your request have been sent!");
        }
 
-        return "redirect:/blog/"+blogId+"/detail/myblog";
+        return "redirect:/blog/detail/myblog/" +blogId;
     }
 
-    //View List Request
+    //View List Request --> Đổi tên Notification
     @GetMapping("/view/view-request")
-    public String viewListRequest(Model model, HttpServletRequest req){
+    public String viewNotification(Model model, HttpServletRequest req){
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
@@ -149,7 +152,7 @@ public class BlogController {
     }
 
 
-
+    //View My Blog
     @GetMapping("/view/myblog")
     public String viewMyBlog(Model model,
                              @RequestParam(defaultValue = "1") int page,
@@ -176,6 +179,8 @@ public class BlogController {
         model.addAttribute("latestBlogs", latestBlogs);
         return "myblog";
     }
+
+
 
     @GetMapping("/search")
     public String viewSearch(Model model, @RequestParam("title") String title,
@@ -424,7 +429,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     }
 
 
-    @GetMapping("/{id}/detail")
+    @GetMapping("/detail/{id}")
     public String viewDetailsBlog(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
@@ -452,7 +457,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     }
 
 
-    @GetMapping("/{id}/detail/myblog")
+    @GetMapping("/detail/myblog/{id}")
     public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req, RedirectAttributes redirectAttributes) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
@@ -573,20 +578,27 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
                 emailService.sendEmail(user.getEmail(), reason);
             }
         }
-        return "redirect:/blog/staff";
+        return "redirect:/staff/view/pending";
     }
 
     @GetMapping("/trash")
-    public String viewBlogReject(Model model, @RequestParam(value = "updated", required = false) String updated) {
-        List<BlogDTO> rejectBlog = blogService.getBlogsReject();
+    public String viewUserTrash(Model model, @RequestParam(value = "updated", required = false) String updated, HttpServletRequest req) {
+        UserDTO user = getUserIdFromCookie(req);
+
+        if (user != null) {
+            List<BlogDTO> userRejectBlogs = blogService.getBlogsReject(user.getId());
+            model.addAttribute("rejectBlog", userRejectBlogs);
+        }
+
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
         List<PetTypeEntity> listPettype = petTypeService.getAllPetType();
-        model.addAttribute("rejectBlog", rejectBlog);
         model.addAttribute("blogTypes", listBlogType);
-        model.addAttribute("petTypes",listPettype);
+        model.addAttribute("petTypes", listPettype);
         model.addAttribute("updated", updated);
+
         return "trash";
     }
+
 
     @PostMapping("/trash")
     public String updateAndResubmitOrDeleteBlog(

@@ -65,4 +65,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity_UserNotification")
     List<UserNotificationEntity> listNotification;
 
+    @OneToMany(mappedBy = "userEntity")
+    private List<InvoiceEntity> invoiceEntities;
+
 }

@@ -20,7 +20,7 @@ public class ServiceDTO {
     private Date createDate;
     private String userName;
     private double price;
-    private boolean status;
+    private Boolean status;
     private Date dateStart;
     private Date dateEnd;
     private int id_user;
@@ -35,7 +35,7 @@ public class ServiceDTO {
         return confirm;
     }
 
-    public void setConfirm(boolean confirm) {
+    public void setConfirm(Boolean confirm) {
         this.confirm = confirm;
     }
 }

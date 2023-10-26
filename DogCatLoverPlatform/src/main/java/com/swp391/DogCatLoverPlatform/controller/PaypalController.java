@@ -1,13 +1,11 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
-import com.swp391.DogCatLoverPlatform.dto.Order;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
-import com.swp391.DogCatLoverPlatform.service.BlogService;
-import com.swp391.DogCatLoverPlatform.service.BookingService;
-import com.swp391.DogCatLoverPlatform.service.PaypalService;
-import com.swp391.DogCatLoverPlatform.service.UserService;
+import com.swp391.DogCatLoverPlatform.dto.*;
+import com.swp391.DogCatLoverPlatform.entity.InvoiceEntity;
+import com.swp391.DogCatLoverPlatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.paypal.api.payments.Links;
@@ -16,6 +14,8 @@ import com.paypal.base.rest.PayPalRESTException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/paymethod")
@@ -30,6 +30,9 @@ public class PaypalController {
 
     @Autowired
     BlogService blogService;
+
+    @Autowired
+    InvoiceService invoiceService;
 
     public static final String SUCCESS_URL = "/pay/success";
     public static final String CANCEL_URL = "/pay/cancel";
@@ -106,20 +109,34 @@ public class PaypalController {
 
     @GetMapping(value = SUCCESSSELL_URL)
     public String successPaySell(HttpServletRequest request, @RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+
         try {
             Payment payment = service.executePayment(paymentId, payerId);
-            int idBlog = Integer.parseInt(request.getParameter("idBlog"));
-            System.out.println(payment.toJSON());
             if (payment.getState().equals("approved")) {
+              int idBlog = Integer.parseInt(request.getParameter("idBlog"));
+              UserDTO user = getUserIdFromCookie(request);
+              InvoiceEntity invoiceEntity = invoiceService.saveInvoice(idBlog,user.getId());
 
+                BlogDTO blogDTO = blogService.getBlogById(idBlog);
                 blogService.updateBlogToFalse(idBlog);
-                return "success";
+
+                // Redirect to the invoice page with the invoice ID as a query parameter
+                return "redirect:/invoice?id=" + invoiceEntity.getId();
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
         return "redirect:/";
     }
+
+
+
+
+
+
+
+
+
 
     //GetUserIdFromCookie cực kỳ quan trọng!!!
     private UserDTO getUserIdFromCookie(HttpServletRequest req) {
