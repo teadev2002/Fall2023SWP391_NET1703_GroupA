@@ -141,6 +141,7 @@
                                 <td class="align-middle">
                                     <span class="badge bg-dark"><a style="color: white; text-decoration: none;"
                                                                    th:href="@{/blog/detail/myblog/{id}(id=${request.blogId})}">Read more</a></span>
+
                                 </td>
 
                                 <!--                                <td class="align-middle">-->
@@ -181,6 +182,7 @@
                             <tr class="fw-normal" th:each="noti : ${listNotification}">
 
                                 <td class="align-middle">
+
                                     <a style="color: white;" th:href="@{/blog/detail/myblog/{id}(id=${noti.request.blogId})}"> <span th:text="${noti.request.blogTitle}"></span></a>
                                 </td>
 
@@ -201,7 +203,6 @@
                                 <td class="align-middle">
                                     <span th:text="${noti.message}"></span>
                                 </td>
-
 
                             </tbody>
                         </table>

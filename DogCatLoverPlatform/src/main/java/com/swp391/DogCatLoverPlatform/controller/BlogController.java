@@ -578,7 +578,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
                 emailService.sendEmail(user.getEmail(), reason);
             }
         }
-        return "redirect:/blog/staff";
+        return "redirect:/staff/view/pending";
     }
 
     @GetMapping("/trash")

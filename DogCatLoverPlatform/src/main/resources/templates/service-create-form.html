@@ -295,7 +295,7 @@
 
 <div class="containers" style="font-family: Helvetica;">
   <div class="inner-div">
-    <h1 class="text-center text-orange">New Blog?</h1>
+    <h1 class="text-center text-orange">New Service?</h1>
 
     <form th:action="@{/service/create}" th:object="${service}" method="post" enctype="multipart/form-data"
           style="width: 395px;">
@@ -355,6 +355,27 @@
                placeholder="Set price..." required>
       </div>
 
+      <div class="mb-3 input-group">
+        <div class="input-group-prepend input-group-addon">
+                        <span class="input-group-text">
+                            <i class="fas fa-paw" style="font-size: 12px;"></i>
+                        </span>
+        </div>
+        <div>Date Start</div></br> &nbsp;
+        <input class="form-control" type="date" id="dateStart" name="dateStart" th:field="*{dateStart}"
+               placeholder="Your title..." required>
+      </div>
+
+      <div class="mb-3 input-group">
+        <div class="input-group-prepend input-group-addon">
+                        <span class="input-group-text">
+                            <i class="fas fa-paw" style="font-size: 12px;"></i>
+                        </span>
+        </div>
+        <div>Date End</div></br>&nbsp;&nbsp;
+        <input class="form-control" type="date" id="dateEnd" name="dateEnd" th:field="*{dateEnd}"
+               placeholder="Your title..." required>
+      </div>
 
       <!--Pet category-->
       <!--<div class="mb-3 input-group">

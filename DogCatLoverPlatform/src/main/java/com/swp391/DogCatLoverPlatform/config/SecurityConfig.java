@@ -59,11 +59,10 @@ public class SecurityConfig {
                     .antMatchers(HttpMethod.POST,"/services/**").permitAll()
                     .antMatchers("/booking/**").permitAll()
 
-//                    .antMatchers("/staff/view").hasRole("ADMIN")
-//                    .antMatchers("/staff/view/**").hasRole("ADMIN")
 
-                    .antMatchers("/staff/view").permitAll()
-                    .antMatchers("/staff/view/pending").permitAll()
+                    .antMatchers("/staff").hasAnyRole("ADMIN", "STAFF")
+                    .antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
+
 
                     .anyRequest().authenticated()
                     .and()

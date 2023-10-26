@@ -42,7 +42,7 @@ public interface RequestRepository extends JpaRepository<RequestEntity, Integer>
 
 
     @Query(value = "SELECT r.* FROM request r \n" +
-                    "WHERE id_blog = :id_blog ", nativeQuery = true)
+            "WHERE id_blog = :id_blog ", nativeQuery = true)
     List<RequestEntity> findAllByIdBlog(int id_blog);
 
 

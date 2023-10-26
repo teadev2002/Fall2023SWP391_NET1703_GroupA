@@ -21,6 +21,8 @@ public class ServiceDTO {
     private String userName;
     private double price;
     private Boolean status;
+    private Date dateStart;
+    private Date dateEnd;
     private int id_user;
     private int id_blog;
     private String emailUserCreate;

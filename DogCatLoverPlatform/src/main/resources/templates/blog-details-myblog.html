@@ -76,6 +76,7 @@
             margin: 15px 0;
         }
 
+
         .popupGift {
             display: none;
             position: fixed;
@@ -95,6 +96,7 @@
             margin: 15px 0;
         }
 
+
         .list-request{
             max-height: 372px;
             max-width: 416px;
@@ -109,6 +111,7 @@
             var popup = document.getElementById(requestId);
             popup.style.display = 'block';
         }
+
 
         function hidePopup(requestId) {
             var popup = document.getElementById(requestId);
@@ -156,7 +159,6 @@
                 confirmationMessage.style.display = 'none';
             }, 4000); // 3 giây
         }
-
     </script>
 
 
@@ -398,6 +400,7 @@
                             </svg>
                             &nbsp;
                         </a>
+
 
                         <!-- Icon Gift-->
                         <span th:if="${blog.blogTypeId == 2 and blog.status != false}">
@@ -682,6 +685,7 @@
 
                     <!--List User Request được gửi đến-->
                     <div th:if="${user.id == blog.userId and blog.confirm == true and blog.blogTypeId == 2}" class="single-widgets widget_egns_tag mb-30 list-request">
+
                         <div class="widget-title">
                             <h3>List User Request</h3>
                         </div>
@@ -695,10 +699,12 @@
                             </thead>
 
                             <tbody>
+
                                 <tr th:each="request : ${listBlog}" class="fw-normal" th:class="${request.status == null ? '' : (request.status == false ? 'alert alert-secondary' : 'alert alert-success')}">
                                     <div th:if="${blog.id == request.blogId}">
                                         <th>
                                             <img th:src="@{'../../../images/avatar/' + ${request.userImage}}"
+
                                                  alt="avatar 1" style="width: 45px; height: auto;">
                                             <a style="text-decoration: none; color: black;"
                                                th:href="@{'/index/profile/' + ${request.userId}}">
@@ -731,10 +737,12 @@
                                                     <button type="submit" class="btn btn-primary">Yes</button>
                                                     <a th:attr="data-request-id=${request.Id}" style="cursor: pointer; font-weight: normal; font-size: 25px;"
                                                        onclick="hidePopup(this.getAttribute('data-request-id'))">Cancel</a>
+
                                                 </span>
                                             </form>
 
                                         </td>
+
                                     </div>
                                 </tr>
                             </tbody>

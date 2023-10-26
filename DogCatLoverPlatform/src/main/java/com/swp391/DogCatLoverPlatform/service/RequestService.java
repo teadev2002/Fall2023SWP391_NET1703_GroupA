@@ -78,7 +78,6 @@ public class RequestService {
         return listRequested;
     }
 
-
     //Hiển thị blog nào được gửi request bên list-request.html
     public List<RequestDTO> viewSendBlogRequest(int id_user_created) {
         List<RequestEntity> listRequest = requestRepository.findAllRequest(id_user_created);

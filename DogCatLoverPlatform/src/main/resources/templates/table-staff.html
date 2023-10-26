@@ -106,8 +106,8 @@
             <li class="active"><a th:href="@{/staff/view}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
             </li>
 
-            <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title"
-                                                                                                          data-i18n="">Pending Blog</span></a>
+            <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
+
             </li>
         </ul>
     </div>
@@ -148,7 +148,9 @@
                                     <tr th:each="blog : ${pendingBlogs}">
                                         <td th:text="${blog.title}"></td>
 
+
                                         <td > <img class="img-fluid" style="object-fit: contain" th:src="@{'../../../images/blog/' + ${blog.image}}" alt></td>
+
 
                                         <td th:if="${blog.petType  != null} " th:text="${blog.petType}"></td>
                                         <td th:if="${blog.petType  == null} " > Service</td>
