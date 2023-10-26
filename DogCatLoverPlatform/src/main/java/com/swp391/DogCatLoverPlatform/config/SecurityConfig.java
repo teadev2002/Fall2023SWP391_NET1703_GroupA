@@ -50,9 +50,15 @@ public class SecurityConfig {
                     .antMatchers("/service/detail/**").permitAll()
                     .antMatchers("/index/**").permitAll()
                     .antMatchers("/cdn-cgi/**").permitAll()
+
                     .antMatchers("/blog/view").permitAll()
                     .antMatchers("/blog/byType").permitAll()
                     .antMatchers("/blog/**").permitAll()        //Dũng thêm để fix bug
+
+                    .antMatchers("/blog/**").permitAll()
+                    .antMatchers("/invoice/**").permitAll()
+                    .antMatchers("/paymethod/**").permitAll()
+
                     .antMatchers("/").permitAll()
                     .antMatchers(HttpMethod.POST,"/blog/**").permitAll()
                     .antMatchers("/paymethod/**").hasRole("USER")

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="UTF-8">
     <title>Invoice Manager</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -86,11 +87,6 @@
 
                 <li class="menu-item-has-children">
                     <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
-                    </ul>
                 </li>
 
                 <li class="menu-item-has-children">
@@ -413,3 +409,38 @@
 
 </body>
 </html>
+=======
+  <meta charset="UTF-8">
+  <title>Invoice Manager</title>
+</head>
+<body>
+
+
+<!-- Display the total number of invoices -->
+<p>Total Number of Invoices: <span th:text="${quantity}">0</span></p>
+<h3>Invoice Information</h3>
+<!-- Iterate through the list of invoices -->
+<ul th:if="${list != null}" th:each="invoice : ${list}">
+  <li>
+
+    <p>Name: <span th:text="${invoice.userName}"></span></p>
+    <p>Invoice Date: <span th:text="${invoice.invoice_date}">N/A</span></p>
+    <p>Total Amount: $<span th:text="${invoice.total_amount}">0.00</span></p>
+    <p>Email: <span th:text="${invoice.email}"></span></p>
+    <p>Title: <span th:text="${invoice.title}"></span></p>
+
+
+    <!-- Add more fields here if needed -->
+  </li>
+</ul>
+
+<!-- Handle the case where there are no invoices -->
+<div th:if="${list == null || list.isEmpty()}">
+  <p>No invoices found.</p>
+</div>
+
+<!-- Add more content as needed -->
+
+</body>
+</html>
+

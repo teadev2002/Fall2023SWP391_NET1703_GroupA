@@ -78,7 +78,7 @@ public class BlogController {
             requestService.acceptedRequest(userNotificationDTO, userIdRequest, userIdAccepted, requestId, blogId);
         }
 
-        return "redirect:/blog/" + blogId + "/detail/myblog";
+        return "redirect:/blog/detail/myblog/" + blogId ;
     }
 
     //Gửi request (Dũng)
@@ -97,7 +97,7 @@ public class BlogController {
            redirectAttributes.addFlashAttribute("sent", "Your request have been sent!");
        }
 
-        return "redirect:/blog/"+blogId+"/detail/myblog";
+        return "redirect:/blog/detail/myblog/" +blogId;
     }
 
     //View List Request --> Đổi tên Notification
@@ -582,16 +582,23 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     }
 
     @GetMapping("/trash")
-    public String viewBlogReject(Model model, @RequestParam(value = "updated", required = false) String updated) {
-        List<BlogDTO> rejectBlog = blogService.getBlogsReject();
+    public String viewUserTrash(Model model, @RequestParam(value = "updated", required = false) String updated, HttpServletRequest req) {
+        UserDTO user = getUserIdFromCookie(req);
+
+        if (user != null) {
+            List<BlogDTO> userRejectBlogs = blogService.getBlogsReject(user.getId());
+            model.addAttribute("rejectBlog", userRejectBlogs);
+        }
+
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
         List<PetTypeEntity> listPettype = petTypeService.getAllPetType();
-        model.addAttribute("rejectBlog", rejectBlog);
         model.addAttribute("blogTypes", listBlogType);
-        model.addAttribute("petTypes",listPettype);
+        model.addAttribute("petTypes", listPettype);
         model.addAttribute("updated", updated);
+
         return "trash";
     }
+
 
     @PostMapping("/trash")
     public String updateAndResubmitOrDeleteBlog(

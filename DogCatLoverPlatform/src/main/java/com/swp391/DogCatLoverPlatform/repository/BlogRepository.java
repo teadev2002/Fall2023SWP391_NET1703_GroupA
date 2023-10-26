@@ -39,4 +39,6 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Query("UPDATE blog b SET b.status = false WHERE b.id = :id")
         void updateStatus(int id);
 
+        List<BlogEntity> findByUserEntityIdAndConfirmAndStatusTrue(Integer userId, Boolean confirm);
+
 }

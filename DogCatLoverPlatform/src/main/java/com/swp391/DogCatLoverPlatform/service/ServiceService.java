@@ -42,24 +42,23 @@ public class ServiceService {
         // Tạo một danh sách chứa các đối tượng ServiceDTO.
         List<ServiceDTO> serviceDTOList = new ArrayList<>();
         for (ServiceEntity s : listService) {
-                ServiceDTO serviceDTO = new ServiceDTO();
-                // Truy cập đối tượng BlogDTO trong ServiceDTO để lấy createDate.
-                serviceDTO.setUserName(s.getBlog_service().getUserEntity().getName());
-                serviceDTO.setContent(s.getBlog_service().getContent());
-                serviceDTO.setPrice(s.getBlog_service().getPrice());
-                serviceDTO.setTitle(s.getBlog_service().getTitle());
-                serviceDTO.setImage(s.getBlog_service().getImage());
-                serviceDTO.setConfirm(s.getBlog_service().getConfirm());
-                serviceDTO.setCreateDate(s.getBlog_service().getCreateDate());
-                serviceDTO.setServiceCateName(s.getService_category().getName());
-                serviceDTO.setId(s.getId());
+            ServiceDTO serviceDTO = new ServiceDTO();
+            // Truy cập đối tượng BlogDTO trong ServiceDTO để lấy createDate.
+            serviceDTO.setUserName(s.getBlog_service().getUserEntity().getName());
+            serviceDTO.setContent(s.getBlog_service().getContent());
+            serviceDTO.setPrice(s.getBlog_service().getPrice());
+            serviceDTO.setTitle(s.getBlog_service().getTitle());
+            serviceDTO.setImage(s.getBlog_service().getImage());
+            serviceDTO.setConfirm(s.getBlog_service().getConfirm());
+            serviceDTO.setCreateDate(s.getBlog_service().getCreateDate());
+            serviceDTO.setServiceCateName(s.getService_category().getName());
+            serviceDTO.setId(s.getId());
 
+            BlogEntity blog = blogRepository.findById(s.getBlog_service().getId()).orElseThrow();
+            BlogDTO blogDTO =  modelMapperConfig.modelMapper().map(blog, BlogDTO.class);
+            serviceDTO.setBlog(blogDTO);
 
-                BlogEntity blog = blogRepository.findById(s.getBlog_service().getId()).orElseThrow();
-                BlogDTO blogDTO =  modelMapperConfig.modelMapper().map(blog, BlogDTO.class);
-                serviceDTO.setBlog(blogDTO);
-
-                serviceDTOList.add(serviceDTO);
+            serviceDTOList.add(serviceDTO);
         }
 
         // Sử dụng PageImpl để tạo một trang mới từ danh sách ServiceDTO và pageable.

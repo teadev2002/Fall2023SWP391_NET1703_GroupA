@@ -38,33 +38,19 @@ confirm bit,
 pet_type bit,
 
 id_user_created int,
-<<<<<<< HEAD
-<<<<<<< HEAD
 id_blog_type int,
 id_pet_category int 
 	
-=======
-id_blog_type int
-=======
-=======
-id_blog_type int,
-id_pet_type int,
-id_pet_category int
 
 
 );
 
 CREATE TABLE pet_type(
->>>>>>> origin/Phong
 	id int auto_increment,
 	type varchar(10),
 	
 	primary key(id)
-<<<<<<< HEAD
->>>>>>> 219e23a34c5029ad7679127c7e51b540625f14f7
->>>>>>> origin/MinhTam
-=======
->>>>>>> origin/Phong
+
 );
 
 CREATE TABLE blog_type(
@@ -129,16 +115,19 @@ CREATE TABLE request(
 	id_user int	
 );
 
-CREATE TABLE pet_category (
+
+
+CREATE TABLE invoice(
     id int auto_increment primary key,
-    name varchar(50),
-    breed varchar(100),
-    age int,
-    color varchar(50),
-    weight double,
-    
-    id_blog int
+    invoice_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    total_amount double,
+    id_user int,
+    id_blog int,
+    FOREIGN KEY (id_user) REFERENCES users(id),
+    FOREIGN KEY (id_blog) REFERENCES blog(id)
 );
+
+
 
 
 ALTER TABLE users ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
@@ -151,33 +140,20 @@ ALTER TABLE comment ADD CONSTRAINT FK_id_user_comment FOREIGN KEY (id_user) REFE
 ALTER TABLE comment ADD CONSTRAINT FK_id_blog_comment FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
 
-ALTER TABLE blog ADD CONSTRAINT FK_pet_type_blog FOREIGN KEY (id_pet_type) REFERENCES pet_type(id);
+
 
 ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN KEY (id_service_cate) REFERENCES service_category(id);
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 ALTER TABLE request ADD CONSTRAINT FK_id_blog_request FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE request ADD CONSTRAINT FK_id_user_request FOREIGN KEY (id_user) REFERENCES users(id);
 ALTER TABLE pet_category ADD CONSTRAINT FK_id_blog_pet_category FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE blog ADD CONSTRAINT FK_pet_category_blog FOREIGN KEY (id_pet_category) REFERENCES pet_category(id);
-=======
-<<<<<<< HEAD
-=======
->>>>>>> origin/Phong
-ALTER TABLE pet_category ADD CONSTRAINT FK_id_blog_pet_category FOREIGN KEY (id_blog) REFERENCES blog(id);
 
 
 
 
+SELECT i.* FROM invoice i INNER JOIN blog b on b.id  = i.id_blog where i.id_user =1
 
 
 
-
-<<<<<<< HEAD
-=======
->>>>>>> e9ea621b6de8faf8f201334d5ff9c927ca3cfd12
->>>>>>> origin/MinhTam
-=======
-
->>>>>>> origin/Phong

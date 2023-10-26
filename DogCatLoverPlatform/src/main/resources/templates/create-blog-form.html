@@ -163,11 +163,6 @@
 
                 <li class="menu-item-has-children">
                     <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
-                    </ul>
                 </li>
 
                 <li class="menu-item-has-children">
@@ -183,7 +178,7 @@
                 <li class="menu-item-has-children">
                     <a th:href="@{/blog/view}">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{/blog/byType(type='Exchange')}">Exchange</a></li>
+                        <li><a th:href="@{/blog/byType(type='Sell')}">Sell</a></li>
                         <li><a th:href="@{/blog/byType(type='Gift')}">Gift</a></li>
                     </ul>
                 </li>
@@ -506,7 +501,7 @@
         var selectedValue = document.getElementById("blogType").value;
         var priceInput = document.getElementById("priceInput");
 
-        if (selectedValue === "Exchange") {
+        if (selectedValue === "Sell") {
             priceInput.style.display = "block"; // Hiển thị
         } else {
             priceInput.style.display = "none"; // Ẩn
@@ -517,8 +512,74 @@
     $("#blogType").on("change", function () {
         togglePriceInput();
     });
+</script>
+
+<script> // validate dateEnd cannot below dateStart
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the dateStart and dateEnd input elements
+    var dateStartInput = document.getElementById('dateStart');
+    var dateEndInput = document.getElementById('dateEnd');
+
+    // Function to validate the dateEnd
+    function validateDates() {
+        var dateStartValue = new Date(dateStartInput.value);
+        var dateEndValue = new Date(dateEndInput.value);
+
+        // Check if dateEnd is not earlier than dateStart
+        if (dateEndValue < dateStartValue) {
+            dateEndInput.setCustomValidity('End date cannot be earlier than start date.');
+        } else {
+            dateEndInput.setCustomValidity('');
+        }
+    }
+
+    // Add an event listener for the input event on both dateStart and dateEnd
+    dateStartInput.addEventListener('input', validateDates);
+    dateEndInput.addEventListener('input', validateDates);
+});
+</script>
+<script>
+    function togglePriceInput() {
+        var selectedValue = document.getElementById("serviceCategory").value;
+        var priceInput = document.getElementById("priceInput");
+
+        if (selectedValue === "Exchange") {
+            priceInput.style.display = "block"; // Hiển thị
+        } else {
+            priceInput.style.display = "none"; // Ẩn
+        }
+    }
+
+    // Thêm sự kiện "change" vào phần chọn để kiểm tra khi người dùng thay đổi lựa chọn
+    $("#serviceCategory").on("change", function () {
+        togglePriceInput();
+    });
 
 
+</script>
+
+
+<script> // validate number negative & text
+document.getElementById("price").onkeypress = function(e) {
+    return isNumber(e);
+};
+
+document.getElementById("petCategory.age").onkeypress = function(e) {
+    return isNumber(e);
+};
+
+document.getElementById("petCategory.weight").onkeypress = function(e) {
+    return isNumber(e);
+};
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
 </script>
 
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>

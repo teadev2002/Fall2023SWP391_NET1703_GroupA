@@ -195,9 +195,9 @@ public class BlogService {
         return pendingBlogDTOs;
     }
 
-    //Thùng rác chứa các Blog bị từ chối
-    public List<BlogDTO> getBlogsReject() {
-        List<BlogEntity> rejectBlogs = blogRepository.findByConfirm(false);
+
+    public List<BlogDTO> getBlogsReject(int userId) {
+        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirmAndStatusTrue(userId, false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
@@ -208,6 +208,7 @@ public class BlogService {
 
         return rejectBlogDTOs;
     }
+
 
     //Blog được chấp nhận
     public void approveBlog(int blogId) {
