@@ -685,7 +685,6 @@
                             </thead>
 
                             <tbody>
-
                                 <tr th:each="request : ${listBlog}" class="fw-normal" th:class="${request.status == null ? '' : (request.status == false ? 'alert alert-secondary' : 'alert alert-success')}">
                                     <div th:if="${blog.id == request.blogId}">
                                         <th>

@@ -252,5 +252,22 @@ public class ServiceController {
         }
         return null;
     }
+
+
+    @PostMapping("/create_comment")
+    public String createComment(@ModelAttribute("comment") CommentDTO commentDTO, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+        String description = req.getParameter("description");
+
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        int id_blog = Integer.parseInt(req.getParameter("id_blog"));
+
+        BlogDTO blog = blogService.getBlogById(id_blog);
+        commentService.createComment(commentDTO, description, id_blog, user.getId());
+
+        // Chuyển hướng người dùng đến trang chi tiết của service
+        return "redirect:/service/detail/"+id;
+    }
 }
 

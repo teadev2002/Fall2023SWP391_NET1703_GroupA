@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class BlogService {
     @Autowired
+    public
     BlogRepository blogRepository;
 
     @Autowired
@@ -197,6 +198,7 @@ public class BlogService {
 
 
     public List<BlogDTO> getBlogsReject(int userId) {
+
         List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirmAndStatusTrue(userId, false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
@@ -218,12 +220,21 @@ public class BlogService {
     }
 
     //Blog bị từ chối
-    public void rejectBlog(int blogId, String reason) {
+    public void rejectBlog(int blogId, String newReason) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
+
+        // Retrieve the existing rejection reasons
+        String existingReasons = blogEntity.getReason();
+
+        // Append the new reason along with previous reasons
+        String combinedReason = existingReasons != null ? existingReasons + "\n" + newReason : newReason;
+
         blogEntity.setConfirm(false);
-        blogEntity.setReason(reason);
+        blogEntity.setReason(combinedReason);
+
         blogRepository.save(blogEntity);
     }
+
 
     public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO,int blogType) {
 
@@ -249,7 +260,18 @@ public class BlogService {
     }
 
 
+    public List<BlogDTO> findBlogByIdUserSell(int id) {
+        List<BlogEntity> blogEntity = blogRepository.findIdSeller(id);
+        List<BlogDTO> blogDTOS = new ArrayList<>();
 
+        Collections.sort(blogEntity, (blog1, blog2) -> blog2.getCreateDate().compareTo(blog1.getCreateDate()));
+        for (BlogEntity blog : blogEntity) {
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blog, BlogDTO.class);
+            blogDTOS.add(blogDTO);
+        }
+
+        return blogDTOS;
+    }
 
 }
 
