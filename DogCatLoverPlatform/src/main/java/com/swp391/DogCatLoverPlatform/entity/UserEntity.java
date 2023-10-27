@@ -40,6 +40,9 @@ public class UserEntity {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "otp")
     private String otp;
 

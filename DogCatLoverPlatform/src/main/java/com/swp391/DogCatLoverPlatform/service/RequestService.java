@@ -54,7 +54,7 @@ public class RequestService {
             Date createDate = new Date();
             request.setCreateDate(createDate);
 
-            request.setStatus(true);
+            request.setStatus(null);
 
             UserEntity userEntity = userRepository.findById(userId).orElseThrow();
             request.setUserEntity_Request(userEntity);
@@ -68,8 +68,20 @@ public class RequestService {
             return createdSendRequest;
     }
 
+    //Hiển thị người dùng nào gửi request bên myblogdetails.html
     public List<RequestDTO> viewSendRequest(int id_user_created) {
         List<RequestEntity> listRequest = requestRepository.findAllRequestToBlogOwner(id_user_created);
+
+        List<RequestDTO> listRequested = listRequest.stream()
+                .map(entity -> modelMapperConfig.modelMapper().map(entity, RequestDTO.class))
+                .collect(Collectors.toList());
+
+        return listRequested;
+    }
+
+    //Hiển thị blog nào được gửi request bên list-request.html
+    public List<RequestDTO> viewSendBlogRequest(int id_user_created) {
+        List<RequestEntity> listRequest = requestRepository.findAllRequest(id_user_created);
 
         List<RequestDTO> listRequested = listRequest.stream()
                 .map(entity -> modelMapperConfig.modelMapper().map(entity, RequestDTO.class))
@@ -102,8 +114,6 @@ public class RequestService {
             //Tạo ra mỗi notification mới sau mỗi lần lặp
             UserNotificationEntity userNotificationEntity = modelMapperConfig.modelMapper().map(userNotificationDTO, UserNotificationEntity.class);
 
-            //Cập nhật lại trạng thái để Hidden đi
-            userRequest.setStatus(false);
 
             //Set lại trạng thái để ẩn bài Blog đi
             blog.setStatus(false);
@@ -111,6 +121,8 @@ public class RequestService {
             //Lấy id user gửi Request
             int userId = userRequest.getUserEntity_Request().getId();
 
+            //Cập nhật lại trạng thái (nếu được chấp nhận thì request của user đó sẽ được set là true, không thì set là false)
+            userRequest.setStatus(userId == userIdRequest? true : false);
 
             //Gửi message: accepted <--> Còn không thì gửi denied
             userNotificationEntity.setMessage(userId == userIdRequest ? accepted : denied);

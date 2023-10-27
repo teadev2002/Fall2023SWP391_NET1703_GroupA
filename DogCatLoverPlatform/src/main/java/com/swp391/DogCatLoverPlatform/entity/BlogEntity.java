@@ -34,7 +34,7 @@ public class BlogEntity {
     private double  price;
 
     @Column(name = "status")
-    private boolean status;
+    private Boolean status;
 
     @Column(name = "create_date")
     private Date createDate;

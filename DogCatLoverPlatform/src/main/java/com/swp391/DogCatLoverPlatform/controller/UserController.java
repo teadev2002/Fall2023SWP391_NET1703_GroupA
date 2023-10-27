@@ -6,6 +6,7 @@ import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
+import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.RequestService;
 import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
@@ -23,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
@@ -30,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 //@RestController
@@ -52,6 +56,8 @@ public class UserController {
     @Autowired
     UserNotificationService userNotificationService;
 
+
+
     private Gson gson = new Gson();
 
     @GetMapping("/home")
@@ -62,7 +68,7 @@ public class UserController {
         //Hiện số lượng thông báo
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -94,7 +100,7 @@ public class UserController {
         //Hiện số lượng thông báo
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -114,7 +120,7 @@ public class UserController {
         //Hiện số lượng list
         if(user != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-            List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
@@ -177,7 +183,7 @@ public class UserController {
                     email = c.getValue();
                     UserDTO user = userService.getUserByEmail(email);
                     List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
-                    List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
+                    List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
                     int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
                     model.addAttribute("count", totalCount);
                     model.addAttribute("user", user);
@@ -192,15 +198,22 @@ public class UserController {
         return "redirect:/index/login";
     }
 
+
+
     @PostMapping(value = "/profile-update")
-    public String profileUpdate(Model model, HttpServletRequest req) {
+    public String profileUpdate(Model model, HttpServletRequest req, @RequestParam("file") File file) throws IOException {
+        String image = req.getParameter("image");
+        if(file.getName().length() > 2){
+            image = file.getName();
+        }
         String fullname = req.getParameter("fullName");
         String username = req.getParameter("userName");
         String address = req.getParameter("address");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
+        String description = req.getParameter("userDescription");
 
-        boolean isSuccess = userService.updateUser(fullname, username, phone, address, email);
+        boolean isSuccess = userService.updateUser(fullname, username, phone, address, email, image, description);
 
 
         return "redirect:/index/profile";
@@ -266,7 +279,7 @@ public class UserController {
 
         BaseRespone baseRespone = new BaseRespone();
         baseRespone.setStatusCode(200);
-        baseRespone.setMessage("");
+        baseRespone.setMessage(roles.toString());
         baseRespone.setData(token);
 
         return new ResponseEntity<>(baseRespone, HttpStatus.OK);

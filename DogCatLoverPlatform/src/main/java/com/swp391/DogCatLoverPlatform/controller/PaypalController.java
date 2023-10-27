@@ -1,9 +1,7 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
-import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
-import com.swp391.DogCatLoverPlatform.dto.InvoiceDTO;
-import com.swp391.DogCatLoverPlatform.dto.Order;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
+import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.InvoiceEntity;
 import com.swp391.DogCatLoverPlatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/paymethod")
@@ -37,6 +36,9 @@ public class PaypalController {
     @Autowired
     InvoiceService invoiceService;
 
+    @Autowired
+    EmailService emailService;
+
     public static final String SUCCESS_URL = "/pay/success";
     public static final String CANCEL_URL = "/pay/cancel";
 
@@ -49,6 +51,7 @@ public class PaypalController {
 
     @PostMapping("/pay")
     public String payment(@ModelAttribute("order") Order order) {
+        order.setCurrency("USD");
         try {
             Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
 
@@ -111,24 +114,34 @@ public class PaypalController {
 
     @GetMapping(value = SUCCESSSELL_URL)
     public String successPaySell(HttpServletRequest request, @RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
-
         try {
             Payment payment = service.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")) {
-              int idBlog = Integer.parseInt(request.getParameter("idBlog"));
-              UserDTO user = getUserIdFromCookie(request);
-              InvoiceEntity invoiceEntity = invoiceService.saveInvoice(idBlog,user.getId());
+                int idBlog = Integer.parseInt(request.getParameter("idBlog"));
+                UserDTO user = getUserIdFromCookie(request);
+                InvoiceEntity invoiceEntity = invoiceService.saveInvoice(idBlog, user.getId());
+                BlogDTO blogDTO = blogService.getBlogById(idBlog);
+                blogService.updateBlogToFalse(idBlog);
 
+                // Lấy thông tin người dùng tạo bài viết
+                Optional<BlogEntity> blogEntity = blogService.blogRepository.findById(idBlog);
+                if (blogEntity.isPresent()) {
+                    String sellerEmail = blogEntity.get().getUserEntity().getEmail(); // Lấy địa chỉ email của người bán
 
-                // Redirect to the invoice page with the invoice ID as a query parameter
-                return "redirect:/invoice?id=" + invoiceEntity.getId();
+                    // Gửi thông báo email cho người bán
+                    String blogTitle = blogDTO.getTitle(); // Lấy tiêu đề của bài viết từ đối tượng blogDTO
+
+                    emailService.sendPurchaseNotification(sellerEmail, blogTitle, idBlog);
+
+                    // Redirect to the invoice page with the invoice ID as a query parameter
+                    return "redirect:/invoice?id=" + invoiceEntity.getId();
+                }
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
         return "redirect:/";
     }
-
 
 
 

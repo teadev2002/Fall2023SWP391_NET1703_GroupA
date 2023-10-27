@@ -42,7 +42,7 @@ public class UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setName(userDTO.getUserName());
-        user.setImage("team-001.jpg");
+        user.setImage("ava-06.jpg");
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setId(1);
         user.setRoleEntity(roleEntity);
@@ -92,6 +92,7 @@ public class UserService {
         userDTO.setAddress(user.getAddress());
         userDTO.setImage(user.getImage());
         userDTO.setPhone(user.getPhone());
+        userDTO.setDescription(user.getDescription());
         userDTO.setRoleDTO(user.getRoleEntity().getName());
         userDTO.setId_role(user.getRoleEntity().getId());
 
@@ -100,12 +101,14 @@ public class UserService {
     }
 
 
-    public boolean updateUser(String fullname, String username, String phone, String address, String email) {
+    public boolean updateUser(String fullname, String username, String phone, String address, String email, String image, String description) {
         UserEntity userEntity = userRepository.findByEmail(email);
+        userEntity.setImage(image);
         userEntity.setFullName(fullname);
         userEntity.setName(username);
         userEntity.setAddress(address);
         userEntity.setPhone(phone);
+        userEntity.setDescription(description);
         userRepository.save(userEntity);
         return true;
     }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -16,17 +17,24 @@ import java.util.List;
 public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
 
         List<BlogEntity> findAll();
-        List<BlogEntity> findFirst3ByConfirmAndStatusTrueOrderByCreateDateDesc(boolean confirm);
-        Page<BlogEntity> findByBlogTypeEntityAndConfirmAndStatusTrue(BlogTypeEntity blogTypeEntity, boolean confirm, Pageable pageable);
-        Page<BlogEntity> findByTitleContainingAndConfirmAndStatusTrue(String title, boolean confirm, Pageable pageable);
+        List<BlogEntity> findFirst3ByConfirmAndStatusNotNullOrderByCreateDateDesc(boolean confirm);
+        Page<BlogEntity> findByBlogTypeEntityAndConfirmAndStatusNotNull(BlogTypeEntity blogTypeEntity, boolean confirm, Pageable pageable);
+        Page<BlogEntity> findByTitleContainingAndConfirmAndStatusNotNull(String title, boolean confirm, Pageable pageable);
 
 
-        @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm AND b.status = true")
+        @Query("SELECT b FROM blog b WHERE b.userEntity.id = :userId AND b.confirm = :confirm AND b.status is not null")
         Page<BlogEntity> findByUserEntityIdAndConfirm(int userId, boolean confirm, Pageable pageable);
 
+
+
+        //Hiển thị bên Blog Pending Approve             Confirm: null (bắt buộc)
+        //Hiển thị bên thùng rác các Blog bị từ chối    Confirm: false (bắt buộc)
         List<BlogEntity> findByConfirm(Boolean confirm);
-        List<BlogEntity> findByConfirmAndStatusTrue(Boolean confirm);
-        Page<BlogEntity> findByConfirmAndStatusTrue(boolean confirm, Pageable pageable);
+
+        //Hiển thị danh sách Blog trên giao diện chính (trước khi thực hiện sell, gift) --> Confirm: true (bắt buộc)
+        Page<BlogEntity> findByConfirmAndStatusNotNull(boolean confirm, Pageable pageable);
+
+
 
         @Transactional
         @Modifying
@@ -34,5 +42,9 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         void updateStatus(int id);
 
         List<BlogEntity> findByUserEntityIdAndConfirmAndStatusTrue(Integer userId, Boolean confirm);
+
+
+        @Query(value ="SELECT b.* FROM blog b join invoice i on b.id = i.id_blog where b.id_user_created =:id_user_created",nativeQuery = true)
+         List<BlogEntity> findIdSeller(Integer id_user_created);
 
 }

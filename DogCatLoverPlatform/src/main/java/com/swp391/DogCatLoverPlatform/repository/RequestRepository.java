@@ -13,11 +13,24 @@ import java.util.Optional;
 @Repository
 public interface RequestRepository extends JpaRepository<RequestEntity, Integer> {
 
+    //Danh sách các User gửi request, hiển thị bên trang my-blog-details.html  (Dũng)
     @Query(value = "SELECT r.* ,u.user_name, b.title  FROM request r \n" +
             "JOIN blog b ON r.id_blog = b.id \n" +
             "JOIN users u  ON r.id_user  = u.id \n" +
-            "WHERE b.id_user_created = :id_user_created AND r.status = 1", nativeQuery = true)
+            "WHERE b.id_user_created = :id_user_created AND r.status is NOT NULL", nativeQuery = true)
     List<RequestEntity> findAllRequestToBlogOwner(Integer id_user_created);
+
+    //Danh sách các Blog được gửi request, hiển thị bên trang list-request.html  (Dũng)
+    @Query(value = "SELECT DISTINCT b.title, r.id_blog, " +
+            "COUNT(r.id) as id, " +
+            "MAX(r.id_user) as id_user, " +
+            "MAX(r.status) as status, " +
+            "MAX(r.create_date) as create_date \n" +
+            "FROM request r \n" +
+            "JOIN blog b ON r.id_blog = b.id \n" +
+            "WHERE b.id_user_created = :id_user_created AND r.status is NULL \n" +
+            "GROUP BY b.title, r.id_blog ", nativeQuery = true)
+    List<RequestEntity> findAllRequest(Integer id_user_created);
 
     //Kiểm tra nếu request đã tồn tại trong danh sách
     @Query(value = "SELECT r.*, u.user_name, b.title  FROM request r \n" +

@@ -13,14 +13,11 @@
 <!-- Iterate through the list of invoices -->
 <ul th:if="${list != null}" th:each="invoice : ${list}">
   <li>
-
     <p>Name: <span th:text="${invoice.userName}"></span></p>
     <p>Invoice Date: <span th:text="${invoice.invoice_date}">N/A</span></p>
     <p>Total Amount: $<span th:text="${invoice.total_amount}">0.00</span></p>
     <p>Email: <span th:text="${invoice.email}"></span></p>
     <p>Title: <span th:text="${invoice.title}"></span></p>
-
-
     <!-- Add more fields here if needed -->
   </li>
 </ul>
