@@ -41,6 +41,7 @@ public class InvoiceController {
             model.addAttribute("totalAmount", invoice.getTotal_amount());
             model.addAttribute("blogId", invoice.getIdBlog());
             model.addAttribute("userId", invoice.getIdUser());
+            model.addAttribute("invoice",invoice);
 
             // Lấy email từ UserEntity trong InvoiceDTO
             String email = userService.getUserById(invoice.getIdUser()).getEmail();

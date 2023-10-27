@@ -78,7 +78,6 @@ public class InvoiceService {
     public InvoiceDTO getInvoiceById(int id) {
         InvoiceEntity invoiceEntity = invoiceRepository.findById(id).orElse(null);
         if (invoiceEntity == null) {
-            // Handle the case where the invoice is not found
             return null;
         }
         return modelMapperConfig.modelMapper().map(invoiceEntity, InvoiceDTO.class);

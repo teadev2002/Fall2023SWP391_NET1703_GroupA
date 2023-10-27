@@ -70,6 +70,7 @@ public class SecurityConfig {
                     .antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
 
 
+
                     .anyRequest().authenticated()
                     .and()
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

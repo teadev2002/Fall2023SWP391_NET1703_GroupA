@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr" xmlns:th="http://www.thymeleaf.org">
 
-<!-- Mirrored from demos.themeselection.com/chameleon-free-bootstrap-admin-template/html/ltr/tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 05:51:26 GMT -->
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<!-- Mirrored from demos.themeselection.com/chameleon-free-bootstrap-admin-template/html/ltr/charts.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 11 Oct 2023 17:40:04 GMT -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,8 +12,14 @@
     <meta name="keywords"
           content="admin template, Chameleon admin template, dashboard template, gradient admin template, responsive admin template, webapp, eCommerce dashboard, analytic dashboard">
     <meta name="author" content="ThemeSelect">
-
-    <title>Staff - Pending Blogs</title>
+    <title>Charts - Chameleon Admin - Modern Bootstrap 4 WebApp & Dashboard HTML Template + UI Kit</title>
+    <link rel="apple-touch-icon" href="../../theme-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon"
+          href="https://demos.themeselection.com/chameleon-free-bootstrap-admin-template/theme-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700"
+          rel="stylesheet">
+    <link href="../../../../maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
+    <!-- BEGIN VENDOR CSS-->
     <link rel="icon" href="../../images/sm-logo.svg" type="image/gif" sizes="20x20">
     <link rel="shortcut icon" type="image/x-icon"
           href="https://demos.themeelection.com/chameleon-free-bootstrap-admin-template/images/ico/favicon.ico">
@@ -29,15 +36,19 @@
     <link rel="stylesheet" type="text/css" th:href="@{../../css/app-lite.css}">
     <link rel="stylesheet" type="text/css" th:href="@{../../css/core/menu/menu-types/vertical-menu.css}">
     <link rel="stylesheet" type="text/css" th:href="@{../../css/core/colors/palette-gradient.css}">
-
+    <!-- END Page Level CSS-->
+    <!-- BEGIN Custom CSS-->
+    <!-- END Custom CSS-->
 </head>
 <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click"
-      data-menu="vertical-menu" data-color="bg-chartbg" data-col="2-columns">
+      data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
 
 <!-- fixed-top-->
-<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light">
-    <div class="navbar-wrapper">
-        <div class="navbar-container content">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light" style="background: #262d47;">
+    <div class="navbar-wrapper" style="height: 1px;">
+        <div class="navbar-container content" style="background: #262d47;
+    position: relative;
+    bottom: 40px;">
             <div class="collapse navbar-collapse show" id="navbar-mobile">
                 <ul class="nav navbar-nav mr-auto float-left">
                     <li class="nav-item d-block d-md-none"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
@@ -66,32 +77,51 @@
 
 
                 <ul class="nav navbar-nav float-right">
+
+
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="arrow_box_right"><a class="dropdown-item" href="#"><i class="ft-book"></i> Read
+                            Mail</a><a class="dropdown-item" href="#"><i class="ft-bookmark"></i> Read Later</a><a
+                                class="dropdown-item" href="#"><i class="ft-check-square"></i> Mark all Read </a>
+                        </div>
+                    </div>
+                    </li>
+
+
                     <!--Dropdown User-->
                     <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
                                                                    href="#" data-toggle="dropdown"> <span
-                            class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}"
+                            class="avatar avatar-online"><img src="../../images/avatar/ava-06.jpg"
                                                               alt="avatar"><i></i></span></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="arrow_box_right"><a class="dropdown-item" href="#"><span
-                                    class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}"
+                                    class="avatar avatar-online"><img src="../../images/portrait/small/avatar-s-19.png"
                                                                       alt="avatar"><span
-                                    class="user-name text-bold-700 ml-1" th:text="${user.userName}"></span></span></a>
+                                    class="user-name text-bold-700 ml-1">John Doe</span></span></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
+                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a
+                                        class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a><a
+                                        class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a><a
+                                        class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" th:href="@{/index/logout}"><i class="ft-power"></i> Logout</a>
+                                <a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
                             </div>
                         </div>
                     </li>
                 </ul>
+
+
             </div>
         </div>
     </div>
 </nav>
 
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+
 
 <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true"
-     data-img="../../images/backgrounds/02.jpg">
+     data-img="../../theme-assets/images/backgrounds/02.jpg">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row justify-content-center" style="background-color: black;">
             <li class="nav-item" style="margin-top: 20px;"><a th:href="@{/index/home}"><img alt="image"
@@ -100,7 +130,6 @@
             </li>
         </ul>
     </div>
-
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class="active"><a th:href="@{/staff/view}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
@@ -126,102 +155,177 @@
 
 <div class="app-content content">
     <div class="content-wrapper">
-
-            <!-- Table head options start -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Pending Blogs</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                        </div>
-                        <div class="card-content collapse show">
-
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="thead-dark" style="text-align: center;">
-                                    <tr>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Origin</th>
-                                        <th scope="col">Content</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">BlogType</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <tr th:each="blog : ${pendingBlogs}">
-                                        <td th:text="${blog.title}"></td>
-
-
-                                        <td > <img class="img-fluid" style="object-fit: contain" th:src="@{'../../../images/blog/' + ${blog.image}}" alt></td>
-
-
-                                        <td th:if="${blog.petType  != null} " th:text="${blog.petType}"></td>
-                                        <td th:if="${blog.petType  == null} " > Service</td>
-
-                                        <td>England</td>
-
-                                <!-- Blog Content-->
-                                        <td>
-                                            <span th:id="${'blogContent-' + blog.id}"
-                                                th:text="${#strings.length(blog.content) > 30 ? blog.content.substring(0, 30) + '...' : blog.content}"></span>
-                                            <span type="button" data-toggle="modal" data-target="#exampleModalLong" style="color: red; font-weight: bold;">Read more</span>
-                                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" style="font-weight: bold; margin-left: 200px;" id="exampleModalLongTitle" th:text="${blog.title}"></h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <span th:text="${blog.content}"></span>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td th:text="${blog.price} + '$'"></td>
-                                        <td th:text="${blog.userName}"></td>
-
-                                        <td th:if="${blog.blogTypeName  != null} " th:text="${blog.blogTypeName}"></td>
-                                        <td th:if="${blog.blogTypeName  == null} " > Service</td>
-                                        <td>
-                                            <form th:action="@{/blog/staff/process}" method="post">
-                                                <button class="btn btn-primary" type="submit" name="action" value="approve">Approve</button>
-                                                <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
-                                                <input type="text" name="reason" placeholder="Enter Notification" required/>
-                                                <input type="hidden" name="blogId" th:value="${blog.id}"  />
-                                            </form>
-
-                                        </td>
-                                    </tr>
-
-                                    </tbody>
-
-                                </table>
-
+        <div class="content-wrapper-before" style="
+    background: #eff0f5;
+"></div>
+        <div class="content-header row">
+            <div class="content-header-left col-md-4 col-12 mb-2">
+                <h3 class="content-header-title" style="color: black;">Charts</h3>
+            </div>
+            <div class="content-header-right col-md-8 col-12">
+                <div class="breadcrumbs-top float-md-right">
+                    <div class="breadcrumb-wrapper mr-1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">Charts
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body"><!-- Bar charts section start -->
+            <section id="chartjs-bar-charts">
+                <!-- Column Chart -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Column Chart</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div class="height-400">
+                                        <canvas id="column-chart"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Table head options end -->
+
+                <!-- Bar Chart -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Bar Chart</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div class="height-400">
+                                        <canvas id="bar-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <!-- // Bar charts section end -->
+
+            <!-- line chart section start -->
+            <section id="chartjs-line-charts">
+                <!-- Line Chart -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Simple Line Chart</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body chartjs">
+                                    <div class="height-500">
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <!-- // line chart section end -->
+
+            <!-- Pie charts section start -->
+            <section id="chartjs-pie-charts">
+                <div class="row">
+                    <!-- Simple Pie Chart -->
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Simple Pie Chart</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div class="height-400">
+                                        <canvas id="simple-pie-chart" width="1389" height="600" style="display: block; height: 400px; width: 926px;" class="chartjs-render-monitor"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simple Doughnut Chart -->
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Simple Doughnut Chart</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div class="height-400">
+                                        <canvas id="simple-doughnut-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- // Pie charts section end -->
 
         </div>
     </div>
 </div>
-
+<!-- ////////////////////////////////////////////////////////////////////////////-->
 
 <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close"
                                                                                          href="#"><i
@@ -282,19 +386,19 @@
         <h5 class="mt-1 mb-1 text-bold-500">Sidebar Background Image</h5>
         <div class="cz-bg-image row">
             <div class="col mb-2">
-                <img src="../../images/backgrounds/04.jpg" class="rounded sidiebar-bg-img" width="50"
+                <img src="../../theme-assets/images/backgrounds/04.jpg" class="rounded sidiebar-bg-img" width="50"
                      height="100" alt="background image">
             </div>
             <div class="col mb-3">
-                <img src="../../images/backgrounds/01.jpg" class="rounded sidiebar-bg-img" width="50"
+                <img src="../../theme-assets/images/backgrounds/01.jpg" class="rounded sidiebar-bg-img" width="50"
                      height="100" alt="background image">
             </div>
             <div class="col mb-3">
-                <img src="../../images/backgrounds/02.jpg" class="rounded sidiebar-bg-img" width="50"
+                <img src="../../theme-assets/images/backgrounds/02.jpg" class="rounded sidiebar-bg-img" width="50"
                      height="100" alt="background image">
             </div>
             <div class="col mb-3">
-                <img src="../../images/backgrounds/05.jpg" class="rounded sidiebar-bg-img" width="50"
+                <img src="../../theme-assets/images/backgrounds/05.jpg" class="rounded sidiebar-bg-img" width="50"
                      height="100" alt="background image">
             </div>
         </div>
@@ -348,15 +452,44 @@
 
 <footer class="footer footer-static footer-light navbar-border navbar-shadow">
     <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
-            class="float-md-left d-block d-md-inline-block">2023  &copy; Copyright </span>
+            class="float-md-left d-block d-md-inline-block">2018  &copy; Copyright <a
+            class="text-bold-800 grey darken-2" href="https://themeselection.com/"
+            target="_blank">ThemeSelection</a></span>
         <ul class="list-inline float-md-right d-block d-md-inline-blockd-none d-lg-block mb-0">
-            <li class="list-inline-item"> More themes</li>
-            <li class="list-inline-item">Support</li>
-            <li class="list-inline-item">Purchase</li>
+            <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/" target="_blank"> More
+                themes</a></li>
+            <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/support" target="_blank">
+                Support</a></li>
+            <li class="list-inline-item"><a class="my-1"
+                                            href="https://themeselection.com/products/chameleon-admin-modern-bootstrap-webapp-dashboard-html-template-ui-kit/"
+                                            target="_blank"> Purchase</a></li>
         </ul>
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script th:inline="javascript">
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var labels = /*[[${listbook}]]*/ 'default';
+    labels = labels.map(book => book.create_date);
+
+    var data = /*[[${listbook}]]*/ 'default';
+    data = data.map(book => book.total_price);
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Booking',
+                data: data,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)'
+            }]
+        }
+    });
+</script>
 
 <script src="../vendors/js/vendors.min.js}" type="text/javascript"></script>
 <script src="../vendors/js/forms/toggle/switchery.min.js}" type="text/javascript"></script>
@@ -371,7 +504,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- END PAGE LEVEL JS-->
 </body>
 
-<!-- Mirrored from demos.themeselection.com/chameleon-free-bootstrap-admin-template/html/ltr/tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 05:51:26 GMT -->
+<!-- Mirrored from demos.themeselection.com/chameleon-free-bootstrap-admin-template/html/ltr/charts.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 11 Oct 2023 17:40:13 GMT -->
 </html>

@@ -263,10 +263,7 @@ public class UserService {
 
     public void UpdateStaff(int idStaff, String roleStaff) {
         Optional<UserEntity> userEntity = userRepository.findById(idStaff);
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setName(roleStaff);
-        roleRepository.save(roleEntity);
-
+        RoleEntity roleEntity = roleRepository.findByName(roleStaff);
         userEntity.get().setRoleEntity(roleEntity);
         userRepository.save(userEntity.get());
     }

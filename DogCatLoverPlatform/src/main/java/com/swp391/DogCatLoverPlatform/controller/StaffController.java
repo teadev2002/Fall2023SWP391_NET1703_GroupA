@@ -1,9 +1,12 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
+import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
+import com.swp391.DogCatLoverPlatform.service.BookingService;
+import com.swp391.DogCatLoverPlatform.service.ChartService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +66,11 @@ public class StaffController {
         }
         return null;
     }
+    @GetMapping("/staff-sign-up")
+    public String staffSignup(Model model, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+        return "staff-sign-up";}
 
     @PostMapping(value = "/sign-up-staff-account")
     public ResponseEntity<?> signup(@Valid @RequestBody UserDTO signUpRequest) {
@@ -73,6 +81,9 @@ public class StaffController {
         baseRespone.setData(isSuccess);
         return new ResponseEntity<>(baseRespone, HttpStatus.OK);
     }
+    @Autowired
+    ChartService chartService;
+
 
     @GetMapping("/manageStaff")
     public String manageStaff(HttpServletRequest req, Model model){
@@ -95,5 +106,15 @@ public class StaffController {
         return "redirect:/staff/manageStaff";
     }
 
+
+
+    @GetMapping("/chart")
+    public String lineChart(Model model){
+//        List<BookingDTO> listbook = chartService.getBookingChart();
+//        model.addAttribute("listbook", listbook);
+        int countBlogInList = chartService.countAllBlog();
+        model.addAttribute("countBlogInList",countBlogInList);
+        return "charts";
+    }
 
 }
