@@ -601,17 +601,16 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
 
     @PostMapping("/trash")
     public String updateAndResubmitOrDeleteBlog(
-            int blogId,
-            int blogTypeId,
+            @RequestParam("blogId") int blogId,
             @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO,
-            String action) {
+            @RequestParam("action") String action) {
 
         if ("resubmit".equals(action)) {
             // Update the blog and set its confirmation status to null
-            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO, blogTypeId);
+            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO);
         } else if ("delete".equals(action)) {
             // Delete the blog
-            blogService.blogRepository.deleteById(blogId);
+            blogService.deleteBlogById(blogId);
         }
 
         return "redirect:/blog/trash";

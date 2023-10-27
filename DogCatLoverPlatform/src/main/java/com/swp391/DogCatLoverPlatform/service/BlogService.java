@@ -236,7 +236,7 @@ public class BlogService {
     }
 
 
-    public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO,int blogType) {
+    public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO) {
 
         BlogEntity blogEntity = blogRepository.findById(blogId)
                 .orElseThrow(() -> new NoSuchElementException("Blog not found with ID: " + blogId));
@@ -247,12 +247,7 @@ public class BlogService {
         // Update the remaining properties using ModelMapper
         modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
 
-        BlogTypeEntity blogTypeEntity = new BlogTypeEntity();
-        blogTypeEntity.setId(blogType);
-        blogEntity.setBlogTypeEntity(blogTypeEntity);
         // Save the updated entity
-
-        blogRepository.save(blogEntity);
     }
 
     public void updateBlogToFalse(int idBlog){
