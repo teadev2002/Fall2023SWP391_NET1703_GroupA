@@ -107,6 +107,10 @@
             </li>
 
             <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
+            </li>
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
+
 
             </li>
         </ul>

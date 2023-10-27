@@ -74,5 +74,26 @@ public class StaffController {
         return new ResponseEntity<>(baseRespone, HttpStatus.OK);
     }
 
+    @GetMapping("/manageStaff")
+    public String manageStaff(HttpServletRequest req, Model model){
+        List<UserDTO> list = userService.getAccountStaff();
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("listStaff", list);
+        model.addAttribute("user", user);
+        return "staff-list";
+    }
+
+    @PostMapping(value = "/updateStaff")
+    public String updateStaff(HttpServletRequest request) {
+        String action = request.getParameter("action");
+        int idStaff = Integer.parseInt(request.getParameter("idStaff"));
+        if(action.equals("Disable")){
+            userService.UpdateStaff(idStaff,"ROLE_NULL");
+        }else if(action.equals("Active")){
+            userService.UpdateStaff(idStaff,"ROLE_STAFF");
+        }
+        return "redirect:/staff/manageStaff";
+    }
+
 
 }
