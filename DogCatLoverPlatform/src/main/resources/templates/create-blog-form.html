@@ -514,30 +514,30 @@
     });
 </script>
 
-<script> // validate dateEnd cannot below dateStart
-document.addEventListener('DOMContentLoaded', function () {
-    // Get the dateStart and dateEnd input elements
-    var dateStartInput = document.getElementById('dateStart');
-    var dateEndInput = document.getElementById('dateEnd');
+<!--<script> // validate dateEnd cannot below dateStart-->
+<!--document.addEventListener('DOMContentLoaded', function () {-->
+<!--    // Get the dateStart and dateEnd input elements-->
+<!--    var dateStartInput = document.getElementById('dateStart');-->
+<!--    var dateEndInput = document.getElementById('dateEnd');-->
 
-    // Function to validate the dateEnd
-    function validateDates() {
-        var dateStartValue = new Date(dateStartInput.value);
-        var dateEndValue = new Date(dateEndInput.value);
+<!--    // Function to validate the dateEnd-->
+<!--    function validateDates() {-->
+<!--        var dateStartValue = new Date(dateStartInput.value);-->
+<!--        var dateEndValue = new Date(dateEndInput.value);-->
 
-        // Check if dateEnd is not earlier than dateStart
-        if (dateEndValue < dateStartValue) {
-            dateEndInput.setCustomValidity('End date cannot be earlier than start date.');
-        } else {
-            dateEndInput.setCustomValidity('');
-        }
-    }
+<!--        // Check if dateEnd is not earlier than dateStart-->
+<!--        if (dateEndValue < dateStartValue) {-->
+<!--            dateEndInput.setCustomValidity('End date cannot be earlier than start date.');-->
+<!--        } else {-->
+<!--            dateEndInput.setCustomValidity('');-->
+<!--        }-->
+<!--    }-->
 
-    // Add an event listener for the input event on both dateStart and dateEnd
-    dateStartInput.addEventListener('input', validateDates);
-    dateEndInput.addEventListener('input', validateDates);
-});
-</script>
+<!--    // Add an event listener for the input event on both dateStart and dateEnd-->
+<!--    dateStartInput.addEventListener('input', validateDates);-->
+<!--    dateEndInput.addEventListener('input', validateDates);-->
+<!--});-->
+<!--</script>-->
 <script>
     function togglePriceInput() {
         var selectedValue = document.getElementById("serviceCategory").value;

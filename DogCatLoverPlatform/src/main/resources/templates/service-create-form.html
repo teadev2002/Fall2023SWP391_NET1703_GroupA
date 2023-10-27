@@ -322,7 +322,7 @@
                     </span>
         </div>
         <input class="form-control" type="text" id="title" name="title" th:field="*{title}"
-               placeholder="Your title..." required>
+               placeholder="Your title..." th:required="true">
       </div>
 
 
@@ -333,7 +333,7 @@
                     </span>
         </div>
         <textarea class="form-control" id="content" name="content" th:field="*{content}" rows="4"
-                  placeholder="Write something..." required></textarea>
+                  placeholder="Write something..." th:required="true"></textarea>
       </div>
 
 
@@ -347,7 +347,7 @@
                         </span>
         </div>
         <input class="form-control" type="text" id="price" name="price" th:field="*{price}"
-               placeholder="Set price..." required>
+               placeholder="Set price..." th:required="true">
       </div>
 
       <div class="mb-3 input-group">
@@ -358,7 +358,7 @@
         </div>
         <div>Date Start</div></br> &nbsp;
         <input class="form-control" type="date" id="dateStart" name="dateStart" th:field="*{dateStart}"
-               placeholder="Your title..." required>
+               placeholder="Your title..." th:required="true">
       </div>
 
       <div class="mb-3 input-group">
@@ -369,7 +369,7 @@
         </div>
         <div>Date End</div></br>&nbsp;&nbsp;
         <input class="form-control" type="date" id="dateEnd" name="dateEnd" th:field="*{dateEnd}"
-               placeholder="Your title..." required>
+               placeholder="Your title..." th:required="true">
       </div>
 
       <div class="button-container">
@@ -451,31 +451,58 @@
   </div>
 </footer>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the dateStart and dateEnd input elements
+    var dateStartInput = document.getElementById('dateStart');
+    var dateEndInput = document.getElementById('dateEnd');
+    var priceInput = document.getElementById('priceInput');
+    var content = document.getElementById('content').value.trim();
+    var title = document.getElementById('title').value.trim();
 
-<script> // validate dateEnd cannot below dateStart
-document.addEventListener('DOMContentLoaded', function () {
-  // Get the dateStart and dateEnd input elements
-  var dateStartInput = document.getElementById('dateStart');
-  var dateEndInput = document.getElementById('dateEnd');
+    // Function to validate the dateEnd
+    function validateDates() {
+      var dateStartValue = new Date(dateStartInput.value);
+      var dateEndValue = new Date(dateEndInput.value);
 
-  // Function to validate the dateEnd
-  function validateDates() {
-    var dateStartValue = new Date(dateStartInput.value);
-    var dateEndValue = new Date(dateEndInput.value);
+      if (content.startsWith(' ')) {
+        alert('Content cannot start with space!');
+        return;
+      }
+      if (title.startsWith(' ')) {
+        alert('Title cannot start with space!');
+        return;
+      }
+      document.getElementById("priceInput").onkeypress = function(e) {
+        return isNumber(e);
+      };
+      if ( priceInput.value < 1) {
+        alert('Price cannot be below 1 or be a non-number!');
+        return;
+      }
 
-    // Check if dateEnd is not earlier than dateStart
-    if (dateEndValue < dateStartValue) {
-      dateEndInput.setCustomValidity('End date cannot be earlier than start date.');
-    } else {
-      dateEndInput.setCustomValidity('');
+      // Check if dateEnd is not earlier than dateStart
+      if (dateEndValue < dateStartValue) {
+        dateEndInput.setCustomValidity('End date cannot be earlier than start date.');
+      } else {
+        dateEndInput.setCustomValidity('');
+      }
     }
-  }
-
-  // Add an event listener for the input event on both dateStart and dateEnd
-  dateStartInput.addEventListener('input', validateDates);
-  dateEndInput.addEventListener('input', validateDates);
-});
+    function isNumber(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+    }
+    // Add an event listener for the input event on both dateStart and dateEnd
+    dateStartInput.addEventListener('input', validateDates);
+    dateEndInput.addEventListener('input', validateDates);
+    priceInput.addEventListener('input', validateDates);
+  });
 </script>
+
 
 <script>
   function togglePriceInput() {

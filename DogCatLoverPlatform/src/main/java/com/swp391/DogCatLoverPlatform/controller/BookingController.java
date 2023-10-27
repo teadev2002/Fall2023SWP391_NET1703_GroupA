@@ -31,15 +31,19 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/history")
-    public ResponseEntity<?> history(Model model, HttpServletRequest request){
+    public String history(Model model, HttpServletRequest request){
         UserDTO userDTO = getUserIdFromCookie(request);
 
         if(userDTO == null){
-            return new ResponseEntity<>("ko có quyền vào",HttpStatus.OK);
+            String noAccess = "cannot access";
+            model.addAttribute("noAccess", noAccess);
         }
-       List<BookingDTO> list = bookingService.getBookingHistory(userDTO.getId());
-        return new ResponseEntity<>(list,HttpStatus.OK);
+       List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
+        model.addAttribute("listHistory",listHistory);
+        return "booking-history";
     }
+
+
 
     @GetMapping("/manager")
     public String manager(Model model, HttpServletRequest req) {

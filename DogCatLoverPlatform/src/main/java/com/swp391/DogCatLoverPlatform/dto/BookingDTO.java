@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -23,4 +24,8 @@ public class BookingDTO {
     private BlogDTO blogDTO;
     private UserDTO userDTO;
 
+    public String getCreate_date() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy");
+        return formatter.format(create_date);
+    }
 }
