@@ -81,19 +81,10 @@
 
         <li><a th:href="@{/index/about}">About</a></li>
 
-        <li class="menu-item-has-children">
-          <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
+        <li>
+          <a th:href="@{/service/view}">Services</a>
         </li>
 
-        <li class="menu-item-has-children">
-          <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
-          <ul class="sub-menu">
-            <li><a href="pricing-plan.html">Pricing Plan</a></li>
-            <li><a href="team.html">Our Team</a></li>
-            <li><a href="3col-gallery.html">Gallery</a></li>
-            <li><a href="faq.html">Faq</a></li>
-          </ul>
-        </li>
 
         <li class="menu-item-has-children">
           <a th:href="@{/blog/view}">Blog</a><i class="bi bi-plus dropdown-icon"></i>
@@ -304,14 +295,6 @@
               <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><span>Re</span>ad More</a>
             </div>
 
-            <!--            <div class="more-btn mt-2" th:if="${user != null}">-->
-            <!--              <form th:action="@{/service/detail/myblog}" method="get">-->
-            <!--                <input type="hidden" name="id" th:value="${service.id}">-->
-            <!--                <span><button type="submit">Read More</button></span>-->
-            <!--              </form>-->
-
-            <!--            </div>-->
-
           </div>
         </div>
 
@@ -429,9 +412,6 @@
             <p class="wp-block-tag-cloud">
               <a th:href="@{/service/byType(type='Exchange')}">Exchange</a>
               <a th:href="@{/service/byType(type='Gift')}">Gift</a>
-              <a href="blog-grid.html">Daycare</a>
-              <a href="blog-grid.html">Boarding</a>
-              <a href="blog-grid.html">Grooming</a>
               <a href="blog-grid.html">Services</a>
             </p>
 
