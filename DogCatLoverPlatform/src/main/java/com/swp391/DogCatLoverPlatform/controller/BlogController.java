@@ -416,7 +416,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         commentService.createComment(commentDTO, description, id_blog, user.getId());
 
         // Chuyển hướng người dùng đến trang chi tiết của bài blog
-        return "redirect:/blog/" + id_blog + "/detail/myblog";
+        return "redirect:/blog/detail/myblog/" + id_blog;
     }
 
     @PostMapping("/delete")

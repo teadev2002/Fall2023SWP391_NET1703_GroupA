@@ -248,6 +248,7 @@ public class BlogService {
         modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
 
         // Save the updated entity
+        blogRepository.save(blogEntity);
     }
 
     public void updateBlogToFalse(int idBlog){
