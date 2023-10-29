@@ -59,9 +59,10 @@ public class SecurityConfig {
                     .antMatchers("/invoice/**").permitAll()
                     .antMatchers("/paymethod/**").permitAll()
 
+
                     .antMatchers("/").permitAll()
                     .antMatchers(HttpMethod.POST,"/blog/**").permitAll()
-                    .antMatchers("/paymethod/**").hasRole("USER")
+                  //  .antMatchers("/paymethod/**").hasRole("USER")
                     .antMatchers(HttpMethod.POST,"/services/**").permitAll()
                     .antMatchers("/booking/**").permitAll()
 

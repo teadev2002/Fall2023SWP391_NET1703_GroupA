@@ -108,9 +108,15 @@
 
             <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
             </li>
-            <li class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-credit-card"></i><span class="menu-title" >Create Account</span> </a>
+
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
+
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-credit-card"></i><span class="menu-title" >Create Account</span> </a>
             </li>
-            <li class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+
             </li>
         </ul>
     </div>
@@ -191,14 +197,20 @@
                                         <td th:if="${blog.blogTypeName  != null} " th:text="${blog.blogTypeName}"></td>
                                         <td th:if="${blog.blogTypeName  == null} " > Service</td>
                                         <td>
-                                            <form th:action="@{/blog/staff/process}" method="post">
+                                            <!-- Form for Approve -->
+                                            <form th:action="@{/blog/staff/process}" method="post" th:if="${true}">
                                                 <button class="btn btn-primary" type="submit" name="action" value="approve">Approve</button>
-                                                <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
-                                                <input type="text" name="reason" placeholder="Enter Notification" required/>
-                                                <input type="hidden" name="blogId" th:value="${blog.id}"  />
+                                                <input type="hidden" name="blogId" th:value="${blog.id}" />
                                             </form>
 
+                                            <!-- Form for Reject -->
+                                            <form th:action="@{/blog/staff/process}" method="post" th:if="${true}">
+                                                <button class="btn btn-danger" type="submit" name="action" value="reject">Reject</button>
+                                                <input type="text" name="reason" placeholder="Enter Notification" required />
+                                                <input type="hidden" name="blogId" th:value="${blog.id}" />
+                                            </form>
                                         </td>
+
                                     </tr>
 
                                     </tbody>

@@ -155,14 +155,17 @@
             <li class="active"><a th:href="@{/staff/view}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
             </li>
 
-            <li class="nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span
-                    class="menu-title" data-i18n="">Pending Blog</span></a>
+            <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
             </li>
-            <li class="nav-item"><a th:href="@{../staff/staff-sign-up}"><i class="ft-credit-card"></i><span
-                    class="menu-title">Create Account</span> </a>
+
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
+
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-credit-card"></i><span class="menu-title" >Create Account</span> </a>
             </li>
-            <li class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title"
-                                                                                                     data-i18n="">Charts</span></a>
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+
             </li>
         </ul>
     </div>
@@ -258,9 +261,56 @@
 
 
 
+        console.log("username : ", userName, " password : ", password,  "email : ", email);
+
+            $.ajax({
+                url: "http://localhost:8080/index/sign-up-add",
+                method: "post",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    userName: userName,
+                    password: password,
+                    email: email
+                })
+            }).done(function (data) {
+                console.log("server tra ve ", data)
+
+            })
+
         // All validation passed, proceed with saving the data in the database
         alert('Account created successfully');
     });
+
+
+</script>
+<script>$("#btn-sign-up").click(function () {
+
+
+    var username = $("#userName").val()
+    var password = $("#password").val()
+    var email = $("#email").val()
+
+
+    console.log("username : ", username, " password : ", password,  "email : ", email);
+    if (result) {
+        $.ajax({
+            url: "http://localhost:8080/index/sign-up-add",
+            method: "post",
+            contentType: "application/json",
+            data: JSON.stringify({
+                userName: username,
+                password: password,
+                email: email
+            })
+        }).done(function (data) {
+            console.log("server tra ve ", data)
+            alert("Đăng Ký Thành Công");
+        })
+    }else{
+        alert("Xác Nhận Mật Khẩu Không Thành Công");
+    }
+
+})
 </script>
 
 
@@ -287,7 +337,7 @@
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/masonry.pkgd.min.js"></script>
 <script src="../js/main.js"></script>
-<script src="../js/login.js"></script>
+
 
 
 

@@ -416,7 +416,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         commentService.createComment(commentDTO, description, id_blog, user.getId());
 
         // Chuyển hướng người dùng đến trang chi tiết của bài blog
-        return "redirect:/blog/" + id_blog + "/detail";
+        return "redirect:/blog/detail/myblog/" + id_blog;
     }
 
     @PostMapping("/delete")
@@ -567,7 +567,6 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         if ("approve".equals(action)) {
             // Approve the blog
             blogService.approveBlog(blogId);
-            emailService.sendEmail(user.getEmail(),reason);
 
         } else if ("reject".equals(action)) {
             // Reject the blog
@@ -603,13 +602,12 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     @PostMapping("/trash")
     public String updateAndResubmitOrDeleteBlog(
             @RequestParam("blogId") int blogId,
-            @RequestParam("blogTypeId") int blogTypeId,
             @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO,
             @RequestParam("action") String action) {
 
         if ("resubmit".equals(action)) {
             // Update the blog and set its confirmation status to null
-            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO, blogTypeId);
+            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO);
         } else if ("delete".equals(action)) {
             // Delete the blog
             blogService.deleteBlogById(blogId);

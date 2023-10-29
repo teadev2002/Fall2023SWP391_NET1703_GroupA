@@ -23,9 +23,4 @@ public class BookingDTO {
     private boolean status;
     private BlogDTO blogDTO;
     private UserDTO userDTO;
-
-    public String getCreate_date() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy");
-        return formatter.format(create_date);
-    }
 }

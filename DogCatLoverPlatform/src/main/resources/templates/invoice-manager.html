@@ -66,6 +66,27 @@
 </style>
 <body>
 
+<div class="top-bar" th:if="${user != null}">
+    <div class="container-lg container-fluid ">
+        <div class="row">
+            <div class="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
+                <div class="social-area">
+                </div>
+                <div class="opening-time text-center">
+                    <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
+                </div>
+                <div class="contact-number" style="display: flex; align-items: center;">
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+                    &nbsp; &nbsp;
+                    <span class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+                    &nbsp; &nbsp;
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
@@ -85,18 +106,9 @@
 
                 <li><a th:href="@{/index/about}">About</a></li>
 
-                <li class="menu-item-has-children">
-                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                </li>
 
-                <li class="menu-item-has-children">
-                    <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="3col-gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
-                    </ul>
+                <li>
+                    <a th:href="@{/service/view}">Services</a>
                 </li>
 
                 <li class="menu-item-has-children">
@@ -422,14 +434,11 @@
 <!-- Iterate through the list of invoices -->
 <ul th:if="${list != null}" th:each="invoice : ${list}">
   <li>
-
     <p>Name: <span th:text="${invoice.userName}"></span></p>
     <p>Invoice Date: <span th:text="${invoice.invoice_date}">N/A</span></p>
     <p>Total Amount: $<span th:text="${invoice.total_amount}">0.00</span></p>
     <p>Email: <span th:text="${invoice.email}"></span></p>
     <p>Title: <span th:text="${invoice.title}"></span></p>
-
-
     <!-- Add more fields here if needed -->
   </li>
 </ul>

@@ -6,8 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -27,5 +29,8 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Integer>
     //View My Service
     @Query(value = "SELECT s.*, b.confirm ,b.title FROM service s  JOIN blog b ON s.id_blog = b.id WHERE b.id_user_created = :userId AND b.status is null", nativeQuery = true)
     Page<ServiceEntity> findByUserEntityIdAndStatus(int userId, Pageable pageable);
+
+    @Query("SELECT s FROM service s WHERE s.date_start >= :startOfWeek AND s.date_end <= :endOfWeek")
+    List<ServiceEntity> findByCreateDateBetween(@Param("startOfWeek") Date startOfWeek, @Param("endOfWeek") Date endOfWeek);
 
 }
