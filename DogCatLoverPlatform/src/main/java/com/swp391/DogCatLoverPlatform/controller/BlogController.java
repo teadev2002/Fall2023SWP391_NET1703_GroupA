@@ -106,13 +106,13 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
+            //Mỗi lần bấm vào giao diện này, nó sẽ đánh dấu là đã xem và set status notification lại, để biến đếm không đếm nữa
+            userNotificationService.markAsRead(user.getId());
+
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
             //User đăng nhập hiện tại sẽ được xem danh sách những user khác đã gửi request trong bài Blog của mình.
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
 
-            //Đếm số lượng thông báo và hiển thị
-            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
-            model.addAttribute("count", totalCount);
             model.addAttribute("listBlog", bookingDTOS);
             model.addAttribute("listNotification", userNotificationDTOS);
             model.addAttribute("currentUserId", user.getId());
@@ -138,7 +138,8 @@ public class BlogController {
 
         //Hiện số lượng list
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -162,7 +163,8 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -199,7 +201,8 @@ public class BlogController {
 
         UserDTO user  = getUserIdFromCookie(req);
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -227,7 +230,8 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -247,7 +251,8 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -262,7 +267,8 @@ public class BlogController {
             model.addAttribute("listBlog", list);
 
             if(user != null){
-                List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+                //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+                List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
                 List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
                 int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
                 model.addAttribute("count", totalCount);
@@ -278,7 +284,8 @@ public class BlogController {
             model.addAttribute("listBlogs", lists);
             model.addAttribute("title", title);
             if(user != null){
-                List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+                //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+                List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
                 List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
                 int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
                 model.addAttribute("count", totalCount);
@@ -287,7 +294,8 @@ public class BlogController {
             if (lists.isEmpty()) {
                 model.addAttribute("msg", "Searching result is not found!!");
                 if(user != null){
-                    List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+                    //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+                    List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
                     List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
                     int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
                     model.addAttribute("count", totalCount);
@@ -296,7 +304,8 @@ public class BlogController {
                 model.addAttribute("listBlogs", lists);
                 model.addAttribute("title", title);
                 if(user != null){
-                    List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+                    //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+                    List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
                     List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
                     int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
                     model.addAttribute("count", totalCount);
@@ -329,7 +338,8 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -346,7 +356,8 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -370,7 +381,8 @@ public class BlogController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -443,7 +455,8 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -468,7 +481,9 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
+
             //User đăng nhập hiện tại sẽ được xem danh sách những user khác đã gửi request trong bài Blog của mình.
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
 

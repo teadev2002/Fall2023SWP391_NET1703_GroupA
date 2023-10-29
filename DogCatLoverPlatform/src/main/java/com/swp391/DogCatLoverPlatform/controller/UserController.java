@@ -67,7 +67,8 @@ public class UserController {
 
         //Hiện số lượng thông báo
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -119,7 +120,8 @@ public class UserController {
 
         //Hiện số lượng list
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -182,7 +184,8 @@ public class UserController {
                 if ("User".equals(c.getName())) {
                     email = c.getValue();
                     UserDTO user = userService.getUserByEmail(email);
-                    List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+                    //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+                    List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
                     List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
                     int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
                     model.addAttribute("count", totalCount);
