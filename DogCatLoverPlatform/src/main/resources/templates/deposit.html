@@ -202,7 +202,7 @@
         <div class="row">
             <div class="col-sm-9">
                 <p style="font-size: 20px;">Select the amount to deposit</p>
-                <p style="font-size:14px">Chọn nhanh số tiền cần nạp</p>
+                <p style="font-size:14px">Quickly select the amount to deposit</p>
                 <div class="row">
                     <div class="col-md-2">
                         <input onclick="setTien(this)" id="50" type="radio" value="50" name="chontien">
@@ -229,21 +229,21 @@
                         <label for="2000">2000 USD</label>
                     </div>
                 </div><br>
-                <p>Hoặc nhập số tiền cần nạp</p>
-                <input id="inputmoney" style="height: 30px; border: 1px solid #000;padding-left: 10px" value="50"><span class="vndinput">VNĐ</span>
+                <p>Or enter the amount to deposit</p>
+                <input id="inputmoney" style="height: 30px; border: 1px solid #000;padding-left: 10px" value="50"><span class="vndinput">$</span>
                 <br><br><br><button onclick="khoiTaoLink()" class="btn btn-primary btntieptuc">Tiếp tục ></button><br><br>
                 <div class="ghichuql">
-                    <p>Lưu ý quan trọng: Trong quá trình thanh toán, bạn vui lòng KHÔNG ĐÓNG TRÌNH DUYỆT.</p>
-                    <p>Nếu gặp khó khăn trong quá trình thanh toán, xin liên hệ 0917686101 để chúng tôi hỗ trợ bạn.</p>
+                    <p>Important note: During the payment process, please DO NOT CLOSE YOUR BROWSER.</p>
+                    <p>If you have difficulty during the payment process, please contact 0777982527 so we can assist you.</p>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="divsodu">
-                    <p>Số dư tài khoản</p>
+                    <p>Account balance</p>
                     <strong id="sodu" class="btntiencon" th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')}+' USD'"></strong>
                     <!--                    <td th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')} +' USD'"></td>-->
                 </div><br>
-                <a href="lichsunap.html" class="btn btn-secondary form-control">Lịch sử nạp tiền ></a>
+                <a href="http://localhost:8080/deposite-history/my-deposit" class="btn btn-secondary form-control">Deposit history</a>
             </div>
         </div>
     </div>
@@ -392,7 +392,7 @@
         var urlinit = 'http://localhost:8080/deposite-history/create';
         var paymentDto = {
             "amount":tien,
-            "content":"Nạp tiền vào tài khoản",
+            "content":"Deposit money into your account",
             "returnUrl":returnUrl,
             "notifyUrl":returnUrl
         }
