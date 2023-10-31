@@ -133,4 +133,17 @@ public class BookingService {
         return bookingDTOList;
     }
 
+    public Long getCountBookingByBookingDate(Date date){
+        Long bookingDTOS = bookingEntityRepository.countBookingByBookingDate(date);
+        return bookingDTOS;
+    }
+
+    public List<BookingEntity> getFindUserBooking(int user){
+        List<BookingEntity> listBookingEntity = bookingEntityRepository.findByUserBooking(user);
+        return listBookingEntity;
+    }
+
+
+
+
 }

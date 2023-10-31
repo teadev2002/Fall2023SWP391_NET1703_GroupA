@@ -267,4 +267,13 @@ public class UserService {
         userEntity.get().setRoleEntity(roleEntity);
         userRepository.save(userEntity.get());
     }
+
+
+    public UserEntity getSaveUser(UserEntity userEntity) {
+        return userRepository.save(userEntity);
+    }
+
+    public UserEntity getFindByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
 }

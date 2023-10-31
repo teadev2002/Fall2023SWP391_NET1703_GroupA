@@ -40,8 +40,7 @@ public class BookingController {
     @Autowired
     RequestService requestService;
 
-    @Autowired
-    private UserRepository userRepository;
+
 
     @GetMapping("/history")
     public String history(Model model, HttpServletRequest request){
@@ -90,8 +89,7 @@ public class BookingController {
         return "booking-manager";
     }
 
-    @Autowired
-    private BookingEntityRepository bookingEntityRepository;
+
 
     @GetMapping("/booking-by-date-and-blog")
     public ResponseEntity<?> findByDateAndBlog(@RequestParam("date") Date date, @RequestParam("id") Integer idBlog){
@@ -111,7 +109,7 @@ public class BookingController {
         UserDTO user = getUserIdFromCookie(req);
         boolean result = false;
         if(user == null){
-            throw new MessageException("Bạn chưa đăng nhập",444);
+            throw new MessageException("You have not login",444);
         }else{
             result = bookingService.createBooking(booking,user);
         }
@@ -143,7 +141,8 @@ public class BookingController {
             Date str = new Date(startDate + (1000L * 60L * 60L * 24L * i));
             StatisticDTO statisticDto = new StatisticDTO();
             statisticDto.setDate(str);
-            statisticDto.setNumberBooking(bookingEntityRepository.countBookingByBookingDate(str));
+//            statisticDto.setNumberBooking(bookingEntityRepository.countBookingByBookingDate(str));
+            statisticDto.setNumberBooking(bookingService.getCountBookingByBookingDate(str));
             list.add(statisticDto);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
@@ -160,9 +159,9 @@ public class BookingController {
         UserEntity user = getUserFromCookie(req);
         boolean result = false;
         if(user == null){
-            throw new MessageException("Bạn chưa đăng nhập",444);
+            throw new MessageException("You are not logged in",444);
         }else{
-            List<BookingEntity> list = bookingEntityRepository.findByUserBooking(user.getId());
+            List<BookingEntity> list = bookingService.getFindUserBooking(user.getId());
             Double total = 0D;
             for(BookingEntity b: list){
                 total += b.getTotal_price();
@@ -173,8 +172,11 @@ public class BookingController {
             if(user.getAccountBalance() < total){
                 throw new MessageException("wallet balance not enough");
             }
+            if(list.isEmpty()){
+                throw new MessageException("Get 1 service to payment!");
+            }
             user.setAccountBalance(user.getAccountBalance() - total);
-            userRepository.save(user);
+            userService.getSaveUser(user);
             for(BookingEntity b: list){
                 b.setStatus(true);
                 UserEntity ch = b.getBlogEntity_BookingEntity().getUserEntity();
@@ -184,11 +186,11 @@ public class BookingController {
                 else{
                     ch.setAccountBalance(b.getTotal_price() + ch.getAccountBalance());
                 }
-                userRepository.save(ch);
+                userService.getSaveUser(ch);
 
             }
         }
-        return new ResponseEntity<>("Thành công", HttpStatus.CREATED);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
     private UserEntity getUserFromCookie(HttpServletRequest req) {
@@ -197,7 +199,7 @@ public class BookingController {
             for (Cookie cookie : cookies) {
                 if ("User".equals(cookie.getName())) {
                     String email = cookie.getValue();
-                    UserEntity user = userRepository.findByEmail(email);
+                    UserEntity user = userService.getFindByEmail(email);
                     return user;
                 }
             }

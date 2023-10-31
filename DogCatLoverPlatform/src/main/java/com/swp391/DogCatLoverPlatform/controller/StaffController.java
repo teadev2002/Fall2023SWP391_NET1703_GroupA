@@ -129,10 +129,6 @@ public class StaffController {
         });
         model.addAttribute("listbook", listbook);
 
-        List<ChartDTO> listTopCustomer = chartService.getTopCustomer();
-        model.addAttribute("listTopCustomer",listTopCustomer);
-
-        System.out.println(listTopCustomer.size());
         return "charts";
     }
 
