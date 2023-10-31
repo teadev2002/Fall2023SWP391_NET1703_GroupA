@@ -528,26 +528,6 @@
 <!--    dateEndInput.addEventListener('input', validateDates);-->
 <!--});-->
 <!--</script>-->
-<script>
-    function togglePriceInput() {
-        var selectedValue = document.getElementById("serviceCategory").value;
-        var priceInput = document.getElementById("priceInput");
-
-        if (selectedValue === "Exchange") {
-            priceInput.style.display = "block"; // Hiển thị
-        } else {
-            priceInput.style.display = "none"; // Ẩn
-        }
-    }
-
-    // Thêm sự kiện "change" vào phần chọn để kiểm tra khi người dùng thay đổi lựa chọn
-    $("#serviceCategory").on("change", function () {
-        togglePriceInput();
-    });
-
-
-</script>
-
 
 <script> // validate number negative & text
 document.getElementById("price").onkeypress = function(e) {

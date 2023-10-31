@@ -68,10 +68,8 @@ $(document).ready(function () {
                 })
             }).done(function (data) {
                 console.log("server tra ve ", data)
-                alert("Đăng Ký Thành Công");
             })
         }else{
-            alert("Xác Nhận Mật Khẩu Không Thành Công");
         }
 
     })

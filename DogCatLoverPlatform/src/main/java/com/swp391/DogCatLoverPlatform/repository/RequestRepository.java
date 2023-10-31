@@ -23,7 +23,7 @@ public interface RequestRepository extends JpaRepository<RequestEntity, Integer>
 
     //Danh sách các Blog được gửi request, hiển thị bên trang list-request.html  (Dũng)
     @Query(value = "SELECT DISTINCT b.title, r.id_blog, " +
-            "MAX(r.id) as id, " +
+            "COUNT(r.id) as id, " +
             "MAX(r.id_user) as id_user, " +
             "MAX(r.status) as status, " +
             "MAX(r.create_date) as create_date \n" +

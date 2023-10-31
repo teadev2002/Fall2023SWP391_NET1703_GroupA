@@ -78,7 +78,6 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -98,7 +97,6 @@ public class ServiceController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -134,7 +132,6 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -161,7 +158,6 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -182,7 +178,6 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if(user != null){
-            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -213,7 +208,6 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if(user != null){
-            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
 

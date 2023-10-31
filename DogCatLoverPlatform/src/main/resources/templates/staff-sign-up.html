@@ -222,7 +222,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="account-btn" type="submit" id="btn-sign-up">Create Account</button>
+                        <button class="account-btn" type="submit" id="btn-sign-up-staff">Create Account</button>
                     </form>
                 </div>
             </div>
@@ -231,7 +231,7 @@
 </div>
 </div>
 <script>
-    document.getElementById('btn-sign-up').addEventListener('click', function(e) {
+    document.getElementById('btn-sign-up-staff').addEventListener('click', function(e) {
         e.preventDefault();
 
         let userName = document.getElementById('userName').value;
@@ -259,58 +259,25 @@
             return;
         }
 
-
-
         console.log("username : ", userName, " password : ", password,  "email : ", email);
-
-            $.ajax({
-                url: "http://localhost:8080/index/sign-up-add",
-                method: "post",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    userName: userName,
-                    password: password,
-                    email: email
-                })
-            }).done(function (data) {
-                console.log("server tra ve ", data)
-
-            })
-
-        // All validation passed, proceed with saving the data in the database
-        alert('Account created successfully');
-    });
-
-
-</script>
-<script>$("#btn-sign-up").click(function () {
-
-
-    var username = $("#userName").val()
-    var password = $("#password").val()
-    var email = $("#email").val()
-
-
-    console.log("username : ", username, " password : ", password,  "email : ", email);
-    if (result) {
         $.ajax({
-            url: "http://localhost:8080/index/sign-up-add",
+            url: "http://localhost:8080/staff/sign-up-staff-account",
             method: "post",
             contentType: "application/json",
             data: JSON.stringify({
-                userName: username,
+                userName: userName,
                 password: password,
                 email: email
             })
         }).done(function (data) {
             console.log("server tra ve ", data)
-            alert("Đăng Ký Thành Công");
         })
-    }else{
-        alert("Xác Nhận Mật Khẩu Không Thành Công");
-    }
 
-})
+
+        // All validation passed, proceed with saving the data in the database
+        alert('Account created successfully');
+    });
+
 </script>
 
 

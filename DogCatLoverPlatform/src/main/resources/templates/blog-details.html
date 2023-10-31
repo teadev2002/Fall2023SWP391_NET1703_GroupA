@@ -107,34 +107,36 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../../images/header1-logo.svg"></a>
+            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a th:href="@{/index/home}"><img alt="image" src="../../images/header1-logo.svg"></a>
+                    <a th:href="@{/index/home}"><img alt="image" src="../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
                 </div>
             </div>
             <ul class="menu-list">
+
                 <li><a th:href="@{/index/home}">Home</a></li>
 
                 <li><a th:href="@{/index/about}">About</a></li>
+
 
                 <li>
                     <a th:href="@{/service/view}">Services</a>
                 </li>
 
+
                 <li class="menu-item-has-children">
-                    <a th:href="@{/blog/view}">Blog</a><i class="bi bi-plus dropdown-icon"></i>
+                    <a th:href="@{/blog/view}">Blog</a>
                     <ul class="sub-menu">
                         <li><a th:href="@{/blog/byType(type='Sell')}">Sell</a></li>
                         <li><a th:href="@{/blog/byType(type='Gift')}">Gift</a></li>
                     </ul>
                 </li>
-
 
                 <li><a th:href="@{/index/contact}">Contact</a></li>
             </ul>
@@ -194,18 +196,32 @@
 
                 </li>
 
-                <li><a href="#">
+
+                <!--Notification-->
+                <li th:if="${user != null}">
+                    <a class="button__notification" th:href="@{/blog/view/view-request}">
+                        <svg  width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
+                        </svg>
+                    </a>
+                    <!--Số lượng thông báo-->
+                    <span th:if="${count != 0}" class="button__notification__badge" th:text="${count}"></span>
+                </li>
+
+                <li  th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom" title="Bạn cần đăng nhập để xem thông báo">
                     <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                     </svg>
                 </a></li>
+                <!-- end notification -->
 
 
-                <li><a href="cart.html">
+                <li><a th:href="@{/service/cart}">
                     <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z"/>
                     </svg>
                 </a></li>
+
                 <li><a th:href="@{/index/profile}">
                     <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1585_341)">
@@ -452,14 +468,8 @@
                             <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
                                     class="number-of-categoris">(18)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
+                            <li><a th:href="@{/service/view}" ><span>Pet Service</span> <span><span
                                     class="number-of-categoris">(21)</span><i
-                                    class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Grooming</span> <span><span
-                                    class="number-of-categoris">(25)</span><i
-                                    class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Boarding</span> <span><span
-                                    class="number-of-categoris">(29)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
                         </ul>
 
@@ -517,7 +527,7 @@
                         <p class="wp-block-tag-cloud">
                             <a th:href="@{/blog/byType(type='Sell')}">Sell</a>
                             <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
-                            <a href="blog-grid.html">Services</a>
+                            <a th:href="@{/service/view}">Services</a>
                         </p>
 
                     </div>

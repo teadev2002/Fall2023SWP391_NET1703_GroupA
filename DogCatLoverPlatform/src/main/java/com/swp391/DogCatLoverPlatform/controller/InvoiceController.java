@@ -74,7 +74,7 @@ public class InvoiceController {
         }
 
         if(userDTO != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(userDTO.getId());
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -101,8 +101,5 @@ public class InvoiceController {
         }
         return null;
     }
-
-
-
 
 }

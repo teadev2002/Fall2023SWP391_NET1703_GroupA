@@ -50,13 +50,13 @@ public class BookingController {
         }
 
         if(userDTO != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(userDTO.getId());
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
 
-       List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
+        List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
         model.addAttribute("listHistory",listHistory);
         model.addAttribute("user", userDTO);
         return "booking-history";
@@ -73,7 +73,7 @@ public class BookingController {
         }
 
         if(userDTO != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(userDTO.getId());
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);

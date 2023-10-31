@@ -30,6 +30,7 @@ public interface UserNotificationRepository extends JpaRepository<UserNotificati
             "WHERE un.id_receiver = :idUser", nativeQuery = true)
     List<UserNotificationEntity> findAllByIdUser(Integer idUser);
 
+
     //Kiểm tra trường hợp danh sách đã được duyệt rồi thì không được gửi nữa.
     @Query(value = "SELECT un.* FROM users_notification un \n" +
             "JOIN request r ON r.id = un.id_request \n" +

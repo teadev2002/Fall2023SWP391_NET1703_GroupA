@@ -347,14 +347,8 @@
                             <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
                                     class="number-of-categoris">(18)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
+                            <li><a th:href="@{/service/view}" ><span>Pet Service</span> <span><span
                                     class="number-of-categoris">(21)</span><i
-                                    class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Grooming</span> <span><span
-                                    class="number-of-categoris">(25)</span><i
-                                    class="bi bi-arrow-right-short"></i></span> </a></li>
-                            <li><a href="blog-grid.html"><span>Pet Boarding</span> <span><span
-                                    class="number-of-categoris">(29)</span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
                         </ul>
 
@@ -411,7 +405,7 @@
                         <p class="wp-block-tag-cloud">
                             <a th:href="@{/blog/byType(type='Sell')}">Sell</a>
                             <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
-                            <a href="blog-grid.html">Services</a>
+                            <a th:href="@{/service/view}">Services</a>
                         </p>
 
                     </div>

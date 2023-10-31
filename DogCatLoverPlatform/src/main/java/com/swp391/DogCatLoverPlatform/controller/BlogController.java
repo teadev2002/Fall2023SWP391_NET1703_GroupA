@@ -428,7 +428,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         commentService.createComment(commentDTO, description, id_blog, user.getId());
 
         // Chuyển hướng người dùng đến trang chi tiết của bài blog
-        return "redirect:/blog/detail/myblog/" + id_blog;
+        return "redirect:/blog/detail/myblog/"+ id_blog;
     }
 
     @PostMapping("/delete")
@@ -483,7 +483,6 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         if(user != null){
             //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
-
             //User đăng nhập hiện tại sẽ được xem danh sách những user khác đã gửi request trong bài Blog của mình.
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
 
