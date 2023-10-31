@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -22,5 +23,4 @@ public class BookingDTO {
     private boolean status;
     private BlogDTO blogDTO;
     private UserDTO userDTO;
-
 }

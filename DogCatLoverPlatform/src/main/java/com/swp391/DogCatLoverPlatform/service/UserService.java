@@ -2,8 +2,11 @@ package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
+import com.swp391.DogCatLoverPlatform.entity.InvoiceEntity;
 import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
+import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.RoleRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,13 @@ public class UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    BlogRepository blogRepository;
+
+
+    @Autowired
+    BlogService blogService;
 
     public boolean addUser(UserDTO userDTO){
         boolean isSuccess = false;
@@ -122,6 +132,7 @@ public class UserService {
         userDTO.setImage(user.getImage());
         userDTO.setPhone(user.getPhone());
         userDTO.setDescription(user.getDescription());
+        userDTO.setBalance(user.getAccountBalance());
         userDTO.setRoleDTO(user.getRoleEntity().getName());
         userDTO.setId_role(user.getRoleEntity().getId());
 
@@ -263,11 +274,31 @@ public class UserService {
 
     public void UpdateStaff(int idStaff, String roleStaff) {
         Optional<UserEntity> userEntity = userRepository.findById(idStaff);
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setName(roleStaff);
-        roleRepository.save(roleEntity);
-
+        RoleEntity roleEntity = roleRepository.findByName(roleStaff);
         userEntity.get().setRoleEntity(roleEntity);
         userRepository.save(userEntity.get());
+    }
+
+    public void transfer(int id_userBuy, int idBlog) {
+
+        //lấy ra người mua
+        Optional<UserEntity> userBuy = userRepository.findById(id_userBuy);
+
+        //lấy ra người bán
+        Optional<BlogEntity> blog = blogRepository.findById(idBlog);
+        Optional<UserEntity> userSell = userRepository.findById(blog.get().getUserEntity().getId());
+
+        // trừ đi số dư của người mua
+        userBuy.get().setAccountBalance(userBuy.get().getAccountBalance() - blog.get().getPrice());
+        userRepository.save(userBuy.get());
+
+        if(userSell.get().getAccountBalance() == null){
+            userSell.get().setAccountBalance(blog.get().getPrice());
+        }
+        else{
+            userSell.get().setAccountBalance(userSell.get().getAccountBalance() + blog.get().getPrice());
+        }
+        userRepository.save(userSell.get());
+
     }
 }

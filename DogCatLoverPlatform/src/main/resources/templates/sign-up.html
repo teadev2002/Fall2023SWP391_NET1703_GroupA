@@ -82,18 +82,8 @@
 
                 <li><a th:href="@{/index/about}">About</a></li>
 
-                <li class="menu-item-has-children">
-                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                </li>
-
-                <li class="menu-item-has-children">
-                    <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="3col-gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
-                    </ul>
+                <li>
+                    <a th:href="@{/service/view}">Services</a>
                 </li>
 
                 <li class="menu-item-has-children">
@@ -396,6 +386,43 @@
         </div>
     </div>
 </footer>
+
+
+<script>
+    document.getElementById('btn-sign-up').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        let userName = document.getElementById('userName').value;
+        let fullName = document.getElementById('fullName').value;
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let passwordConfirm = document.getElementById('passwordConfirm').value;
+        let html = document.getElementById('html').checked;
+
+        if (!html) {
+            alert('Please agree to the Terms & Policy');
+            return;
+        }
+
+        if (!email.endsWith('@gmail.com')) {
+            alert('Please enter a valid gmail address');
+            return;
+        }
+
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            return;
+        }
+
+        if (password !== passwordConfirm) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        // All validation passed, proceed with saving the data in the database
+        alert('Account created successfully');
+    });
+</script>
 
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
 <script src="../js/jquery-3.6.0.min.js"></script>

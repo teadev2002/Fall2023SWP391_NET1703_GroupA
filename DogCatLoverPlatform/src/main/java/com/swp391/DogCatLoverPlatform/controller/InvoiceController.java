@@ -1,10 +1,10 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.InvoiceDTO;
+import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
-import com.swp391.DogCatLoverPlatform.service.BlogService;
-import com.swp391.DogCatLoverPlatform.service.InvoiceService;
-import com.swp391.DogCatLoverPlatform.service.UserService;
+import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
+import com.swp391.DogCatLoverPlatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +29,15 @@ public class InvoiceController {
     @Autowired
     BlogService blogService;
 
+    @Autowired
+    UserNotificationService userNotificationService;
+
+    @Autowired
+    RequestService requestService;
+
 
     @GetMapping("")
-    public String showInvoice(@RequestParam("id") int invoiceId, Model model) {
+    public String showInvoice(@RequestParam("id") int invoiceId, Model model, HttpServletRequest req) {
         // Fetch invoice details by ID (You should implement this logic in your service)
         InvoiceDTO invoice = invoiceService.getInvoiceById(invoiceId);
 
@@ -41,6 +47,7 @@ public class InvoiceController {
             model.addAttribute("totalAmount", invoice.getTotal_amount());
             model.addAttribute("blogId", invoice.getIdBlog());
             model.addAttribute("userId", invoice.getIdUser());
+            model.addAttribute("invoice",invoice);
 
             // Lấy email từ UserEntity trong InvoiceDTO
             String email = userService.getUserById(invoice.getIdUser()).getEmail();
@@ -48,6 +55,9 @@ public class InvoiceController {
 
             String title = blogService.getBlogById(invoice.getIdBlog()).getTitle();
             model.addAttribute("title", title);
+
+            UserDTO userDTO = getUserIdFromCookie(req);
+            model.addAttribute("user", userDTO);
         }
 
         // Return the invoice template (invoice.html)
@@ -57,10 +67,21 @@ public class InvoiceController {
     @GetMapping("/manager")
     public String manager(Model model, HttpServletRequest req) {
         UserDTO userDTO = getUserIdFromCookie(req);
+        model.addAttribute("user", userDTO);
 
         if(userDTO == null){
             return "redirect:/index/login";
         }
+
+        if(userDTO != null){
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
+
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
         List<InvoiceDTO> list = invoiceService.getSellManager(userDTO.getId());
         model.addAttribute("list", list);
         model.addAttribute("quantity", list.size());
@@ -82,8 +103,5 @@ public class InvoiceController {
         }
         return null;
     }
-
-
-
 
 }

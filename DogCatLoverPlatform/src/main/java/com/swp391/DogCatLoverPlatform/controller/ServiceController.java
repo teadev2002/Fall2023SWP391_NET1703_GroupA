@@ -78,7 +78,9 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+  //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -97,7 +99,10 @@ public class ServiceController {
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -132,7 +137,9 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+  //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -158,7 +165,10 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -178,7 +188,10 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -208,7 +221,9 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+    //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
 
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -251,6 +266,23 @@ public class ServiceController {
             }
         }
         return null;
+    }
+
+
+    @PostMapping("/create_comment")
+    public String createComment(@ModelAttribute("comment") CommentDTO commentDTO, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+        String description = req.getParameter("description");
+
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        int id_blog = Integer.parseInt(req.getParameter("id_blog"));
+
+        BlogDTO blog = blogService.getBlogById(id_blog);
+        commentService.createComment(commentDTO, description, id_blog, user.getId());
+
+        // Chuyển hướng người dùng đến trang chi tiết của service
+        return "redirect:/service/detail/"+id;
     }
 }
 

@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<!-- Mirrored from demo.egenslab.com/html/scooby/preview/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:24 GMT -->
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scooby - Petcare & Pet Shop HTML Template</title>
-    <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+
+
+    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" th:href="@{../css/all.css}">
     <link rel="stylesheet" th:href="@{../css/animate.css}">
-
     <link rel="stylesheet" th:href="@{../css/bootstrap.min.css}">
 
     <link rel="stylesheet" th:href="@{../css/boxicons.min.css}">
@@ -38,8 +34,21 @@
     <link rel="stylesheet" th:href="@{../css/uiicss.css}">
 
     <link rel="stylesheet" th:href="@{../css/style.css}">
-    <link rel="stylesheet" th:href="@{../css/profile.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Title</title>
 </head>
+ <style>
+     .content {
+         padding: 10vh;
+         padding-right: 50vh;
+         padding-left: 50vh;
+     }
+     .menu-list li a{
+         text-decoration: none;
+     }
+ </style>
 <body>
 
 <div class="top-bar" th:if="${user != null}">
@@ -54,7 +63,9 @@
                 <div class="contact-number" style="display: flex; align-items: center;">
                     Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
                     &nbsp; &nbsp;
-                    <span class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+
+                    <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+
                     &nbsp; &nbsp;
                     <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
@@ -66,12 +77,12 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
+            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../../../../images/header1-logo.svg"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a th:href="@{/index/home}"><img alt="image" src="../images/header1-logo.svg"></a>
+                    <a th:href="@{/index/home}"><img alt="image" src="../../../../images/header1-logo.svg"></a>
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
@@ -93,6 +104,7 @@
                         <li><a th:href="@{/blog/byType(type='Gift')}">Gift</a></li>
                     </ul>
                 </li>
+
 
                 <li><a th:href="@{/index/contact}">Contact</a></li>
             </ul>
@@ -123,23 +135,26 @@
                         </svg>
                     </a></li>
                 </ul>
-                <form class="mobile-menu-form">
+
+                <form class="mobile-menu-form" th:action="@{/blog/search}" method="post">
                     <div class="input-with-btn d-flex flex-column">
-                        <input type="text" placeholder="Search here...">
+                        <input name="title" type="text" placeholder="Search here...">
                         <button class="primary-btn1" type="submit">Search</button>
                     </div>
                 </form>
+
             </div>
         </div>
-        <div class="nav-right d-flex jsutify-content-end align-items-center">
 
+        <div class="nav-right d-flex jsutify-content-end align-items-center">
             <ul>
 
-                <li class="search-btn"><a>
-                    <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13.8914 12.3212L11.3164 9.74312C11.1877 9.63999 11.0332 9.56265 10.8787 9.56265H10.4667C11.1619 8.6603 11.5997 7.52593 11.5997 6.26265C11.5997 3.32358 9.1792 0.900146 6.2437 0.900146C3.28245 0.900146 0.887695 3.32358 0.887695 6.26265C0.887695 9.22749 3.28245 11.6251 6.2437 11.6251C7.4797 11.6251 8.6127 11.2126 9.5397 10.4908V10.9291C9.5397 11.0837 9.5912 11.2384 9.71995 11.3673L12.2692 13.9197C12.5267 14.1775 12.9129 14.1775 13.1447 13.9197L13.8657 13.1978C14.1232 12.9658 14.1232 12.5791 13.8914 12.3212ZM6.2437 9.56265C4.41545 9.56265 2.9477 8.09312 2.9477 6.26265C2.9477 4.45796 4.41545 2.96265 6.2437 2.96265C8.0462 2.96265 9.5397 4.45796 9.5397 6.26265C9.5397 8.09312 8.0462 9.56265 6.2437 9.56265Z"/>
-                    </svg>
-                </a>
+                <li class="search-btn">
+                    <a>
+                        <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.8914 12.3212L11.3164 9.74312C11.1877 9.63999 11.0332 9.56265 10.8787 9.56265H10.4667C11.1619 8.6603 11.5997 7.52593 11.5997 6.26265C11.5997 3.32358 9.1792 0.900146 6.2437 0.900146C3.28245 0.900146 0.887695 3.32358 0.887695 6.26265C0.887695 9.22749 3.28245 11.6251 6.2437 11.6251C7.4797 11.6251 8.6127 11.2126 9.5397 10.4908V10.9291C9.5397 11.0837 9.5912 11.2384 9.71995 11.3673L12.2692 13.9197C12.5267 14.1775 12.9129 14.1775 13.1447 13.9197L13.8657 13.1978C14.1232 12.9658 14.1232 12.5791 13.8914 12.3212ZM6.2437 9.56265C4.41545 9.56265 2.9477 8.09312 2.9477 6.26265C2.9477 4.45796 4.41545 2.96265 6.2437 2.96265C8.0462 2.96265 9.5397 4.45796 9.5397 6.26265C9.5397 8.09312 8.0462 9.56265 6.2437 9.56265Z"/>
+                        </svg>
+                    </a>
 
                     <form class="nav__search-form" th:action="@{/blog/search}" method="post">
                         <input type="text" name="title" placeholder="Search Products" id="search" autocomplete="off"
@@ -152,7 +167,6 @@
                     </form>
 
                 </li>
-
 
                 <!--Notification-->
                 <li th:if="${user != null}">
@@ -179,120 +193,57 @@
                     </svg>
                 </a></li>
 
-                <li><a th:href="@{/index/profile}">
-                    <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_1585_341)">
-                            <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
-                            <path d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
-                        </g>
-                    </svg>
-                </a></li>
-            </ul>
+                <!--Dropdown User-->
+                <li>
+                    <a th:href="@{/index/profile}">
+                        <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_1585_341)">
+                                <path d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
+                                <path d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
+                            </g>
+                        </svg>
+                    </a>
+                </li>
 
+            </ul>
             <div class="sidebar-button mobile-menu-btn ">
                 <i class="bi bi-list"></i>
             </div>
         </div>
+
     </div>
 </header>
 
-<div class="container rounded bg-white mt-5 mb-5">
-    <form th:action="@{/index/profile-update}" method="post">
-    <div class="row">
 
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img id="user-image" class="rounded-circle mt-5" width="150px" height="150px"
-                     th:src="@{'../images/avatar/'+${user.image}}" >
-                <input type="hidden" name="image" th:value="${user.image}">
-                <span class="font-weight-bold" th:text="${user.userName}"></span>
-                <span class="text-black-50" th:text="${user.email}"></span>
-                <input class="form-control" name="file" style="width: 100px; margin-left: 50px;" type="file" id="image-input" accept="image/*">
-                <br><a class="btn btn-primary" href="../deposite-history/deposit">Deposit</a><br>
-                <a class="btn btn-primary" href="../deposite-history/my-deposit">Deposit history</a>
-            </div>
+<div class="content">
+    <div class="row head">
+        <div class="col-md-12">
+            <h3 style="text-align: center; padding: 10vh">Booking history</h3>
         </div>
+        <table class="table table-hover">
+            <thead class="table-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Booking Date</th>
+                <th scope="col">Booking Blog Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
 
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="list,iterStat  : ${listHistory}">
+                <td class="count" th:text="${iterStat.count}">1</td>
+                <td th:text="${list.bookingDate}"></td>
+                <td th:text="${list.blogDTO.title}"></td>
+                <td th:text="${list.total_price}">N/A</td>
+                <td th:text="${list.status}">N/A</td>
 
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Settings</h4>
-                    </div>
-                    <div class="row mt-2" th:object="${user}">
-                        <div class="col-md-6"><label class="labels">Full Name</label>
-                            <input type="text" class="form-control" name="fullName" placeholder="Full Name"
-                                   th:field="*{fullName}">
-                        </div>
-                        <div class="col-md-6"><label class="labels">User Name</label>
-                            <input type="text" class="form-control" name="userName" placeholder="User Name"
-                                   th:field="*{userName}">
-                        </div>
-                    </div>
-                    <div class="row mt-3" th:object="${user}">
-                        <div class="col-md-12"><label class="labels">Mobile Number</label>
-                            <input type="text" class="form-control" name="phone" placeholder="enter phone number"
-                                   th:field="*{phone}">
-                        </div>
-                        <div class="col-md-12"><label class="labels">Address</label>
-                            <input type="text" class="form-control" name="address" placeholder="enter address"
-                                   th:field="*{address}">
-                        </div>
-                        <div class="col-md-12"><label class="labels">Your Email</label>
-                            <input type="text" class="form-control" name="email" placeholder="Enter email"
-                                   th:field="*{email}" readonly>
-                        </div>
-                        <div class="col-md-12"><label class="labels">Role</label>
-                            <input type="text" class="form-control" name="role" placeholder="Your Role"
-                                   th:value="${user.id_role}" th:field="*{roleDTO}" readonly>
-                        </div>
-<!--                        <div class="col-md-12"><label class="labels">Your Bio</label>-->
-<!--                            <textarea type="text" class="form-control" name="description" placeholder="Your Bio" rows="4"-->
-<!--                                      th:field="${user.description}" ></textarea>-->
-<!--                        </div>-->
-
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
-                        <a th:href="@{/index/home}"><button class="btn btn-primary profile-button" type="button">Back</button></a>
-                    </div>
-
-            </div>
-        </div>
-
-
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience">
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/service/view/myservice}"><i class="fa fa-plus"></i>&nbsp;View My Service</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/blog/view/myblog}"><i class="fa fa-plus"></i>&nbsp;View My Blog</a></span>
-                </div>
-
-                <br>
-
-                <div class="col-md-12" ><label class="labels">About me</label>
-                    <textarea type="text" class="form-control" name="description" placeholder="Write something..." rows="4"
-                            th:field="${user.description}" ></textarea>
-
-                </div>
-
-                <br>
-                <div class="d-flex justify-content-between align-items-center experience">
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/booking/history}"><i class="fa fa-plus"></i>&nbsp;My Booking History</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/booking/manager}"><i class="fa fa-plus"></i>&nbsp;Booking Manager</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/invoice/manager}"><i class="fa fa-plus"></i>&nbsp;Invoice Manager</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/blog/trash}"><i class="fa fa-plus"></i>&nbsp;My Rejected Blog</a></span>
-                </div>
-<!--                <div class="col-md-12"><label class="labels">Additional Details</label>-->
-<!--                    <input type="text" class="form-control" placeholder="additional details" value="">-->
-<!--                </div>-->
-            </div>
-        </div>
-
+            </tr>
+            </tbody>
+        </table>
     </div>
-    </form>
-
+    <div class="msg"><h1 th:text="${noAccess}">#</h1></div>
 </div>
 
 
@@ -318,12 +269,12 @@
                         </div>
                         <div class="email-info">
                             <h6 class="mb-10"><a
-                                    href="https://demo.egenslab.com/cdn-cgi/l/email-protection#20494e464f604558414d504c450e434f4d"><span
-                                    class="__cf_email__" data-cfemail="264f48404966435e474b564a430845494b">[email&#160;protected]</span></a>
+                                    href="https://demo.egenslab.com/cdn-cgi/l/email-protection#f49d9a929bb4918c9599849891da979b99}"><span
+                                    class="__cf_email__" data-cfemail="6a03040c052a0f120b071a060f44090507">[email&#160;protected]</span></a>
                             </h6>
                             <h6>
-                                <a href="https://demo.egenslab.com/cdn-cgi/l/email-protection#b0d9ded6dff0c3c5c0c0dfc2c49ed3dfdd"><span
-                                        class="__cf_email__" data-cfemail="aac3c4ccc5ead9dfdadac5d8de84c9c5c7">[email&#160;protected]</span></a>
+                                <a href="https://demo.egenslab.com/cdn-cgi/l/email-protection#fb92959d94bb888e8b8b94898fd5989496}"><span
+                                        class="__cf_email__" data-cfemail="1e777078715e6d6b6e6e716c6a307d7173">[email&#160;protected]</span></a>
                             </h6>
                         </div>
                     </div>
@@ -379,24 +330,21 @@
         </div>
     </div>
 </footer>
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const imageInput = document.getElementById('image-input');
-        const userImage = document.getElementById('user-image');
-
-        imageInput.addEventListener('change', function() {
-            const file = imageInput.files[0];
-            if (file) {
-                const imageURL = URL.createObjectURL(file);
-                userImage.src = imageURL;
-            }
+    // JavaScript to increment the count dynamically
+    document.addEventListener("DOMContentLoaded", function () {
+        var countElements = document.querySelectorAll(".count");
+        countElements.forEach(function (element, index) {
+            element.textContent = index + 1;
         });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+
+<!-- Include Bootstrap JS and Popper.js for added functionality like modals, tooltips, etc. (optional) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
 <script src="../js/jquery-3.6.0.min.js"></script>
 <script src="../js/jquery-ui.js"></script>
@@ -416,8 +364,7 @@
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/masonry.pkgd.min.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/deleteBlog"></script>
 
 </body>
-
-<!-- Mirrored from demo.egenslab.com/html/scooby/preview/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:25 GMT -->
 </html>

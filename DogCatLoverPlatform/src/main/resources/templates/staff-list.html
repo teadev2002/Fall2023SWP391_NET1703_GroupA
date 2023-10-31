@@ -107,11 +107,15 @@
       </li>
 
       <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
-
       </li>
 
-      <li class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
 
+      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
+
+
+      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-credit-card"></i><span class="menu-title" >Create Account</span> </a>
+      </li>
+      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
       </li>
     </ul>
   </div>
@@ -145,7 +149,7 @@
                 </tr>
                 </thead>
 
-                <tbody>
+                <tbody style="text-align:  center;">
                 <tr th:each="staff,  iterStat : ${listStaff}">
                   <td th:text="${iterStat.count}"></td>
 
