@@ -19,8 +19,13 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Integer>
     @Query(value = "SELECT s.* \n" +
             "FROM service s \n" +
             "JOIN blog b ON s.id_blog = b.id \n" +
+            "WHERE b.confirm = :confirm \n" +
             "ORDER BY b.create_date  DESC \n" +
             "LIMIT 3", nativeQuery = true)
-    List<ServiceEntity> findFirst3OrderByCreateDateDesc();
+    List<ServiceEntity> findFirst3OrderByCreateDateDesc(Boolean confirm);
+
+    //View My Service
+    @Query(value = "SELECT s.*, b.confirm ,b.title FROM service s  JOIN blog b ON s.id_blog = b.id WHERE b.id_user_created = :userId AND b.status is null", nativeQuery = true)
+    Page<ServiceEntity> findByUserEntityIdAndStatus(int userId, Pageable pageable);
 
 }

@@ -1,11 +1,15 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
+import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
 import com.swp391.DogCatLoverPlatform.entity.BookingEntity;
 import com.swp391.DogCatLoverPlatform.exception.MessageException;
 import com.swp391.DogCatLoverPlatform.repository.BookingEntityRepository;
 import com.swp391.DogCatLoverPlatform.service.BookingService;
+import com.swp391.DogCatLoverPlatform.service.RequestService;
+import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +34,36 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
+    @Autowired
+    UserNotificationService userNotificationService;
+
+    @Autowired
+    RequestService requestService;
+
+    @GetMapping("/history")
+    public String history(Model model, HttpServletRequest request){
+        UserDTO userDTO = getUserIdFromCookie(request);
+
+        if(userDTO == null){
+            String noAccess = "cannot access";
+            model.addAttribute("noAccess", noAccess);
+        }
+
+        if(userDTO != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(userDTO.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
+       List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
+        model.addAttribute("listHistory",listHistory);
+        model.addAttribute("user", userDTO);
+        return "booking-history";
+    }
+
+
+
     @GetMapping("/manager")
     public String manager(Model model, HttpServletRequest req) {
         UserDTO userDTO = getUserIdFromCookie(req);
@@ -37,9 +71,18 @@ public class BookingController {
         if(userDTO == null){
             return "redirect:/index/login";
         }
+
+        if(userDTO != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(userDTO.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
         List<BookingDTO> list = bookingService.getBookingManager(userDTO.getId());
         model.addAttribute("listBooking", list);
         model.addAttribute("quantity", list.size());
+        model.addAttribute("user", userDTO);
 
         return "booking-manager";
     }

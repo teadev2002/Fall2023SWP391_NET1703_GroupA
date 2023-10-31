@@ -155,14 +155,12 @@ ALTER TABLE blog ADD CONSTRAINT FK_pet_category_blog FOREIGN KEY (id_pet_categor
 
 /*SELECT i.* FROM invoice i INNER JOIN blog b on b.id  = i.id_blog where i.id_user =1*/
 
-SELECT invoice.id AS invoice_id, invoice.invoice_date, invoice.total_amount,
-       blog.id AS blog_id, blog.title AS blog_title, blog.content AS blog_content,
-       users.id AS user_id, users.user_name, users.full_name, users.email
-FROM invoice
-INNER JOIN blog ON invoice.id_blog = blog.id
-INNER JOIN users ON blog.id_user_created = users.id
-WHERE invoice.id = 19;
+SELECT u.id, u.user_name, COUNT(b.id) AS total_blogs
+FROM users u
+LEFT JOIN blog b ON u.id = b.id_user_created
+GROUP BY u.id, u.user_name
+ORDER BY total_blogs DESC
+LIMIT 3;
 
-SELECT b.title,i.invoice_date ,i.total_amount ,i.id_user  FROM blog b join invoice i on b.id = i.id_blog where b.id_user_created =:id
 
-SELECT b.* FROM blog b join invoice i on b.id = i.id_blog where b.id_user_created =:id
+SELECT COUNT(b) FROM blog b WHERE b.id_user_created = :userId

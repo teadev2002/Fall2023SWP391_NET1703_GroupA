@@ -48,10 +48,12 @@
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
-                <div class="contact-number" style="display: flex;">
+                <div class="contact-number" style="display: flex; align-items: center;">
                     Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
-                    &nbsp; &nbsp;<img src="../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}" >Đăng xuất</a></span>
+                    &nbsp; &nbsp;
+                    <span class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+                    &nbsp; &nbsp;
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
             </div>
         </div>
@@ -79,29 +81,15 @@
 
                 <li><a th:href="@{/index/about}">About</a></li>
 
-                <li class="menu-item-has-children">
-                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
-                    </ul>
-                </li>
+                <li>
+                    <a th:href="@{/service/view}">Services</a>
 
-                <li class="menu-item-has-children">
-                    <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="3col-gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
-                    </ul>
                 </li>
 
                 <li class="menu-item-has-children">
                     <a th:href="@{/blog/view}">Blog</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a th:href="@{/blog/byType(type='Exchange')}">Exchange</a></li>
+                        <li><a th:href="@{/blog/byType(type='Sell')}">Sell</a></li>
                         <li><a th:href="@{/blog/byType(type='Gift')}">Gift</a></li>
                     </ul>
                 </li>

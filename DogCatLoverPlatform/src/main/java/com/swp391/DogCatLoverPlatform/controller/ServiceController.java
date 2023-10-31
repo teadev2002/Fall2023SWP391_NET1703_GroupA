@@ -34,6 +34,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -58,6 +59,61 @@ public class ServiceController {
 
     @Autowired
     RequestService requestService;
+
+
+    @GetMapping("/view/myservice/details/{id}")
+    public String viewMyServiceDetail(@PathVariable("id") int id, Model model, HttpServletRequest req){
+        List<ServiceDTO> latestServices = serviceService.getThreeLatestBlogs();
+        model.addAttribute("latestService", latestServices);
+
+        ServiceDTO serviceDTO = serviceService.getServiceDetail(id);
+        model.addAttribute("service", serviceDTO);
+
+        UserDTO user = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
+        //Lấy comment by Blog Id
+        List<CommentDTO> comments = commentService.getCommentsByBlogId(serviceDTO.getId_blog());
+        model.addAttribute("comments", comments);
+
+        //Hiện thông báo (trường hợp có)
+        if (user != null) {
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
+        return "service-details-myservice";
+    }
+
+    //View My Blog Service
+    @GetMapping("/view/myservice")
+    public String viewMyService(Model model,
+                                @RequestParam(defaultValue = "1") int page,
+                                @RequestParam(defaultValue = "3") int size,
+                                HttpServletRequest req) {
+
+        UserDTO user  = getUserIdFromCookie(req);
+
+        if(user != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+        model.addAttribute("user", user);
+
+        Page<ServiceDTO> listMyService = serviceService.GetAllMyService(user.getId(), page, size);
+        model.addAttribute("totalPage", listMyService.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("listService", listMyService);
+
+
+        List<ServiceDTO> latestServices = serviceService.getThreeLatestBlogs();
+        model.addAttribute("latestService", latestServices);
+        return "myservice";
+    }
 
     @GetMapping("/view")
     public String viewAllService(Model model,
@@ -135,6 +191,8 @@ public class ServiceController {
     public String createService(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws IOException {
 
         String image = blogService.saveImageAndReturnPath(file);
+        Date startDate = Date.valueOf(request.getParameter("dateStart"));
+        Date endDate = Date.valueOf(request.getParameter("dateEnd"));
         String Content = request.getParameter("content");
         int price = Integer.parseInt(request.getParameter("price"));
         String title = request.getParameter("title");
@@ -142,7 +200,7 @@ public class ServiceController {
         System.out.println(userDTO.getId());
         int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
 
-        serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image);
+        serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image, startDate, endDate);
 
         UserDTO user = getUserIdFromCookie(request);
         model.addAttribute("user", user);

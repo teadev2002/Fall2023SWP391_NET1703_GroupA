@@ -48,7 +48,6 @@ public class RequestService {
     }
 
     public RequestDTO AddRequest(RequestDTO requestDTO, int userId, int blogId){
-
             RequestEntity request = modelMapperConfig.modelMapper().map(requestDTO, RequestEntity.class);
 
             Date createDate = new Date();
@@ -127,7 +126,7 @@ public class RequestService {
             //Gửi message: accepted <--> Còn không thì gửi denied
             userNotificationEntity.setMessage(userId == userIdRequest ? accepted : denied);
 
-            //Người gửi
+            //Người gửi thông báo
             userNotificationEntity.setUserEntity_UserNotification(userAccepted);
 
             //Lấy user IdReceiver

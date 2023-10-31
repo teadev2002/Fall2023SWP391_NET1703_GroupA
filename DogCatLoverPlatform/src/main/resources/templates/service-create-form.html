@@ -137,10 +137,12 @@
         <div class="opening-time text-center">
           <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
         </div>
-        <div class="contact-number" style="display: flex;">
-          Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
-          &nbsp; &nbsp;<img src="../images/icon/support.svg" alt>
-          &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}">Đăng xuất</a></span>
+        <div class="contact-number" style="display: flex; align-items: center;">
+          Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+          &nbsp; &nbsp;
+          <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+          &nbsp; &nbsp;
+          <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
         </div>
       </div>
     </div>
@@ -166,29 +168,15 @@
 
         <li><a th:href="@{/index/about}">About</a></li>
 
-        <li class="menu-item-has-children">
-          <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-          <ul class="sub-menu">
-            <li><a href="service-details.html">Daycare </a></li>
-            <li><a href="service-details.html">Grooming</a></li>
-            <li><a href="service-details.html">Boarding</a></li>
-          </ul>
-        </li>
 
-        <li class="menu-item-has-children">
-          <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
-          <ul class="sub-menu">
-            <li><a href="pricing-plan.html">Pricing Plan</a></li>
-            <li><a href="team.html">Our Team</a></li>
-            <li><a href="3col-gallery.html">Gallery</a></li>
-            <li><a href="faq.html">Faq</a></li>
-          </ul>
+        <li>
+          <a th:href="@{/service/view}">Services</a>
         </li>
 
         <li class="menu-item-has-children">
           <a th:href="@{/blog/view}">Blog</a><i class="bi bi-plus dropdown-icon"></i>
           <ul class="sub-menu">
-            <li><a th:href="@{/blog/byType(type='Exchange')}">Exchange</a></li>
+            <li><a th:href="@{/blog/byType(type='Sell')}">Sell</a></li>
             <li><a th:href="@{/blog/byType(type='Gift')}">Gift</a></li>
           </ul>
         </li>
@@ -293,7 +281,7 @@
 
 <div class="containers" style="font-family: Helvetica;">
   <div class="inner-div">
-    <h1 class="text-center text-orange">New Blog?</h1>
+    <h1 class="text-center text-orange">New Service?</h1>
 
     <form th:action="@{/service/create}" th:object="${service}" method="post" enctype="multipart/form-data"
           style="width: 395px;">
@@ -325,7 +313,7 @@
                     </span>
         </div>
         <input class="form-control" type="text" id="title" name="title" th:field="*{title}"
-               placeholder="Your title..." required>
+               placeholder="Your title..." th:required="true">
       </div>
 
 
@@ -336,7 +324,7 @@
                     </span>
         </div>
         <textarea class="form-control" id="content" name="content" th:field="*{content}" rows="4"
-                  placeholder="Write something..." required></textarea>
+                  placeholder="Write something..." th:required="true"></textarea>
       </div>
 
 
@@ -350,74 +338,31 @@
                         </span>
         </div>
         <input class="form-control" type="text" id="price" name="price" th:field="*{price}"
-               placeholder="Set price..." required>
+               placeholder="Set price..." th:required="true">
       </div>
 
-
-      <!--Pet category-->
-      <!--<div class="mb-3 input-group">
+      <div class="mb-3 input-group">
         <div class="input-group-prepend input-group-addon">
                         <span class="input-group-text">
                             <i class="fas fa-paw" style="font-size: 12px;"></i>
                         </span>
         </div>
-        <input class="form-control" type="text" id="petCategory.name" name="petName"
-               placeholder="Pet Name" required>
+        <div>Date Start</div></br> &nbsp;
+        <input class="form-control" type="date" id="dateStart" name="dateStart" th:field="*{dateStart}"
+               placeholder="Your title..." th:required="true">
       </div>
 
       <div class="mb-3 input-group">
         <div class="input-group-prepend input-group-addon">
                         <span class="input-group-text">
-                            <i class="fas fa-bone" style="font-size: 10px;"></i>
+                            <i class="fas fa-paw" style="font-size: 12px;"></i>
                         </span>
         </div>
-        <input class="form-control" type="text" id="petCategory.breed" name="petBreed"
-               placeholder="Pet Breed" required>
+        <div>Date End</div></br>&nbsp;&nbsp;
+        <input class="form-control" type="date" id="dateEnd" name="dateEnd" th:field="*{dateEnd}"
+               placeholder="Your title..." th:required="true">
       </div>
 
-      <div class="mb-3 input-group">
-        <div class="input-group-prepend input-group-addon">
-                                <span class="input-group-text">
-                                    <i class="fas fa-clock" style="font-size: 12px;"></i>
-                                </span>
-        </div>
-        <input class="form-control" type="text" id="petCategory.age" name="petAge"
-               placeholder="Pet Age" required>
-      </div>
-
-      <div class="mb-3 input-group">
-        <div class="input-group-prepend input-group-addon">
-                                <span class="input-group-text">
-                                    <i class="fas fa-palette" style="font-size: 12px;"></i>
-                                </span>
-        </div>
-        <input class="form-control" type="text" id="petCategory.color" name="petColor"
-               placeholder="Pet Color" required>
-      </div>
-
-      <div class="mb-3 input-group">
-        <div class="input-group-prepend input-group-addon">
-                        <span class="input-group-text">
-                            <i class="fas fa-weight" style="font-size: 12px;"></i>
-                        </span>
-        </div>
-        <input class="form-control" type="text" id="petCategory.weight" name="petWeight"
-               placeholder="Pet Weight" required>
-      </div>-->
-
-
-      <!--            <div class="mb-3 input-group">-->
-      <!--                <div class="input-group-prepend input-group-addon">-->
-      <!--            <span class="input-group-text">-->
-      <!--                <i class="fas fa-weight" style="font-size: 12px;"></i>-->
-      <!--            </span>-->
-      <!--                </div>-->
-      <!--                <input class="form-control" type="number" id="petCategory.weight" name="petCategory.weight"-->
-      <!--                       placeholder="Pet Weight" required>-->
-      <!--            </div>-->
-
-
-      <!-- Đặt cả nút "Submit" và nút "Quay lại" ở giữa -->
       <div class="button-container">
         <div style="margin-right: 12px;">
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -497,6 +442,58 @@
   </div>
 </footer>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the dateStart and dateEnd input elements
+    var dateStartInput = document.getElementById('dateStart');
+    var dateEndInput = document.getElementById('dateEnd');
+    var priceInput = document.getElementById('priceInput');
+    var content = document.getElementById('content').value.trim();
+    var title = document.getElementById('title').value.trim();
+
+    // Function to validate the dateEnd
+    function validateDates() {
+      var dateStartValue = new Date(dateStartInput.value);
+      var dateEndValue = new Date(dateEndInput.value);
+
+      if (content.startsWith(' ')) {
+        alert('Content cannot start with space!');
+        return;
+      }
+      if (title.startsWith(' ')) {
+        alert('Title cannot start with space!');
+        return;
+      }
+      document.getElementById("priceInput").onkeypress = function(e) {
+        return isNumber(e);
+      };
+      if ( priceInput.value < 1) {
+        alert('Price cannot be below 1 or be a non-number!');
+        return;
+      }
+
+      // Check if dateEnd is not earlier than dateStart
+      if (dateEndValue < dateStartValue) {
+        dateEndInput.setCustomValidity('End date cannot be earlier than start date.');
+      } else {
+        dateEndInput.setCustomValidity('');
+      }
+    }
+    function isNumber(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+    }
+    // Add an event listener for the input event on both dateStart and dateEnd
+    dateStartInput.addEventListener('input', validateDates);
+    dateEndInput.addEventListener('input', validateDates);
+    priceInput.addEventListener('input', validateDates);
+  });
+</script>
+
 
 <script>
   function togglePriceInput() {
@@ -515,7 +512,21 @@
     togglePriceInput();
   });
 
+</script>
 
+<script> // validate number negative & text
+document.getElementById("price").onkeypress = function (e) {
+  return isNumber(e);
+};
+
+function isNumber(evt) {
+  evt = (evt) ? evt : window.event;
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
+}
 </script>
 
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>

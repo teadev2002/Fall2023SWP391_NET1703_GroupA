@@ -69,13 +69,14 @@ public class BlogService {
         return blogPage.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
     }
 
+    //View My Blog
     public Page<BlogDTO> GetAllMyBlog(int id_user, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
         // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, true, pageable);
+        Page<BlogEntity> listBlog = blogRepository.findByUserEntityIdAndConfirm(id_user, pageable);
 
         Page<BlogDTO> pageOfBlogDTO = listBlog.map(blogEntity -> modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class));
 
@@ -198,7 +199,7 @@ public class BlogService {
 
     public List<BlogDTO> getBlogsReject(int userId) {
 
-        List<BlogEntity> rejectBlogs = blogRepository.findByConfirm(false);
+        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirmAndStatusTrue(userId, false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
@@ -211,6 +212,7 @@ public class BlogService {
     }
 
 
+    //Blog được chấp nhận
     public void approveBlog(int blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
         blogEntity.setConfirm(true);
@@ -218,23 +220,15 @@ public class BlogService {
     }
 
     //Blog bị từ chối
-    public void rejectBlog(int blogId, String newReason) {
+    public void rejectBlog(int blogId, String reason) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
-
-        // Retrieve the existing rejection reasons
-        String existingReasons = blogEntity.getReason();
-
-        // Append the new reason along with previous reasons
-        String combinedReason = existingReasons != null ? existingReasons + "\n" + newReason : newReason;
-
         blogEntity.setConfirm(false);
-        blogEntity.setReason(combinedReason);
-
+        blogEntity.setReason(reason);
         blogRepository.save(blogEntity);
     }
 
 
-    public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO,int blogType) {
+    public void updateAndSetConfirmToNull(int blogId, BlogUpdateDTO blogUpdateDTO) {
 
         BlogEntity blogEntity = blogRepository.findById(blogId)
                 .orElseThrow(() -> new NoSuchElementException("Blog not found with ID: " + blogId));
@@ -245,11 +239,7 @@ public class BlogService {
         // Update the remaining properties using ModelMapper
         modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
 
-        BlogTypeEntity blogTypeEntity = new BlogTypeEntity();
-        blogTypeEntity.setId(blogType);
-        blogEntity.setBlogTypeEntity(blogTypeEntity);
         // Save the updated entity
-
         blogRepository.save(blogEntity);
     }
 
@@ -267,8 +257,6 @@ public class BlogService {
             BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blog, BlogDTO.class);
             blogDTOS.add(blogDTO);
         }
-
-
 
         return blogDTOS;
     }

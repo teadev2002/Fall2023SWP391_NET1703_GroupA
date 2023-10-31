@@ -2796,7 +2796,7 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content
 
     display: inline-block;
 
-    width: 30px;
+    max-width: 36px;
 
     vertical-align: bottom; 
     white-space: nowrap;
@@ -2831,7 +2831,7 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content
     width: 100%;
     max-width: 100%;
     height: auto;
-
+    object-fit: contain;
     border: 0 none;
     border-radius: 1000px;
 }

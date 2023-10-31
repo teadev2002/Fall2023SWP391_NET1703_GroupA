@@ -15,6 +15,7 @@ public class UserNotificationDTO {
     private int id;
     private String userName;    //Người accepted
     private int userId;
+    private String userImage;
     private Date createDate;
     private String message;
     private RequestDTO request;

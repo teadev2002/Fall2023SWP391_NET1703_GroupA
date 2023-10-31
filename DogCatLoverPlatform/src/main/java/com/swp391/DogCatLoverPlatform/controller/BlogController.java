@@ -33,6 +33,9 @@ public class BlogController {
     BlogService blogService;
 
     @Autowired
+    ServiceService serviceService;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -75,7 +78,7 @@ public class BlogController {
             requestService.acceptedRequest(userNotificationDTO, userIdRequest, userIdAccepted, requestId, blogId);
         }
 
-        return "redirect:/blog/" + blogId + "/detail/myblog";
+        return "redirect:/blog/detail/myblog/" + blogId ;
     }
 
     //Gửi request (Dũng)
@@ -94,12 +97,12 @@ public class BlogController {
            redirectAttributes.addFlashAttribute("sent", "Your request have been sent!");
        }
 
-        return "redirect:/blog/"+blogId+"/detail/myblog";
+        return "redirect:/blog/detail/myblog/" +blogId;
     }
 
-    //View List Request
+    //View List Request --> Đổi tên Notification
     @GetMapping("/view/view-request")
-    public String viewListRequest(Model model, HttpServletRequest req){
+    public String viewNotification(Model model, HttpServletRequest req){
         UserDTO user  = getUserIdFromCookie(req);
 
         if(user != null){
@@ -149,7 +152,7 @@ public class BlogController {
     }
 
 
-
+    //View My Blog
     @GetMapping("/view/myblog")
     public String viewMyBlog(Model model,
                              @RequestParam(defaultValue = "1") int page,
@@ -176,6 +179,8 @@ public class BlogController {
         model.addAttribute("latestBlogs", latestBlogs);
         return "myblog";
     }
+
+
 
     @GetMapping("/search")
     public String viewSearch(Model model, @RequestParam("title") String title,
@@ -411,7 +416,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         commentService.createComment(commentDTO, description, id_blog, user.getId());
 
         // Chuyển hướng người dùng đến trang chi tiết của bài blog
-        return "redirect:/blog/" + id_blog + "/detail/myblog";
+        return "redirect:/blog/detail/myblog/" + id_blog;
     }
 
     @PostMapping("/delete")
@@ -424,7 +429,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     }
 
 
-    @GetMapping("/{id}/detail")
+    @GetMapping("/detail/{id}")
     public String viewDetailsBlog(@PathVariable("id") int id, Model model, HttpServletRequest req) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
@@ -452,7 +457,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     }
 
 
-    @GetMapping("/{id}/detail/myblog")
+    @GetMapping("/detail/myblog/{id}")
     public String viewMyBlogDetails(@PathVariable("id") int id, Model model, HttpServletRequest req, RedirectAttributes redirectAttributes) {
         BlogDTO blogDTO = blogService.getBlogById(id);
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
@@ -572,7 +577,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
                 emailService.sendEmail(user.getEmail(), reason);
             }
         }
-        return "redirect:/blog/staff";
+        return "redirect:/staff/view/pending";
     }
 
     @GetMapping("/trash")
@@ -597,13 +602,12 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     @PostMapping("/trash")
     public String updateAndResubmitOrDeleteBlog(
             @RequestParam("blogId") int blogId,
-            @RequestParam("blogTypeId") int blogTypeId,
             @ModelAttribute("blog") BlogUpdateDTO blogUpdateDTO,
             @RequestParam("action") String action) {
 
         if ("resubmit".equals(action)) {
             // Update the blog and set its confirmation status to null
-            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO, blogTypeId);
+            blogService.updateAndSetConfirmToNull(blogId, blogUpdateDTO);
         } else if ("delete".equals(action)) {
             // Delete the blog
             blogService.deleteBlogById(blogId);
@@ -611,5 +615,4 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
 
         return "redirect:/blog/trash";
     }
-
 }

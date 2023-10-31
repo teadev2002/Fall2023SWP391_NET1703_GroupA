@@ -111,4 +111,26 @@ public class BookingService {
     public void deleteById(int id_booking) {
         bookingEntityRepository.deleteById(id_booking);
     }
+
+    public List<BookingDTO> getBookingHistory(int id_user) {
+        List<BookingEntity> bookingEntities = bookingEntityRepository.findByUserBookingHistory(id_user);
+
+        List<BookingDTO> bookingDTOList = new ArrayList<>();
+        for(BookingEntity booking : bookingEntities){
+            BlogDTO blogDTO = blogService.getBlogById(booking.getBlogEntity_BookingEntity().getId());
+            UserDTO userDTO = userService.getUserById(booking.getUserEntity_BookingEntity().getId());
+            BookingDTO bookingDTO = new BookingDTO();
+            bookingDTO.setId(booking.getId());
+            bookingDTO.setBookingDate(booking.getBookingDate());
+            bookingDTO.setBookingTime(booking.getBookingTime());
+            bookingDTO.setTotal_price(booking.getTotal_price());
+            bookingDTO.setPaying_method(booking.getPaying_method());
+            bookingDTO.setStatus(booking.isStatus());
+            bookingDTO.setBlogDTO(blogDTO);
+            bookingDTO.setUserDTO(userDTO);
+            bookingDTOList.add(bookingDTO);
+        }
+        return bookingDTOList;
+    }
+
 }

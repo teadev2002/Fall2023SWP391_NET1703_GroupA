@@ -50,10 +50,12 @@
                 <div class="opening-time text-center">
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
-                <div class="contact-number" style="display: flex;">
-                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
-                    &nbsp; &nbsp;<img src="../images/icon/support.svg" alt>
-                    &nbsp;<span style="color: #8494a5"><a th:href="@{/index/logout}">Đăng xuất</a></span>
+                <div class="contact-number" style="display: flex; align-items: center;">
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+                    &nbsp; &nbsp;
+                    <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+                    &nbsp; &nbsp;
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
             </div>
         </div>
@@ -79,23 +81,8 @@
 
                 <li><a th:href="@{/index/about}">About</a></li>
 
-                <li class="menu-item-has-children">
-                    <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="service-details.html">Daycare </a></li>
-                        <li><a href="service-details.html">Grooming</a></li>
-                        <li><a href="service-details.html">Boarding</a></li>
-                    </ul>
-                </li>
-
-                <li class="menu-item-has-children">
-                    <a href="#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="pricing-plan.html">Pricing Plan</a></li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li><a href="3col-gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
-                    </ul>
+                <li>
+                    <a th:href="@{/service/view}">Services</a>
                 </li>
 
                 <li class="menu-item-has-children">
@@ -301,13 +288,6 @@
                             <a th:href="@{/service/detail/{id}(id=${service.id})}"><span>Re</span>ad More</a>
                         </div>
 
-                        <!--            <div class="more-btn mt-2" th:if="${user != null}">-->
-                        <!--              <form th:action="@{/service/detail/myblog}" method="get">-->
-                        <!--                <input type="hidden" name="id" th:value="${service.id}">-->
-                        <!--                <span><button type="submit">Read More</button></span>-->
-                        <!--              </form>-->
-
-                        <!--            </div>-->
 
                     </div>
                 </div>
@@ -385,31 +365,15 @@
 
                         <!--                        Newest Blog-->
                         <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
-                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                            <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                                 <div class="wi sidebarImage" >
-                                    <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}"><img
+                                    <a th:href="@{/service/detail/{id}(id=${service.id})}"><img
                                             th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}" th:text="${service.blog.createDate}"></a>
+                                    <a th:href="@{/service/detail/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                                     <h6>
-                                        <a th:href="@{/blog/{id}/detail(id=${service.blog.id})}"
-                                           th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
-                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
-                                <div class="wi sidebarImage" >
-                                    <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}"><img
-                                            th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
-                                </div>
-                                <div class="wc">
-                                    <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}" th:text="${service.blog.createDate}"></a>
-                                    <h6>
-                                        <a th:href="@{/blog/{id}/detail/myblog(id=${service.blog.id})}"
+                                        <a th:href="@{/service/detail/{id}(id=${service.id})}"
                                            th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
                                     </h6>
                                 </div>
@@ -428,9 +392,6 @@
                         <p class="wp-block-tag-cloud">
                             <a th:href="@{/service/byType(type='Sell')}">Sell</a>
                             <a th:href="@{/service/byType(type='Gift')}">Gift</a>
-                            <a href="blog-grid.html">Daycare</a>
-                            <a href="blog-grid.html">Boarding</a>
-                            <a href="blog-grid.html">Grooming</a>
                             <a href="blog-grid.html">Services</a>
                         </p>
 

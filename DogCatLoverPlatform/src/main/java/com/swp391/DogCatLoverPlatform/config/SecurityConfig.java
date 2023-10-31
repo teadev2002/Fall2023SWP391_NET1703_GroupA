@@ -44,8 +44,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                    .antMatchers("/css/**", "/js/**", "/images/**", "/webfonts/**", "/fonts/**", "/video/**").permitAll()
-
+                    .antMatchers("/css/**", "/js/**", "/images/**", "/webfonts/**", "/fonts/**", "/video/**", "/vendors/**", "/buttons.github.io/**").permitAll()
+                    .antMatchers("/service/**").permitAll()     //Dũng thêm để fix bug
                     .antMatchers("/service/view").permitAll()
                     .antMatchers("/service/detail/**").permitAll()
                     .antMatchers("/index/**").permitAll()
@@ -53,25 +53,36 @@ public class SecurityConfig {
 
                     .antMatchers("/blog/view").permitAll()
                     .antMatchers("/blog/byType").permitAll()
+                    .antMatchers("/blog/**").permitAll()        //Dũng thêm để fix bug
+
+                    .antMatchers("/blog/**").permitAll()
+                    .antMatchers("/invoice/**").permitAll()
+                    .antMatchers("/paymethod/**").permitAll()
 
 
                     .antMatchers("/").permitAll()
                     .antMatchers(HttpMethod.POST,"/blog/**").permitAll()
-                    .antMatchers("/paymethod/**").hasRole("USER")
+                  //  .antMatchers("/paymethod/**").hasRole("USER")
                     .antMatchers(HttpMethod.POST,"/services/**").permitAll()
                     .antMatchers("/booking/**").permitAll()
 
-                    .antMatchers("/blog/staff").hasRole("ADMIN")
-                    .antMatchers("/blog/staff/**").hasRole("ADMIN")
+
+                    .antMatchers("/staff").hasAnyRole("ADMIN", "STAFF")
+                    .antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
+
+
+
+
 
                     .anyRequest().authenticated()
                     .and()
+
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin()
-                .loginPage("/index/login")
-                .loginProcessingUrl("/j_spring_security_check")
-                .defaultSuccessUrl("/index/home")
-                .and()
+//                .formLogin()
+//                .loginPage("/index/login")
+//                .loginProcessingUrl("/j_spring_security_check")
+//                .defaultSuccessUrl("/index/home")
+//                .and()
 //                .logout()
 //                    .permitAll()
 //                .and()
