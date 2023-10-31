@@ -28,6 +28,9 @@ public class UserNotificationEntity {
     @Column(name="id_receiver")
     private int idReceiver;
 
+    @Column(name="status")
+    private Boolean status;
+
     @ManyToOne
     @JoinColumn(name="id_sender")
     private UserEntity userEntity_UserNotification;

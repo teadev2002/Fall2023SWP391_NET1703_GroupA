@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scooby - Petcare & Pet Shop HTML Template</title>
+    <title>Deposit</title>
     <link rel="icon" th:href="@{../images/sm-logo.svg}" type="image/gif" sizes="20x20">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -35,7 +35,6 @@
 
     <link rel="stylesheet" th:href="@{../css/datepicker.min.css}">
 
-    <link rel="stylesheet" th:href="@{../css/uiicss.css}">
 
     <link rel="stylesheet" th:href="@{../css/style.css}">
     <link rel="stylesheet" th:href="@{../css/profile.css}">
@@ -196,102 +195,58 @@
     </div>
 </header>
 
-<div class="container rounded bg-white mt-5 mb-5">
-    <form th:action="@{/index/profile-update}" method="post">
-    <div class="row">
-
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img id="user-image" class="rounded-circle mt-5" width="150px" height="150px"
-                     th:src="@{'../images/avatar/'+${user.image}}" >
-                <input type="hidden" name="image" th:value="${user.image}">
-                <span class="font-weight-bold" th:text="${user.userName}"></span>
-                <span class="text-black-50" th:text="${user.email}"></span>
-                <input class="form-control" name="file" style="width: 100px; margin-left: 50px;" type="file" id="image-input" accept="image/*">
-                <br><a class="btn btn-primary" href="../deposite-history/deposit">Deposit</a><br>
-                <a class="btn btn-primary" href="../deposite-history/my-deposit">Deposit history</a>
+<div class="container-fluid rounded bg-white mt-5 mb-5" style="padding: 20px 30px 30px 30px">
+    <div class="blockcontent">
+        <h3>Deposit money into your account</h3>
+        <hr>
+        <div class="row">
+            <div class="col-sm-9">
+                <p style="font-size: 20px;">Select the amount to deposit</p>
+                <p style="font-size:14px">Chọn nhanh số tiền cần nạp</p>
+                <div class="row">
+                    <div class="col-md-2">
+                        <input onclick="setTien(this)" id="50" type="radio" value="50" name="chontien">
+                        <label for="50">50 USD</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input onclick="setTien(this)" id="100" type="radio" value="100" name="chontien">
+                        <label for="100">100 USD</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input onclick="setTien(this)" id="200" type="radio" value="200" name="chontien">
+                        <label for="200">200 USD</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input onclick="setTien(this)" id="500" type="radio" value="500" name="chontien">
+                        <label for="500">500 USD</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input onclick="setTien(this)" id="1000" type="radio" value="1000" name="chontien">
+                        <label for="1000">1000 USD</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input onclick="setTien(this)" id="2000" type="radio" value="2000" name="chontien">
+                        <label for="2000">2000 USD</label>
+                    </div>
+                </div><br>
+                <p>Hoặc nhập số tiền cần nạp</p>
+                <input id="inputmoney" style="height: 30px; border: 1px solid #000;padding-left: 10px" value="50"><span class="vndinput">VNĐ</span>
+                <br><br><br><button onclick="khoiTaoLink()" class="btn btn-primary btntieptuc">Tiếp tục ></button><br><br>
+                <div class="ghichuql">
+                    <p>Lưu ý quan trọng: Trong quá trình thanh toán, bạn vui lòng KHÔNG ĐÓNG TRÌNH DUYỆT.</p>
+                    <p>Nếu gặp khó khăn trong quá trình thanh toán, xin liên hệ 0917686101 để chúng tôi hỗ trợ bạn.</p>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="divsodu">
+                    <p>Số dư tài khoản</p>
+                    <strong id="sodu" class="btntiencon" th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')}+' USD'"></strong>
+                    <!--                    <td th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')} +' USD'"></td>-->
+                </div><br>
+                <a href="lichsunap.html" class="btn btn-secondary form-control">Lịch sử nạp tiền ></a>
             </div>
         </div>
-
-
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Settings</h4>
-                    </div>
-                    <div class="row mt-2" th:object="${user}">
-                        <div class="col-md-6"><label class="labels">Full Name</label>
-                            <input type="text" class="form-control" name="fullName" placeholder="Full Name"
-                                   th:field="*{fullName}">
-                        </div>
-                        <div class="col-md-6"><label class="labels">User Name</label>
-                            <input type="text" class="form-control" name="userName" placeholder="User Name"
-                                   th:field="*{userName}">
-                        </div>
-                    </div>
-                    <div class="row mt-3" th:object="${user}">
-                        <div class="col-md-12"><label class="labels">Mobile Number</label>
-                            <input type="text" class="form-control" name="phone" placeholder="enter phone number"
-                                   th:field="*{phone}">
-                        </div>
-                        <div class="col-md-12"><label class="labels">Address</label>
-                            <input type="text" class="form-control" name="address" placeholder="enter address"
-                                   th:field="*{address}">
-                        </div>
-                        <div class="col-md-12"><label class="labels">Your Email</label>
-                            <input type="text" class="form-control" name="email" placeholder="Enter email"
-                                   th:field="*{email}" readonly>
-                        </div>
-                        <div class="col-md-12"><label class="labels">Role</label>
-                            <input type="text" class="form-control" name="role" placeholder="Your Role"
-                                   th:value="${user.id_role}" th:field="*{roleDTO}" readonly>
-                        </div>
-<!--                        <div class="col-md-12"><label class="labels">Your Bio</label>-->
-<!--                            <textarea type="text" class="form-control" name="description" placeholder="Your Bio" rows="4"-->
-<!--                                      th:field="${user.description}" ></textarea>-->
-<!--                        </div>-->
-
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
-                        <a th:href="@{/index/home}"><button class="btn btn-primary profile-button" type="button">Back</button></a>
-                    </div>
-
-            </div>
-        </div>
-
-
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience">
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/service/view/myservice}"><i class="fa fa-plus"></i>&nbsp;View My Service</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/blog/view/myblog}"><i class="fa fa-plus"></i>&nbsp;View My Blog</a></span>
-                </div>
-
-                <br>
-
-                <div class="col-md-12" ><label class="labels">Experience</label>
-                    <textarea type="text" class="form-control" name="description" placeholder="Your Bio" rows="4"
-                            th:field="${user.description}" ></textarea>
-
-                </div>
-
-                <br>
-                <div class="d-flex justify-content-between align-items-center experience">
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/booking/history}"><i class="fa fa-plus"></i>&nbsp;My Booking History</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/booking/manager}"><i class="fa fa-plus"></i>&nbsp;Booking Manager</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/invoice/manager}"><i class="fa fa-plus"></i>&nbsp;Invoice Manager</a></span>
-                    <span class="border px-3 p-1 add-experience"><a th:href="@{/blog/trash}"><i class="fa fa-plus"></i>&nbsp;My Rejected Blog</a></span>
-                </div>
-<!--                <div class="col-md-12"><label class="labels">Additional Details</label>-->
-<!--                    <input type="text" class="form-control" placeholder="additional details" value="">-->
-<!--                </div>-->
-            </div>
-        </div>
-
     </div>
-    </form>
 
 </div>
 
@@ -379,7 +334,12 @@
         </div>
     </div>
 </footer>
-
+<script>
+    function setTien(e){
+        var tien = e.value
+        document.getElementById("inputmoney").value = tien
+    }
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const imageInput = document.getElementById('image-input');
@@ -418,6 +378,36 @@
 <script src="../js/main.js"></script>
 
 </body>
+
+<script>
+    var returnUrl = 'http://localhost:8080/deposite-history/check-deposit';
+    async function khoiTaoLink(){
+        var tien =  document.getElementById("inputmoney").value;
+        tien =  tien.replace(".", "");
+        if(isNaN(tien)){
+            alert("cannot input special keyword")
+            return;
+        }
+
+        var urlinit = 'http://localhost:8080/deposite-history/create';
+        var paymentDto = {
+            "amount":tien,
+            "content":"Nạp tiền vào tài khoản",
+            "returnUrl":returnUrl,
+            "notifyUrl":returnUrl
+        }
+        console.log(paymentDto)
+        const res = await fetch(urlinit, {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(paymentDto)
+        });
+        var urlReturn = await res.text();
+        window.open(urlReturn, '_blank');
+    }
+</script>
 
 <!-- Mirrored from demo.egenslab.com/html/scooby/preview/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Sep 2023 15:11:25 GMT -->
 </html>

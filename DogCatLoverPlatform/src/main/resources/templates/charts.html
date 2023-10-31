@@ -26,6 +26,7 @@
           href="https://demos.themeelection.com/chameleon-free-bootstrap-admin-template/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700"
           rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link th:href="@{../../maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css}" rel="stylesheet">
@@ -175,8 +176,44 @@
         </div>
         <div class="content-body"><!-- Bar charts section start -->
             <section id="chartjs-bar-charts">
-                <!-- Column Chart -->
+
                 <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Number of order on 7 day</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="row" style="margin-top: 30px">
+                                    <div class="col-4">
+                                        <label>Choose date</label>
+                                        <input type="date" onchange="loadDatas(this.value)" id="chonngay" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div class="height-400">
+                                        <canvas id="myBarChartst"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Column Chart -->
+                <div style="display: none" class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -203,37 +240,12 @@
                 </div>
 
                 <!-- Bar Chart -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">High Chart</h4>
-                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                <div class="heading-elements">
-                                    <ul class="list-inline mb-0">
-                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card-content collapse show">
-                                <div class="card-body">
-                                    <div class="height-400">
-                                        <canvas id="myBarChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </section>
             <!-- // Bar charts section end -->
 
             <!-- line chart section start -->
-            <section id="chartjs-line-charts">
+            <section style="display: none" id="chartjs-line-charts">
                 <!-- Line Chart -->
                 <div class="row">
                     <div class="col-12">
@@ -268,7 +280,7 @@
             <section id="chartjs-pie-charts">
                 <div class="row">
                     <!-- Simple Pie Chart -->
-                    <div class="col-md-6 col-sm-12">
+                    <div style="display: none" class="col-md-6 col-sm-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Simple Pie Chart</h4>
@@ -469,16 +481,81 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('chonngay').valueAsDate = new Date();
+    window.onload = function (){
+        loadDatas(today);
+    }
+    async function loadDatas(date){
+        var url = 'http://localhost:8080/booking/statistic?date='+date;
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+        var list = await response.json();
+        var lables = [];
+        var datas = [];
+        for(i=0; i< list.length; i++){
+            lables.push(list[i].date);
+            datas.push(list[i].numberBooking);
+        }
+        let chartStatus = Chart.getChart("myBarChartst");
+        if (chartStatus != undefined) {
+            chartStatus.destroy();
+        }
+        const ctx = document.getElementById("myBarChartst").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels:lables,
+                datasets: [{
+                    label: 'Number order from '+date,
+                    backgroundColor: 'rgba(161, 198, 247, 1)',
+                    borderColor: 'rgb(47, 128, 237)',
+                    data: datas,
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            callback: function(value) {
+                                return value;
+                            }
+                        }
+                    }]
+                }
+            },
+        });
+        myChart.destroy();
+        myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels:lables,
+                datasets: [{
+                    label: 'Number order from '+date,
+                    backgroundColor: 'rgba(161, 198, 247, 1)',
+                    borderColor: 'rgb(47, 128, 237)',
+                    data: datas,
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            callback: function(value) {
+                                return value;
+                            }
+                        }
+                    }]
+                }
+            },
+        });
+    }
+</script>
 
-<!-- Include Chart.js library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Your existing canvas element -->
 
 
 <!-- Your existing script for creating the initial doughnut chart -->
@@ -513,28 +590,6 @@
 
 </script>
 <script>
-
-    // $.ajax({ cmt
-    //     url: "/staff/chart",
-    //     success: function(result) {
-    //         var series = [];
-    //         var data = [];
-    //         for (var i = 0; i < result.length; i++) {
-    //             var object = {};
-    //             object.name = result[i].name;
-    //             object.y = result[i].count;
-    //             data.push(object);
-    //         }
-    //         var seriesObject = {
-    //             name: "Products",
-    //             colorByPoint: true,
-    //             data: data
-    //         };
-    //         series.push(seriesObject);
-    //         drawPieChart(series);
-    //     }
-    // });
-    // Get the canvas element dang cmt
     var ctx = document.getElementById('myColChart').getContext('2d');
 
     // Data for the column chart
@@ -636,57 +691,6 @@
     });
 </script>
 
-<script th:inline="javascript">
-    // Lấy dữ liệu từ model  dang cmt
-    // var blogCountByWeek = blogCountByWeek.map(x => ["price"]);
-    // var serviceCountByWeek = /!*[[${serviceCountByWeek}]]*!/ [];
-    // console.log("Hello world: " + blogCountByWeek);
-    /* // Tạo mảng chứa nhãn của từng tuần
-     var weeks = blogCountByWeek.map(entry => entry.weekNumber);
-
-     // Tạo mảng chứa số lượng blog và dịch vụ tương ứng
-     var blogCounts = blogCountByWeek.map(entry => entry.blogCount);
-     var serviceCounts = serviceCountByWeek.map(entry => entry.serviceCount); dang  cmt  */
-    const dataTest = {
-        labels: "ABCDE",
-        datasets: [{
-            label: 'My First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-        }]
-    };
-    // Vẽ biểu đồ cột sử dụng Chart.js
-    var test = document.getElementById('myBarChart').getContext('2d');
-    new Chart(test, {
-        type: 'bar',
-        data: dataTest,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        },
-    });
-</script>
 
 <!--line chart-->
 <script th:inline="javascript">
@@ -731,30 +735,7 @@
     });
 </script>
 
-<!--<script th:inline="javascript">-->
-<!--    /* Dữ liệu từ Spring Model */-->
-<!--    var listbook = /*[[${listbook}]]*/ [];-->
 
-<!--    // Extract các giá trị từ danh sách đối tượng BookingDTO-->
-<!--    var labels = listbook.map(entry => entry.create_date);-->
-<!--    var values = listbook.map(entry => entry.total_price);-->
-
-<!--    // var lab = listbook.map(entry => entry.blogCountByWeek);-->
-<!--    // Vẽ line chart sử dụng Chart.js-->
-<!--    var ctx = document.getElementById('myChart').getContext('2d');-->
-<!--    new Chart(ctx, {-->
-<!--        type: 'line',-->
-<!--        data: {-->
-<!--            labels: labels,-->
-<!--            datasets: [{-->
-<!--                label: 'Total Price',-->
-<!--                data: values,-->
-<!--                borderColor: 'blue',-->
-<!--                borderWidth: 1-->
-<!--            }]-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->
 <script src="../js/charts.js"></script>
 <script src="../../static/js/scripts/charts/pie-doughnut/doughnut-simple.js"></script>
 <script src="../vendors/js/vendors.min.js" type="text/javascript"></script>

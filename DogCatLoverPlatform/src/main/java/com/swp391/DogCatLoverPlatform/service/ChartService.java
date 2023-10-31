@@ -69,19 +69,19 @@ public class ChartService {
     @Autowired
     private ServiceRepository serviceRepository;
 
-    public int getServiceCountByWeek() {
-        LocalDate startOfWeek = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate endOfWeek = startOfWeek.plusDays(6);
-
-        Date startOfWeekDate = java.sql.Date.valueOf(startOfWeek);
-        Date endOfWeekDate = java.sql.Date.valueOf(endOfWeek);
-
-        List<ServiceEntity> servicesThisWeek = serviceRepository.findByCreateDateBetween(startOfWeekDate, endOfWeekDate);
-
-        return servicesThisWeek.size();
-
-
-    }
+//    public int getServiceCountByWeek() {
+//        LocalDate startOfWeek = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+//        LocalDate endOfWeek = startOfWeek.plusDays(6);
+//
+//        Date startOfWeekDate = java.sql.Date.valueOf(startOfWeek);
+//        Date endOfWeekDate = java.sql.Date.valueOf(endOfWeek);
+//
+//        List<ServiceEntity> servicesThisWeek = serviceRepository.findByCreateDateBetween(startOfWeekDate, endOfWeekDate);
+//
+//        return servicesThisWeek.size();
+//
+//
+//    }
 
     public int getBlogAndService() {
         List<BlogEntity> blogsThisWeek = blogRepository.findAll();

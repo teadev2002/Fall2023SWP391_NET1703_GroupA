@@ -21,6 +21,29 @@ public class UserNotificationService {
     @Autowired
     private UserNotificationRepository userNotificationRepository;
 
+    //Hàm để hiển thị số lượng thông báo(người dùng nào được chấp nhận hay từ chối)
+    public List<UserNotificationDTO> viewAllNotificationCount(int id_user) {
+        List<UserNotificationEntity> listNotification = userNotificationRepository.viewCountNotification(id_user);
+
+        List<UserNotificationDTO> listNotificated = listNotification.stream()
+                .map(entity -> modelMapperConfig.modelMapper().map(entity, UserNotificationDTO.class))
+                .collect(Collectors.toList());
+
+        return listNotificated;
+    }
+
+
+    //Hàm đánh dấu các thông báo đã được xem
+    public void markAsRead(int id_user){
+        List<UserNotificationEntity> listNotification = userNotificationRepository.findAllByIdUser(id_user);
+        for (UserNotificationEntity userNotification : listNotification) {
+            userNotification.setStatus(false);
+        }
+        // Lưu các thay đổi vào cơ sở dữ liệu
+        userNotificationRepository.saveAll(listNotification);
+    }
+
+    //Hiển thị thông báo (người dùng nào được chấp nhận hay từ chối)
     public List<UserNotificationDTO> viewAllNotification(int id_user) {
         List<UserNotificationEntity> listNotification = userNotificationRepository.findAllByIdUser(id_user);
 

@@ -35,8 +35,6 @@ public interface BookingEntityRepository extends JpaRepository<BookingEntity,Int
     @Query("UPDATE booking b SET b.status = true WHERE b.id = :id")
     void updateStatus(int id);
 
-
-//    @Query(value = "SELECT u.full_name AS fullName, b.id_user as idUser, COUNT(b.id_user) as topCustomer FROM booking b JOIN users u ON b.id_user = u.id GROUP BY b.id_user ORDER BY topCustomer DESC", nativeQuery = true)
-//    public List<BookingEntity> findTopCustomers();
-
+    @Query(value = "SELECT count(*)from booking b where b.booking_date = ?1",nativeQuery = true)
+    public Long countBookingByBookingDate(Date date);
 }

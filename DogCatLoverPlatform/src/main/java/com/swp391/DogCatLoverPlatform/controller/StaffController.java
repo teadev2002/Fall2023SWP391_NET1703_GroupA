@@ -1,13 +1,10 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
-import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.dto.ChartDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
-import com.swp391.DogCatLoverPlatform.entity.BookingEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
-import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.ChartService;
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -112,37 +107,13 @@ public class StaffController {
 
 
 
-//    @GetMapping("/chart")
-//    public String lineChart(Model model){
-////        List<BookingDTO> listbook = chartService.getBookingChart();
-////        model.addAttribute("listbook", listbook);
+    @GetMapping("/chart")
+    public String lineChart(Model model){
+//        List<BookingDTO> listbook = chartService.getBookingChart();
+//        model.addAttribute("listbook", listbook);
 //        int countBlogInList = chartService.countAllBlog();
 //        model.addAttribute("countBlogInList",countBlogInList);
-//        return "charts";
-//    }
 
-
-
-//
-//    @GetMapping("/chart")
-//    public String lineChart(Model model) {
-//        List<ChartDTO> listbook = chartService.getBookingChart();
-//
-//        int blogCountByWeek = chartService.getServiceCount();
-//        int serviceCountByWeek = chartService.getBlogCountByWeek();
-//
-//        listbook.forEach(chartDTO -> {
-//            chartDTO.setBlogCountByWeek(blogCountByWeek);
-//            chartDTO.setServiceCountByWeek(serviceCountByWeek);
-//        });
-//
-//        model.addAttribute("listbook", listbook);
-//
-//        return "charts";
-//    }
-
-    @GetMapping("/chart")
-    public String lineChart(Model model) {
         List<ChartDTO> listbook = chartService.getAllBlogChart();
 
         int blogCountByWeek = chartService.getBlogCount();
@@ -162,8 +133,6 @@ public class StaffController {
         model.addAttribute("listTopCustomer",listTopCustomer);
 
         System.out.println(listTopCustomer.size());
-
-//        System.out.println("blog is: " +blogCountByWeek + "\nservice is:" +serviceCountByWeek );
         return "charts";
     }
 

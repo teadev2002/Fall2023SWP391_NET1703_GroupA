@@ -18,6 +18,8 @@ public class UserNotificationDTO {
     private String userImage;
     private Date createDate;
     private String message;
+    private Boolean status;
+
     private RequestDTO request;
     private int requestId;
     private int currentUserId;

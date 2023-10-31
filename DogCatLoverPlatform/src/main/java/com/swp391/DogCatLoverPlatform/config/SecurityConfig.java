@@ -69,6 +69,7 @@ public class SecurityConfig {
 
                     .antMatchers("/staff").hasAnyRole("ADMIN", "STAFF")
                     .antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
+                    .antMatchers("/deposite-history/**").permitAll()
 
 
 

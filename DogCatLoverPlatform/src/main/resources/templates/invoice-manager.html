@@ -63,6 +63,13 @@
     .menu-list li a{
         text-decoration: none;
     }
+    .detail a{
+        text-decoration: none;
+        color: black;
+    }
+    .detail a:hover{
+        text-decoration: underline;
+    }
 </style>
 <body>
 
@@ -254,7 +261,8 @@
         <tbody> <!-- Iterate through the list of invoices -->
         <tr th:each="invoice, iterStat : ${list}">
             <td class="count" th:text="${iterStat.count}">1</td>
-            <td th:text="${invoice.title}"></td>
+            <td class="detail"> <a th:href="@{/blog/detail/{id}(id=${invoice.idBlog})}"
+                                   th:text="${invoice.title}"></a>
             <td th:text="${invoice.invoice_date}">N/A</td>
 <!--            <td>$<span th:text="${invoice.total_amount}">0.00</span></td>-->
 <!--            <td th:text="${invoice.userName}"></td>-->
