@@ -1,9 +1,5 @@
+DROP DATABASE swp391;
 CREATE database swp391;
-
-
-/*DROP database swp391;*/
-
-
 Use swp391;
 
 CREATE TABLE users(
@@ -15,6 +11,9 @@ password varchar(255),
 phone varchar(11),
 address varchar(255),
 image varchar(255),
+description varchar(255),
+otp varchar(255),
+	
 id_role int
 );
 
@@ -35,14 +34,12 @@ reason nvarchar(255),
 status bit,
 create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 confirm bit,
-pet_type bit,
 
 id_user_created int,
 id_blog_type int,
-id_pet_category int 
+id_pet_category int,
+id_pet_type int 
 	
-
-
 );
 
 CREATE TABLE pet_type(
@@ -56,6 +53,7 @@ CREATE TABLE pet_type(
 CREATE TABLE blog_type(
 id int auto_increment primary key,
 name varchar(50)
+	
 );
 
 CREATE TABLE booking(
@@ -64,16 +62,13 @@ total_price double,
 paying_method varchar(10),
 status bit,
 create_date Date,
+booking_date Date,
+booking_time Time,	
 id_user int,
 id_blog int
+	
 );
 
-CREATE TABLE booking_history(
-id int auto_increment primary key,
-description varchar(255),
-status bit,
-id_booking int
-);
 
 CREATE TABLE comment(
 id int auto_increment primary key,
@@ -92,9 +87,12 @@ CREATE TABLE service_category(
 CREATE TABLE service(
     id int auto_increment primary key,
     schedule nvarchar(255), 
+    date_start Date,
+    date_end Date,
     id_blog int,
     id_service_cate int
 );
+
 CREATE TABLE pet_category (
     id int auto_increment,
     name varchar(50),
@@ -103,18 +101,18 @@ CREATE TABLE pet_category (
     color varchar(50),
     weight double,
     
-    id_blog int,
-    
     primary key(id)
 );
+
 
 CREATE TABLE request(
 	id int auto_increment primary key,
 	create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	status bit,
+	
 	id_blog int,
 	id_user int	
 );
-
 
 
 CREATE TABLE invoice(
@@ -127,42 +125,30 @@ CREATE TABLE invoice(
     FOREIGN KEY (id_blog) REFERENCES blog(id)
 );
 
-
+CREATE TABLE users_notification(
+	id int auto_increment primary key,
+	id_receiver int,
+	message nvarchar(255),
+	create_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	
+	
+	id_sender int,
+	id_request int
+	);
 
 
 ALTER TABLE users ADD CONSTRAINT FK_id_role_user FOREIGN KEY (id_role) REFERENCES role(id);
 ALTER TABLE blog ADD CONSTRAINT FK_id_user_blog FOREIGN KEY (id_user_created) REFERENCES users(id);
 ALTER TABLE blog ADD CONSTRAINT FK_id_pet_category_blog FOREIGN KEY (id_pet_category) REFERENCES pet_category(id);
+ALTER TABLE blog ADD CONSTRAINT FK_id_pet_type_blog FOREIGN KEY (id_pet_type) REFERENCES pet_type(id);
+ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
 ALTER TABLE booking ADD CONSTRAINT FK_id_blog_booking FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE booking ADD CONSTRAINT FK_id_user_booking FOREIGN KEY (id_user) REFERENCES users(id);
-ALTER TABLE booking_history ADD CONSTRAINT FK__booking_booking_history FOREIGN KEY (id_booking) REFERENCES booking(id);
 ALTER TABLE comment ADD CONSTRAINT FK_id_user_comment FOREIGN KEY (id_user) REFERENCES users(id);
 ALTER TABLE comment ADD CONSTRAINT FK_id_blog_comment FOREIGN KEY (id_blog) REFERENCES blog(id);
-ALTER TABLE blog ADD CONSTRAINT FK_blog_type_blog FOREIGN KEY (id_blog_type) REFERENCES blog_type(id);
-
-
-
 ALTER TABLE service ADD CONSTRAINT FK_id_blog_service FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE service ADD CONSTRAINT FK_id_service_cate_service_category FOREIGN KEY (id_service_cate) REFERENCES service_category(id);
-
 ALTER TABLE request ADD CONSTRAINT FK_id_blog_request FOREIGN KEY (id_blog) REFERENCES blog(id);
 ALTER TABLE request ADD CONSTRAINT FK_id_user_request FOREIGN KEY (id_user) REFERENCES users(id);
-ALTER TABLE pet_category ADD CONSTRAINT FK_id_blog_pet_category FOREIGN KEY (id_blog) REFERENCES blog(id);
-ALTER TABLE blog ADD CONSTRAINT FK_pet_category_blog FOREIGN KEY (id_pet_category) REFERENCES pet_category(id);
-
-
-
-
-/*SELECT i.* FROM invoice i INNER JOIN blog b on b.id  = i.id_blog where i.id_user =1*/
-
-SELECT invoice.id AS invoice_id, invoice.invoice_date, invoice.total_amount,
-       blog.id AS blog_id, blog.title AS blog_title, blog.content AS blog_content,
-       users.id AS user_id, users.user_name, users.full_name, users.email
-FROM invoice
-INNER JOIN blog ON invoice.id_blog = blog.id
-INNER JOIN users ON blog.id_user_created = users.id
-WHERE invoice.id = 19;
-
-SELECT b.title,i.invoice_date ,i.total_amount ,i.id_user  FROM blog b join invoice i on b.id = i.id_blog where b.id_user_created =:id
-
-SELECT b.* FROM blog b join invoice i on b.id = i.id_blog where b.id_user_created =:id
+ALTER TABLE users_notification ADD CONSTRAINT FK_id_user_users_notification FOREIGN KEY (id_sender) REFERENCES users(id);
+ALTER TABLE users_notification ADD CONSTRAINT FK_id_request_users_notification FOREIGN KEY (id_request) REFERENCES request(id);
