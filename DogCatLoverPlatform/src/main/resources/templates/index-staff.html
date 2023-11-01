@@ -246,25 +246,25 @@
                         </div>
                         <div class="card-content">
                             <div id="recent-buyers" class="media-list">
-                                <a href="#" class="media border-0" th:each="user1 : ${users}">
+                                <a th:href="@{'/index/profile/' + ${user1.id}}" class="media border-0" th:each="user1 : ${users}">
                                     <div class="media-left pr-1">
-        <span class="avatar avatar-md avatar-away">
-            <img class="media-object rounded-circle" th:src="@{'../../images/avatar/' + ${user1.image}}" alt="Generic placeholder image">
-            <i></i>
-        </span>
+                                    <span class="avatar avatar-md avatar-away">
+                                        <img class="media-object rounded-circle" th:src="@{'../../images/avatar/' + ${user1.image}}" alt="Generic placeholder image">
+                                        <i></i>
+                                    </span>
                                     </div>
-                                    <div th:href="@{'/index/profile/' + ${user1.id}}" class="media-body w-100">
-                                        <span  class="list-group-item-heading" ><a th:href="@{'/index/profile/' + ${user1.id}}" th:text="${user1.userName}"></a></span>
-                                        <ul class="list-unstyled users-list m-0 float-right">
-                                            <li th:text="${user1.totalBlogs}">
+                                    <div  class="media-body w-100">
+                                    <span class="list-group-item-heading" th:text="${user1.userName}"></span>
+                                    <ul class="list-unstyled users-list m-0 float-right">
+                                        <li th:text="${user1.totalBlogs}">
 
-                                            </li>
+                                        </li>
 
-                                        </ul>
-                                        <p class="list-group-item-text mb-0">
-                                            <span class="blue-grey lighten-2 font-small-3" th:text="${user1.id}"></span>
-                                        </p>
-                                    </div>
+                                    </ul>
+                                    <p class="list-group-item-text mb-0">
+                                        <span class="blue-grey lighten-2 font-small-3" th:text="${user1.id}"></span>
+                                    </p>
+                            </div>
                                 </a>
 
 

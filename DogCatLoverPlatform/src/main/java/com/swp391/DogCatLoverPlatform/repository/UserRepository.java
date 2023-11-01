@@ -31,6 +31,7 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer>  {
     @Query("UPDATE users u SET u.password = :password WHERE u.id = :id")
     void updatePassInUser(@Param("password") String password, @Param("id") int id);
 
+
     @Query(nativeQuery = true, value =
             "SELECT u.*, COUNT(b.id) AS num_blogs\n" +
                     "FROM users u\n" +
@@ -44,4 +45,5 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer>  {
     @Query(nativeQuery = true, value =
             "SELECT COUNT(b.id) FROM blog b WHERE b.id_user_created = :userId")
     int getTotalBlogsByUserId(@Param("userId") int userId);
+
 }

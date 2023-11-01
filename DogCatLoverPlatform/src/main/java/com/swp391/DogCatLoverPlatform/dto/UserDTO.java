@@ -21,5 +21,9 @@ public class UserDTO {
     private String description;
     private int id_role;
     private String roleDTO;
+
     private int totalBlogs;
+
+    private Double balance;
+
 }

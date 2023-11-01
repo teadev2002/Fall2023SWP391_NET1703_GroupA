@@ -1,12 +1,20 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
+
 import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.ChartService;
+
+import com.swp391.DogCatLoverPlatform.dto.ChartDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
+import com.swp391.DogCatLoverPlatform.service.BlogService;
+//import com.swp391.DogCatLoverPlatform.service.ChartService;
+
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,16 +41,22 @@ public class StaffController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ChartService chartService;
+
+
     @GetMapping("/view")
     public String viewDashboard(HttpServletRequest req, Model model){
         UserDTO user  = getUserIdFromCookie(req);
         model.addAttribute("user", user);
+
 
         List<UserDTO> users = userService.getThreeUsersWithMostBlogs();
         model.addAttribute("users", users);
 
         List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
         model.addAttribute("latestBlogs", latestBlogs);
+
         return "index-staff";
     }
 
@@ -87,8 +101,8 @@ public class StaffController {
         baseRespone.setData(isSuccess);
         return new ResponseEntity<>(baseRespone, HttpStatus.OK);
     }
-    @Autowired
-    ChartService chartService;
+
+
 
 
     @GetMapping("/manageStaff")
@@ -114,13 +128,32 @@ public class StaffController {
 
 
 
+
+
     @GetMapping("/chart")
     public String lineChart(Model model){
 //        List<BookingDTO> listbook = chartService.getBookingChart();
 //        model.addAttribute("listbook", listbook);
-        int countBlogInList = chartService.countAllBlog();
-        model.addAttribute("countBlogInList",countBlogInList);
+//        int countBlogInList = chartService.countAllBlog();
+//        model.addAttribute("countBlogInList",countBlogInList);
+
+       /* List<ChartDTO> listbook = chartService.getAllBlogChart();
+
+        int blogCountByWeek = chartService.getBlogCount();
+        model.addAttribute("blogCountByWeek",blogCountByWeek);
+        int serviceCountByWeek = chartService.getServiceCount();
+        model.addAttribute("blogCountByWeek",blogCountByWeek);
+
+
+        listbook.forEach(chartDTO -> {
+
+            chartDTO.setBlogCountByWeek(blogCountByWeek);
+            chartDTO.setServiceCountByWeek(serviceCountByWeek);
+        });
+        model.addAttribute("listbook", listbook);
+*/
         return "charts";
     }
+
 
 }

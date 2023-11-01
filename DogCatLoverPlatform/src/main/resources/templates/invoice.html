@@ -1,20 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>Invoice</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>Invoice</h1>-->
-<!--<p>Invoice Date: <span th:text="${invoiceDate}">Invoice Date</span></p>-->
-<!--<p>Total Amount: <span th:text="${totalAmount}">Total Amount</span></p>-->
-<!--<p>Blog ID: <span th:text="${blogId}">Blog ID</span></p>-->
-<!--<p>User ID: <span th:text="${userId}">User ID</span></p>-->
-<!--<p>Email: <span th:text="${email}">Email</span></p>-->
-<!--<p>Title: <span th:text="${title}">Title</span></p>-->
-
-<!--</body>-->
-<!--</html>-->
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
@@ -197,9 +180,10 @@
                 </div>
                 <div class="contact-number" style="display: flex; align-items: center;">
                     Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+
                     &nbsp; &nbsp;
                     <span class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}" alt="avatar"></span>
-                    &nbsp; &nbsp;
+
                     <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
             </div>
@@ -210,12 +194,16 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
-            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../images/header1-logo.svg"></a>
+
+            <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../../../../images/header1-logo.svg"></a>
+
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a th:href="@{/index/home}"><img alt="image" src="../images/header1-logo.svg"></a>
+
+                    <a th:href="@{/index/home}"><img alt="image" src="../../../../images/header1-logo.svg"></a>
+
                 </div>
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
@@ -225,6 +213,7 @@
                 <li><a th:href="@{/index/home}">Home</a></li>
 
                 <li><a th:href="@{/index/about}">About</a></li>
+
 
                 <li class="menu-item-has-children">
                     <a th:href="@{/service/view}">Services</a><i class="bi bi-plus dropdown-icon"></i>
@@ -243,6 +232,10 @@
                         <li><a href="3col-gallery.html">Gallery</a></li>
                         <li><a href="faq.html">Faq</a></li>
                     </ul>
+
+                <li>
+                    <a th:href="@{/service/view}">Services</a>
+
                 </li>
 
                 <li class="menu-item-has-children">
@@ -319,7 +312,8 @@
                 <!--Notification-->
                 <li th:if="${user != null}">
                     <a class="button__notification" th:href="@{/blog/view/view-request}">
-                        <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
+            <svg  width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
+
                             <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                         </svg>
                     </a>
@@ -327,13 +321,15 @@
                     <span th:if="${count != 0}" class="button__notification__badge" th:text="${count}"></span>
                 </li>
 
-                <li th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom"
-                                               title="Bạn cần đăng nhập để xem thông báo">
+
+                <li  th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom" title="Bạn cần đăng nhập để xem thông báo">
+
                     <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                     </svg>
                 </a></li>
                 <!-- end notification -->
+
 
                 <li><a th:href="@{/service/cart}">
                     <svg width="16" height="13" viewBox="0 0 16 13" xmlns="http://www.w3.org/2000/svg">
@@ -358,6 +354,7 @@
                 <i class="bi bi-list"></i>
             </div>
         </div>
+
     </div>
 </header>
 

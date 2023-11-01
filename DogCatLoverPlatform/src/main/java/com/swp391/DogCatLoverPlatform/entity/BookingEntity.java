@@ -57,9 +57,5 @@ public class BookingEntity {
     private BlogEntity blogEntity_BookingEntity; // tên Entity tham chiếu tới
 
 
-    @OneToMany(mappedBy = "bookingEntity")
-    @JsonIgnore
-    List<BookingHistoryEntity> listBookingHistory = new ArrayList<>();
-
 
 }

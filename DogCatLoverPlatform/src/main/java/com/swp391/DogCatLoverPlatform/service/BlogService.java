@@ -220,10 +220,18 @@ public class BlogService {
     }
 
     //Blog bị từ chối
-    public void rejectBlog(int blogId, String reason) {
+    public void rejectBlog(int blogId, String newReason) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
+
+        // Retrieve the existing rejection reasons
+        String existingReasons = blogEntity.getReason();
+
+        // Append the new reason along with previous reasons
+        String combinedReason = existingReasons != null ? existingReasons + "\n" + newReason : newReason;
+
         blogEntity.setConfirm(false);
-        blogEntity.setReason(reason);
+        blogEntity.setReason(combinedReason);
+
         blogRepository.save(blogEntity);
     }
 
