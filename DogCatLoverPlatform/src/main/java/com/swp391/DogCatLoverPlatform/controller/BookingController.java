@@ -1,6 +1,14 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
+
+import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
+import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
+
+
 import com.swp391.DogCatLoverPlatform.dto.*;
+
 import com.swp391.DogCatLoverPlatform.entity.BookingEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.exception.MessageException;
@@ -42,6 +50,10 @@ public class BookingController {
 
 
 
+    @Autowired
+    private UserRepository userRepository;
+
+
     @GetMapping("/history")
     public String history(Model model, HttpServletRequest request){
         UserDTO userDTO = getUserIdFromCookie(request);
@@ -52,13 +64,19 @@ public class BookingController {
         }
 
         if(userDTO != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(userDTO.getId());
+
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
+
+
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
 
+
        List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
+
         model.addAttribute("listHistory",listHistory);
         model.addAttribute("user", userDTO);
         return "booking-history";
@@ -75,7 +93,11 @@ public class BookingController {
         }
 
         if(userDTO != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(userDTO.getId());
+
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
+
+
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -89,7 +111,8 @@ public class BookingController {
         return "booking-manager";
     }
 
-
+    @Autowired
+    private BookingEntityRepository bookingEntityRepository;
 
     @GetMapping("/booking-by-date-and-blog")
     public ResponseEntity<?> findByDateAndBlog(@RequestParam("date") Date date, @RequestParam("id") Integer idBlog){
@@ -109,7 +132,7 @@ public class BookingController {
         UserDTO user = getUserIdFromCookie(req);
         boolean result = false;
         if(user == null){
-            throw new MessageException("You have not login",444);
+            throw new MessageException("Bạn chưa đăng nhập",444);
         }else{
             result = bookingService.createBooking(booking,user);
         }
@@ -141,12 +164,16 @@ public class BookingController {
             Date str = new Date(startDate + (1000L * 60L * 60L * 24L * i));
             StatisticDTO statisticDto = new StatisticDTO();
             statisticDto.setDate(str);
-//            statisticDto.setNumberBooking(bookingEntityRepository.countBookingByBookingDate(str));
+            /*statisticDto.setNumberBooking(bookingEntityRepository.countBookingByBookingDate(str));*/
             statisticDto.setNumberBooking(bookingService.getCountBookingByBookingDate(str));
             list.add(statisticDto);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+
+
+
 
     /*
      * sau khi nhấn nút thanh toán bằng ví
@@ -173,7 +200,7 @@ public class BookingController {
                 throw new MessageException("wallet balance not enough");
             }
             if(list.isEmpty()){
-                throw new MessageException("Get 1 service to payment!");
+                throw new MessageException("you must have at least 1 service to payment!");
             }
             user.setAccountBalance(user.getAccountBalance() - total);
             userService.getSaveUser(user);
@@ -199,7 +226,7 @@ public class BookingController {
             for (Cookie cookie : cookies) {
                 if ("User".equals(cookie.getName())) {
                     String email = cookie.getValue();
-                    UserEntity user = userService.getFindByEmail(email);
+                    UserEntity user = userRepository.findByEmail(email);
                     return user;
                 }
             }

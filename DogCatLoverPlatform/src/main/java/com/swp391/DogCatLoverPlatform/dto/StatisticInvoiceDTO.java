@@ -5,11 +5,8 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class StatisticDTO {
+public class StatisticInvoiceDTO {
 
-    private Date date;
-
-    private Long numberBooking;
-
-
+    private Date dateInvoice;
+    private Long numberInvoice;
 }

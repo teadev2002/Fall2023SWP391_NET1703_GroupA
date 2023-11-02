@@ -73,8 +73,7 @@
                     <th style="padding-right: 70px; ">Title</th>
                     <th style="padding-right: 70px; ">Content</th>
                     <th>Reason</th>
-                    <th style="padding-right: 90px; ">Blog Type</th>
-                    <th style="padding-right: 90px; ">Pet Type</th>
+                    <th style="padding-right: 90px; ">Type</th>
                     <th>Price</th>
                     <th>Img</th>
                     <th>Actions</th>
@@ -93,24 +92,12 @@
                                readonly="readonly"/>
                     </td>
                     <td>
-
                         <!-- Dropdown selection for "Type" -->
-                        <select id="blogType" name="blogTypeId" class="form-control" onchange="togglePriceInput()">
-                            <option th:each="blogType : ${blogTypes}" th:value="${blogType.id}"
-                                    th:text="${blogType.name}" th:selected="${blogType.id == blog.blogTypeId}"></option>
+                        <select class="form-control" name="blogTypeName">
+                            <option value="Gift" th:selected="${blog.blogTypeName == 'Gift'}">Gift</option>
+                            <option value="Exchange" th:selected="${blog.blogTypeName == 'Exchange'}">Exchange</option>
                         </select>
                     </td>
-
-                  <td>
-                      <div class="form-check">
-                          <select id="" name="idPetType" class="form-control" onchange="togglePriceInput()">
-                              <option th:each="petTypes : ${petTypes}" th:value="${petTypes.id}"
-                                      th:text="${petTypes.type}" th:selected="${petTypes.id==blog.petTypeId}"></option>
-                          </select>
-                      </div>
-
-                  </td>
-
                     <td>
                         <input type="text" class="form-control" name="price" th:value="${blog.price}"/>
                     </td>

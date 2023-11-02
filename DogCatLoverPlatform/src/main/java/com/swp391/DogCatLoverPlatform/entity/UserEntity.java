@@ -70,7 +70,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity")
     private List<InvoiceEntity> invoiceEntities;
 
+
     @JsonDeserialize(using = CustomDoubleSerializer.class)
     private Double accountBalance;
+
 
 }

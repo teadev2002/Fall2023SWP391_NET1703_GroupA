@@ -189,31 +189,15 @@
                             <!-- Carousel -->
                             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="1" ></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="2" ></li>
+                                    <li data-target="#carouselExampleIndicators" th:each="blog, iterStat : ${latestBlogs}" th:data-slide-to="${iterStat.index}" th:classappend="${iterStat.index == 0}? 'active'"></li>
                                 </ol>
 
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="../images/carousel/01.jpg" class="d-block w-100" alt="First slide">
-                                        <div class="carousel-caption d-none d-md-block" style=" background: rgba(0, 0, 0, 0.2);">
-                                            <h5 style="color: white;">Here is Title</h5>
-                                            <p style="font-size: 12px;">Here is the Content</p>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="../images/carousel/08.jpg" class="d-block w-100" alt="Second slide">
-                                        <div class="carousel-caption d-none d-md-block" style=" background: rgba(0, 0, 0, 0.2);">
-                                            <h5 style="color: white;">Here is Title</h5>
-                                            <p style="font-size: 12px;">Here is the Content</p>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="../images/carousel/03.jpg"  class="d-block w-100" alt="Third slide">
-                                        <div class="carousel-caption d-none d-md-block" style=" background: rgba(0, 0, 0, 0.2);">
-                                            <h5 style="color: white;">Here is Title</h5>
-                                            <p style="font-size: 12px;">Here is the Content</p>
+                                    <div class="carousel-item" th:each="blog, iterStat : ${latestBlogs}" th:classappend="${iterStat.index == 0}? 'active'">
+                                        <img th:src="@{'../images/blog/' + ${blog.image}}" class="d-block w-100" alt="Image">
+                                        <div class="carousel-caption d-none d-md-block" style="background: rgba(0, 0, 0, 0.2);">
+                                            <h5 style="color: white;" th:text="${blog.title}"></h5>
+                                            <p style="font-size: 12px;" th:text="${blog.userName}"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -227,6 +211,7 @@
                                     <span class="sr-only">Next</span>
                                 </a>
                             </div>
+
 
 
 
@@ -245,7 +230,7 @@
                 <div class="col-xl-4 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Recent Buyers</h4>
+                            <h4 class="card-title">Recent Post</h4>
                             <a class="heading-elements-toggle">
                                 <i class="fa fa-ellipsis-v font-medium-3"></i>
                             </a>
@@ -261,161 +246,30 @@
                         </div>
                         <div class="card-content">
                             <div id="recent-buyers" class="media-list">
-                                <a href="#" class="media border-0">
+                                <a th:href="@{'/index/profile/' + ${user1.id}}" class="media border-0" th:each="user1 : ${users}">
                                     <div class="media-left pr-1">
-                            <span class="avatar avatar-md avatar-online">
-                                <img class="media-object rounded-circle"
-                                     src="../../images/portrait/small/avatar-s-7.png" alt="Generic placeholder image">
-                                <i></i>
-                            </span>
+                                    <span class="avatar avatar-md avatar-away">
+                                        <img class="media-object rounded-circle" th:src="@{'../../images/avatar/' + ${user1.image}}" alt="Generic placeholder image">
+                                        <i></i>
+                                    </span>
                                     </div>
-                                    <div class="media-body w-100">
-                            <span class="list-group-item-heading">Kristopher Candy
+                                    <div  class="media-body w-100">
+                                    <span class="list-group-item-heading" th:text="${user1.userName}"></span>
+                                    <ul class="list-unstyled users-list m-0 float-right">
+                                        <li th:text="${user1.totalBlogs}">
 
-                            </span>
-                                        <ul class="list-unstyled users-list m-0 float-right">
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 1" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-1.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 2" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-2.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 3" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-4.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                        </ul>
-                                        <p class="list-group-item-text mb-0">
-                                            <span class="blue-grey lighten-2 font-small-3"> #INV-12332 </span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="#" class="media border-0">
-                                    <div class="media-left pr-1">
-                            <span class="avatar avatar-md avatar-away">
-                                <img class="media-object rounded-circle"
-                                     src="../../images/portrait/small/avatar-s-8.png" alt="Generic placeholder image">
-                                <i></i>
-                            </span>
-                                    </div>
-                                    <div class="media-body w-100">
-                            <span class="list-group-item-heading">Lawrence Fowler
+                                        </li>
 
-                            </span>
-                                        <ul class="list-unstyled users-list m-0 float-right">
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 1" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-5.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 2" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-6.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                        </ul>
-                                        <p class="list-group-item-text mb-0">
-                                            <span class="blue-grey lighten-2 font-small-3"> #INV-12333 </span>
-                                        </p>
-                                    </div>
+                                    </ul>
+                                    <p class="list-group-item-text mb-0">
+                                        <span class="blue-grey lighten-2 font-small-3" th:text="${user1.id}"></span>
+                                    </p>
+                            </div>
                                 </a>
-                                <a href="#" class="media border-0">
-                                    <div class="media-left pr-1">
-                            <span class="avatar avatar-md avatar-busy">
-                                <img class="media-object rounded-circle"
-                                     src="../../images/portrait/small/avatar-s-9.png" alt="Generic placeholder image">
-                                <i></i>
-                            </span>
-                                    </div>
-                                    <div class="media-body w-100">
-                            <span class="list-group-item-heading">Linda Olson
 
-                            </span>
-                                        <ul class="list-unstyled users-list m-0 float-right">
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 1" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-2.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 2" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-5.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                        </ul>
-                                        <p class="list-group-item-text mb-0">
-                                            <span class="blue-grey lighten-2 font-small-3"> #INV-12334 </span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="#" class="media border-0">
-                                    <div class="media-left pr-1">
-                            <span class="avatar avatar-md avatar-online">
-                                <img class="media-object rounded-circle"
-                                     src="../../images/portrait/small/avatar-s-10.png" alt="Generic placeholder image">
-                                <i></i>
-                            </span>
-                                    </div>
-                                    <div class="media-body w-100">
-                            <span class="list-group-item-heading">Roy Clark
 
-                            </span>
-                                        <ul class="list-unstyled users-list m-0 float-right">
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 1" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-6.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 2" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-1.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                        </ul>
-                                        <p class="list-group-item-text mb-0">
-                                            <span class="blue-grey lighten-2 font-small-3"> #INV-12335 </span>
-                                        </p>
-                                    </div>
-                                </a>
-                                <a href="#" class="media border-0">
-                                    <div class="media-left pr-1">
-                            <span class="avatar avatar-md avatar-online">
-                                <img class="media-object rounded-circle"
-                                     src="../../images/portrait/small/avatar-s-11.png" alt="Generic placeholder image">
-                                <i></i>
-                            </span>
-                                    </div>
-                                    <div class="media-body w-100">
-                            <span class="list-group-item-heading">Kristopher Candy
 
-                            </span>
-                                        <ul class="list-unstyled users-list m-0 float-right">
-                                            <li data-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-original-title="Product 1" class="avatar avatar-sm pull-up">
-                                                <img class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                                                     src="../../images/portfolio/portfolio-5.jpg"
-                                                     alt="Avatar">
-                                            </li>
-                                        </ul>
-                                        <p class="list-group-item-text mb-0">
-                                            <span class="blue-grey lighten-2 font-small-3"> #INV-12336 </span>
-                                        </p>
-                                    </div>
-                                </a>
+
                             </div>
                         </div>
                     </div>

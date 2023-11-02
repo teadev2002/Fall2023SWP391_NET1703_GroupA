@@ -37,19 +37,7 @@ public class ChartService {
 //        return listBookingDTO;
 //    }
 
-    public List<ChartDTO> getAllBlogChart() {
-        List<BookingEntity> listbookingEn = bookingRepository.findAll();
-        List<ChartDTO> listBookingDTO = new ArrayList<>();
-        for (BookingEntity o : listbookingEn) {
-            ChartDTO listBook = new ChartDTO();
-            listBook.setCreate_date(o.getCreate_date());
-            listBook.setServiceCountByWeek(o.getListBookingHistory().size());
-            listBook.setBlogCountByWeek(o.getListBookingHistory().size());
-            listBookingDTO.add(listBook);
 
-        }
-        return listBookingDTO;
-    }
 
 
     public int getBlogAndService() {

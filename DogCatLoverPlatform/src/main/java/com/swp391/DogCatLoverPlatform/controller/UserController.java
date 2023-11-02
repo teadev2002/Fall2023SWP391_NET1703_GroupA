@@ -3,6 +3,7 @@ package com.swp391.DogCatLoverPlatform.controller;
 
 import com.google.gson.Gson;
 import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
+import com.swp391.DogCatLoverPlatform.dto.Root;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
@@ -21,6 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+/*import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;*/
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //@RestController
 @Controller
@@ -100,7 +104,8 @@ public class UserController {
 
         //Hiện số lượng thông báo
         if(user != null){
-            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotification(user.getId());
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -129,40 +134,6 @@ public class UserController {
         return "contact";
     }
 
-    @GetMapping("/faq")
-    public String faq() {
-        return "faq";
-    }
-
-    @GetMapping("/pricing-plan")
-    public String pricingPlan() {
-        return "pricing-plan";
-    }
-
-    @GetMapping("/service-details")
-    public String serviceDetail() {
-        return "service-details";
-    }
-
-    @GetMapping("/cart")
-    public String cart() {
-        return "cart";
-    }
-
-    @GetMapping("/check-out")
-    public String checkOut() {
-        return "check-out";
-    }
-
-    @GetMapping("/3col-gallery")
-    public String gallery() {
-        return "3col-gallery";
-    }
-
-    @GetMapping("/team")
-    public String team() {
-        return "team";
-    }
 
     //Xem profile user của phần List Request
     @GetMapping("/profile/{userId}")
@@ -222,24 +193,6 @@ public class UserController {
         return "redirect:/index/profile";
     }
 
-//    @GetMapping("/signinggoogle")
-//    public Map<String, Object>currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
-//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
-//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
-//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
-//        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-//    }
-//
-//    public Root toPerson(Map<String, Object> map){
-//        if(map== null){
-//            return null;
-//        }
-//        Root root = new Root();
-//        root.setEmail((String) map.get("email"));
-//        root.setName((String) map.get("name"));
-//        root.setPicture((String) map.get("picture"));
-//        return root;
-//    }
 
 
     @GetMapping("/sign-up")
@@ -362,6 +315,28 @@ public class UserController {
         baseRespone.setData(checkEmailExist);
         return new ResponseEntity<>(baseRespone,HttpStatus.OK);
     }
+
+/*
+    @GetMapping("/login/oauth2/code/google")
+    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
+        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
+        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
+        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
+    }
+
+    public Root toPerson(Map<String, Object> map){
+        if(map== null){
+            return null;
+        }
+        Root root = new Root();
+        root.setEmail((String) map.get("email"));
+        root.setName((String) map.get("name"));
+        root.setPicture((String) map.get("picture"));
+        return root;
+    }
+*/
+
 
 
 

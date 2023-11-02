@@ -295,17 +295,7 @@
               <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><span>Re</span>ad More</a>
             </div>
 
-<<<<<<< HEAD
-=======
-            <!--            <div class="more-btn mt-2" th:if="${user != null}">-->
-            <!--              <form th:action="@{/service/detail/myblog}" method="get">-->
-            <!--                <input type="hidden" name="id" th:value="${service.id}">-->
-            <!--                <span><button type="submit">Read More</button></span>-->
-            <!--              </form>-->
 
-            <!--            </div>-->
-
->>>>>>> origin/MinhTam
           </div>
         </div>
 
@@ -361,15 +351,11 @@
               <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
                       class="number-of-categoris">(18)</span><i
                       class="bi bi-arrow-right-short"></i></span> </a></li>
-              <li><a href="blog-grid.html"><span>Pet Daycare</span> <span><span
+
+              <li><a th:href="@{/service/view}" ><span>Pet Service</span> <span><span
                       class="number-of-categoris">(21)</span><i
                       class="bi bi-arrow-right-short"></i></span> </a></li>
-              <li><a href="blog-grid.html"><span>Pet Grooming</span> <span><span
-                      class="number-of-categoris">(25)</span><i
-                      class="bi bi-arrow-right-short"></i></span> </a></li>
-              <li><a href="blog-grid.html"><span>Pet Boarding</span> <span><span
-                      class="number-of-categoris">(29)</span><i
-                      class="bi bi-arrow-right-short"></i></span> </a></li>
+
             </ul>
 
           </div>
@@ -421,15 +407,16 @@
             </div>
 
             <p class="wp-block-tag-cloud">
-              <a th:href="@{/service/byType(type='Exchange')}">Exchange</a>
+
+              <a th:href="@{/service/byType(type='Sell')}">Sell</a>
               <a th:href="@{/service/byType(type='Gift')}">Gift</a>
-<<<<<<< HEAD
-=======
-              <a href="blog-grid.html">Daycare</a>
-              <a href="blog-grid.html">Boarding</a>
-              <a href="blog-grid.html">Grooming</a>
->>>>>>> origin/MinhTam
-              <a href="blog-grid.html">Services</a>
+
+
+              <a th:href="@{/blog/byType(type='Sell')}">Sell</a>
+              <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
+              <a th:href="@{/service/view}">Services</a>
+
+
             </p>
 
           </div>

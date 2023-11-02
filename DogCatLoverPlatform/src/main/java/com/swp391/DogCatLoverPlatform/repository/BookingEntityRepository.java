@@ -37,4 +37,6 @@ public interface BookingEntityRepository extends JpaRepository<BookingEntity,Int
 
     @Query(value = "SELECT count(*)from booking b where b.booking_date = ?1",nativeQuery = true)
     public Long countBookingByBookingDate(Date date);
+
+
 }

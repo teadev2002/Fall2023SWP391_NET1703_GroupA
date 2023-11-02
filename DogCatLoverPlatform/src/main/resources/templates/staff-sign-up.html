@@ -103,12 +103,12 @@
 
 
 
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div class="arrow_box_right"><a class="dropdown-item" href="#"><i class="ft-book"></i> Read
-                                Mail</a><a class="dropdown-item" href="#"><i class="ft-bookmark"></i> Read Later</a><a
-                                    class="dropdown-item" href="#"><i class="ft-check-square"></i> Mark all Read </a>
-                            </div>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="arrow_box_right"><a class="dropdown-item" href="#"><i class="ft-book"></i> Read
+                            Mail</a><a class="dropdown-item" href="#"><i class="ft-bookmark"></i> Read Later</a><a
+                                class="dropdown-item" href="#"><i class="ft-check-square"></i> Mark all Read </a>
                         </div>
+                    </div>
                     </li>
 
 
@@ -157,8 +157,6 @@
 
             <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
             </li>
-
-
             <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
 
 
@@ -263,19 +261,19 @@
 
         console.log("username : ", userName, " password : ", password,  "email : ", email);
 
-            $.ajax({
-                url: "http://localhost:8080/index/sign-up-add",
-                method: "post",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    userName: userName,
-                    password: password,
-                    email: email
-                })
-            }).done(function (data) {
-                console.log("server tra ve ", data)
-
+        $.ajax({
+            url: "http://localhost:8080/index/sign-up-add",
+            method: "post",
+            contentType: "application/json",
+            data: JSON.stringify({
+                userName: userName,
+                password: password,
+                email: email
             })
+        }).done(function (data) {
+            console.log("server tra ve ", data)
+
+        })
 
         // All validation passed, proceed with saving the data in the database
         alert('Account created successfully');
