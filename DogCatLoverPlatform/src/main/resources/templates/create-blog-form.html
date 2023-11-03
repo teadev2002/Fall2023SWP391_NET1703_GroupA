@@ -504,32 +504,9 @@
     });
 </script>
 
-<!--<script> // validate dateEnd cannot below dateStart-->
-<!--document.addEventListener('DOMContentLoaded', function () {-->
-<!--    // Get the dateStart and dateEnd input elements-->
-<!--    var dateStartInput = document.getElementById('dateStart');-->
-<!--    var dateEndInput = document.getElementById('dateEnd');-->
 
-<!--    // Function to validate the dateEnd-->
-<!--    function validateDates() {-->
-<!--        var dateStartValue = new Date(dateStartInput.value);-->
-<!--        var dateEndValue = new Date(dateEndInput.value);-->
-
-<!--        // Check if dateEnd is not earlier than dateStart-->
-<!--        if (dateEndValue < dateStartValue) {-->
-<!--            dateEndInput.setCustomValidity('End date cannot be earlier than start date.');-->
-<!--        } else {-->
-<!--            dateEndInput.setCustomValidity('');-->
-<!--        }-->
-<!--    }-->
-
-<!--    // Add an event listener for the input event on both dateStart and dateEnd-->
-<!--    dateStartInput.addEventListener('input', validateDates);-->
-<!--    dateEndInput.addEventListener('input', validateDates);-->
-<!--});-->
-<!--</script>-->
-
-<script> // validate number negative & text
+<script>
+// validate number negative & text
 document.getElementById("price").onkeypress = function(e) {
     return isNumber(e);
 };
@@ -551,6 +528,8 @@ function isNumber(evt) {
     return true;
 }
 </script>
+
+
 
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
 <script src="../../js/jquery-3.6.0.min.js"></script>

@@ -1,5 +1,7 @@
 package com.swp391.DogCatLoverPlatform.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.swp391.DogCatLoverPlatform.config.CustomDoubleSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -67,5 +69,10 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity")
     private List<InvoiceEntity> invoiceEntities;
+
+
+    @JsonDeserialize(using = CustomDoubleSerializer.class)
+    private Double accountBalance;
+
 
 }

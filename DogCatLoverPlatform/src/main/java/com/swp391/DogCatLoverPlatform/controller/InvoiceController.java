@@ -1,11 +1,15 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
+
 import com.swp391.DogCatLoverPlatform.dto.InvoiceDTO;
 import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -75,6 +81,7 @@ public class InvoiceController {
 
         if(userDTO != null){
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
+
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
@@ -101,5 +108,21 @@ public class InvoiceController {
         }
         return null;
     }
+
+
+    @GetMapping("/statistic-invoice")
+    public ResponseEntity<?> statisticInvoice(@RequestParam("date") Date date){
+        List<StatisticInvoiceDTO> list = new ArrayList<>();
+        Long startDate = date.getTime();
+        for (int i = 0; i <7; i++){
+            Date str = new Date(startDate + (1000L * 60L * 60L * 24L * i));
+            StatisticInvoiceDTO statisticDTO = new StatisticInvoiceDTO();
+            statisticDTO.setDateInvoice(str);
+            statisticDTO.setNumberInvoice(invoiceService.getCountInvoiceByBlogDate(str));
+            list.add((statisticDTO));
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 
 }

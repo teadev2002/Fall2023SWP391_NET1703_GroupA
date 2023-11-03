@@ -77,7 +77,7 @@
                                                                       alt="avatar"><span
                                     class="user-name text-bold-700 ml-1" th:text="${user.userName}"></span></span></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
+                                <a class="dropdown-item" th:href="@{/index/profile}"><i class="ft-user"></i> Edit Profile</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/index/logout}"><i class="ft-power"></i> Logout</a>
                             </div>
@@ -110,10 +110,10 @@
             </li>
 
 
-            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-users"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
 
 
-            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-credit-card"></i><span class="menu-title" >Create Account</span> </a>
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-user"></i><span class="menu-title" >Create Account</span> </a>
             </li>
             <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
 
@@ -168,14 +168,15 @@
 
                                 <!-- Blog Content-->
                                         <td>
-                                            <span th:id="${'blogContent-' + blog.id}"
-                                                th:text="${#strings.length(blog.content) > 30 ? blog.content.substring(0, 30) + '...' : blog.content}"></span>
-                                            <span type="button" data-toggle="modal" data-target="#exampleModalLong" style="color: red; font-weight: bold;">Read more</span>
-                                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                            <span th:id="'blogContent-' + ${blog.id}"
+                                                  th:text="${#strings.length(blog.content) > 30 ? blog.content.substring(0, 30) + '...' : blog.content}"></span>
+                                            <span type="button" data-toggle="modal" th:attr="data-target='#exampleModalLong-' + ${blog.id}" style="color: red; font-weight: bold;">Read more</span>
+
+                                            <div class="modal fade" th:id="'exampleModalLong-' + ${blog.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" style="font-weight: bold; margin-left: 200px;" id="exampleModalLongTitle" th:text="${blog.title}"></h5>
+                                                            <h5 class="modal-title" style="font-weight: bold; margin-left: 30px;" id="exampleModalLongTitle" th:text="${blog.title}"></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>

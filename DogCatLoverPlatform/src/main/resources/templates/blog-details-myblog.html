@@ -77,6 +77,27 @@
         }
 
 
+        .popupSellWallet {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px 5px rgba(0, 0, 0, 0.1);
+            margin-top: -25px;
+            z-index: 999;
+        }
+
+        .popupSellWallet > * {
+            margin: 15px 0;
+        }
+
+
+
         .popupGift {
             display: none;
             position: fixed;
@@ -134,6 +155,18 @@
         function showPopupSell() {
             var popup = document.querySelector('.popupSell');
             popup.style.display = 'block';
+
+        }
+
+        function showPopupSellWallet() {
+            var popup = document.querySelector('.popupSellWallet');
+            popup.style.display = 'block';
+
+        }
+
+        function hidePopupSellWallet() {
+            var popup = document.querySelector('.popupSellWallet');
+            popup.style.display = 'none';
 
         }
 
@@ -370,7 +403,7 @@
                     </div>
 
                     <h2 class="post-title" style="display: flex;">
-                        <a th:text="${blog.title}"></a> &nbsp;
+                        <a style="width: 600px;" th:text="${blog.title}"></a> &nbsp;
 
                         <!-- Thông báo Blog đang chờ được duyệt-->
                         <span th:if="${blog.confirm == null}" style="margin-left: 12px;">
@@ -408,6 +441,16 @@
                                  viewBox="0 0 576 512">
                                 <path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"/>
                             </svg>
+                            </a>
+                        </span>
+                        <!-- Icon Sell BY Wallet (Exchange)-->
+                        <span style="margin-left: 4px;" th:if="${blog.blogTypeId == 1 and blog.status != false}">
+                            <a th:if="${user != null and user.id != blog.userId}" onclick="showPopupSellWallet()"
+                               style="cursor: pointer;">
+
+                                 <svg xmlns="http://www.w3.org/2000/svg" height="0.5em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                     <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H80c-8.8 0-16-7.2-16-16s7.2-16 16-16H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM416 272a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+                                 </svg>
                             </a>
                         </span>
 
@@ -452,14 +495,25 @@
 
 
                             <span class="popupSell">
-                                <h2>Do you want to make a transaction?</h2>
+                                <h2>Do you want to make a transaction with paypal?</h2>
                                 <button type="submit" class="btn btn-primary"
                                         onclick="confirmTransaction()">Yes</button>
                                 <a style="cursor: pointer; font-weight: normal; font-size: 25px;" onclick="hidePopupSell()">Cancel</a>
                             </span>
                         </form>
 
-                        &nbsp;
+                            <!-- Sell with wallet                        -->
+                        &nbsp; <form method="post" action="/blog/buyByWallet" >
+
+
+                              <input type="hidden"  name="idBlog"  th:value="${blog.id}">
+                            <span class="popupSellWallet">
+                                <h2>Do you want to make a transaction by your Wallet?</h2>
+                                <button type="submit" class="btn btn-primary"
+                                        onclick="confirmTransaction()">Yes</button>
+                                <a style="cursor: pointer; font-weight: normal; font-size: 25px;" onclick="hidePopupSellWallet()">Cancel</a>
+                            </span>
+                         </form>
 
                         <!--Báo thành công-->
                         <div th:if="${sent}" class="alert alert-success"
@@ -623,42 +677,41 @@
                             <h3>Newest Posts</h3>
                         </div>
 
-                        <div class="recent-post-wraper" style="padding-top: 0px;"
-                             th:each="blog , iterStat : ${latestBlogs}">
-                            <div th:if="${user == null}" class="widget-cnt"
-                                 th:classappend="${iterStat.index < 2} ? 'mb-25' : ''">
-                                <div class="wi sidebarImage">
+
+                        <!--                        Newest Blog-->
+                        <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
                                     <a th:href="@{/blog/detail/{id}(id=${blog.id})}"><img
-                                            th:src="@{'../images/blog/' + ${blog.image}}" alt="image"></a>
+                                            th:src="@{'../../../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
                                     <a th:href="@{/blog/detail/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="recent-post-wraper" style="padding-top: 0px;"
-                             th:each="blog , iterStat : ${latestBlogs}">
-                            <div th:if="${user != null}" class="widget-cnt"
-                                 th:classappend="${iterStat.index < 2} ? 'mb-25' : ''">
-                                <div class="wi sidebarImage">
+                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
+                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
                                     <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"><img
                                             th:src="@{'../../../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
-                                    <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"
-                                       th:text="${blog.createDate}"></a>
+                                    <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
 
 

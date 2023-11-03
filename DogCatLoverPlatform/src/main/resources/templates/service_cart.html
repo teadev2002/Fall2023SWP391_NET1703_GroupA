@@ -195,6 +195,9 @@
         </tr>
         </tbody>
       </table>
+
+
+      <button onclick="confirmBooking()" class="btn btn-primary">Use wallet balance</button>
     </div>
   </div>
   <div class="container">
@@ -228,5 +231,25 @@
 </div>
 </div>
 
+<script>
+  async function confirmBooking(){
+    var con = confirm("Xác nhận sử dụng ví để thanh toán?");
+    if(con == false){
+      return;
+    }
+    var url = 'http://localhost:8080/booking/confirm-booking';
+    const response = await fetch(url, {
+      method: 'POST'
+    });
+    if (response.status < 300) {
+      alert("Success");
+      window.location.href = '../booking/history'
+    }
+    if (response.status == 417) {
+      var result = await response.json()
+      alert(result.defaultMessage);
+    }
+  }
+</script>
 </body>
 </html>

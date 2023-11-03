@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
+import java.sql.*;
 @Service
 public class InvoiceService {
 
@@ -110,7 +110,10 @@ public class InvoiceService {
     }
 
 
-
+    public Long getCountInvoiceByBlogDate(Date dates){
+        Long invoiceDTOs = invoiceRepository.countInvoiceByBlogDate((java.sql.Date) dates);
+        return invoiceDTOs;
+    }
 
 
 }

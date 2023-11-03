@@ -81,11 +81,9 @@
 
                 <li><a th:href="@{/index/about}">About</a></li>
 
-
                 <li>
                     <a th:href="@{/service/view}">Services</a>
                 </li>
-
 
                 <li class="menu-item-has-children">
                     <a th:href="@{/blog/view}">Blog</a>
@@ -368,7 +366,7 @@
                                     <a th:href="@{/blog/detail/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
@@ -384,7 +382,7 @@
                                     <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>

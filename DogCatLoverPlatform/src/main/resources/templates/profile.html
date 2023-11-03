@@ -208,6 +208,8 @@
                 <span class="font-weight-bold" th:text="${user.userName}"></span>
                 <span class="text-black-50" th:text="${user.email}"></span>
                 <input class="form-control" name="file" style="width: 100px; margin-left: 50px;" type="file" id="image-input" accept="image/*">
+                <br><a class="btn btn-primary" href="../deposite-history/deposit">Deposit</a><br>
+                <a class="btn btn-primary" href="../deposite-history/my-deposit">Deposit history</a>
             </div>
         </div>
 
@@ -269,8 +271,11 @@
 
                 <br>
 
+
                 <div class="col-md-12" ><label class="labels">About me</label>
                     <textarea type="text" class="form-control" name="description" placeholder="Write something..." rows="4"
+
+
                             th:field="${user.description}" ></textarea>
 
                 </div>

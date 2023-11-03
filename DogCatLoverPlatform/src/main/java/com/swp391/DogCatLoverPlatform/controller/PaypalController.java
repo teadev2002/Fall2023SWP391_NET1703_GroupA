@@ -5,6 +5,7 @@ import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 
 import com.swp391.DogCatLoverPlatform.entity.InvoiceEntity;
+import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -106,6 +107,8 @@ public class PaypalController {
             if (payment.getState().equals("approved")) {
                 UserDTO userDTO = getUserIdFromCookie(request);
                 bookingService.updateStatus(userDTO.getId());
+
+
                 return "success";
             }
         } catch (PayPalRESTException e) {
@@ -127,13 +130,19 @@ public class PaypalController {
 
                 // Lấy thông tin người dùng tạo bài viết
                 Optional<BlogEntity> blogEntity = blogService.blogRepository.findById(idBlog);
+                //add money for seller
+                UserEntity userSeller = userService.getFindByEmail(blogEntity.get().getUserEntity().getEmail());
+                userSeller.setAccountBalance(userSeller.getAccountBalance() + blogEntity.get().getPrice());
+                userService.getSaveUser(userSeller);
                 if (blogEntity.isPresent()) {
                     String sellerEmail = blogEntity.get().getUserEntity().getEmail(); // Lấy địa chỉ email của người bán
 
                     // Gửi thông báo email cho người bán
                     String blogTitle = blogDTO.getTitle(); // Lấy tiêu đề của bài viết từ đối tượng blogDTO
 
-                    emailService.sendPurchaseNotification(sellerEmail, blogTitle, idBlog);
+
+
+                    //emailService.sendPurchaseNotification(sellerEmail, blogTitle, idBlog);
 
                     // Redirect to the invoice page with the invoice ID as a query parameter
                     return "redirect:/invoice?id=" + invoiceEntity.getId();

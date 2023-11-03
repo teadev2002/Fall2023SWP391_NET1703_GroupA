@@ -3,8 +3,10 @@ package com.swp391.DogCatLoverPlatform.controller;
 
 import com.google.gson.Gson;
 import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
+import com.swp391.DogCatLoverPlatform.dto.Root;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
+import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.RequestService;
@@ -21,6 +23,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+/*import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;*/
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +37,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //@RestController
 @Controller
@@ -189,24 +194,6 @@ public class UserController {
         return "redirect:/index/profile";
     }
 
-//    @GetMapping("/signinggoogle")
-//    public Map<String, Object>currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
-//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
-//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
-//        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
-//        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-//    }
-//
-//    public Root toPerson(Map<String, Object> map){
-//        if(map== null){
-//            return null;
-//        }
-//        Root root = new Root();
-//        root.setEmail((String) map.get("email"));
-//        root.setName((String) map.get("name"));
-//        root.setPicture((String) map.get("picture"));
-//        return root;
-//    }
 
 
     @GetMapping("/sign-up")
@@ -216,12 +203,20 @@ public class UserController {
 
     @PostMapping(value = "/sign-up-add")
     public ResponseEntity<?> signup(@Valid @RequestBody UserDTO signUpRequest) {
-        boolean isSuccess = userService.addUser(signUpRequest);
-        BaseRespone baseRespone = new BaseRespone();
-        baseRespone.setStatusCode(200);
-        baseRespone.setMessage("");
-        baseRespone.setData(isSuccess);
-        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        UserEntity checkEmail = userService.getFindByEmail(signUpRequest.getEmail());
+
+        if(checkEmail == null){
+            BaseRespone baseRespone = new BaseRespone();
+            boolean isSuccess = userService.addUser(signUpRequest);
+            baseRespone.setStatusCode(200);
+            baseRespone.setMessage("");
+            baseRespone.setData(isSuccess);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }else{
+            BaseRespone baseRespone = new BaseRespone();
+            baseRespone.setStatusCode(400);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }
     }
 
 
@@ -329,6 +324,28 @@ public class UserController {
         baseRespone.setData(checkEmailExist);
         return new ResponseEntity<>(baseRespone,HttpStatus.OK);
     }
+
+/*
+    @GetMapping("/login/oauth2/code/google")
+    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getEmail());
+        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getName());
+        System.out.println(toPerson(oAuth2AuthenticationToken.getPrincipal().getAttributes()).getPicture());
+        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
+    }
+
+    public Root toPerson(Map<String, Object> map){
+        if(map== null){
+            return null;
+        }
+        Root root = new Root();
+        root.setEmail((String) map.get("email"));
+        root.setName((String) map.get("name"));
+        root.setPicture((String) map.get("picture"));
+        return root;
+    }
+*/
+
 
 
 

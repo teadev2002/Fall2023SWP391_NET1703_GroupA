@@ -199,12 +199,12 @@ public class BlogService {
 
     public List<BlogDTO> getBlogsReject(int userId) {
 
-        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirmAndStatusTrue(userId, false);
+        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirm(userId, false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
-                BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-                rejectBlogDTOs.add(blogDTO);
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            rejectBlogDTOs.add(blogDTO);
 
         }
 

@@ -344,23 +344,23 @@
                     </div>
 
                     <div class="single-widgets widget_egns_recent_post mb-30">
-
                         <div class="widget-title" style="padding-bottom: 45px;">
                             <h3>Newest Posts</h3>
                         </div>
 
-                        <!-- Newest Blog -->
+
+                        <!--                        Newest Blog-->
                         <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="blog , iterStat : ${latestBlogs}">
                             <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                                 <div class="wi sidebarImage" >
                                     <a th:href="@{/blog/detail/{id}(id=${blog.id})}"><img
-                                            th:src="@{'../images/blog/' + ${blog.image}}" alt="image"></a>
+                                            th:src="@{'../../../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
                                     <a th:href="@{/blog/detail/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
@@ -376,7 +376,7 @@
                                     <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
@@ -395,6 +395,7 @@
                             <a th:href="@{/blog/byType(type='Sell')}">Sell</a>
                             <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
                             <a th:href="@{/service/view}">Services</a>
+
                         </p>
 
                     </div>

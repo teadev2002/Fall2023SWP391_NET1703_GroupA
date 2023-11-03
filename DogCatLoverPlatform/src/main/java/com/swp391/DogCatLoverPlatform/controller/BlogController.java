@@ -4,6 +4,7 @@ import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import com.swp391.DogCatLoverPlatform.entity.*;
+import com.swp391.DogCatLoverPlatform.exception.MessageException;
 import com.swp391.DogCatLoverPlatform.service.*;
 //import com.swp391.DogCatLoverPlatform.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/blog")
@@ -58,6 +61,9 @@ public class BlogController {
 
     @Autowired
     UserNotificationService userNotificationService;
+
+    @Autowired
+    InvoiceService invoiceService;
 
 
     @PostMapping("/accepted-request")
@@ -428,6 +434,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         commentService.createComment(commentDTO, description, id_blog, user.getId());
 
         // Chuyển hướng người dùng đến trang chi tiết của bài blog
+
         return "redirect:/blog/detail/myblog/"+ id_blog;
     }
 
@@ -483,6 +490,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         if(user != null){
             //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
+
             //User đăng nhập hiện tại sẽ được xem danh sách những user khác đã gửi request trong bài Blog của mình.
             List<RequestDTO> bookingDTOS = requestService.viewSendRequest(user.getId());
 
@@ -628,6 +636,33 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         }
 
         return "redirect:/blog/trash";
+    }
+
+
+    @PostMapping("/buyByWallet")
+    public String buyByWallet(HttpServletRequest req, Model model) {
+        UserDTO user = getUserIdFromCookie(req);
+        int idBlog = Integer.parseInt(req.getParameter("idBlog"));
+        Optional<BlogEntity> blogEntity = blogService.blogRepository.findById(idBlog);
+        boolean result = false;
+        if (user == null) {
+            return "redirect:/index/login";
+        } else {
+
+            if (user.getBalance() == null || user.getBalance() < blogEntity.get().getPrice()) {
+                model.addAttribute("errBalance",true);
+                return "redirect:/deposite-history/deposit";
+            }
+
+
+            userService.transfer(user.getId(),idBlog);
+            InvoiceEntity invoiceEntity = invoiceService.saveInvoice(idBlog, user.getId());
+            blogService.updateBlogToFalse(idBlog);
+
+
+
+            return "redirect:/invoice?id=" + invoiceEntity.getId();
+        }
     }
 
 }

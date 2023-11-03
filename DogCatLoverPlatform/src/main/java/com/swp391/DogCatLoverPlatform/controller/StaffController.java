@@ -1,12 +1,21 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
 import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
+
 import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.ChartService;
+
+import com.swp391.DogCatLoverPlatform.dto.ChartDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
+import com.swp391.DogCatLoverPlatform.service.BlogService;
+//import com.swp391.DogCatLoverPlatform.service.ChartService;
+
 import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,10 +42,22 @@ public class StaffController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ChartService chartService;
+
+
     @GetMapping("/view")
     public String viewDashboard(HttpServletRequest req, Model model){
         UserDTO user  = getUserIdFromCookie(req);
         model.addAttribute("user", user);
+
+
+        List<UserDTO> users = userService.getThreeUsersWithMostBlogs();
+        model.addAttribute("users", users);
+
+        List<BlogDTO> latestBlogs = blogService.getThreeLatestBlogs();
+        model.addAttribute("latestBlogs", latestBlogs);
+
         return "index-staff";
     }
 
@@ -74,15 +95,21 @@ public class StaffController {
 
     @PostMapping(value = "/sign-up-staff-account")
     public ResponseEntity<?> signup(@Valid @RequestBody UserDTO signUpRequest) {
-        boolean isSuccess = userService.addStaff(signUpRequest);
-        BaseRespone baseRespone = new BaseRespone();
-        baseRespone.setStatusCode(200);
-        baseRespone.setMessage("");
-        baseRespone.setData(isSuccess);
-        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        UserEntity checkEmail = userService.getFindByEmail(signUpRequest.getEmail());
+
+        if(checkEmail == null){
+            BaseRespone baseRespone = new BaseRespone();
+            boolean isSuccess = userService.addStaff(signUpRequest);
+            baseRespone.setStatusCode(200);
+            baseRespone.setMessage("");
+            baseRespone.setData(isSuccess);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }else{
+            BaseRespone baseRespone = new BaseRespone();
+            baseRespone.setStatusCode(400);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }
     }
-    @Autowired
-    ChartService chartService;
 
 
     @GetMapping("/manageStaff")
@@ -107,14 +134,33 @@ public class StaffController {
     }
 
 
-
     @GetMapping("/chart")
-    public String lineChart(Model model){
+    public String lineChart(Model model, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
 //        List<BookingDTO> listbook = chartService.getBookingChart();
 //        model.addAttribute("listbook", listbook);
-        int countBlogInList = chartService.countAllBlog();
-        model.addAttribute("countBlogInList",countBlogInList);
+//        int countBlogInList = chartService.countAllBlog();
+//        model.addAttribute("countBlogInList",countBlogInList);
+
+       /* List<ChartDTO> listbook = chartService.getAllBlogChart();
+
+        int blogCountByWeek = chartService.getBlogCount();
+        model.addAttribute("blogCountByWeek",blogCountByWeek);
+        int serviceCountByWeek = chartService.getServiceCount();
+        model.addAttribute("blogCountByWeek",blogCountByWeek);
+
+
+        listbook.forEach(chartDTO -> {
+
+            chartDTO.setBlogCountByWeek(blogCountByWeek);
+            chartDTO.setServiceCountByWeek(serviceCountByWeek);
+        });
+        model.addAttribute("listbook", listbook);
+*/
         return "charts";
     }
+
 
 }

@@ -356,24 +356,38 @@
                             <h3>Newest Posts</h3>
                         </div>
 
-
                         <!--                        Newest Blog-->
                         <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
-                            <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                                 <div class="wi sidebarImage" >
                                     <a th:href="@{/service/detail/{id}(id=${service.id})}"><img
-                                            th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
+                                            th:src="@{'../../images/blog/' + ${service.blog.image}}" alt="image"></a>
                                 </div>
                                 <div class="wc">
                                     <a th:href="@{/service/detail/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/service/detail/{id}(id=${service.id})}"
-                                           th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
+                                           th:text="${#strings.length(service.blog.title) > 30} ? ${service.blog.title.substring(0, 30) + '...'} : ${service.blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
+                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
+                                    <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><img
+                                            th:src="@{'../../images/blog/' + ${service.blog.image}}" alt="image"></a>
+                                </div>
+                                <div class="wc">
+                                    <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
+                                    <h6>
+                                        <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"
+                                           th:text="${#strings.length(service.blog.title) > 30} ? ${service.blog.title.substring(0, 30) + '...'} : ${service.blog.title}"></a>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 

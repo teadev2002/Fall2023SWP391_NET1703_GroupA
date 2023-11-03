@@ -70,10 +70,17 @@ public class SecurityConfig {
                     .antMatchers("/staff").hasAnyRole("ADMIN", "STAFF")
                     .antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
 
+//                .antMatchers("/staff").permitAll()
+//                .antMatchers("/staff/**").permitAll()
+
+                    .antMatchers("/deposite-history/**").permitAll()
+
+
 
 
                     .anyRequest().authenticated()
                     .and()
+
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 //                .formLogin()
 //                .loginPage("/index/login")

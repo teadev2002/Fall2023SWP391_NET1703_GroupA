@@ -63,6 +63,15 @@
     .menu-list li a{
         text-decoration: none;
     }
+
+    .detail a{
+        text-decoration: none;
+        color: black;
+    }
+    .detail a:hover{
+        text-decoration: underline;
+    }
+
 </style>
 <body>
 
@@ -78,7 +87,9 @@
                 <div class="contact-number" style="display: flex; align-items: center;">
                     Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
                     &nbsp; &nbsp;
+
                     <span class="avatar avatar-online"><img th:src="@{'../../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+
                     &nbsp; &nbsp;
                     <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
                 </div>
@@ -90,13 +101,16 @@
 <header class="header-area style-1">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="header-logo">
+
             <a th:href="@{/index/home}"><img alt="image" class="img-fluid" src="../../../../images/header1-logo.svg"></a>
+
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
                     <a th:href="@{/index/home}"><img alt="image" src="../../../../images/header1-logo.svg"></a>
                 </div>
+
                 <div class="menu-close-btn">
                     <i class="bi bi-x-lg text-white"></i>
                 </div>
@@ -255,7 +269,10 @@
         <tbody> <!-- Iterate through the list of invoices -->
         <tr th:each="invoice, iterStat : ${list}">
             <td class="count" th:text="${iterStat.count}">1</td>
-            <td th:text="${invoice.title}"></td>
+
+
+            <td class="detail"> <a th:href="@{/blog/detail/{id}(id=${invoice.idBlog})}"
+                                   th:text="${invoice.title}"></a>
             <td th:text="${invoice.invoice_date}">N/A</td>
 <!--            <td>$<span th:text="${invoice.total_amount}">0.00</span></td>-->
 <!--            <td th:text="${invoice.userName}"></td>-->
@@ -267,8 +284,6 @@
     </table>
 
     <div th:if="${list == null || list.isEmpty()}" ><p>No invoices found!</p></div>
-</div>
- <!-- Add more content as needed -->
 </div>
 
 
@@ -422,6 +437,8 @@
 <script src="../js/main.js"></script>
 <script src="../js/deleteBlog"></script>
 
+
 </body>
 </html>
+
 

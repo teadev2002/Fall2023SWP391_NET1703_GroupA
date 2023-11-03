@@ -292,7 +292,7 @@
                         </span>
 
             <div class="more-btn mt-2">
-              <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><span>Re</span>ad More</a>
+              <a th:href="@{/service/detail/{id}(id=${service.id})}"><span>Re</span>ad More</a>
             </div>
 
 
@@ -374,7 +374,7 @@
                   <a th:href="@{/service/detail/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                   <h6>
                     <a th:href="@{/service/detail/{id}(id=${service.id})}"
-                       th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
+                       th:text="${#strings.length(service.blog.title) > 30} ? ${service.blog.title.substring(0, 30) + '...'} : ${service.blog.title}"></a>
                   </h6>
                 </div>
               </div>
@@ -390,7 +390,7 @@
                   <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                   <h6>
                     <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"
-                       th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
+                       th:text="${#strings.length(service.blog.title) > 30} ? ${service.blog.title.substring(0, 30) + '...'} : ${service.blog.title}"></a>
                   </h6>
                 </div>
               </div>

@@ -31,4 +31,20 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer>  {
     @Query("UPDATE users u SET u.password = :password WHERE u.id = :id")
     void updatePassInUser(@Param("password") String password, @Param("id") int id);
 
+
+    @Query(nativeQuery = true, value =
+            "SELECT u.*, COUNT(b.id) AS num_blogs \n" +
+                    "FROM users u \n" +
+                    "LEFT JOIN blog b ON u.id = b.id_user_created \n" +
+                    "WHERE u.id_role = 1 \n" +
+                    "GROUP BY u.id, u.user_name\n" +
+                    "ORDER BY num_blogs DESC\n" +
+                    "LIMIT 3;")
+    List<UserEntity> findTop3UsersWithMostBlogs();
+
+
+    @Query(nativeQuery = true, value =
+            "SELECT COUNT(b.id) FROM blog b WHERE b.id_user_created = :userId")
+    int getTotalBlogsByUserId(@Param("userId") int userId);
+
 }

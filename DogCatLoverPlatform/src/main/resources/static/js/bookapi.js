@@ -42,7 +42,7 @@ async function loadTime(){
         document.getElementById("listTime").innerHTML = main
     }else {
         // `chooseDate` không nằm trong khoảng thời gian bắt đầu và kết thúc
-        alert("Ngày bạn chọn không nằm trong khoảng thời gian dịch vụ.");
+        alert("The date you selected is not within the service period.");
         window.location.reload()
     }
 }
@@ -65,10 +65,10 @@ async function createAppointment(){
     var idBlog  = document.getElementById("id_blog").value;
     var chooseDate = document.getElementById("chooseDate").value;
     if(chooseDate == "" || chooseDate == null){
-        alert("hãy chọn ngày khám");
+        alert("Choose date");
         return
     }if(time == null){
-        alert("hãy chọn giờ khám");
+        alert("Choose time");
         return
     }
     var req = {
@@ -87,7 +87,7 @@ async function createAppointment(){
         body: JSON.stringify(req)
     });
     if(response.status < 300){
-        alert("Thành công!")
+        alert("Success!")
         window.location.reload()
     }
     if(response.status === 417 || response.status == 417){

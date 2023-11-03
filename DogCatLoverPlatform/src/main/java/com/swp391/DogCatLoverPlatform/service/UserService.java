@@ -2,8 +2,11 @@ package com.swp391.DogCatLoverPlatform.service;
 
 import com.swp391.DogCatLoverPlatform.config.ModelMapperConfig;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
+import com.swp391.DogCatLoverPlatform.entity.InvoiceEntity;
 import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
+import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.repository.RoleRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,14 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    BlogRepository blogRepository;
+
+
+    @Autowired
+    BlogService blogService;
+
+
     public boolean addUser(UserDTO userDTO){
         boolean isSuccess = false;
         UserEntity user = new UserEntity();
@@ -48,6 +59,7 @@ public class UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setName(userDTO.getUserName());
+        user.setAccountBalance(0.0);
         user.setImage("ava-06.jpg");
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setId(1);
@@ -122,6 +134,7 @@ public class UserService {
         userDTO.setImage(user.getImage());
         userDTO.setPhone(user.getPhone());
         userDTO.setDescription(user.getDescription());
+        userDTO.setBalance(user.getAccountBalance());
         userDTO.setRoleDTO(user.getRoleEntity().getName());
         userDTO.setId_role(user.getRoleEntity().getId());
 
@@ -267,4 +280,57 @@ public class UserService {
         userEntity.get().setRoleEntity(roleEntity);
         userRepository.save(userEntity.get());
     }
+
+
+    public List<UserDTO> getThreeUsersWithMostBlogs() {
+        List<UserEntity> userList = userRepository.findTop3UsersWithMostBlogs();
+        List<UserDTO> userDTOList = new ArrayList<>();
+
+        for (UserEntity userEntity : userList) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(userEntity.getId());
+            userDTO.setUserName(userEntity.getName());
+            userDTO.setImage(userEntity.getImage());
+            userDTO.setEmail(userEntity.getEmail());
+
+            // Sử dụng UserRepository để lấy số lượng bài blog của người dùng
+            int totalBlogs = userRepository.getTotalBlogsByUserId(userEntity.getId());
+            userDTO.setTotalBlogs(totalBlogs);
+
+            userDTOList.add(userDTO);
+        }
+
+        return userDTOList;
+    }
+
+    public void transfer(int id_userBuy, int idBlog) {
+
+        //lấy ra người mua
+        Optional<UserEntity> userBuy = userRepository.findById(id_userBuy);
+
+        //lấy ra người bán
+        Optional<BlogEntity> blog = blogRepository.findById(idBlog);
+        Optional<UserEntity> userSell = userRepository.findById(blog.get().getUserEntity().getId());
+
+        // trừ đi số dư của người mua
+        userBuy.get().setAccountBalance(userBuy.get().getAccountBalance() - blog.get().getPrice());
+        userRepository.save(userBuy.get());
+
+        if(userSell.get().getAccountBalance() == null){
+            userSell.get().setAccountBalance(blog.get().getPrice());
+        }
+        else{
+            userSell.get().setAccountBalance(userSell.get().getAccountBalance() + blog.get().getPrice());
+        }
+        userRepository.save(userSell.get());
+
+    }
+    public UserEntity getSaveUser(UserEntity userEntity) {
+        return userRepository.save(userEntity);
+    }
+
+    public UserEntity getFindByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
 }
