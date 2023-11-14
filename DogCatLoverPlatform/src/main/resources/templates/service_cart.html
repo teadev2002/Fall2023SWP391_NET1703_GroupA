@@ -3,9 +3,10 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <style>
 
-      /* Add styles for the table */
+    /* Add styles for the table */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -143,97 +144,107 @@
         margin-bottom: 20px;
       }
     }
+    .content{
+      position: relative;
+    }
 
   </style>
 </head>
-<body>
-<div class="row">
-  <div class="col-75">
-    <div>
-<!--      <form method="post"  action="/paymethod/pay">-->
-<!--        <div class="col-50">-->
-<!--          <h3>Payment</h3>-->
-<!--          <label>Accepted Cards</label>-->
-<!--          <div class="icon-container">-->
-<!--            <i class="fa fa-cc-visa" style="color:navy;"></i>-->
-<!--            <i class="fa fa-cc-amex" style="color:blue;"></i>-->
-<!--            <i class="fa fa-cc-mastercard" style="color:red;"></i>-->
-<!--            <i class="fa fa-cc-discover" style="color:orange;"></i>-->
-<!--          </div>-->
-<!--          <label for="price">Total</label>-->
-<!--          <input type="text" id="price" name="price" value="10">-->
-<!--          <label for="currency">Currency</label>-->
-<!--          <input type="text" id="currency" name="currency" placeholder="Enter Currency">-->
-<!--          <label for="method">Payment Method</label>-->
-<!--          <input type="text" id="method" name="method" placeholder="Payment Method">-->
-<!--          <label for="intent">Intent</label>-->
-<!--          <input type="text" id="intent" name="intent" value="sale">-->
-<!--          <label for="description">Payment Description</label>-->
-<!--          <input type="text" id="description" name="description" placeholder="Payment Description">-->
+<body >
 
-<!--        </div>-->
+<div class="content">
+  <div class="row" >
+    <div class="col-md-4">
+      <div style="
+    width: 67%;
+    position: absolute;
+    left: 0px;
+    margin-left: 10px ;
+    margin-right: 10px;
+">
 
-<!--        <input type="submit" value="Continue to checkout" class="btn">-->
-<!--      </form>-->
-      <table class="table table-cart table-order" id="my-orders-table">
-        <thead class="thead-default">
-        <tr>
-          <th>Booking id</th>
-          <th>Booking date</th>
-          <th class="floatr">Tổng tiền</th>
-          <th class="floatr">Blog name</th>
-          <th class="floatr"></th>
-        </tr>
-        </thead>
-        <tbody th:each="booking : ${listBooking}">
-        <tr>
-          <td><a class="yls pointer-event" th:text="${booking.id}"></a></td>
-          <td th:text="${booking.bookingDate}+', '+${booking.bookingTime}"></td>
-          <td class="floatr"><span class="yls" th:text="${#numbers.formatDecimal(booking.total_price, 0, 'COMMA', 0, 'POINT')}"></span></td>
-          <td class="floatr"><span class="span_" th:text="${booking.blogDTO.title}"></span></td>
-          <td class="floatr"><a th:href="@{'/booking/delete?id_booking='+${booking.id}}">DELETE</a></td>
-        </tr>
-        </tbody>
-      </table>
+        <table class="table table-cart table-order" id="my-orders-table">
+          <thead class="thead-default">
+          <tr>
+            <th>Booking id</th>
+            <th>Booking date</th>
+            <th class="floatr">Price</th>
+            <th class="floatr">Blog name</th>
+            <th class="floatr">Action</th>
+          </tr>
+          </thead>
+          <tbody th:each="booking : ${listBooking}">
+          <tr>
+            <td><a class="yls pointer-event" th:text="${booking.id}"></a></td>
+            <td th:text="${booking.bookingDate}+', '+${booking.bookingTime}"></td>
+            <td class="floatr"><span class="yls" th:text="${#numbers.formatDecimal(booking.total_price, 0, 'COMMA', 0, 'POINT')} + '$'"></span></td>
+            <td class="floatr"><span class="span_" th:text="${booking.blogDTO.title}"></span></td>
+            <td class="floatr"><a th:href="@{'/booking/delete?id_booking='+${booking.id}}">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                <style> {
+                  fill: #384352
+                }</style>
+                <path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
+              </svg>
+            </a></td>
+          </tr>
+          </tbody>
+        </table>
 
 
-      <button onclick="confirmBooking()" class="btn btn-primary">Use wallet balance</button>
+        <!--      <button onclick="confirmBooking()" class="btn btn-primary">Use wallet balance</button>-->
+      </div>
+    </div>
+    <div class="container" style="
+                                justify-content: flex-end;
+                                position: absolute;
+                                right: 0px;
+                                ">
+      <h4><a th:href="@{/service/view}">
+        <svg style="position: absolute; top: 12px; left: 12px;"
+             xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
+          <path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM217.4 376.9L117.5 269.8c-3.5-3.8-5.5-8.7-5.5-13.8s2-10.1 5.5-13.8l99.9-107.1c4.2-4.5 10.1-7.1 16.3-7.1c12.3 0 22.3 10 22.3 22.3l0 57.7 96 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32l-96 0 0 57.7c0 12.3-10 22.3-22.3 22.3c-6.2 0-12.1-2.6-16.3-7.1z"/>
+        </svg>
+      </a> <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i>  <b th:text="${quantity}"></b></span></h4>
+      <br>
+      <form method="post"  action="/paymethod/pay">
+        <div class="col-50">
+          <h3>Payment</h3>
+          <label>Accepted Cards</label>
+          <div class="icon-container">
+            <i class="fa fa-cc-visa" style="color:navy;"></i>
+            <i class="fa fa-cc-amex" style="color:blue;"></i>
+            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+            <i class="fa fa-cc-discover" style="color:orange;"></i>
+          </div>
+          <label for="price">Total</label>
+          <input type="text" id="price" name="price" th:value="${totalPrice}" readonly>
+          <label for="currency">Currency</label>
+          <input type="text" id="currency" name="currency" placeholder="Enter Currency" value="USD">
+          <label for="method">Payment Method</label>
+          <input type="text" id="method" name="method" placeholder="Payment Method" value="PAYPAL">
+          <label for="intent">Intent</label>
+          <input type="text" id="intent" name="intent" value="sale">
+          <label for="description">Payment Description</label>
+          <input type="text" id="description" name="description" placeholder="Payment Description">
+
+        </div>
+
+          <div class="payment" style="display: block;" >
+            <input type="submit" value="Continue to checkout" class="btn">
+          </div>
+      </form>
+
+      <div class="payment" style="display: block;" >
+        <button onclick="confirmBooking()" class="btn">Use wallet balance</button>
+      </div>
     </div>
   </div>
-  <div class="container">
-    <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b th:text="${quantity}"></b></span></h4>
-    <form method="post"  action="/paymethod/pay">
-      <div class="col-50">
-        <h3>Payment</h3>
-        <label>Accepted Cards</label>
-        <div class="icon-container">
-          <i class="fa fa-cc-visa" style="color:navy;"></i>
-          <i class="fa fa-cc-amex" style="color:blue;"></i>
-          <i class="fa fa-cc-mastercard" style="color:red;"></i>
-          <i class="fa fa-cc-discover" style="color:orange;"></i>
-        </div>
-        <label for="price">Total</label>
-        <input type="text" id="price" name="price" th:value="${totalPrice}" readonly>
-        <label for="currency">Currency</label>
-        <input type="text" id="currency" name="currency" placeholder="Enter Currency" value="USD">
-        <label for="method">Payment Method</label>
-        <input type="text" id="method" name="method" placeholder="Payment Method" value="PAYPAL">
-        <label for="intent">Intent</label>
-        <input type="text" id="intent" name="intent" value="sale">
-        <label for="description">Payment Description</label>
-        <input type="text" id="description" name="description" placeholder="Payment Description">
-
-      </div>
-
-      <input type="submit" value="Continue to checkout" class="btn">
-    </form>
-  </div>
 </div>
 </div>
-
 <script>
   async function confirmBooking(){
-    var con = confirm("Xác nhận sử dụng ví để thanh toán?");
+    var con = confirm("Confirm to use Wallet Payment?");
     if(con == false){
       return;
     }

@@ -193,6 +193,7 @@ public class BookingController {
             user.setAccountBalance(user.getAccountBalance() - total);
             userService.getSaveUser(user);
             for(BookingEntity b: list){
+                b.setPaying_method("Wallet");
                 b.setStatus(true);
                 UserEntity ch = b.getBlogEntity_BookingEntity().getUserEntity();
                 if(ch.getAccountBalance() == null){

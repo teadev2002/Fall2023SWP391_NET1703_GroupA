@@ -260,7 +260,7 @@
             <th scope="col">#</th>
             <th scope="col">Title</th>
             <th scope="col">Invoice Date</th>
-<!--            <th scope="col">Total Amount</th>-->
+            <th scope="col">Pay method</th>
 <!--            <th scope="col">Name Customer</th>-->
 <!--            <th scope="col">Email</th>-->
 
@@ -274,7 +274,7 @@
             <td class="detail"> <a th:href="@{/blog/detail/{id}(id=${invoice.idBlog})}"
                                    th:text="${invoice.title}"></a>
             <td th:text="${invoice.invoice_date}">N/A</td>
-<!--            <td>$<span th:text="${invoice.total_amount}">0.00</span></td>-->
+            <td th:text="${invoice.paying_method}"></td>
 <!--            <td th:text="${invoice.userName}"></td>-->
 <!--            <td th:text="${invoice.email}"></td>-->
 

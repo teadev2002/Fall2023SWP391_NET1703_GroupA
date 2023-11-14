@@ -236,7 +236,7 @@
         <div class="row g-lg-4 gy-5 justify-content-center mb-70">
             <div class="col-lg-12" style="margin: auto;margin-top: 10px">
                 <div class="headeraccount">
-                    <p class="fontyel">Quản lý đơn đặt</p>
+                    <p class="fontyel">Booking Manager</p>
                     <div class="right_flex">
                         <span class="textrf" th:text="${quantity} + ' đơn hàng'"></span>
                     </div>
@@ -244,10 +244,9 @@
                 <table class="table table-cart table-order" id="my-orders-table">
                     <thead class="thead-default">
                     <tr>
-                        <th>Booking id</th>
                         <th class="floatr">Service Created date</th>
                         <th>Booking date</th>
-                        <th class="floatr">Tổng tiền</th>
+                        <th class="floatr">Total price</th>
                         <th>Pay method</th>
                         <th class="floatr">Blog name</th>
                         <th>Email</th>
@@ -255,14 +254,14 @@
                     </thead>
                     <tbody th:each="booking : ${listBooking}">
                     <tr>
-                        <td><a class="yls pointer-event" th:text="${booking.id}"></a></td>
                         <td class="floatr" th:text="${booking.blogDTO.createDate}"></td>
                         <td th:text="${booking.bookingDate}+', '+${booking.bookingTime}"></td>
-                        <td class="floatr"><span class="yls" th:text="${#numbers.formatDecimal(booking.total_price, 0, 'COMMA', 0, 'POINT')}"></span></td>
+                        <td class="floatr"><span class="yls" th:text="${#numbers.formatDecimal(booking.total_price, 0, 'COMMA', 0, 'POINT')} + '$'"></span></td>
                         <td>
                            <!-- <span class="span_pending" th:text="${booking.status}"></span>-->
-                            <span  class="span_pending" th:if="${booking.status == true}">Đã thanh toán</span>
-                            <span  class="span_pending" th:if="${booking.status == false}">Chưa thanh toán</span>
+                            <span  class="span_pending" th:if="${booking.status == true}">Paid</span>
+                            <span  class="span_pending" th:if="${booking.status == true}" th:text="${booking.paying_method}"></span>
+                            <span  class="span_pending" th:if="${booking.status == false}">Not Paid</span>
                         </td>
                         <td class="floatr"><span class="span_" th:text="${booking.blogDTO.title}"></span></td>
                         <td th:text="${booking.userDTO.email}"></td>

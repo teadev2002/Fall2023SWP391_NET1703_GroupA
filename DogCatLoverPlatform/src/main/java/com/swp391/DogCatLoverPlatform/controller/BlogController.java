@@ -569,14 +569,6 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         }
         return null;
     }
-    //Quản lý Blog bên Staff
-    @GetMapping("/staff")
-    public String viewBlogManagement(Model model){
-        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
-        model.addAttribute("pendingBlogs", pendingBlogs);
-        return "table-staff";
-    }
-
 
     @PostMapping("/staff/process")
     public String processBlog(
@@ -596,7 +588,8 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
             // Send a rejection email
 
             if (user != null) {
-                emailService.sendEmail(user.getEmail(), reason);
+               Optional<BlogEntity> blogEntity = blogService.blogRepository.findById(blogId);
+                emailService.sendEmail(blogEntity.get().getUserEntity().getEmail(), reason);
             }
         }
         return "redirect:/staff/view/pending";
@@ -656,7 +649,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
 
 
             userService.transfer(user.getId(),idBlog);
-            InvoiceEntity invoiceEntity = invoiceService.saveInvoice(idBlog, user.getId());
+            InvoiceEntity invoiceEntity = invoiceService.saveInvoiceWallet(idBlog, user.getId());
             blogService.updateBlogToFalse(idBlog);
 
 

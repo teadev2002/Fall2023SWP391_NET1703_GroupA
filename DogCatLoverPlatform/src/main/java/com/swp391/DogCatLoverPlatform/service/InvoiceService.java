@@ -41,6 +41,42 @@ public class InvoiceService {
     @Autowired
     private UserService userService;
 
+
+    public InvoiceEntity saveInvoiceWallet(int idBlog, int idUser) {
+        InvoiceEntity invoiceEntity = new InvoiceEntity();
+        Date date = new Date();
+        invoiceEntity.setInvoice_date(date);
+
+        Optional<BlogEntity> blogEntityOptional = blogRepository.findById(idBlog);
+
+        if (blogEntityOptional.isPresent()) {
+            BlogEntity blogEntity = blogEntityOptional.get();
+            // Lấy giá từ đối tượng blog
+            double price = blogEntity.getPrice();
+            invoiceEntity.setTotal_amount(price);
+            invoiceEntity.setPaying_method("Wallet");
+            String title = blogEntity.getTitle();
+
+            Optional<UserEntity> userEntityOptional = userRepository.findById(idUser);
+
+            if (userEntityOptional.isPresent()) {
+                UserEntity userEntity = userEntityOptional.get();
+                String email = userEntity.getEmail();
+                invoiceEntity.setUserEntity(userEntity);
+            } else {
+                // Xử lý trường hợp không tìm thấy người dùng
+                return null;
+            }
+
+            invoiceEntity.setBlogEntity(blogEntity);
+            invoiceRepository.save(invoiceEntity);
+            return invoiceEntity;
+        } else {
+            // Xử lý trường hợp không tìm thấy bài viết
+            return null;
+        }
+    }
+
     public InvoiceEntity saveInvoice(int idBlog, int idUser) {
         InvoiceEntity invoiceEntity = new InvoiceEntity();
         Date date = new Date();
@@ -53,6 +89,7 @@ public class InvoiceService {
             // Lấy giá từ đối tượng blog
             double price = blogEntity.getPrice();
             invoiceEntity.setTotal_amount(price);
+            invoiceEntity.setPaying_method("Paypal");
             String title = blogEntity.getTitle();
 
             Optional<UserEntity> userEntityOptional = userRepository.findById(idUser);
@@ -92,6 +129,7 @@ public class InvoiceService {
             UserDTO userDTO = userService.getUserById(invoice.getUserEntity().getId());
 
             InvoiceDTO invoiceDTO = new InvoiceDTO();
+            invoiceDTO.setPaying_method(invoice.getPaying_method());
             invoiceDTO.setId(invoice.getId());
             invoiceDTO.setInvoice_date(invoice.getInvoice_date());
             invoiceDTO.setTotal_amount(invoice.getTotal_amount());

@@ -26,6 +26,9 @@ public class InvoiceEntity {
     @Column(name = "total_amount")
     private double total_amount;
 
+    @Column(name = "paying_method")
+    private String paying_method;
+
     @ManyToOne
     @JoinColumn(name = "id_user")
     private UserEntity userEntity; // Thay UserEntity bằng tên Entity tương ứng cho bảng users

@@ -346,13 +346,13 @@
 
             <ul class="wp-block-categoris-cloud">
               <li><a th:href="@{/blog/byType(type='Sell')}"><span>Pet Sell</span> <span><span
-                      class="number-of-categoris">(30)</span><i
+                      class="number-of-categoris"></span><i
                       class="bi bi-arrow-right-short"></i></span></a></li>
               <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
-                      class="number-of-categoris">(18)</span><i
+                      class="number-of-categoris"></span><i
                       class="bi bi-arrow-right-short"></i></span> </a></li>
               <li><a th:href="@{/service/view}" ><span>Pet Service</span> <span><span
-                      class="number-of-categoris">(21)</span><i
+                      class="number-of-categoris"></span><i
                       class="bi bi-arrow-right-short"></i></span> </a></li>
             </ul>
 
@@ -370,7 +370,7 @@
                   <a th:href="@{/service/detail/{id}(id=${service.id})}"><img
                           th:src="@{'../../images/blog/' + ${service.blog.image}}" alt="image"></a>
                 </div>
-                <div class="wc">
+                <div class="wc" style="width: 240px;">
                   <a th:href="@{/service/detail/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                   <h6>
                     <a th:href="@{/service/detail/{id}(id=${service.id})}"
@@ -386,7 +386,7 @@
                   <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><img
                           th:src="@{'../../images/blog/' + ${service.blog.image}}" alt="image"></a>
                 </div>
-                <div class="wc">
+                <div class="wc" style="width: 240px;">
                   <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                   <h6>
                     <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"

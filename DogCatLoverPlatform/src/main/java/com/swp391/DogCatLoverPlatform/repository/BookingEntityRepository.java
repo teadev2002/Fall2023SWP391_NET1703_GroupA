@@ -32,7 +32,7 @@ public interface BookingEntityRepository extends JpaRepository<BookingEntity,Int
 
     @Transactional
     @Modifying
-    @Query("UPDATE booking b SET b.status = true WHERE b.id = :id")
+    @Query("UPDATE booking b SET b.status = true, b.paying_method = 'Paypal'  WHERE b.id = :id")
     void updateStatus(int id);
 
     @Query(value = "SELECT count(*)from booking b where b.booking_date = ?1 and b.status = true",nativeQuery = true)

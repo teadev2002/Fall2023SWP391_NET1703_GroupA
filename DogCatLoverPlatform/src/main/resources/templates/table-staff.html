@@ -115,9 +115,9 @@
 
             <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-user"></i><span class="menu-title" >Create Account</span> </a>
             </li>
-            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+<!--            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>-->
 
-            </li>
+<!--            </li>-->
         </ul>
     </div>
 
@@ -176,7 +176,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" style="font-weight: bold; margin-left: 30px;" id="exampleModalLongTitle" th:text="${blog.title}"></h5>
+                                                            <h5 class="modal-title" style="font-weight: bold; margin-left: 40px;" id="exampleModalLongTitle" th:text="${blog.title}"></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>

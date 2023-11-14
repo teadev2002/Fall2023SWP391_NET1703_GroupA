@@ -337,8 +337,8 @@
                                         <ul class="review-list">
                                             <li>
                                                 <div class="single-review d-flex justify-content-between flex-md-nowrap flex-wrap">
-                                                    <div class="review-image">
-                                                        <img src="../../images/bg/review-img-1.png" alt="image">
+                                                    <div class="review-image" style="width: 62px; height: 62px;">
+                                                        <img th:src="@{'../../images/avatar/' + ${comments.userImage}}" style="width: 100%; height: 100%; object-fit: contain;" alt="image">
                                                     </div>
                                                     <div class="review-content">
                                                         <div class="c-header d-flex align-items-center">

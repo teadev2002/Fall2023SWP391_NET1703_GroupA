@@ -240,7 +240,7 @@
                             <th scope="col">Booking Date</th>
                             <th scope="col">Booking Blog Name</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Status</th>
+<!--                            <th scope="col">Status</th>-->
 
                         </tr>
                         </thead>
@@ -249,8 +249,8 @@
                             <td class="count" th:text="${iterStat.count}">1</td>
                             <td th:text="${list.bookingDate}"></td>
                             <td th:text="${list.blogDTO.title}"></td>
-                            <td th:text="${list.total_price}">N/A</td>
-                            <td th:text="${list.status}">N/A</td>
+                            <td th:text="${list.total_price} + '$'">N/A</td>
+<!--                            <td th:text="${list.status}"></td>-->
 
                         </tr>
                         </tbody>
