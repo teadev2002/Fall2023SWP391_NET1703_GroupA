@@ -39,25 +39,35 @@ public class ChartService {
 
 
 
+//
+//    public int getBlogAndService() {
+//        List<BlogEntity> blogsThisWeek = blogRepository.findAll();
+//        return blogsThisWeek.size();
+//    }
+//
+//    public int getBlogCount() {
+//        List<ServiceEntity> serviceEntities = serviceRepository.findAll();
+//        int countService = getBlogAndService() - serviceEntities.size();
+//
+//        return countService;
+//    }
+//
+//    public int getServiceCount() {
+//        int blogCountByWeek = getBlogAndService() - getBlogCount();
+//        return blogCountByWeek;
+//    }
 
-    public int getBlogAndService() {
-        List<BlogEntity> blogsThisWeek = blogRepository.findAll();
-        return blogsThisWeek.size();
+    public StatisticBlogNServiceDTO countBlogNService() {
+        List<Object[]> result = blogRepository.getBlogAndServiceCounts();
+        StatisticBlogNServiceDTO getCount = new StatisticBlogNServiceDTO();
+
+        for (Object[] row : result) {
+            getCount.setNumBlog(((Number) row[0]).intValue()); // Assuming the first column is numBlog
+            getCount.setNumService(((Number) row[1]).intValue()); // Assuming the second column is numService
+
+        }
+        return getCount;
     }
-
-    public int getBlogCount() {
-        List<ServiceEntity> serviceEntities = serviceRepository.findAll();
-        int countService = getBlogAndService() - serviceEntities.size();
-
-        return countService;
-    }
-
-    public int getServiceCount() {
-        int blogCountByWeek = getBlogAndService() - getBlogCount();
-        return blogCountByWeek;
-    }
-
-
 
 
 

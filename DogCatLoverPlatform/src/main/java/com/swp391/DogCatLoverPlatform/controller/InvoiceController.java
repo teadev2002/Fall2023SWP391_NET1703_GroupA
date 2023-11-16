@@ -66,6 +66,17 @@ public class InvoiceController {
             model.addAttribute("user", userDTO);
         }
 
+        UserDTO userDTO = getUserIdFromCookie(req);
+        model.addAttribute("user", userDTO);
+
+        if(userDTO != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
+
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
         // Return the invoice template (invoice.html)
         return "invoice";
     }

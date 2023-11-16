@@ -119,8 +119,8 @@
             <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-user"></i><span class="menu-title" >Create Account</span> </a>
             </li>
 
-<!--            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>-->
-<!--            </li>-->
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+            </li>
         </ul>
     </div>
 
@@ -243,7 +243,7 @@
 
                                     </ul>
                                     <p class="list-group-item-text mb-0">
-                                        <span class="blue-grey lighten-2 font-small-3" th:text="${user1.id}"></span>
+                                        <span class="blue-grey lighten-2 font-small-3" th:text="${user1.email}"></span>
                                     </p>
                             </div>
                                 </a>

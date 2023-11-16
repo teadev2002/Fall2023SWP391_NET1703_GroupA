@@ -46,4 +46,9 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Query(value ="SELECT b.* FROM blog b join invoice i on b.id = i.id_blog where b.id_user_created =:id_user_created",nativeQuery = true)
          List<BlogEntity> findIdSeller(Integer id_user_created);
 
+//        Chart
+        @Query(value = "SELECT COUNT(b.id_pet_type), COUNT(s.id) FROM blog b LEFT JOIN service s ON s.id = b.id", nativeQuery = true)
+        List<Object[]> getBlogAndServiceCounts();
+
+
 }

@@ -271,7 +271,7 @@
                         <div class="blog-meta">
                             <ul>
                                 <li><a th:text="${blog.createDate}"></a></li>
-                                <li><a th:text="${blog.userName}"></a></li>
+                                <li><a th:text="${blog.userName}"  th:href="@{'/index/profile/' + ${blog.userId}}"></a></li>
                             </ul>
                         </div>
 
@@ -304,18 +304,32 @@
                                 <a class="page-link" th:href="@{'/blog/view?page=' + ${currentPage-1}}"><i class="bi bi-arrow-left-short"></i></a>
                             </li>
 
-                            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">
-                                <a class="page-link" th:href="@{'/blog/view?page=' + ${i}}" th:text="${i}"></a>
+<!--                            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">-->
+<!--                                <a class="page-link" th:href="@{'/blog/view?page=' + ${i}}" th:text="${i}"></a>-->
+<!--                            </li>-->
+
+                            <!-- Hiển thị trang trước, trang hiện tại và trang sau (nếu có) -->
+                            <li th:each="i : ${currentPage > 1 ?
+                             (currentPage == totalPage ? #numbers.sequence(currentPage - 1, currentPage)
+                             : #numbers.sequence(currentPage - 1, currentPage + 1))
+                             : #numbers.sequence(1, 2)}"
+                            th:classappend="${currentPage == i} ? 'active' : ''"
+                            class="page-item">
+                            <a class="page-link" th:href="@{'/blog/view?page=' + ${i}}" th:text="${i}"></a>
                             </li>
+
+
+
 
                             <li class="page-item" th:if="${currentPage < totalPage}">
                                 <a class="page-link" th:href="@{'/blog/view?page=' + ${currentPage+1}}"><i class="bi bi-arrow-right-short"></i></a>
                             </li>
                         </ul>
-
-
                     </nav>
                 </div>
+
+
+
 
             </div>
             <div class="col-lg-4">

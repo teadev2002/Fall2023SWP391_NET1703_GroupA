@@ -138,10 +138,21 @@ public class UserController {
 
     //Xem profile user của phần List Request
     @GetMapping("/profile/{userId}")
-    public String profile(Model model, @PathVariable int userId) {
+    public String profile(Model model, @PathVariable int userId, HttpServletRequest req) {
         // Sử dụng userId để truy vấn thông tin người dùng và chuẩn bị dữ liệu cho view
         UserDTO user = userService.getUserById(userId);
         model.addAttribute("user", user);
+
+
+        UserDTO users  = getUserIdFromCookie(req);
+        model.addAttribute("users", users);
+        if(users != null){
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(users.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(users.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
 
         return "profile-user-request";
     }

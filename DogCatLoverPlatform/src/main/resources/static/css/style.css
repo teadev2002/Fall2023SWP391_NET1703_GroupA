@@ -14447,13 +14447,13 @@ footer.style2 .social-area ul li:hover a i {
 
 /*Code thêm*/
 .previewImage {
-    height: 110px;
-    width: 342px;
+    height: 325px;
+    width: 850px;
     border: 1px solid gray;
-    margin-bottom: 12px;
+    margin-bottom: 28px;
     display: none;
     position: relative;
-    margin-left: 51px;
+
 }
 
 .previewImage img {
@@ -14525,7 +14525,7 @@ footer.style2 .social-area ul li:hover a i {
 
 .headeraccount{
     padding: 15px 20px 10px 20px;
-    border-bottom: 2px solid #f5f5f0;
+    /*border-bottom: 2px solid #f5f5f0;*/
     margin-bottom: 20px;
     position: relative;
     min-height: 60px;
@@ -14538,7 +14538,7 @@ footer.style2 .social-area ul li:hover a i {
 .fontyel{
     color: #fcaf17 !important;
     font-family: 'SVN-Gilroy Bold';
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 600;
 }
 .textrf{

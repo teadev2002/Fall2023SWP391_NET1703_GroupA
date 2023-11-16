@@ -164,7 +164,8 @@
                                         <td th:if="${blog.petType  != null} " th:text="${blog.petType}"></td>
                                         <td th:if="${blog.petType  == null} " > Service</td>
 
-                                        <td>England</td>
+                                        <td th:if="${blog.petType  != null} " th:text="${blog.petCategory.breed}"></td>
+                                        <td th:if="${blog.petType  == null} " >None</td>
 
                                 <!-- Blog Content-->
                                         <td>

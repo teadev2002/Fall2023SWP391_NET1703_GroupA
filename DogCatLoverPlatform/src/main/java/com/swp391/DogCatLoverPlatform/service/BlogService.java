@@ -46,6 +46,8 @@ public class BlogService {
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
         // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
+        //pageNo-1 là do Spring Data JPA sẽ hiểu trang đầu tiên có index = 0, chứ không phải từ 1
+        //pageSize: số phần tử mong đợi hiển thị trên 1 trang
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<BlogEntity> blogPage = blogRepository.findByConfirmAndStatusNotNull(true, pageable);
 

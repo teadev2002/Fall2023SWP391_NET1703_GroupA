@@ -30,6 +30,30 @@ public class ServiceService {
     ModelMapperConfig modelMapperConfig;
 
 
+    public ServiceDTO findService(int id_service) {
+        Optional<ServiceEntity> s = serviceRepository.findById(id_service);
+        ServiceDTO serviceDTO = new ServiceDTO();
+        serviceDTO.setUserName(s.get().getBlog_service().getUserEntity().getName());
+        serviceDTO.setEmailUserCreate(s.get().getBlog_service().getUserEntity().getEmail());
+        serviceDTO.setContent(s.get().getBlog_service().getContent());
+        serviceDTO.setPrice(s.get().getBlog_service().getPrice());
+        serviceDTO.setTitle(s.get().getBlog_service().getTitle());
+        serviceDTO.setImage(s.get().getBlog_service().getImage());
+        serviceDTO.setConfirm(s.get().getBlog_service().getConfirm());
+        serviceDTO.setCreateDate(s.get().getBlog_service().getCreateDate());
+        serviceDTO.setServiceCateName(s.get().getService_category().getName());
+        serviceDTO.setId_blog(s.get().getBlog_service().getId());
+        serviceDTO.setDateStart(s.get().getDate_start());
+        serviceDTO.setDateEnd(s.get().getDate_end());
+        serviceDTO.setId(s.get().getId());
+
+        BlogEntity blog = blogRepository.findById(s.get().getBlog_service().getId()).orElseThrow();
+        BlogDTO blogDTO =  modelMapperConfig.modelMapper().map(blog, BlogDTO.class);
+        serviceDTO.setBlog(blogDTO);
+
+        return serviceDTO ;
+    }
+
     //View My Service
     public Page<ServiceDTO> GetAllMyService(int id_user, int pageNo, int pageSize) {
         // Định nghĩa trường sắp xếp là "createdAt" (hoặc trường bạn sử dụng cho thời gian tạo).
@@ -105,7 +129,7 @@ public class ServiceService {
         return new PageImpl<>(serviceDTOList, pageable, serviceEntityList.getTotalElements());
     }
 
-    public ServiceEntity createService(String Content, int price, String title, int id_user, int serviceCategory, String image, java.sql.Date startDate, java.sql.Date endDate){
+    public ServiceEntity createService(String Content, double price, String title, int id_user, int serviceCategory, String image, java.sql.Date startDate, java.sql.Date endDate){
         ServiceEntity serviceEntity = new ServiceEntity();
 
         ServiceCategoryEntity serviceCategoryEntity = new ServiceCategoryEntity();

@@ -40,12 +40,6 @@ public class BlogDTO {
     private int petTypeId;
     private String petType;
 
-
-
-
-
-
-
     private PetCategoryDTO petCategory; // Change the property name to 'petCategory'
 
 }

@@ -368,7 +368,11 @@
 
                         <div class="bolg-tag">
                             <ul>
-                                <li>#<a th:text="${blog.blogTypeName}"></a></li>
+                                <li th:text="'#' +${blog.blogTypeName}"></li>
+                                <li th:text="'#Age:'+ ${blog.petCategory.age}"></li>
+                                <li th:text="'#Color:' +${blog.petCategory.color}"></li>
+                                <li th:text="'#Breed:'+ ${blog.petCategory.breed}"></li>
+                                <li th:text="'#Weight:'+ ${blog.petCategory.weight}"></li>
                             </ul>
                         </div>
 

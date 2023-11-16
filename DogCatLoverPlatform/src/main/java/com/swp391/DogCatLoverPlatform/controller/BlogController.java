@@ -65,6 +65,9 @@ public class BlogController {
     @Autowired
     InvoiceService invoiceService;
 
+    @Autowired
+    ChartService chartService;
+
 
     @PostMapping("/accepted-request")
     public String acceptedRequest(@RequestParam(name="requestId") int requestId,
@@ -602,6 +605,12 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         if (user != null) {
             List<BlogDTO> userRejectBlogs = blogService.getBlogsReject(user.getId());
             model.addAttribute("rejectBlog", userRejectBlogs);
+            model.addAttribute("user", user);
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
         }
 
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
@@ -656,6 +665,13 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
 
             return "redirect:/invoice?id=" + invoiceEntity.getId();
         }
+    }
+
+    @GetMapping("/statistic-blog-service")
+    public ResponseEntity<?> statisticBlogNService(){
+        StatisticBlogNServiceDTO getAllBlogNService = chartService.countBlogNService();
+
+        return new ResponseEntity<>(getAllBlogNService, HttpStatus.OK);
     }
 
 }
