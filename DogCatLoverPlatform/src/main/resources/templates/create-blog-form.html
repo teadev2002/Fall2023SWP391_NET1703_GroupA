@@ -313,7 +313,7 @@
             <div class="mb-3 input-group" style="width: 603px;">
                 <input style="margin-left: 45%;" class="form-control" type="text" id="title" name="title"
                        th:field="*{title}"
-                       placeholder="Your title..." required>
+                       placeholder="Your title..." required pattern="\S.*\S">
             </div>
 
             <div class="previewImage"><img id="previewImage"></div>
@@ -325,7 +325,7 @@
                     <div class="col-6">
                         <div>About Blog:</div>
                         <textarea class="form-control" id="content" name="content" th:field="*{content}" rows="12"
-                                  placeholder="Write something..." required></textarea>
+                                  placeholder="Write something..." required pattern="\S.*\S"></textarea>
                     </div>
 
                     <!--Add Details-->
@@ -400,21 +400,6 @@
 
                 </div>
             </div>
-
-            <!--            <div class="mb-3 input-group">-->
-            <!--                -->
-            <!--            </div>-->
-
-
-            <!--            <div class="mb-3 input-group">-->
-            <!--                <div class="input-group-prepend input-group-addon">-->
-            <!--            <span class="input-group-text">-->
-            <!--                <i class="fas fa-weight" style="font-size: 12px;"></i>-->
-            <!--            </span>-->
-            <!--                </div>-->
-            <!--                <input class="form-control" type="number" id="petCategory.weight" name="petCategory.weight"-->
-            <!--                       placeholder="Pet Weight" required>-->
-            <!--            </div>-->
 
 
             <!-- Đặt cả nút "Submit" và nút "Quay lại" ở giữa -->

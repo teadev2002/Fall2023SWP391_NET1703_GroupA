@@ -34,6 +34,8 @@
     <link rel="stylesheet" th:href="@{../../css/uiicss.css}">
 
     <link rel="stylesheet" th:href="@{../../css/style.css}">
+
+
     <!-- Import Font Awesome -->
     <style>
         /* Gradient background màu cam */
@@ -309,7 +311,6 @@
             <!-- Thẻ div cha cho phần content -->
             <div class="container mt-4" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,.25),0 3px 10px 0 rgba(0,0,0,.2)!important;">
                 <div class="row" style="padding: 24px 26px 24px 4px;">
-
                     <!--Add Content-->
                     <div class="col-6">
                         <div>About Service:</div>
@@ -329,15 +330,42 @@
                         <div class="mb-3 input-group">
                             <div>Date Start:</div> &nbsp;&nbsp;
                             <input style="width: 263px;" class="form-control" type="date" id="dateStart" name="dateStart" th:field="*{dateStart}"
-                                   placeholder="Your title..." th:required="true">
+                                   placeholder="Your title..." th:required="true"  onchange="validateDateStart()">
 
                         </div>
 
                         <div class="mb-3 input-group">
                             <div style="margin-right: 5px;">Date End:</div>&nbsp;&nbsp;
-                            <input style="width: 263px;" class="form-control" type="date" id="dateEnd" name="dateEnd" th:field="*{dateEnd}"
-                                   placeholder="Your title..." th:required="true">
+                            <input style="width: 263px;" disabled class="form-control" type="date" id="dateEnd" name="dateEnd" th:field="*{dateEnd}"
+                                   placeholder="Your title..." th:required="true" onchange="validateDate()">
                         </div>
+                        <script>
+                            function validateDateStart() {
+                                var startDate = document.getElementById('dateStart').value;
+                                var endDateInput = document.getElementById('dateEnd');
+
+                                if (startDate) {
+                                    endDateInput.disabled = false;
+                                    endDateInput.focus();
+                                } else {
+                                    endDateInput.disabled = true;
+                                }
+                                endDateInput.value = undefined;
+                            }
+
+                            function validateDate() {
+                                var startDate = document.getElementById('dateStart').value;
+                                var endDate = document.getElementById('dateEnd').value;
+
+                                if (endDate <= startDate) {
+                                    alert('End date cannot be before or equal to start date!');
+                                    document.getElementById('dateEnd').value = undefined;
+                                    // You can also choose to prevent form submission or handle this validation differently based on your requirement
+                                }
+
+
+                            }
+                        </script>
                     </div>
 
                 </div>
@@ -349,7 +377,9 @@
                 </div>
                 <a class="btn btn-primary" href="/blog/view">Back</a>
             </div>
+
         </form>
+
 
     </div>
 </div>
@@ -422,6 +452,7 @@
     </div>
 </footer>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Get the dateStart and dateEnd input elements
@@ -454,10 +485,7 @@
             }
 
             // Check if dateStart is not earlier than now
-            if (dateStartValue.getDate() <= now.getDate() && dateStartValue.getFullYear() >= now.getFullYear()) {
-                dateStartInput.setCustomValidity('Start date cannot be earlier than now.');
-                return;
-            } else if (dateEndValue < dateStartValue) {
+            if (dateEndValue < dateStartValue) {
                 dateEndInput.setCustomValidity('Date end must be after date start !');
 
             } else {
@@ -479,32 +507,13 @@
     });
 </script>
 
-
-<script>
-    function togglePriceInput() {
-        var selectedValue = document.getElementById("serviceCategory").value;
-        var priceInput = document.getElementById("priceInput");
-
-        if (selectedValue === "Exchange") {
-            priceInput.style.display = "block"; // Hiển thị
-        } else {
-            priceInput.style.display = "none"; // Ẩn
-        }
-    }
-
-    // Thêm sự kiện "change" vào phần chọn để kiểm tra khi người dùng thay đổi lựa chọn
-    $("#serviceCategory").on("change", function () {
-        togglePriceInput();
-    });
-
-</script>
-
 <script> // validate number negative & text
 document.getElementById("price").onkeypress = function (e) {
     return isNumber(e);
 };
 
-function isNumber(evt) {evt = (evt) ? evt : window.event;
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         return false;

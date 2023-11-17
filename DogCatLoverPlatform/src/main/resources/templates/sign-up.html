@@ -236,7 +236,7 @@
                                 <div class="form-inner">
 
                                     <label>UserName *</label>
-                                    <input type="text" name="userName" id="userName" required>
+                                    <input type="text" name="userName" id="userName" required pattern="\S.*\S">
 
                                 </div>
                             </div>
@@ -244,7 +244,7 @@
                                 <div class="form-inner">
 
                                     <label>FullName *</label>
-                                    <input type="text" name="fullName" id="fullName" required>
+                                    <input type="text" name="fullName" id="fullName" required pattern="\S.*\S">
 
                                 </div>
                             </div>
@@ -407,10 +407,22 @@
             return;
         }
 
-        if(fullName.startsWith(' ')){
+        if(fullName.startsWith(' ') ){
             alert('Full name cannot starts with space! ');
             return;
         }
+
+        if (userName.length < 1) {
+            alert('UserName must be not null');
+            return;
+        }
+
+        if (fullName.length < 1) {
+            alert('FullName must be not null');
+            return;
+        }
+
+
 
         if (password.length < 8) {
             alert('Password must be at least 8 characters long');
