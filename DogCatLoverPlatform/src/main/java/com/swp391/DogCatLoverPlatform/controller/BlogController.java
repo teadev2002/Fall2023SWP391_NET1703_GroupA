@@ -65,6 +65,9 @@ public class BlogController {
     @Autowired
     InvoiceService invoiceService;
 
+    @Autowired
+    ChartService chartService;
+
 
     @PostMapping("/accepted-request")
     public String acceptedRequest(@RequestParam(name="requestId") int requestId,
@@ -435,8 +438,7 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
 
         // Chuyển hướng người dùng đến trang chi tiết của bài blog
 
-        return "redirect:/blog/detail/myblog/" + id_blog;
-
+        return "redirect:/blog/detail/myblog/"+ id_blog;
     }
 
     @PostMapping("/delete")
@@ -570,14 +572,6 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         }
         return null;
     }
-    //Quản lý Blog bên Staff
-    @GetMapping("/staff")
-    public String viewBlogManagement(Model model){
-        List<BlogDTO> pendingBlogs = blogService.getBlogsPendingApproval();
-        model.addAttribute("pendingBlogs", pendingBlogs);
-        return "table-staff";
-    }
-
 
     @PostMapping("/staff/process")
     public String processBlog(
@@ -597,7 +591,8 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
             // Send a rejection email
 
             if (user != null) {
-                emailService.sendEmail(user.getEmail(), reason);
+               Optional<BlogEntity> blogEntity = blogService.blogRepository.findById(blogId);
+                emailService.sendEmail(blogEntity.get().getUserEntity().getEmail(), reason);
             }
         }
         return "redirect:/staff/view/pending";
@@ -610,6 +605,12 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
         if (user != null) {
             List<BlogDTO> userRejectBlogs = blogService.getBlogsReject(user.getId());
             model.addAttribute("rejectBlog", userRejectBlogs);
+            model.addAttribute("user", user);
+
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
         }
 
         List<BlogTypeEntity> listBlogType = blogTypeService.getAllBlogType();
@@ -640,29 +641,38 @@ public String createNewBlog(HttpServletRequest request, @RequestParam("file") Mu
     }
 
 
-    @PostMapping("buyByWallet")
-    public String buyByWallet(HttpServletRequest req) {
+    @PostMapping("/buyByWallet")
+    public String buyByWallet(HttpServletRequest req, Model model) {
         UserDTO user = getUserIdFromCookie(req);
         int idBlog = Integer.parseInt(req.getParameter("idBlog"));
         Optional<BlogEntity> blogEntity = blogService.blogRepository.findById(idBlog);
         boolean result = false;
         if (user == null) {
-            throw new MessageException("Bạn chưa đăng nhập", 444);
+            return "redirect:/index/login";
         } else {
 
             if (user.getBalance() == null || user.getBalance() < blogEntity.get().getPrice()) {
-                throw new MessageException("wallet balance not enough");
+                model.addAttribute("errBalance",true);
+                return "redirect:/deposite-history/deposit";
             }
 
 
             userService.transfer(user.getId(),idBlog);
-            InvoiceEntity invoiceEntity = invoiceService.saveInvoice(idBlog, user.getId());
+            InvoiceEntity invoiceEntity = invoiceService.saveInvoiceWallet(idBlog, user.getId());
             blogService.updateBlogToFalse(idBlog);
 
 
 
             return "redirect:/invoice?id=" + invoiceEntity.getId();
         }
+    }
+
+    @GetMapping("/statistic-blog-service")
+    public ResponseEntity<?> statisticBlogNService(){
+        StatisticBlogNServiceDTO getAllBlogNService = chartService.countBlogNService();
+//        StatisticBlogTypeAndServicesDTO getAllBlogNService = chartService.countBlogTypeNService();
+
+        return new ResponseEntity<>(getAllBlogNService, HttpStatus.OK);
     }
 
 }

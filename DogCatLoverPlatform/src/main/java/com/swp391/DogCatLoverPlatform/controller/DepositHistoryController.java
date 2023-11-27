@@ -4,14 +4,15 @@ package com.swp391.DogCatLoverPlatform.controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import com.swp391.DogCatLoverPlatform.dto.Order;
-import com.swp391.DogCatLoverPlatform.dto.PaymentDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.entity.DispositHistory;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.repository.DispositHistoryRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import com.swp391.DogCatLoverPlatform.service.PaypalService;
+import com.swp391.DogCatLoverPlatform.service.RequestService;
+import com.swp391.DogCatLoverPlatform.service.UserNotificationService;
+import com.swp391.DogCatLoverPlatform.service.UserService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -39,13 +41,21 @@ public class DepositHistoryController {
     @Autowired
     PaypalService service;
 
+    @Autowired
+    UserNotificationService userNotificationService;
+
+    @Autowired
+    RequestService requestService;
+
+    @Autowired
+    UserService userService;
 
     // tạo link nạp tiền, truyền vào số tiền cần nạp-> trả link nạp tiền
     @PostMapping("/create")
     public ResponseEntity<?> getUrlPayment(@RequestBody PaymentDTO paymentDto){
         Order order = new Order();
         order.setMethod("PAYPAL");
-        order.setDescription("Nap tien vao vi");
+        order.setDescription("Deposit into Wallet");
         order.setIntent("sale");
         order.setPrice(paymentDto.getAmount());
         order.setCurrency("USD");
@@ -75,6 +85,18 @@ public class DepositHistoryController {
         if(user == null){
             return "redirect:../index/login";
         }
+
+        //Hiện số lượng list
+        if(user != null){
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
+        UserDTO userDTO = getUserIdFromCookies(request); //Hàm này lấy user để hiển thị thanh header, khác trên
+        model.addAttribute("user", userDTO);
         model.addAttribute("accountBal", user.getAccountBalance());
         return "deposit";
     }
@@ -125,6 +147,19 @@ public class DepositHistoryController {
         if(user == null){
             return "redirect:../index/login";
         }
+
+        //Hiện số lượng list
+        if(user != null){
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
+        UserDTO userDTO = getUserIdFromCookies(request); //Hàm này lấy user để hiển thị thanh header, khác trên nha
+        model.addAttribute("user", userDTO);
+
         model.addAttribute("mydeposit",dispositHistoryRepository.findByUser(user.getId()));
         return "my-deposit";
     }
@@ -140,6 +175,22 @@ public class DepositHistoryController {
                     String email = cookie.getValue();
                     UserEntity user = userRepository.findByEmail(email);
                     return user;
+                }
+            }
+        }
+        return null;
+    }
+
+    //Hàm này lấy userDTO để hiển thị cái thanh user ở phần header
+    private UserDTO getUserIdFromCookies(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        UserDTO userDTO = new UserDTO();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("User".equals(cookie.getName())) {
+                    String email = cookie.getValue();
+                    userDTO = userService.getUserByEmail(email);
+                    return userDTO;
                 }
             }
         }

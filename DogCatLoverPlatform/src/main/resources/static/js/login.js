@@ -32,12 +32,12 @@ $(document).ready(function () {
                     window.location = "home";
                 }
 
-            }else{
-                alert("Sai email hoặc mật khẩu")
-        }
+            }
 
             console.log("server tra ve ", data)
 
+        }).fail(function (data) {
+            alert("Email or Password are wrong!");
         })
 
     })

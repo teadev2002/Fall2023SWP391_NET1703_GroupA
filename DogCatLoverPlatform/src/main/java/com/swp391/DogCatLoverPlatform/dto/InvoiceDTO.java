@@ -19,6 +19,7 @@ public class InvoiceDTO {
 
     private String email;
     private String title;
+    private String paying_method;
 
     private String userName;
 

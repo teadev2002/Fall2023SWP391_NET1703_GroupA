@@ -5,10 +5,7 @@ import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
 import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
-
-
 import com.swp391.DogCatLoverPlatform.dto.*;
-
 import com.swp391.DogCatLoverPlatform.entity.BookingEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.exception.MessageException;
@@ -48,8 +45,6 @@ public class BookingController {
     @Autowired
     RequestService requestService;
 
-
-
     @Autowired
     private UserRepository userRepository;
 
@@ -64,18 +59,14 @@ public class BookingController {
         }
 
         if(userDTO != null){
-
-
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
-
 
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
             model.addAttribute("count", totalCount);
         }
 
-
-       List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
+        List<BookingDTO> listHistory = bookingService.getBookingHistory(userDTO.getId());
 
         model.addAttribute("listHistory",listHistory);
         model.addAttribute("user", userDTO);
@@ -93,10 +84,7 @@ public class BookingController {
         }
 
         if(userDTO != null){
-
-
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
-
 
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -132,7 +120,7 @@ public class BookingController {
         UserDTO user = getUserIdFromCookie(req);
         boolean result = false;
         if(user == null){
-            throw new MessageException("Bạn chưa đăng nhập",444);
+            throw new MessageException("You're not logged in!",444);
         }else{
             result = bookingService.createBooking(booking,user);
         }
@@ -205,6 +193,7 @@ public class BookingController {
             user.setAccountBalance(user.getAccountBalance() - total);
             userService.getSaveUser(user);
             for(BookingEntity b: list){
+                b.setPaying_method("Wallet");
                 b.setStatus(true);
                 UserEntity ch = b.getBlogEntity_BookingEntity().getUserEntity();
                 if(ch.getAccountBalance() == null){

@@ -6,6 +6,7 @@ import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
 import com.swp391.DogCatLoverPlatform.dto.Root;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
+import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.RequestService;
@@ -137,10 +138,21 @@ public class UserController {
 
     //Xem profile user của phần List Request
     @GetMapping("/profile/{userId}")
-    public String profile(Model model, @PathVariable int userId) {
+    public String profile(Model model, @PathVariable int userId, HttpServletRequest req) {
         // Sử dụng userId để truy vấn thông tin người dùng và chuẩn bị dữ liệu cho view
         UserDTO user = userService.getUserById(userId);
         model.addAttribute("user", user);
+
+
+        UserDTO users  = getUserIdFromCookie(req);
+        model.addAttribute("users", users);
+        if(users != null){
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(users.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(users.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
 
         return "profile-user-request";
     }
@@ -202,12 +214,20 @@ public class UserController {
 
     @PostMapping(value = "/sign-up-add")
     public ResponseEntity<?> signup(@Valid @RequestBody UserDTO signUpRequest) {
-        boolean isSuccess = userService.addUser(signUpRequest);
-        BaseRespone baseRespone = new BaseRespone();
-        baseRespone.setStatusCode(200);
-        baseRespone.setMessage("");
-        baseRespone.setData(isSuccess);
-        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        UserEntity checkEmail = userService.getFindByEmail(signUpRequest.getEmail());
+
+        if(checkEmail == null){
+            BaseRespone baseRespone = new BaseRespone();
+            boolean isSuccess = userService.addUser(signUpRequest);
+            baseRespone.setStatusCode(200);
+            baseRespone.setMessage("");
+            baseRespone.setData(isSuccess);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }else{
+            BaseRespone baseRespone = new BaseRespone();
+            baseRespone.setStatusCode(400);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }
     }
 
 

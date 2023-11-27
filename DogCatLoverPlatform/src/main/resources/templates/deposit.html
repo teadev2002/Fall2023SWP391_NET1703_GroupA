@@ -38,7 +38,73 @@
 
     <link rel="stylesheet" th:href="@{../css/style.css}">
     <link rel="stylesheet" th:href="@{../css/profile.css}">
+
 </head>
+<style>
+    body {
+        background: white;
+    }
+
+    .menhgia li {
+        list-style: none;
+    }
+
+    .menhgia li input:hover {
+        background: darkgray;
+        color: black;
+    }
+
+    .menhgia {
+
+        justify-content: center;
+    }
+    .top{
+        display: flex;
+        justify-content: center;
+    }
+    .bot{
+        display: flex;
+        justify-content: center;
+    }
+
+    .btntieptuc {
+        padding: 12px 5px;
+        border-radius: 30px;
+        background: orange;
+        border: none;
+        font-weight: bold;
+        color: black;
+
+    }
+    img{
+        width: 30%;
+        margin-bottom: 6px;
+    }
+    .content {
+
+    }
+    .divsodu{
+        /*display: flex;*/
+        /*position: relative;*/
+
+
+    }
+    .divsodu span{
+
+        /*position: absolute;*/
+        /*top: 90px;*/
+        /*right: 140px;*/
+        /*font-size: 20px;*/
+
+    }
+    .btntiencon{
+        margin-top: 3px;
+        font-weight: bold;
+        /*position: absolute;*/
+        /*top: 3px;*/
+        font-size: 25px;
+    }
+</style>
 <body>
 
 <div class="top-bar" th:if="${user != null}">
@@ -51,11 +117,12 @@
                     <p>Opening Hours<br><span>Mon - Sat 9.00 - 19.00</span></p>
                 </div>
                 <div class="contact-number" style="display: flex; align-items: center;">
-                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}" ></a>
+                    Account: &nbsp; <a th:href="@{/index/profile}" th:text="${user.userName}"></a>
                     &nbsp; &nbsp;
-                    <span class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}" alt="avatar"></span>
+                    <span class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}"
+                                                            alt="avatar"></span>
                     &nbsp; &nbsp;
-                    <span style="color: #8494a5"><a th:href="@{/index/logout}" >Logout</a></span>
+                    <span style="color: #8494a5"><a th:href="@{/index/logout}">Logout</a></span>
                 </div>
             </div>
         </div>
@@ -156,7 +223,7 @@
                 <!--Notification-->
                 <li th:if="${user != null}">
                     <a class="button__notification" th:href="@{/blog/view/view-request}">
-                        <svg  width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                         </svg>
                     </a>
@@ -164,7 +231,8 @@
                     <span th:if="${count != 0}" class="button__notification__badge" th:text="${count}"></span>
                 </li>
 
-                <li  th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom" title="Bạn cần đăng nhập để xem thông báo">
+                <li th:if="${user == null}"><a th:href="@{/index/login}" data-toggle="tooltip" data-placement="bottom"
+                                               title="Bạn cần đăng nhập để xem thông báo">
                     <svg width="14" height="13" viewBox="0 0 14 13" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                     </svg>
@@ -194,61 +262,99 @@
     </div>
 </header>
 
-<div class="container-fluid rounded bg-white mt-5 mb-5" style="padding: 20px 30px 30px 30px">
+<div class="container-fluid rounded bg-white mt-5 mb-5" style="padding: 0px 30px 10px 30px">
+
     <div class="blockcontent">
-        <h3>Deposit money into your account</h3>
-        <hr>
-        <div class="row">
-            <div class="col-sm-9">
-                <p style="font-size: 20px;">Select the amount to deposit</p>
-                <p style="font-size:14px">Quickly select the amount to deposit</p>
-                <div class="row">
-                    <div class="col-md-2">
-                        <input onclick="setTien(this)" id="50" type="radio" value="50" name="chontien">
-                        <label for="50">50 USD</label>
+
+        <div class="row content">
+            <div class="col-md-8 naptien" style="
+                                        text-align: center;
+                                    "><h3 style="text-align: center">Deposit money into your account</h3>
+                <hr>
+                <p style="font-size: 20px;">Select the amount to deposit (USD)</p>
+                <!--                <p style="font-size:14px">Quickly select the amount to deposit</p>-->
+                <ul class="menhgia">
+
+                    <div class="top">
+                        <li>
+                            <input onclick="setTien(this)" id="50" type="text" value="50" name="chontien"
+                                   class="time-item active" readonly>
+                            <!--                                            <label for="200">200 USD</label>-->
+                        </li>
+                        <li>
+                            <input onclick="setTien(this)" id="100" type="text" value="100" name="chontien"
+                                   class="time-item active" readonly>
+                            <!--                        <label for="500"> USD</label>-->
+                        </li>
+                        <li>
+                            <input onclick="setTien(this)" id="200" type="text" value="200" name="chontien"
+                                   class="time-item active" readonly>
+                            <!--                                            <label for="200">200 USD</label>-->
+                        </li>
                     </div>
-                    <div class="col-md-2">
-                        <input onclick="setTien(this)" id="100" type="radio" value="100" name="chontien">
-                        <label for="100">100 USD</label>
+                    <div class="bot">
+                        <li>
+                            <input onclick="setTien(this)" id="500" type="text" value="500" name="chontien"
+                                   class="time-item active" readonly>
+                            <!--                        <label for="500"> USD</label>-->
+                        </li>
+                        <li>
+                            <input onclick="setTien(this)" id="1000" type="text" value="1000" name="chontien"
+                                   class="time-item active" readonly>
+                            <!--                        <label for="1000"> USD</label>-->
+                        </li>
+                        <li>
+                            <input onclick="setTien(this)" id="2000" type="text" value="2000" name="chontien"
+                                   class="time-item active" readonly>
+                            <!--                        <label for="2000"> USD</label>-->
+                        </li>
                     </div>
-                    <div class="col-md-2">
-                        <input onclick="setTien(this)" id="200" type="radio" value="200" name="chontien">
-                        <label for="200">200 USD</label>
-                    </div>
-                    <div class="col-md-2">
-                        <input onclick="setTien(this)" id="500" type="radio" value="500" name="chontien">
-                        <label for="500">500 USD</label>
-                    </div>
-                    <div class="col-md-2">
-                        <input onclick="setTien(this)" id="1000" type="radio" value="1000" name="chontien">
-                        <label for="1000">1000 USD</label>
-                    </div>
-                    <div class="col-md-2">
-                        <input onclick="setTien(this)" id="2000" type="radio" value="2000" name="chontien">
-                        <label for="2000">2000 USD</label>
-                    </div>
-                </div><br>
+                </ul>
+
                 <p>Or enter the amount to deposit</p>
-                <input id="inputmoney" style="height: 30px; border: 1px solid #000;padding-left: 10px" value="50"><span class="vndinput">$</span>
-                <br><br><br><button onclick="khoiTaoLink()" class="btn btn-primary btntieptuc">Tiếp tục ></button><br><br>
-                <div class="ghichuql">
-                    <p>Important note: During the payment process, please DO NOT CLOSE YOUR BROWSER.</p>
-                    <p>If you have difficulty during the payment process, please contact 0777982527 so we can assist you.</p>
-                </div>
+                <input id="inputmoney"
+                       style="height: 30px; border: 1px solid #000;padding-left: 10px; text-align: center;  color: orange;  font-weight: bold;"
+                       value="50"><span class="vndinput" style="
+                                                        color: black;
+                                                        padding: 7px;
+                                                        background: #cdc5c5;
+                                                        border-radius: 4px;
+                                                        " th:required="true">$</span>
+
+
+                <br><br>
+                <button onclick="khoiTaoLink()" class="btn btn-primary btntieptuc"> <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg"> Checkout</button>
+                <br><br>
+                <hr>
+                <!--                <div class="ghichuql">-->
+                <!--                    <p>Important note: During the payment process, please DO NOT CLOSE YOUR BROWSER.</p>-->
+                <!--                    <p>If you have difficulty during the payment process, please contact 0777982527 so we can assist you.</p>-->
+                <!--                </div>-->
             </div>
-            <div class="col-sm-3">
-                <div class="divsodu">
-                    <p>Account balance</p>
-                    <strong id="sodu" class="btntiencon" th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')}+' USD'"></strong>
-                    <!--                    <td th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')} +' USD'"></td>-->
-                </div><br>
-                <a href="http://localhost:8080/deposite-history/my-deposit" class="btn btn-secondary form-control">Deposit history</a>
+            <div class="col-md-4" style="text-align: center">
+                <!--                <div class="divsodu" >-->
+                <!--                    <p> <i class="bi bi-wallet"></i> Account balance: </p> &nbsp;-->
+                <!--                    <b id="sodu" class="btntiencon"-->
+                <!--                          th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')}+' USD'"></b>-->
+
+                <!--                </div>-->
+                <div class="lichsu" style="display: flex; justify-content: center ">
+
+                    <div class="divsodu">
+                        <p><i class="bi bi-wallet"></i> &nbsp; Account balance <br><span id="sodu" class="btntiencon"
+                                                                                 th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')}+' USD'"></span></p>
+
+                        <!--                    <td th:text="${#numbers.formatDecimal(accountBal, 1, 'DEFAULT', 2, 'DEFAULT')} +' USD'"></td>-->
+                    </div>
+                </div>
+
+                <a href="http://localhost:8080/deposite-history/my-deposit" class="btn btn-secondary form-control" style="width: 50%;">Deposit
+                    history</a>
             </div>
         </div>
     </div>
 
 </div>
-
 
 
 <footer>
@@ -334,17 +440,36 @@
     </div>
 </footer>
 <script>
-    function setTien(e){
+    document.addEventListener('DOMContentLoaded', function () {
+        var inputMoney = document.getElementById('inputmoney');
+
+        // Function to validate the input field
+        function validateInputMoney() {
+            var inputValue = inputMoney.value.trim();
+
+            if (inputValue === '') {
+                alert('Input cannot be blank!');
+                return;
+                // You can add additional actions here if needed, such as preventing form submission.
+            }
+        }
+
+        // Add an event listener for the input event on the input field
+        inputMoney.addEventListener('input', validateInputMoney);
+    });
+</script>
+<script>
+    function setTien(e) {
         var tien = e.value
         document.getElementById("inputmoney").value = tien
     }
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const imageInput = document.getElementById('image-input');
         const userImage = document.getElementById('user-image');
 
-        imageInput.addEventListener('change', function() {
+        imageInput.addEventListener('change', function () {
             const file = imageInput.files[0];
             if (file) {
                 const imageURL = URL.createObjectURL(file);
@@ -377,23 +502,43 @@
 <script src="../js/main.js"></script>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the input element
+        var inputMoney = document.getElementById('inputmoney');
 
+        // Add an event listener to the input element
+        inputMoney.addEventListener('input', function() {
+            // Remove non-numeric characters
+            var inputValue = inputMoney.value.replace(/[^0-9]/g, '');
+
+            // Update the input value
+            inputMoney.value = inputValue;
+
+            // Block negative numbers
+            if (parseInt(inputValue) < 0) {
+                inputMoney.value = '0';
+            }
+        });
+    });
+</script>
 <script>
     var returnUrl = 'http://localhost:8080/deposite-history/check-deposit';
-    async function khoiTaoLink(){
-        var tien =  document.getElementById("inputmoney").value;
-        tien =  tien.replace(".", "");
-        if(isNaN(tien)){
+
+    async function khoiTaoLink() {
+        var tien = document.getElementById("inputmoney").value;
+        tien = tien.replace(".", "");
+        if (isNaN(tien)) {
             alert("cannot input special keyword")
             return;
         }
 
         var urlinit = 'http://localhost:8080/deposite-history/create';
         var paymentDto = {
-            "amount":tien,
-            "content":"Deposit money into your account",
-            "returnUrl":returnUrl,
-            "notifyUrl":returnUrl
+            "amount": tien,
+            "content": "Deposit money into your account",
+            "returnUrl": returnUrl,
+            "notifyUrl": returnUrl
         }
         console.log(paymentDto)
         const res = await fetch(urlinit, {

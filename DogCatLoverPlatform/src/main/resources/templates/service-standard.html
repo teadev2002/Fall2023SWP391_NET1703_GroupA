@@ -39,6 +39,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
+<style>
+  .blog-img  .img-fluid{
+    width: 100%;
+    }
+</style>
 <body>
 
 <div class="top-bar" th:if="${user != null}">
@@ -262,10 +267,10 @@
 
                 <div class="blog-st-card mb-70" th:each="service:${listService}">
                     <div class="blog-img">
-                        <img class="img-fluid" th:src="@{'../images/blog/' + ${service.image}}" alt>
+                        <img class="img-fluid"  th:src="@{'../images/blog/' + ${service.image}}" alt>
                         <div class="category">
                             <a style="margin-right: 12px;" th:text="${service.price} + '$'"></a>
-                            <a th:text="${service.serviceCateName}"></a>-->
+                            <a th:text="${service.serviceCateName}"></a>
                         </div>
                     </div>
 
@@ -339,13 +344,13 @@
 
                         <ul class="wp-block-categoris-cloud">
                             <li><a th:href="@{/blog/byType(type='Sell')}"><span>Pet Sell</span> <span><span
-                                    class="number-of-categoris">(30)</span><i
+                                    class="number-of-categoris"></span><i
                                     class="bi bi-arrow-right-short"></i></span></a></li>
                             <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
-                                    class="number-of-categoris">(18)</span><i
+                                    class="number-of-categoris"></span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
                             <li><a th:href="@{/service/view}" ><span>Pet Service</span> <span><span
-                                    class="number-of-categoris">(21)</span><i
+                                    class="number-of-categoris"></span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
                         </ul>
 
@@ -356,24 +361,38 @@
                             <h3>Newest Posts</h3>
                         </div>
 
-
                         <!--                        Newest Blog-->
                         <div  class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
-                            <div class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                            <div th:if="${user == null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
                                 <div class="wi sidebarImage" >
                                     <a th:href="@{/service/detail/{id}(id=${service.id})}"><img
-                                            th:src="@{'../images/blog/' + ${service.blog.image}}" alt="image"></a>
+                                            th:src="@{'../../images/blog/' + ${service.blog.image}}" alt="image"></a>
                                 </div>
-                                <div class="wc">
+                                <div class="wc" style="width: 240px;">
                                     <a th:href="@{/service/detail/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/service/detail/{id}(id=${service.id})}"
-                                           th:text="${#strings.length(service.blog.title) > 50} ? ${service.blog.title.substring(0, 50) + '...'} : ${service.blog.title}"></a>
+                                           th:text="${#strings.length(service.blog.title) > 30} ? ${service.blog.title.substring(0, 30) + '...'} : ${service.blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="recent-post-wraper"  style="padding-top: 0px;" th:each="service , iterStat : ${latestService}">
+                            <div th:if="${user != null}" class="widget-cnt" th:classappend="${iterStat.index < 2} ? 'mb-25' : ''" >
+                                <div class="wi sidebarImage" >
+                                    <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"><img
+                                            th:src="@{'../../images/blog/' + ${service.blog.image}}" alt="image"></a>
+                                </div>
+                                <div class="wc" style="width: 240px;">
+                                    <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}" th:text="${service.blog.createDate}"></a>
+                                    <h6>
+                                        <a th:href="@{/service/view/myservice/details/{id}(id=${service.id})}"
+                                           th:text="${#strings.length(service.blog.title) > 30} ? ${service.blog.title.substring(0, 30) + '...'} : ${service.blog.title}"></a>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -384,12 +403,9 @@
                         </div>
 
                         <p class="wp-block-tag-cloud">
-
                             <a th:href="@{/blog/byType(type='Sell')}">Sell</a>
                             <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
                             <a th:href="@{/service/view}">Services</a>
-
-
                         </p>
 
                     </div>

@@ -61,6 +61,7 @@ public class ServiceController {
     RequestService requestService;
 
 
+
     @GetMapping("/view/myservice/details/{id}")
     public String viewMyServiceDetail(@PathVariable("id") int id, Model model, HttpServletRequest req){
         List<ServiceDTO> latestServices = serviceService.getThreeLatestBlogs();
@@ -78,9 +79,7 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-
-  //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
-
+             //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
 
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
@@ -102,9 +101,7 @@ public class ServiceController {
 
         if(user != null){
 
-
             //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
-
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
 
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
@@ -141,8 +138,8 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if (user != null) {
-  //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
 
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -171,7 +168,6 @@ public class ServiceController {
         if (user != null) {
 
             //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
-
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -187,14 +183,13 @@ public class ServiceController {
         UserDTO user = getUserIdFromCookie(req);
 
         model.addAttribute("user", user);
+
         model.addAttribute("serviceCategories", listServiceCategory);
         model.addAttribute("service", new ServiceDTO());
 
         //Hiện thông báo (trường hợp có)
         if(user != null){
-
             //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
-
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
             int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
@@ -211,7 +206,7 @@ public class ServiceController {
         Date startDate = Date.valueOf(request.getParameter("dateStart"));
         Date endDate = Date.valueOf(request.getParameter("dateEnd"));
         String Content = request.getParameter("content");
-        int price = Integer.parseInt(request.getParameter("price"));
+        double price = Double.parseDouble(request.getParameter("price"));
         String title = request.getParameter("title");
         UserDTO userDTO = getUserIdFromCookie(request);
         System.out.println(userDTO.getId());
@@ -225,8 +220,7 @@ public class ServiceController {
 
         //Hiện thông báo (trường hợp có)
         if(user != null){
-    //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
-
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
 
@@ -243,6 +237,16 @@ public class ServiceController {
         if (userDTO == null) {
             return "redirect:/index/login";
         }
+
+        //Hiện thông báo (trường hợp có)
+        if (userDTO != null) {
+
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
         List<BookingDTO> list = bookingService.findByUserBooking(userDTO.getId());
 
         double price = 0;
@@ -250,6 +254,7 @@ public class ServiceController {
             price += booking.getTotal_price();
             System.out.println(price);
         }
+        model.addAttribute("user", userDTO);
         model.addAttribute("listBooking", list);
         model.addAttribute("quantity", list.size());
         model.addAttribute("totalPrice", price);
@@ -288,5 +293,57 @@ public class ServiceController {
         // Chuyển hướng người dùng đến trang chi tiết của service
         return "redirect:/service/detail/"+id;
     }
+
+
+    @GetMapping("/savedraft")
+    public String savedraft(HttpServletRequest request, Model model){
+        UserDTO userDTO = getUserIdFromCookie(request);
+        if (userDTO == null) {
+            return "redirect:/index/login";
+        }
+        List<ServiceCategoryDTO> listServiceCategory = serviceService.getServiceCategoryEntityList();
+        model.addAttribute("serviceCategories", listServiceCategory);
+
+        int id_service = Integer.parseInt(request.getParameter("idService"));
+        ServiceDTO serviceDTO = serviceService.findService(id_service);
+        model.addAttribute("service",serviceDTO);
+        return "savedraft";
+    }
+
+    @PostMapping("/savedraft")
+    public String saveDraft(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws IOException {
+        //String image = blogService.saveImageAndReturnPath(file);
+        String image = request.getParameter("fileOriginal");
+        if(!file.isEmpty()){
+            image = blogService.saveImageAndReturnPath(file);;
+        }
+        Date startDate = Date.valueOf(request.getParameter("dateStart"));
+        Date endDate = Date.valueOf(request.getParameter("dateEnd"));
+        String Content = request.getParameter("content");
+        double price = Double.parseDouble(request.getParameter("price"));
+        String title = request.getParameter("title");
+        UserDTO userDTO = getUserIdFromCookie(request);
+        System.out.println(userDTO.getId());
+        int serviceCategory = Integer.parseInt(request.getParameter("serviceCategory"));
+
+        serviceService.createService(Content, price, title, userDTO.getId(), serviceCategory, image, startDate, endDate);
+
+        UserDTO user = getUserIdFromCookie(request);
+        model.addAttribute("user", user);
+
+
+        //Hiện thông báo (trường hợp có)
+        if(user != null){
+            //Đã cập nhật lại, mỗi lần xem thông báo rồi sẽ set lại số lượng cho biến count
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(user.getId());
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(user.getId());
+
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
+        return "redirect:/service/view";
+    }
+
 }
 

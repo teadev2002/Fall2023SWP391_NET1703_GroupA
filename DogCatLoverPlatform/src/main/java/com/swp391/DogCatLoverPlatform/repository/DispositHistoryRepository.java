@@ -15,4 +15,7 @@ public interface DispositHistoryRepository extends JpaRepository<DispositHistory
 
     @Query("select h from disposit_history h where h.userEntity.id = ?1")
     public List<DispositHistory> findByUser(Integer userId);
+
+    @Query(value = "  select sum(u.account_balance) from users u ", nativeQuery = true)
+    public double getTotalMoney();
 }

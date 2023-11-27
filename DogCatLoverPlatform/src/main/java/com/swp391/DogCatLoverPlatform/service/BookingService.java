@@ -67,6 +67,7 @@ public class BookingService {
             BlogDTO blogDTO = blogService.getBlogById(booking.getBlogEntity_BookingEntity().getId());
             UserDTO userDTO = userService.getUserById(booking.getUserEntity_BookingEntity().getId());
             BookingDTO bookingDTO = new BookingDTO();
+            bookingDTO.setPaying_method(booking.getPaying_method());
             bookingDTO.setId(booking.getId());
             bookingDTO.setBookingDate(booking.getBookingDate());
             bookingDTO.setBookingTime(booking.getBookingTime());

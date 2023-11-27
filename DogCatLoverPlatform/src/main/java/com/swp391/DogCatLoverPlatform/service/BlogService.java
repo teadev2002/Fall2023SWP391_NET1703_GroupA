@@ -46,6 +46,8 @@ public class BlogService {
         Sort sort = Sort.by(Sort.Order.desc("createDate"));
 
         // Sử dụng PageRequest để tạo Pageable với sắp xếp theo trường createDate giảm dần.
+        //pageNo-1 là do Spring Data JPA sẽ hiểu trang đầu tiên có index = 0, chứ không phải từ 1
+        //pageSize: số phần tử mong đợi hiển thị trên 1 trang
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Page<BlogEntity> blogPage = blogRepository.findByConfirmAndStatusNotNull(true, pageable);
 
@@ -199,12 +201,12 @@ public class BlogService {
 
     public List<BlogDTO> getBlogsReject(int userId) {
 
-        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirmAndStatusTrue(userId, false);
+        List<BlogEntity> rejectBlogs = blogRepository.findByUserEntityIdAndConfirm(userId, false);
         List<BlogDTO> rejectBlogDTOs = new ArrayList<>();
 
         for (BlogEntity blogEntity : rejectBlogs) {
-                BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
-                rejectBlogDTOs.add(blogDTO);
+            BlogDTO blogDTO = modelMapperConfig.modelMapper().map(blogEntity, BlogDTO.class);
+            rejectBlogDTOs.add(blogDTO);
 
         }
 
@@ -220,18 +222,10 @@ public class BlogService {
     }
 
     //Blog bị từ chối
-    public void rejectBlog(int blogId, String newReason) {
+    public void rejectBlog(int blogId, String reason) {
         BlogEntity blogEntity = blogRepository.findById(blogId).orElseThrow();
-
-        // Retrieve the existing rejection reasons
-        String existingReasons = blogEntity.getReason();
-
-        // Append the new reason along with previous reasons
-        String combinedReason = existingReasons != null ? existingReasons + "\n" + newReason : newReason;
-
         blogEntity.setConfirm(false);
-        blogEntity.setReason(combinedReason);
-
+        blogEntity.setReason(reason);
         blogRepository.save(blogEntity);
     }
 
@@ -248,6 +242,7 @@ public class BlogService {
         modelMapperConfig.modelMapper().map(blogUpdateDTO, blogEntity);
 
         // Save the updated entity
+
         blogRepository.save(blogEntity);
     }
 

@@ -13,45 +13,44 @@
     <meta name="author" content="ThemeSelect">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Charts - Chameleon Admin - Modern Bootstrap 4 WebApp & Dashboard HTML Template + UI Kit</title>
-    <link rel="apple-touch-icon" href="../../theme-assets/images/ico/apple-icon-120.png">
+    <title>Charts</title>
+    <link rel="icon" href="../images/sm-logo.svg" type="image/gif" sizes="20x20">
     <link rel="shortcut icon" type="image/x-icon"
-          href="https://demos.themeselection.com/chameleon-free-bootstrap-admin-template/theme-assets/images/ico/favicon.ico">
+          href="https://demos.themeelection.com/chameleon-free-bootstrap-admin-template/theme-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700"
           rel="stylesheet">
-    <link href="../../../../maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
-    <!-- BEGIN VENDOR CSS-->
-    <link rel="icon" href="../../images/sm-logo.svg" type="image/gif" sizes="20x20">
-    <link rel="shortcut icon" type="image/x-icon"
-          href="https://demos.themeelection.com/chameleon-free-bootstrap-admin-template/images/ico/favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700"
-          rel="stylesheet">
+
+    <!--    js của charts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link th:href="@{../../maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{../maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css}" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/vendors.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../../vendors/css/forms/toggle/switchery.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/plugins/forms/switch.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/core/colors/palette-switch.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/app-lite.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/core/menu/menu-types/vertical-menu.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/core/colors/palette-gradient.css}">
-    <!-- END Page Level CSS-->
-    <!-- BEGIN Custom CSS-->
-    <!-- END Custom CSS-->
+    <link rel="stylesheet" type="text/css" th:href="@{../css/vendors.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../vendors/css/forms/toggle/switchery.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/plugins/forms/switch.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/core/colors/palette-switch.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/app-lite.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/core/menu/menu-types/vertical-menu.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/core/colors/palette-gradient.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../vendors/css/charts/chartist.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/pages/dashboard-ecommerce.css}">
+
 </head>
+<style>
+    .scrollable-container {
+        max-height: 400px; /* Set your desired height */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>
 <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click"
       data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
 
 <!-- fixed-top-->
-<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light"
-     style="background: #262d47;">
-    <div class="navbar-wrapper" style="height: 1px;">
-        <div class="navbar-container content" style="background: #262d47;
-    position: relative;
-    bottom: 40px;">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-light">
+    <div class="navbar-wrapper">
+        <div class="navbar-container content" style="background-color: black;">
             <div class="collapse navbar-collapse show" id="navbar-mobile">
                 <ul class="nav navbar-nav mr-auto float-left">
                     <li class="nav-item d-block d-md-none"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
@@ -80,34 +79,20 @@
 
 
                 <ul class="nav navbar-nav float-right">
-
-
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="arrow_box_right"><a class="dropdown-item" href="#"><i class="ft-book"></i> Read
-                            Mail</a><a class="dropdown-item" href="#"><i class="ft-bookmark"></i> Read Later</a><a
-                                class="dropdown-item" href="#"><i class="ft-check-square"></i> Mark all Read </a>
-                        </div>
-                    </div>
-                    </li>
-
-
                     <!--Dropdown User-->
                     <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
                                                                    href="#" data-toggle="dropdown"> <span
-                            class="avatar avatar-online"><img src="../../images/avatar/ava-06.jpg"
+                            class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}"
                                                               alt="avatar"><i></i></span></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="arrow_box_right"><a class="dropdown-item" href="#"><span
-                                    class="avatar avatar-online"><img src="../../images/portrait/small/avatar-s-19.png"
+                                    class="avatar avatar-online"><img th:src="@{'../../images/avatar/' + ${user.image}}"
                                                                       alt="avatar"><span
-                                    class="user-name text-bold-700 ml-1">John Doe</span></span></a>
+                                    class="user-name text-bold-700 ml-1" th:text="${user.userName}"></span></span></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a><a
-                                        class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a><a
-                                        class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a><a
-                                        class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
+                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
+                                <a class="dropdown-item" th:href="@{/index/logout}"><i class="ft-power"></i> Logout</a>
                             </div>
                         </div>
                     </li>
@@ -119,32 +104,36 @@
     </div>
 </nav>
 
-<!-- ////////////////////////////////////////////////////////////////////////////-->
-
 
 <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true"
-     data-img="../../theme-assets/images/backgrounds/02.jpg">
+     data-img="../../images/backgrounds/02.jpg">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row justify-content-center" style="background-color: black;">
             <li class="nav-item" style="margin-top: 20px;"><a th:href="@{/index/home}"><img alt="image"
                                                                                             class="img-fluid"
-                                                                                            src="../../images/header1-logo.svg"></a>
+                                                                                            src="../images/header1-logo.svg"></a>
             </li>
         </ul>
     </div>
+
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class="active"><a th:href="@{/staff/view}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
             </li>
 
-            <li class="nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span
+            <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span
                     class="menu-title" data-i18n="">Pending Blog</span></a>
             </li>
-            <li class="nav-item"><a th:href="@{../staff/staff-sign-up}"><i class="ft-credit-card"></i><span
-                    class="menu-title">Create Account</span> </a>
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i
+                    class="ft-users"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i
+                    class="ft-user"></i><span class="menu-title">Create Account</span> </a>
             </li>
-            <li class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title"
-                                                                                                     data-i18n="">Charts</span></a>
+
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i
+                    class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Statistic</span></a>
             </li>
         </ul>
     </div>
@@ -153,27 +142,133 @@
 </div>
 
 <div class="app-content content">
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="margin-top: 20px;">
         <div class="content-wrapper-before" style="
     background: #eff0f5;
 "></div>
         <div class="content-header row">
             <div class="content-header-left col-md-4 col-12 mb-2">
-                <h3 class="content-header-title" style="color: black;">Charts</h3>
-            </div>
-            <div class="content-header-right col-md-8 col-12">
-                <div class="breadcrumbs-top float-md-right">
-                    <div class="breadcrumb-wrapper mr-1">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a>
-                            </li>
-                            <li class="breadcrumb-item active">Charts
-                            </li>
-                        </ol>
-                    </div>
-                </div>
+                <h3 class="content-header-title" style="color: black;">Statistic</h3>
             </div>
         </div>
+        <!--        =====================================  Statistic  -->
+        <div _ngcontent-wlk-c123="" class="row">
+            <div _ngcontent-wlk-c123="" class="col-12">
+                <app-project-counter _ngcontent-wlk-c123="">
+                    <div class="card-group m-b-30">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="m-b-0"><i class="mdi mdi-briefcase-check text-info"></i></h2>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                                            <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8m0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+                                        </svg>
+                                        <h3 th:text="${allInvoice}">#</h3>
+                                        <h6 class="card-subtitle">All blogs have been traded</h6>
+                                    </div>
+                                    <div class="col-12">
+                                        <ngb-progressbar type="info" ng-reflect-type="info"
+                                                         ng-reflect-show-value="false" ng-reflect-value="50">
+                                            <div class="progress">
+                                                <div role="progressbar" aria-valuemin="0" class="bg-info progress-bar"
+                                                     aria-valuenow="${allInvoice}" aria-valuemax="100"
+                                                     th:style="'width: ' + ${allInvoice} + '%'">
+                                                </div>
+                                            </div>
+                                        </ngb-progressbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="m-b-0"><i class="mdi mdi-alert-circle text-success"></i></h2>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
+                                            <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+                                        </svg>
+                                        <h3 th:text="${allBooking}">#</h3>
+                                        <h6 class="card-subtitle">All service have been booked</h6>
+                                    </div>
+                                    <div class="col-12">
+                                        <ngb-progressbar type="success" ng-reflect-type="success"
+                                                         ng-reflect-show-value="false" ng-reflect-value="50">
+                                            <div class="progress">
+                                                <div role="progressbar" aria-valuemin="0"
+                                                     class="bg-success progress-bar"
+                                                     aria-valuenow="${allBooking}" aria-valuemax="100"
+                                                     th:style="'width: ' + ${allBooking} + '%'">
+                                                </div>
+                                            </div>
+                                        </ngb-progressbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="m-b-0"><i class="mdi mdi-wallet text-purple"></i></h2>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                                        </svg>
+                                        <h3 th:text="${allUser}"></h3>
+                                        <h6 class="card-subtitle">Total User in platform</h6>
+                                    </div>
+                                    <div class="col-12">
+                                        <ngb-progressbar type="primary" ng-reflect-type="primary"
+                                                         ng-reflect-show-value="false" ng-reflect-value="50">
+                                            <div class="progress" style="margin-top: 15px">
+                                                <div role="progressbar" aria-valuemin="0"
+                                                     class="bg-primary progress-bar"
+                                                     aria-valuenow="${allUser}" aria-valuemax="100"
+                                                     th:style="'width: ' + ${allUser} + '%'">
+                                                </div>
+                                            </div>
+                                        </ngb-progressbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="m-b-0"><i class="mdi mdi-buffer text-warning"></i></h2>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-currency-exchange" viewBox="0 0 16 16">
+                                            <path d="M0 5a5.002 5.002 0 0 0 4.027 4.905 6.46 6.46 0 0 1 .544-2.073C3.695 7.536 3.132 6.864 3 5.91h-.5v-.426h.466V5.05c0-.046 0-.093.004-.135H2.5v-.427h.511C3.236 3.24 4.213 2.5 5.681 2.5c.316 0 .59.031.819.085v.733a3.46 3.46 0 0 0-.815-.082c-.919 0-1.538.466-1.734 1.252h1.917v.427h-1.98c-.003.046-.003.097-.003.147v.422h1.983v.427H3.93c.118.602.468 1.03 1.005 1.229a6.5 6.5 0 0 1 4.97-3.113A5.002 5.002 0 0 0 0 5m16 5.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0m-7.75 1.322c.069.835.746 1.485 1.964 1.562V14h.54v-.62c1.259-.086 1.996-.74 1.996-1.69 0-.865-.563-1.31-1.57-1.54l-.426-.1V8.374c.54.06.884.347.966.745h.948c-.07-.804-.779-1.433-1.914-1.502V7h-.54v.629c-1.076.103-1.808.732-1.808 1.622 0 .787.544 1.288 1.45 1.493l.358.085v1.78c-.554-.08-.92-.376-1.003-.787zm1.96-1.895c-.532-.12-.82-.364-.82-.732 0-.41.311-.719.824-.809v1.54h-.005zm.622 1.044c.645.145.943.38.943.796 0 .474-.37.8-1.02.86v-1.674z"/>
+                                        </svg>
+                                        <h3 th:text="${moneyAll} + '$'"></h3>
+                                        <h6 class="card-subtitle">Total Money in platform</h6>
+                                    </div>
+                                    <div class="col-12">
+                                        <ngb-progressbar type="warning" ng-reflect-type="warning"
+                                                         ng-reflect-show-value="false" ng-reflect-value="50">
+                                            <div class="progress" style="margin-top: 15px">
+                                                <div role="progressbar" aria-valuemin="0"
+                                                     class="bg-warning progress-bar"
+                                                     aria-valuenow="${moneyAll}" aria-valuemax="1000"
+                                                     th:style="'width: ' + (${moneyAll} / 100) + '%'">
+                                                </div>
+                                            </div>
+                                        </ngb-progressbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </app-project-counter>
+            </div>
+        </div>
+        <!--           ====================================== end statistic-->
         <div class="content-body"><!-- Bar charts section start -->
             <section id="chartjs-bar-charts">
 
@@ -181,7 +276,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Number of order on 7 day</h4>
+                                <h4 class="card-title">Number of order on 7 days</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -195,7 +290,8 @@
                                 <div class="row" style="margin-top: 30px">
                                     <div class="col-4">
                                         <label>Choose date</label>
-                                        <input type="date" onchange="loadDatas(this.value)" id="chonngay" class="form-control">
+                                        <input type="date" onchange="loadDatas(this.value)" id="chonngay"
+                                               class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -210,12 +306,170 @@
                     </div>
                 </div>
             </section>
+
+
+            <!-- Pie charts section start -->
+            <section id="chartjs-pie-charts">
+                <div class="row">
+                    <!-- Simple Pie Chart -->
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Statistic User & Blog</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div class="scrollable-container">
+                                    <div class="height-400">
+<!--                                        <canvas id="simple-pie-chart" width="1389" height="600"-->
+<!--                                                style="display: block; height: 400px; width: 926px;"-->
+<!--                                                class="chartjs-render-monitor"></canvas>-->
+                                        <div class="bg p-20">
+                                            <div class="d-flex" style="display: flex; justify-content: space-around;">
+                                                <div class="align-self-center">
+                                                    <h3 class="m-b-0">Total Blog  </h3>
+                                                    <h2 class="text-success" th:text="${allBlog}"></h2>
+                                                </div>
+                                                <div class="ml-auto align-self-center">
+                                                    <h3 class="m-b-0">Total service</h3>
+                                                    <h2 class="text-success"  th:text="${allService} "></h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table class="table table-hover earning-box">
+                                            <thead>
+                                            <tr>
+                                                <th> Image</th>
+                                                <th>Name</th>
+
+                                                <th> Posted</th>
+                                                <th> Deposit</th>
+                                            </tr>
+                                            </thead>
+                                            <style>
+                                                tr th{
+                                                    text-align: center;
+                                                }
+                                                tr td{
+                                                    text-align: center;
+                                                }
+                                            </style>
+                                            <tbody>
+                                            <tr th:each="user : ${getListUser}">
+                                                <td style="width: 50px;"><span class="round"><img
+                                                        th:src="@{'../../images/avatar/' + ${user.image}}"
+                                                        alt="user" width="50"></span></td>
+
+                                                <td><a style="text-decoration: none; color: black;"
+                                                       th:href="@{'/index/profile/' + ${user.id}}">
+                                                    <p th:if="${user.roleDTO == 'ROLE_NULL'}" th:text="${'(BANNED)'}" style="color: red; font-weight: bold; font-size: 10px" th:else="${user.fullName}"></p>
+
+                                                    <span th:text="${user.userName}">#</span></a>
+                                                </td>
+
+                                                <td th:text="${user.numBlog}"> </td>
+                                                <td th:text="${user.balance} + ' ' + '$'"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+<!--                                        =========================-->
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Staff earning report</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div class="height-400">
+                                        <!--                                        =========================-->
+                                        <div class="bg p-20">
+                                            <div class="d-flex" style="display: flex; justify-content: space-around;">
+                                                <div class="align-self-center">
+                                                    <h3 class="m-b-0">Total Earning</h3>
+                                                </div>
+                                                <div class="ml-auto align-self-center">
+
+                                                <h2 class="text-success"  th:text="${allRevenue} + '$'"></h2>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div _ngcontent-pso-c123="" class="col-lg-6">
+                                            <app-earning-report _ngcontent-pso-c123="">
+                                                <div class="card">
+
+                                                    <table class="table table-hover earning-box">
+                                                        <thead>
+                                                        <tr>
+                                                            <th> Image</th>
+                                                            <th>Name</th>
+
+                                                            <th>Earnings </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr th:each="user : ${listStaff}">
+                                                            <td style="width: 50px;"><span class="round"><img
+                                                                    th:src="@{'../../images/avatar/' + ${user.image}}"
+                                                                    alt="user" width="50"></span></td>
+
+                                                            <td>
+                                                                <h6 th:if="${user.roleDTO == 'ROLE_NULL'}" th:text="${'(BANNED)'}" style="color: red; font-weight: bold;" th:else="${user.fullName}"></h6>
+                                                                <h6   th:text="${user.fullName  }" ></h6>
+                                                            </td>
+                                                            <td th:text="${user.balance} + ' ' + '$'"> </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+
+                                                    <!--                                        ==========================-->
+
+                                                </div>
+                                            </app-earning-report>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+            <!-- // Pie charts section end -->
+
+
         </div>
 
 
-
-        </div>
     </div>
+</div>
 </div>
 <!-- ////////////////////////////////////////////////////////////////////////////-->
 
@@ -344,9 +598,9 @@
 
 <footer class="footer footer-static footer-light navbar-border navbar-shadow">
     <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
-            class="float-md-left d-block d-md-inline-block">2018  &copy; Copyright <a
+            class="float-md-left d-block d-md-inline-block">2023  &copy; Copyright <a
             class="text-bold-800 grey darken-2" href="https://themeselection.com/"
-            target="_blank">ThemeSelection</a></span>
+            target="_blank"> </a></span>
         <ul class="list-inline float-md-right d-block d-md-inline-blockd-none d-lg-block mb-0">
             <li class="list-inline-item"><a class="my-1" href="https://themeselection.com/" target="_blank"> More
                 themes</a></li>
@@ -359,23 +613,24 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     var today = new Date().toISOString().split('T')[0];
     document.getElementById('chonngay').valueAsDate = new Date();
-    window.onload = function (){
+    window.onload = function () {
         loadDatas(today);
     }
-    async function loadDatas(date){
-        var url = 'http://localhost:8080/booking/statistic?date='+date;
+
+    async function loadDatas(date) {
+        var url = 'http://localhost:8080/booking/statistic?date=' + date;
         const response = await fetch(url, {
             method: 'GET'
         });
         var list = await response.json();
         var lables = [];
         var datas = [];
-        for(i=0; i< list.length; i++){
+        for (i = 0; i < list.length; i++) {
             lables.push(list[i].date);
             datas.push(list[i].numberBooking);
         }
@@ -387,9 +642,9 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels:lables,
+                labels: lables,
                 datasets: [{
-                    label: 'Number order from '+date,
+                    label: 'Number order from ' + date,
                     backgroundColor: 'rgba(161, 198, 247, 1)',
                     borderColor: 'rgb(47, 128, 237)',
                     data: datas,
@@ -399,7 +654,7 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            callback: function(value) {
+                            callback: function (value) {
                                 return value;
                             }
                         }
@@ -411,9 +666,9 @@
         myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels:lables,
+                labels: lables,
                 datasets: [{
-                    label: 'Number order from '+date,
+                    label: 'Number order from ' + date,
                     backgroundColor: 'rgba(161, 198, 247, 1)',
                     borderColor: 'rgb(47, 128, 237)',
                     data: datas,
@@ -423,7 +678,7 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            callback: function(value) {
+                            callback: function (value) {
                                 return value;
                             }
                         }
@@ -434,14 +689,110 @@
     }
 </script>
 
+<script>
 
+    async function updateChart() {
+        const ctx = document.getElementById('simple-pie-chart').getContext('2d');
+        const response = await fetch('http://localhost:8080/blog/statistic-blog-service');
+        // const data = await response.json();
+        // Get data from the API
+        const apiData = await response.json();
+        console.log(apiData);
+        // Check if the data is available
+        if (apiData) {
+            const data = {
+                labels: ['Blog', 'Service'],
+                datasets: [{
+                    data: [apiData.numBlog, apiData.numService],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
 
+            const options = {
+                responsive: true,
+                maintainAspectRatio: false
+            };
 
+            // Destroy the previous chart (if any) to prevent conflicts
+            if (window.myPieChart) {
+                window.myPieChart.destroy();
+            }
 
+            // Create the new pie chart
+            window.myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: options
+            });
+        }
+    }
 
+    // Call the updateChart function when the page loads
+    updateChart();
+</script>
+<!--=== test ===-->
+<!--<script>-->
 
-<script src="../js/charts.js"></script>
-<script src="../../static/js/scripts/charts/pie-doughnut/doughnut-simple.js"></script>
+<!--    async function updateChart() {-->
+<!--        const ctx = document.getElementById('simple-pie-chart').getContext('2d');-->
+<!--        const response = await fetch('http://localhost:8080/blog/statistic-blog-service');-->
+<!--        // const data = await response.json();-->
+<!--        // Get data from the API-->
+<!--        const apiData = await response.json();-->
+<!--        console.log(apiData);-->
+<!--        // Check if the data is available-->
+<!--        if (apiData) {-->
+<!--            const data = {-->
+<!--                labels: ['BlogSell', 'BlogGift' , 'Service'],-->
+<!--                datasets: [{-->
+<!--                    data: [apiData.numBlogSell, apiData.numBlogGift, apiData.numService],-->
+<!--                    backgroundColor: [-->
+<!--                        'rgba(255, 99, 132, 0.8)',-->
+<!--                        'rgba(235,227,69,0.8)',-->
+<!--                        'rgba(54, 162, 235, 0.8)'-->
+<!--                    ],-->
+<!--                    borderColor: [-->
+<!--                        'rgba(255, 99, 132, 1)',-->
+<!--                        'rgba(235,227,69, 1)',-->
+<!--                        'rgba(54, 162, 235, 1)'-->
+<!--                    ],-->
+<!--                    borderWidth: 1-->
+<!--                }]-->
+<!--            };-->
+
+<!--            const options = {-->
+<!--                responsive: true,-->
+<!--                maintainAspectRatio: false-->
+<!--            };-->
+
+<!--            // Destroy the previous chart (if any) to prevent conflicts-->
+<!--            if (window.myPieChart) {-->
+<!--                window.myPieChart.destroy();-->
+<!--            }-->
+
+<!--            // Create the new pie chart-->
+<!--            window.myPieChart = new Chart(ctx, {-->
+<!--                type: 'pie',-->
+<!--                data: data,-->
+<!--                options: options-->
+<!--            });-->
+<!--        }-->
+<!--    }-->
+
+<!--    // Call the updateChart function when the page loads-->
+<!--    updateChart();-->
+<!--</script>-->
+
+<!--==== test -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../vendors/js/vendors.min.js" type="text/javascript"></script>
 <script src="../vendors/js/forms/toggle/switchery.min.js" type="text/javascript"></script>
 <script src="../js/scripts/forms/switch.js" type="text/javascript"></script>
@@ -455,7 +806,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- END PAGE LEVEL JS-->
+
 </body>
 
 <!-- Mirrored from demos.themeselection.com/chameleon-free-bootstrap-admin-template/html/ltr/charts.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 11 Oct 2023 17:40:13 GMT -->

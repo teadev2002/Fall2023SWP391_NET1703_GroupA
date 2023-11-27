@@ -14,6 +14,7 @@ public class CommentDTO {
     private int id_user;
     private int id_blog;
     private String userName;
+    private String userImage;
     private Date createDate;
     private String blogTitle;
     private int id;

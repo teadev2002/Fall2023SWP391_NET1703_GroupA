@@ -236,7 +236,7 @@
                                 <div class="form-inner">
 
                                     <label>UserName *</label>
-                                    <input type="text" name="userName" id="userName" required>
+                                    <input type="text" name="userName" id="userName" required pattern="\S.*\S">
 
                                 </div>
                             </div>
@@ -244,7 +244,7 @@
                                 <div class="form-inner">
 
                                     <label>FullName *</label>
-                                    <input type="text" name="fullName" id="fullName" required>
+                                    <input type="text" name="fullName" id="fullName" required pattern="\S.*\S">
 
                                 </div>
                             </div>
@@ -285,16 +285,8 @@
                         </div>
                         <button class="account-btn" type="submit" id="btn-sign-up" >Create Account</button>
                     </form>
-                    <div class="alternate-signup-box">
-                        <h6>or signup WITH</h6>
-                        <div class="btn-group gap-4">
-                            <a href class="eg-btn google-btn d-flex align-items-center"><i
-                                    class="bx bxl-google"></i><span>signup whit google</span></a>
-                            <a href class="eg-btn facebook-btn d-flex align-items-center"><i
-                                    class="bx bxl-facebook"></i>signup whit facebook</a>
-                        </div>
-                    </div>
-                    <div class="form-poicy-area">
+
+                    <div class="form-poicy-area" style="margin-top: 20px;">
                         <p>By clicking the "signup" button, you create a Cobiro account, and you agree to Cobiro's <a
                                 href="#">Terms & Conditions</a> & <a href="#">Privacy Policy.</a></p>
                     </div>
@@ -409,6 +401,29 @@
             return;
         }
 
+
+        if(userName.startsWith(' ')){
+            alert('User name cannot starts with space! ');
+            return;
+        }
+
+        if(fullName.startsWith(' ') ){
+            alert('Full name cannot starts with space! ');
+            return;
+        }
+
+        if (userName.length < 1) {
+            alert('UserName must be not null');
+            return;
+        }
+
+        if (fullName.length < 1) {
+            alert('FullName must be not null');
+            return;
+        }
+
+
+
         if (password.length < 8) {
             alert('Password must be at least 8 characters long');
             return;
@@ -419,8 +434,34 @@
             return;
         }
 
-        // All validation passed, proceed with saving the data in the database
-        alert('Account created successfully');
+        if(password.startsWith(' ')){
+            alert('Password cannot starts with space! ');
+            return;
+        }
+
+        $.ajax({
+            url: "http://localhost:8080/index/sign-up-add",
+            method: "post",
+            contentType: "application/json",
+            data: JSON.stringify({
+                fullName: fullName,
+                userName: userName,
+                password: password,
+                email: email
+            })
+        }).done(function (data) {
+            console.log("server tra ve ", data)
+            if(data && data.statusCode == 400){
+                window.alert("Email has been registered change email please");
+                return;
+            }else if(data && data.statusCode == 200){
+                window.alert('Account created successfully');
+            }else{
+                window.alert('Account created Failed!');
+            }
+
+        })
+
     });
 </script>
 
@@ -443,7 +484,7 @@
 <script src="../js/jquery.magnific-popup.min.js"></script>
 <script src="../js/masonry.pkgd.min.js"></script>
 <script src="../js/main.js"></script>
-<script src="../js/login.js"></script>
+<!--<script src="../js/login.js"></script>-->
 </body>
 
 

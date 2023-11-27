@@ -77,13 +77,15 @@
                                                         alt="avatar"><span
                       class="user-name text-bold-700 ml-1" th:text="${user.userName}"></span></span></a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
+                <a class="dropdown-item" th:href="@{/index/profile}"><i class="ft-user"></i> Edit Profile</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" th:href="@{/index/logout}"><i class="ft-power"></i> Logout</a>
               </div>
             </div>
           </li>
         </ul>
+
+
       </div>
     </div>
   </div>
@@ -109,13 +111,12 @@
       <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
       </li>
 
+      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-users"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
 
-      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
-
-
-      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-credit-card"></i><span class="menu-title" >Create Account</span> </a>
+      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-user"></i><span class="menu-title" >Create Account</span> </a>
       </li>
-      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+
+      <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Statistic</span></a>
       </li>
     </ul>
   </div>

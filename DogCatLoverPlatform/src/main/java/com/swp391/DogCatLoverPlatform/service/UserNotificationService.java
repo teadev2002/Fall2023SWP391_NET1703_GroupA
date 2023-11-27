@@ -44,8 +44,8 @@ public class UserNotificationService {
     }
 
 
-    //Hiển thị thông báo (người dùng nào được chấp nhận hay từ chối)
 
+    //Hiển thị thông báo (người dùng nào được chấp nhận hay từ chối)
     public List<UserNotificationDTO> viewAllNotification(int id_user) {
         List<UserNotificationEntity> listNotification = userNotificationRepository.findAllByIdUser(id_user);
 

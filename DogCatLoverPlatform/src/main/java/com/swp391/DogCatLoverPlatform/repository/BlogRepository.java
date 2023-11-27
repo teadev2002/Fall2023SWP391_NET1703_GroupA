@@ -1,5 +1,6 @@
 package com.swp391.DogCatLoverPlatform.repository;
 
+import com.swp391.DogCatLoverPlatform.dto.StatisticUserDTO;
 import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.BlogTypeEntity;
 import org.springframework.data.domain.Page;
@@ -40,10 +41,19 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Integer> {
         @Query("UPDATE blog b SET b.status = false WHERE b.id = :id")
         void updateStatus(int id);
 
-        List<BlogEntity> findByUserEntityIdAndConfirmAndStatusTrue(Integer userId, Boolean confirm);
+        List<BlogEntity> findByUserEntityIdAndConfirm(Integer userId, Boolean confirm);
 
 
         @Query(value ="SELECT b.* FROM blog b join invoice i on b.id = i.id_blog where b.id_user_created =:id_user_created",nativeQuery = true)
          List<BlogEntity> findIdSeller(Integer id_user_created);
+
+//        Chart
+        @Query(value = "SELECT COUNT(b.id_pet_type), COUNT(s.id) FROM blog b LEFT JOIN service s ON s.id = b.id", nativeQuery = true)
+        List<Object[]> getBlogAndServiceCounts();
+
+
+
+
+
 
 }

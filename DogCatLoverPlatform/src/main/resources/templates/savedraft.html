@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -34,8 +41,6 @@
     <link rel="stylesheet" th:href="@{../../css/uiicss.css}">
 
     <link rel="stylesheet" th:href="@{../../css/style.css}">
-
-
     <!-- Import Font Awesome -->
     <style>
         /* Gradient background màu cam */
@@ -119,7 +124,7 @@
 
 
     </style>
-    <title>Form Create Service</title>
+    <title>Form Create Blog</title>
 </head>
 
 <body>
@@ -279,10 +284,10 @@
     <div class="inner-div">
         <h1 class="text-center text-orange">New Service?</h1>
 
-        <form th:action="@{/service/create}" th:object="${service}" method="post" enctype="multipart/form-data"
+        <form th:action="@{/service/savedraft}" th:object="${service}" method="post" enctype="multipart/form-data"
               style="width: 850px;">
-
             <div style="padding-left: 36%; display: flex; height: 60px; font-size: 14px;" class="mb-2 input-group">
+
                 <div class="form-group" style="padding-top: 12px;">
                     <label for="serviceCategory"></label>
                     <select id="serviceCategory" name="serviceCategory" class="form-control">
@@ -290,32 +295,34 @@
                                 th:text="${serviceCategory.name}"></option>
                     </select>
                 </div>
-
                 <!-- Hình ảnh -->
                 <div class="mb-3 input-group" style="width: 100px; margin-left: 20px;">
                     <div>Import Image:</div>
-                    <input type="file" class="form-control" id="image" name="file" required onchange="previewFile()">
+                    <input type="file" class="form-control" id="image" name="file"  onchange="previewFile()">
+                    <!--                    <input class="form-control" name="file" style="width: 100px; margin-left: 50px;" type="file" id="image-input" accept="image/*">-->
                 </div>
+
             </div>
 
             <!--Service Title-->
             <div class="mb-3 input-group" style="width: 600px;">
                 <input style="margin-left: 42%;" class="form-control" type="text" id="title" name="title" th:field="*{title}"
-                       placeholder="Your title..." required pattern="\S.*\S" th:required="true">
+                       placeholder="Your title..." th:required="true">
             </div>
 
-
-            <div class="previewImage"><img id="previewImage"></div>
-
+            <!--Hình ảnh cũ-->
+            <img id="previewImage" th:src="@{'../images/blog/'+${service.image}}" >
+            <input type="hidden" name="fileOriginal" th:value="${service.image}">
 
             <!-- Thẻ div cha cho phần content -->
             <div class="container mt-4" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,.25),0 3px 10px 0 rgba(0,0,0,.2)!important;">
                 <div class="row" style="padding: 24px 26px 24px 4px;">
+
                     <!--Add Content-->
                     <div class="col-6">
                         <div>About Service:</div>
                         <textarea class="form-control" id="content" name="content" th:field="*{content}" rows="12"
-                                  placeholder="Write something..." required pattern="\S.*\S" th:required="true"></textarea>
+                                  placeholder="Write something..." th:required="true"></textarea>
                     </div>
 
                     <!--Add Details-->
@@ -330,81 +337,19 @@
                         <div class="mb-3 input-group">
                             <div>Date Start:</div> &nbsp;&nbsp;
                             <input style="width: 263px;" class="form-control" type="date" id="dateStart" name="dateStart" th:field="*{dateStart}"
-                                   placeholder="Your title..." th:required="true"  onchange="validateDateStart()">
-
+                                   placeholder="Your title..." th:required="true">
                         </div>
 
                         <div class="mb-3 input-group">
                             <div style="margin-right: 5px;">Date End:</div>&nbsp;&nbsp;
-                            <input style="width: 263px;" disabled class="form-control" type="date" id="dateEnd" name="dateEnd" th:field="*{dateEnd}"
-                                   placeholder="Your title..." th:required="true" onchange="validateDate()">
+                            <input style="width: 263px;" class="form-control" type="date" id="dateEnd" name="dateEnd" th:field="*{dateEnd}"
+                                   placeholder="Your title..." th:required="true">
                         </div>
-<!--                        <script>-->
-<!--                            function validateDateStart() {-->
-<!--                                var startDate = document.getElementById('dateStart').value;-->
-<!--                                var endDateInput = document.getElementById('dateEnd');-->
-
-<!--                                if (startDate) {-->
-<!--                                    endDateInput.disabled = false;-->
-<!--                                    endDateInput.focus();-->
-<!--                                } else {-->
-<!--                                    endDateInput.disabled = true;-->
-<!--                                }-->
-<!--                                endDateInput.value = undefined;-->
-<!--                            }-->
-
-<!--                            function validateDate() {-->
-<!--                                var startDate = document.getElementById('dateStart').value;-->
-<!--                                var endDate = document.getElementById('dateEnd').value;-->
-
-<!--                                if (endDate <= startDate) {-->
-<!--                                    alert('End date cannot be before or equal to start date!');-->
-<!--                                    document.getElementById('dateEnd').value = undefined;-->
-<!--                                    // You can also choose to prevent form submission or handle this validation differently based on your requirement-->
-<!--                                }-->
-
-
-<!--                            }-->
-<!--                        </script>-->
-                        <script>
-                            function validateDateStart() {
-                                var startDate = document.getElementById('dateStart').value;
-                                var endDateInput = document.getElementById('dateEnd');
-
-                                // Check if startDate is not in the past
-                                var today = new Date();
-                                today.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0 for accurate comparison
-                                var selectedDate = new Date(startDate);
-
-                                if (selectedDate < today) {
-                                    alert('Start date cannot be in the past!');
-                                    document.getElementById('dateStart').value = '';
-                                    endDateInput.disabled = true;
-                                } else {
-                                    endDateInput.disabled = false;
-                                    endDateInput.focus();
-                                }
-
-                                endDateInput.value = undefined;
-                            }
-
-                            function validateDate() {
-                                var startDate = document.getElementById('dateStart').value;
-                                var endDate = document.getElementById('dateEnd').value;
-
-                                if (endDate <= startDate) {
-                                    alert('End date cannot be before or equal to start date!');
-                                    document.getElementById('dateEnd').value = undefined;
-                                    // You can also choose to prevent form submission or handle this validation differently based on your requirement
-                                }
-                            }
-                        </script>
-
-                        <!--                        ======-->
                     </div>
 
                 </div>
             </div>
+
 
             <div class="button-container">
                 <div style="margin-right: 12px;">
@@ -412,9 +357,7 @@
                 </div>
                 <a class="btn btn-primary" href="/blog/view">Back</a>
             </div>
-
         </form>
-
 
     </div>
 </div>
@@ -487,7 +430,6 @@
     </div>
 </footer>
 
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Get the dateStart and dateEnd input elements
@@ -497,11 +439,10 @@
         var content = document.getElementById('content').value.trim();
         var title = document.getElementById('title').value.trim();
 
-        // Function to validate the dateStart
-        function validateDateStart() {
+        // Function to validate the dateEnd
+        function validateDates() {
             var dateStartValue = new Date(dateStartInput.value);
             var dateEndValue = new Date(dateEndInput.value);
-            var now = new Date();
 
             if (content.startsWith(' ')) {
                 alert('Content cannot start with space!');
@@ -511,23 +452,21 @@
                 alert('Title cannot start with space!');
                 return;
             }
-            document.getElementById("priceInput").onkeypress = function (e) {
+            document.getElementById("priceInput").onkeypress = function(e) {
                 return isNumber(e);
             };
-            if (priceInput.value < 1) {
+            if ( priceInput.value < 1) {
                 alert('Price cannot be below 1 or be a non-number!');
                 return;
             }
 
-            // Check if dateStart is not earlier than now
+            // Check if dateEnd is not earlier than dateStart
             if (dateEndValue < dateStartValue) {
-                dateEndInput.setCustomValidity('Date end must be after date start !');
-
+                dateEndInput.setCustomValidity('End date cannot be earlier than start date.');
             } else {
-                dateStartInput.setCustomValidity('');
+                dateEndInput.setCustomValidity('');
             }
         }
-
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
             var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -536,10 +475,31 @@
             }
             return true;
         }
-
-        // Add an event listener for the input event on dateStart
-        dateStartInput.addEventListener('input', validateDateStart);
+        // Add an event listener for the input event on both dateStart and dateEnd
+        dateStartInput.addEventListener('input', validateDates);
+        dateEndInput.addEventListener('input', validateDates);
+        priceInput.addEventListener('input', validateDates);
     });
+</script>
+
+
+<script>
+    function togglePriceInput() {
+        var selectedValue = document.getElementById("serviceCategory").value;
+        var priceInput = document.getElementById("priceInput");
+
+        if (selectedValue === "Exchange") {
+            priceInput.style.display = "block"; // Hiển thị
+        } else {
+            priceInput.style.display = "none"; // Ẩn
+        }
+    }
+
+    // Thêm sự kiện "change" vào phần chọn để kiểm tra khi người dùng thay đổi lựa chọn
+    $("#serviceCategory").on("change", function () {
+        togglePriceInput();
+    });
+
 </script>
 
 <script> // validate number negative & text
@@ -555,6 +515,28 @@ function isNumber(evt) {
     }
     return true;
 }
+</script>
+
+<script>
+    function previewFile() {
+        var preview = document.getElementById('preview');
+        var fileInput = document.getElementById('image');
+        var file = fileInput.files[0];
+
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            // Nếu không có tệp nào được chọn, có thể hiển thị hình ảnh mặc định ở đây.
+            // Ví dụ: preview.src = "default-image.jpg";
+            preview.src = "";
+        }
+    }
 </script>
 
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-email-decode.min.js"></script>
@@ -578,5 +560,7 @@ function isNumber(evt) {
 <script src="../../js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script src="../../js/previewImage.js"></script>
+</body>
+</html>
 </body>
 </html>

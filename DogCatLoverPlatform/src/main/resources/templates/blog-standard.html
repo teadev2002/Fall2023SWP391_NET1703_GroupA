@@ -259,10 +259,10 @@
 
                 <div class="blog-st-card mb-70" th:each="blog : ${#lists.isEmpty(listBlogs) ? listBlog : listBlogs}">
                     <div class="blog-img">
-                        <img class="img-fluid" th:src="@{'../images/blog/' + ${blog.image}}" alt>
+                        <img class="img-fluid" style="width: 100%;" th:src="@{'../images/blog/' + ${blog.image}}" alt>
                         <div class="category">
                             <a th:if="${blog.blogTypeId != 2}" style="margin-right: 12px;" th:text="${blog.price} + '$'"></a>
-                            <a th:text="${blog.blogTypeName}"></a>-->
+                            <a th:text="${blog.blogTypeName}"></a>
                         </div>
                     </div>
 
@@ -271,7 +271,7 @@
                         <div class="blog-meta">
                             <ul>
                                 <li><a th:text="${blog.createDate}"></a></li>
-                                <li><a th:text="${blog.userName}"></a></li>
+                                <li><a th:text="${blog.userName}"  th:href="@{'/index/profile/' + ${blog.userId}}"></a></li>
                             </ul>
                         </div>
 
@@ -304,18 +304,32 @@
                                 <a class="page-link" th:href="@{'/blog/view?page=' + ${currentPage-1}}"><i class="bi bi-arrow-left-short"></i></a>
                             </li>
 
-                            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">
-                                <a class="page-link" th:href="@{'/blog/view?page=' + ${i}}" th:text="${i}"></a>
+<!--                            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">-->
+<!--                                <a class="page-link" th:href="@{'/blog/view?page=' + ${i}}" th:text="${i}"></a>-->
+<!--                            </li>-->
+
+                            <!-- Hiển thị trang trước, trang hiện tại và trang sau (nếu có) -->
+                            <li th:each="i : ${currentPage > 1 ?
+                             (currentPage == totalPage ? #numbers.sequence(currentPage - 1, currentPage)
+                             : #numbers.sequence(currentPage - 1, currentPage + 1))
+                             : #numbers.sequence(1, 2)}"
+                            th:classappend="${currentPage == i} ? 'active' : ''"
+                            class="page-item">
+                            <a class="page-link" th:href="@{'/blog/view?page=' + ${i}}" th:text="${i}"></a>
                             </li>
+
+
+
 
                             <li class="page-item" th:if="${currentPage < totalPage}">
                                 <a class="page-link" th:href="@{'/blog/view?page=' + ${currentPage+1}}"><i class="bi bi-arrow-right-short"></i></a>
                             </li>
                         </ul>
-
-
                     </nav>
                 </div>
+
+
+
 
             </div>
             <div class="col-lg-4">
@@ -342,13 +356,13 @@
 
                         <ul class="wp-block-categoris-cloud">
                             <li><a th:href="@{/blog/byType(type='Sell')}"><span>Pet Sell</span> <span><span
-                                    class="number-of-categoris">(30)</span><i
+                                    class="number-of-categoris"></span><i
                                     class="bi bi-arrow-right-short"></i></span></a></li>
                             <li><a th:href="@{/blog/byType(type='Gift')}"><span>Pet Gift</span> <span><span
-                                    class="number-of-categoris">(18)</span><i
+                                    class="number-of-categoris"></span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
                             <li><a th:href="@{/service/view}" ><span>Pet Service</span> <span><span
-                                    class="number-of-categoris">(21)</span><i
+                                    class="number-of-categoris"></span><i
                                     class="bi bi-arrow-right-short"></i></span> </a></li>
                         </ul>
 
@@ -367,11 +381,11 @@
                                     <a th:href="@{/blog/detail/{id}(id=${blog.id})}"><img
                                             th:src="@{'../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
-                                <div class="wc">
+                                <div class="wc" style="width: 240px;">
                                     <a th:href="@{/blog/detail/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
@@ -383,11 +397,11 @@
                                     <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"><img
                                             th:src="@{'../images/blog/' + ${blog.image}}" alt="image"></a>
                                 </div>
-                                <div class="wc">
+                                <div class="wc" style="width: 240px;">
                                     <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}" th:text="${blog.createDate}"></a>
                                     <h6>
                                         <a th:href="@{/blog/detail/myblog/{id}(id=${blog.id})}"
-                                           th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50) + '...'} : ${blog.title}"></a>
+                                           th:text="${#strings.length(blog.title) > 30} ? ${blog.title.substring(0, 30) + '...'} : ${blog.title}"></a>
                                     </h6>
                                 </div>
                             </div>
@@ -405,10 +419,7 @@
                         <p class="wp-block-tag-cloud">
                             <a th:href="@{/blog/byType(type='Sell')}">Sell</a>
                             <a th:href="@{/blog/byType(type='Gift')}">Gift</a>
-
-
                             <a th:href="@{/service/view}">Services</a>
-
 
                         </p>
 

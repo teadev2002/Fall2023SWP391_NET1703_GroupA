@@ -6,9 +6,7 @@ import com.swp391.DogCatLoverPlatform.entity.BlogEntity;
 import com.swp391.DogCatLoverPlatform.entity.InvoiceEntity;
 import com.swp391.DogCatLoverPlatform.entity.RoleEntity;
 import com.swp391.DogCatLoverPlatform.entity.UserEntity;
-
 import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
-
 import com.swp391.DogCatLoverPlatform.repository.RoleRepository;
 import com.swp391.DogCatLoverPlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +44,6 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
 
-
     @Autowired
     BlogRepository blogRepository;
 
@@ -62,6 +59,7 @@ public class UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setName(userDTO.getUserName());
+        user.setAccountBalance(0.0);
         user.setImage("ava-06.jpg");
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setId(1);
@@ -270,7 +268,7 @@ public class UserService {
             userDTO.setPhone(user.getPhone());
             userDTO.setDescription(user.getDescription());
             userDTO.setRoleDTO(user.getRoleEntity().getName());
-            userDTO.setId_role(user.getRoleEntity().getId());
+            userDTO.setId_role(user.getRoleEntity().getId()); userDTO.setBalance(user.getAccountBalance());
             staffDTO.add(userDTO);
         }
         return staffDTO;
@@ -335,4 +333,26 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+
+    public List<UserDTO> getAccountUser(){
+        List<UserEntity> userEntityList = userRepository.findAllRoleUser();
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for(UserEntity user : userEntityList){
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setUserName(user.getName());
+            userDTO.setFullName(user.getFullName());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setAddress(user.getAddress());
+            userDTO.setImage(user.getImage());
+            userDTO.setPhone(user.getPhone());
+            userDTO.setDescription(user.getDescription());
+            userDTO.setRoleDTO(user.getRoleEntity().getName());
+            userDTO.setId_role(user.getRoleEntity().getId());
+            userDTO.setBalance(user.getAccountBalance());
+            userDTOList.add(userDTO);
+
+        }
+        return userDTOList;
+    }
 }

@@ -79,7 +79,7 @@
                                                                       alt="avatar"><span
                                     class="user-name text-bold-700 ml-1" th:text="${user.userName}"></span></span></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
+                                <a class="dropdown-item" th:href="@{/index/profile}"><i class="ft-user"></i> Edit Profile</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/index/logout}"><i class="ft-power"></i> Logout</a>
                             </div>
@@ -114,12 +114,12 @@
             <li class=" nav-item"><a th:href="@{/staff/view/pending}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Pending Blog</span></a>
             </li>
 
-            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class=" nav-item"><a th:href="@{/staff/manageStaff}"><i class="ft-users"></i><span class="menu-title" data-i18n="">Staff Manager</span></a>
 
-            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-credit-card"></i><span class="menu-title" >Create Account</span> </a>
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/staff-sign-up}"><i class="ft-user"></i><span class="menu-title" >Create Account</span> </a>
             </li>
 
-            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+            <li th:if="${user.roleDTO == 'ROLE_ADMIN'}" class="nav-item"><a th:href="@{../../staff/chart}"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Statistic</span></a>
             </li>
         </ul>
     </div>
@@ -213,36 +213,17 @@
                             </div>
 
 
-
-
-                            <div class="card-body">
-                                <a href="#" class="card-link">Accept</a>
-                                <a href="#" class="card-link">Deny</a>
-
-                                <span class="tags float-right">
-                                    <span class="badge badge-pill badge-primary">Blog</span>
-                                    <span class="badge badge-pill badge-danger">Sell</span>
-                                 </span>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Recent Post</h4>
+                            <h4 class="card-title">Most Active User</h4>
                             <a class="heading-elements-toggle">
                                 <i class="fa fa-ellipsis-v font-medium-3"></i>
                             </a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li>
-                                        <a data-action="reload">
-                                            <i class="ft-rotate-cw"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+
                         </div>
                         <div class="card-content">
                             <div id="recent-buyers" class="media-list">
@@ -262,7 +243,7 @@
 
                                     </ul>
                                     <p class="list-group-item-text mb-0">
-                                        <span class="blue-grey lighten-2 font-small-3" th:text="${user1.id}"></span>
+                                        <span class="blue-grey lighten-2 font-small-3" th:text="${user1.email}"></span>
                                     </p>
                             </div>
                                 </a>

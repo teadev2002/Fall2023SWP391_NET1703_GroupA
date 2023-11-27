@@ -1,15 +1,14 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
-import com.swp391.DogCatLoverPlatform.dto.BlogDTO;
+import com.swp391.DogCatLoverPlatform.dto.*;
 
-import com.swp391.DogCatLoverPlatform.dto.BookingDTO;
-import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.entity.UserEntity;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
+import com.swp391.DogCatLoverPlatform.repository.BlogRepository;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
 import com.swp391.DogCatLoverPlatform.service.BookingService;
 import com.swp391.DogCatLoverPlatform.service.ChartService;
 
-import com.swp391.DogCatLoverPlatform.dto.ChartDTO;
 import com.swp391.DogCatLoverPlatform.dto.UserDTO;
 import com.swp391.DogCatLoverPlatform.payload.BaseRespone;
 import com.swp391.DogCatLoverPlatform.service.BlogService;
@@ -94,15 +93,21 @@ public class StaffController {
 
     @PostMapping(value = "/sign-up-staff-account")
     public ResponseEntity<?> signup(@Valid @RequestBody UserDTO signUpRequest) {
-        boolean isSuccess = userService.addStaff(signUpRequest);
-        BaseRespone baseRespone = new BaseRespone();
-        baseRespone.setStatusCode(200);
-        baseRespone.setMessage("");
-        baseRespone.setData(isSuccess);
-        return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        UserEntity checkEmail = userService.getFindByEmail(signUpRequest.getEmail());
+
+        if(checkEmail == null){
+            BaseRespone baseRespone = new BaseRespone();
+            boolean isSuccess = userService.addStaff(signUpRequest);
+            baseRespone.setStatusCode(200);
+            baseRespone.setMessage("");
+            baseRespone.setData(isSuccess);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }else{
+            BaseRespone baseRespone = new BaseRespone();
+            baseRespone.setStatusCode(400);
+            return new ResponseEntity<>(baseRespone, HttpStatus.OK);
+        }
     }
-
-
 
 
     @GetMapping("/manageStaff")
@@ -128,10 +133,35 @@ public class StaffController {
 
 
 
-
-
     @GetMapping("/chart")
-    public String lineChart(Model model){
+    public String lineChart(Model model, HttpServletRequest req){
+        UserDTO user  = getUserIdFromCookie(req);
+        model.addAttribute("user", user);
+
+        double moneyAll = chartService.getAllMoneyUserRecharge();
+        model.addAttribute("moneyAll",moneyAll);
+
+        int allUser = chartService.getAllUser();
+        model.addAttribute("allUser", allUser);
+
+        int allBooking = chartService.getTotalBooking();
+        model.addAttribute("allBooking",allBooking);
+
+        int allInvoice = chartService.getTotalInvoice();
+        model.addAttribute("allInvoice",allInvoice);
+
+        List<UserDTO> listStaff = userService.getAccountStaff();
+        model.addAttribute("listStaff",listStaff);
+
+        double allRevenue = chartService.getTotalBookingServiceRevenue();
+        model.addAttribute("allRevenue",allRevenue);
+
+        int allBlog = chartService.getBlogCount();
+        model.addAttribute("allBlog", allBlog);
+
+        int allService = chartService.getServiceCount();
+        model.addAttribute("allService",allService);
+
 //        List<BookingDTO> listbook = chartService.getBookingChart();
 //        model.addAttribute("listbook", listbook);
 //        int countBlogInList = chartService.countAllBlog();
@@ -152,6 +182,11 @@ public class StaffController {
         });
         model.addAttribute("listbook", listbook);
 */
+        List<StatisticUserDTO> getListUser = chartService.getCountNumBlogByUser();
+        model.addAttribute("getListUser", getListUser);
+
+        List<UserDTO> userDTO =  userService.getAccountUser();
+        model.addAttribute("userDTO",userDTO);
         return "charts";
     }
 

@@ -1,5 +1,10 @@
 package com.swp391.DogCatLoverPlatform.controller;
 
+
+import com.swp391.DogCatLoverPlatform.dto.InvoiceDTO;
+import com.swp391.DogCatLoverPlatform.dto.RequestDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserDTO;
+import com.swp391.DogCatLoverPlatform.dto.UserNotificationDTO;
 import com.swp391.DogCatLoverPlatform.dto.*;
 import com.swp391.DogCatLoverPlatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +66,17 @@ public class InvoiceController {
             model.addAttribute("user", userDTO);
         }
 
+        UserDTO userDTO = getUserIdFromCookie(req);
+        model.addAttribute("user", userDTO);
+
+        if(userDTO != null){
+            List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
+
+            List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
+            int totalCount = bookingDTOS.size() + userNotificationDTOS.size();
+            model.addAttribute("count", totalCount);
+        }
+
         // Return the invoice template (invoice.html)
         return "invoice";
     }
@@ -75,8 +91,6 @@ public class InvoiceController {
         }
 
         if(userDTO != null){
-
-
             List<UserNotificationDTO> userNotificationDTOS = userNotificationService.viewAllNotificationCount(userDTO.getId());
 
             List<RequestDTO> bookingDTOS = requestService.viewSendBlogRequest(userDTO.getId());
@@ -120,5 +134,6 @@ public class InvoiceController {
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
 
 }

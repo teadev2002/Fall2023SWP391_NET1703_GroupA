@@ -57,5 +57,4 @@ public class BookingEntity {
     private BlogEntity blogEntity_BookingEntity; // tên Entity tham chiếu tới
 
 
-
 }

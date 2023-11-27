@@ -17,4 +17,7 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Integer>
 
     @Query(value = "SELECT count(*) FROM invoice i WHERE i.invoice_date LIKE %:date%", nativeQuery = true)
     public Long countInvoiceByBlogDate(Date date);
+
+    @Query(value = " select count(*) from invoice i  ",nativeQuery = true)
+    public int getAllInvoice();
 }
